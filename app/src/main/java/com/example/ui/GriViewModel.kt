@@ -25,10 +25,10 @@ import kotlinx.coroutines.launch
 
 enum class NavigationTab {
   HOME,
-  ACADEMICS,
+  EXPLORE,
   SERVICES,
-  GRIEVANCES,
-  ADMIN
+  NEWS,
+  PROFILE
 }
 
 data class GriUiState(

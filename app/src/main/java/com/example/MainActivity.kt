@@ -12,7 +12,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DirectionsBus
 import androidx.compose.material.icons.filled.Dns
+import androidx.compose.material.icons.filled.EventNote
+import androidx.compose.material.icons.filled.FolderShared
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.ReportProblem
 import androidx.compose.material.icons.filled.School
 import androidx.compose.material3.Icon
@@ -81,10 +84,10 @@ class MainActivity : ComponentActivity() {
 
 sealed class NavItem(val tab: NavigationTab, val title: String, val icon: ImageVector, val tag: String) {
   object Home : NavItem(NavigationTab.HOME, "Home", Icons.Default.Home, "nav_home")
-  object Academics : NavItem(NavigationTab.ACADEMICS, "Academics", Icons.Default.School, "nav_academics")
+  object Explore : NavItem(NavigationTab.EXPLORE, "Explore", Icons.Default.Public, "nav_explore")
   object Services : NavItem(NavigationTab.SERVICES, "Services", Icons.Default.DirectionsBus, "nav_services")
-  object Grievances : NavItem(NavigationTab.GRIEVANCES, "GRI-Care", Icons.Default.ReportProblem, "nav_grievances")
-  object Admin : NavItem(NavigationTab.ADMIN, "Console", Icons.Default.Dns, "nav_admin")
+  object News : NavItem(NavigationTab.NEWS, "News", Icons.Default.EventNote, "nav_news")
+  object Profile : NavItem(NavigationTab.PROFILE, "Profile", Icons.Default.FolderShared, "nav_profile")
 }
 
 @Composable
@@ -113,10 +116,10 @@ fun GriApp(
 
   val navItems = listOf(
     NavItem.Home,
-    NavItem.Academics,
+    NavItem.Explore,
     NavItem.Services,
-    NavItem.Grievances,
-    NavItem.Admin
+    NavItem.News,
+    NavItem.Profile
   )
 
   Scaffold(
@@ -182,33 +185,28 @@ fun GriApp(
             HomeScreen(
               uiState = uiState,
               onFetchHallTicket = onFetchHallTicket,
-              onNavigateToGrievances = { onTabSelected(NavigationTab.GRIEVANCES) },
+              onNavigateToGrievances = { onTabSelected(NavigationTab.PROFILE) },
               onNavigateToServices = { onTabSelected(NavigationTab.SERVICES) },
-              onNavigateToAcademics = { onTabSelected(NavigationTab.ACADEMICS) },
+              onNavigateToAcademics = { onTabSelected(NavigationTab.EXPLORE) },
               onMarkCircularRead = onMarkCircularRead
             )
           }
-          NavigationTab.ACADEMICS -> {
-            AcademicsScreen(
-              courses = uiState.courses,
-              onMarkAttendance = onMarkAttendance,
-              onFetchHallTicket = onFetchHallTicket
-            )
+          NavigationTab.EXPLORE -> {
+            PublicExploreScreen()
           }
           NavigationTab.SERVICES -> {
             ServicesScreen(
               transportRoutes = uiState.transportRoutes
             )
           }
-          NavigationTab.GRIEVANCES -> {
-            GrievancesScreen(
-              grievances = uiState.grievances,
-              userRole = uiState.currentRole,
-              onSubmitGrievance = onSubmitGrievance,
-              onResolveGrievance = onResolveGrievance
+          NavigationTab.NEWS -> {
+            AcademicsScreen(
+              courses = uiState.courses,
+              onMarkAttendance = onMarkAttendance,
+              onFetchHallTicket = onFetchHallTicket
             )
           }
-          NavigationTab.ADMIN -> {
+          NavigationTab.PROFILE -> {
             AdminScreen(
               uiState = uiState,
               onToggleServer = onToggleServer,
