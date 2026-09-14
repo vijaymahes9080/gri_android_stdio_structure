@@ -1,0 +1,94 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- Outer Navy Ring -->
+    <path
+        android:fillColor="#0B2545"
+        android:pathData="M60,2 C27.96,2 2,27.96 2,60 C2,92.04 27.96,118 60,118 C92.04,118 118,92.04 118,60 C118,27.96 92.04,2 60,2 Z" />
+
+    <!-- Gold Accent Ring -->
+    <path
+        android:fillColor="#C28437"
+        android:pathData="M60,6 C30.17,6 6,30.17 6,60 C6,89.83 30.17,114 60,114 C89.83,114 114,89.83 114,60 C114,30.17 89.83,6 60,6 Z" />
+
+    <!-- Inner Cream/White Background -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M60,12 C33.49,12 12,33.49 12,60 C12,86.51 33.49,108 60,108 C86.51,108 108,86.51 108,60 C108,33.49 86.51,12 60,12 Z" />
+
+    <!-- Fine Inner Navy Border -->
+    <path
+        android:fillColor="#0B2545"
+        android:pathData="M60,16 C35.7,16 16,35.7 16,60 C16,84.3 35.7,104 60,104 C84.3,104 104,84.3 104,60 C104,35.7 84.3,16 60,16 Z" />
+
+    <!-- Core Center Disc (Soft Ivory) -->
+    <path
+        android:fillColor="#FDFBF7"
+        android:pathData="M60,18 C36.8,18 18,36.8 18,60 C18,83.2 36.8,102 60,102 C83.2,102 102,83.2 102,60 C102,36.8 83.2,18 60,18 Z" />
+
+    <!-- Radiant Rays of Wisdom (Golden) -->
+    <path
+        android:fillColor="#E5A93C"
+        android:pathData="M60,24 L62,32 L58,32 Z M76,28 L72,35 L68,32 Z M44,28 L52,32 L48,35 Z M88,40 L81,44 L79,40 Z M32,40 L41,40 L39,44 Z" />
+
+    <!-- Sacred Knowledge Lamp Base (Agal Vilakku / Deepam) -->
+    <path
+        android:fillColor="#C28437"
+        android:pathData="M42,66 C42,66 48,74 60,74 C72,74 78,66 78,66 C75,69 69,72 60,72 C51,72 45,69 42,66 Z" />
+    <path
+        android:fillColor="#0B2545"
+        android:pathData="M50,73 L70,73 L67,77 L53,77 Z" />
+    <path
+        android:fillColor="#C28437"
+        android:pathData="M48,77 L72,77 L75,80 L45,80 Z" />
+
+    <!-- Open Book of Learning and Truth -->
+    <!-- Left Page -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M59,68 L36,62 C35,55 35,46 37,42 L59,48 Z" />
+    <path
+        android:fillColor="#134074"
+        android:pathData="M40,48 L56,52 L56,53 L40,49 Z M40,54 L56,58 L56,59 L40,55 Z" />
+    <!-- Right Page -->
+    <path
+        android:fillColor="#F0F4F8"
+        android:pathData="M61,68 L84,62 C85,55 85,46 83,42 L61,48 Z" />
+    <path
+        android:fillColor="#134074"
+        android:pathData="M80,48 L64,52 L64,53 L80,49 Z M80,54 L64,58 L64,59 L80,55 Z" />
+    <!-- Book Spine -->
+    <path
+        android:fillColor="#C28437"
+        android:pathData="M59.5,47 L60.5,47 L60.5,70 L59.5,70 Z" />
+
+    <!-- Radiant Lamp Flame (Outer Glow) -->
+    <path
+        android:fillColor="#E65100"
+        android:pathData="M60,26 C57,32 54,37 54,41 C54,44.5 56.5,47 60,47 C63.5,47 66,44.5 66,41 C66,37 63,32 60,26 Z" />
+    <!-- Flame Core (Bright Gold) -->
+    <path
+        android:fillColor="#FFD54F"
+        android:pathData="M60,30 C58.5,33.5 56.5,37 56.5,40 C56.5,42 58,44 60,44 C62,44 63.5,42 63.5,40 C63.5,37 61.5,33.5 60,30 Z" />
+
+    <!-- Lotus Petals at Base -->
+    <path
+        android:fillColor="#D97706"
+        android:pathData="M60,82 C55,82 48,87 40,84 C46,90 54,92 60,92 C66,92 74,90 80,84 C72,87 65,82 60,82 Z" />
+    <path
+        android:fillColor="#F59E0B"
+        android:pathData="M60,84 C56,84 50,88 44,86 C49,90 55,91 60,91 C65,91 71,90 76,86 C70,88 64,84 60,84 Z" />
+
+    <!-- Decorative Stars on Border -->
+    <path
+        android:fillColor="#C28437"
+        android:pathData="M24,58 L25.5,59.5 L24,61 L22.5,59.5 Z M96,58 L97.5,59.5 L96,61 L94.5,59.5 Z" />
+
+    <!-- Foundation Year Inscription -->
+    <path
+        android:fillColor="#0B2545"
+        android:pathData="M52,94 L68,94 L68,95 L52,95 Z" />
+</vector>

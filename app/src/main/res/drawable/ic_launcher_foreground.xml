@@ -1,0 +1,32 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Base Lotus Petals -->
+    <path
+        android:fillColor="#FFD166"
+        android:pathData="M54,68 C46,68 38,62 34,56 C38,62 48,66 54,66 C60,66 70,62 74,56 C70,62 62,68 54,68 Z" />
+    <path
+        android:fillColor="#FFE8A3"
+        android:pathData="M54,65 C48,65 42,60 38,54 C43,58 50,62 54,62 C58,62 65,58 70,54 C66,60 60,65 54,65 Z" />
+
+    <!-- Open Book of Learning -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M52.5,58 L36,54 C35,50 35,42 36,38 L52.5,42 Z" />
+    <path
+        android:fillColor="#F0F4F8"
+        android:pathData="M55.5,58 L72,54 C73,50 73,42 72,38 L55.5,42 Z" />
+    <path
+        android:fillColor="#0B2545"
+        android:pathData="M53.5,42 L54.5,42 L54.5,59 L53.5,59 Z" />
+
+    <!-- Sacred Knowledge Lamp / Deepam Flame -->
+    <path
+        android:fillColor="#FF9F1C"
+        android:pathData="M54,26 C52,29 50,32 50,35 C50,37.5 51.8,39.5 54,39.5 C56.2,39.5 58,37.5 58,35 C58,32 56,29 54,26 Z" />
+    <path
+        android:fillColor="#FFE8A3"
+        android:pathData="M54,29 C53,31 52,33 52,35 C52,36.5 53,37.5 54,37.5 C55,37.5 56,36.5 56,35 C56,33 55,31 54,29 Z" />
+</vector>
