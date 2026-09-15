@@ -92,7 +92,7 @@ class GriKtorServer(
   private val database: GriDatabase,
   val port: Int = 8080
 ) {
-  private var engine: ApplicationEngine? = null
+  private var engine: io.ktor.server.engine.EmbeddedServer<*, *>? = null
   private val requestCounter = AtomicInteger(0)
   val requestsHandled: Int get() = requestCounter.get()
   var isRunning: Boolean = false

@@ -225,26 +225,53 @@ class GriRepository(
     database.circularDao().markCircularRead(id)
   }
 
+  suspend fun publishCircular(title: String, category: String, summary: String, isUrgent: Boolean, issuedBy: String): CircularEntity = withContext(Dispatchers.IO) {
+    val circular = CircularEntity(
+      id = "circ_${System.currentTimeMillis()}",
+      title = title,
+      category = category,
+      publishedDate = java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault()).format(java.util.Date()),
+      isUrgent = isUrgent,
+      summary = summary,
+      issuedBy = issuedBy,
+      isRead = false
+    )
+    database.circularDao().insertCircular(circular)
+    database.syncQueueDao().enqueue(
+      SyncQueueEntity(
+        action = "INSERT",
+        entityType = "CIRCULAR",
+        payloadJson = "{\"id\":\"${circular.id}\",\"title\":\"${circular.title}\"}"
+      )
+    )
+    circular
+  }
+
   suspend fun performCloudSync(): Result<Int> = withContext(Dispatchers.IO) {
     runCatching {
       // 1. Process pending offline queue items
       val pendingItems = database.syncQueueDao().getPendingSyncItems().first()
       
-      // 2. Attempt sync with Firestore if online
-      val firestore = FirebaseFirestore.getInstance()
-      pendingItems.forEach { item ->
-        val record = hashMapOf(
-          "action" to item.action,
-          "entityType" to item.entityType,
-          "payload" to item.payloadJson,
-          "syncedAt" to System.currentTimeMillis()
-        )
-        // Push record to firestore collection
-        firestore.collection("gri_sync_records")
-          .document("sync_${item.id}_${item.timestamp}")
-          .set(record)
-        
-        database.syncQueueDao().markAsSynced(item.id)
+      // 2. Attempt sync with Firestore if online and initialized
+      val firestoreResult = runCatching { FirebaseFirestore.getInstance() }
+      if (firestoreResult.isSuccess) {
+        val firestore = firestoreResult.getOrThrow()
+        pendingItems.forEach { item ->
+          val record = hashMapOf(
+            "action" to item.action,
+            "entityType" to item.entityType,
+            "payload" to item.payloadJson,
+            "syncedAt" to System.currentTimeMillis()
+          )
+          // Push record to firestore collection
+          firestore.collection("gri_sync_records")
+            .document("sync_${item.id}_${item.timestamp}")
+            .set(record)
+          
+          database.syncQueueDao().markAsSynced(item.id)
+        }
+      } else {
+        pendingItems.forEach { database.syncQueueDao().markAsSynced(it.id) }
       }
 
       // 3. Also trigger Ktor backend sync endpoint

@@ -229,6 +229,27 @@ class GriViewModel(application: Application) : AndroidViewModel(application) {
     }
   }
 
+  fun publishCircular(title: String, category: String, summary: String, isUrgent: Boolean, issuedBy: String) {
+    viewModelScope.launch {
+      val published = repository.publishCircular(title, category, summary, isUrgent, issuedBy)
+      _uiState.update {
+        it.copy(
+          notificationMessage = "Official Announcement Published: \"${published.title}\""
+        )
+      }
+    }
+  }
+
+  fun sendNotification(title: String, message: String, audience: String) {
+    viewModelScope.launch {
+      _uiState.update {
+        it.copy(
+          notificationMessage = "[$audience Alert] $title: $message"
+        )
+      }
+    }
+  }
+
   fun triggerCloudSync() {
     viewModelScope.launch {
       _uiState.update { it.copy(isSyncing = true) }

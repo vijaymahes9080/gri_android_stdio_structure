@@ -20,13 +20,22 @@ private val DarkColorScheme = darkColorScheme(
   onSecondary = Color(0xFF351E00),
   secondaryContainer = Color(0xFF523305),
   onSecondaryContainer = Color(0xFFFFE0B2),
+  tertiary = GriAccentCyan,
+  onTertiary = Color.White,
+  tertiaryContainer = Color(0xFF0C4A6E),
+  onTertiaryContainer = Color(0xFFE0F2FE),
+  error = Color(0xFFF87171),
+  onError = Color(0xFF450A0A),
+  errorContainer = Color(0xFF7F1D1D),
+  onErrorContainer = Color(0xFFFEE2E2),
   background = GriBackgroundDark,
   surface = GriSurfaceDark,
   surfaceVariant = GriSurfaceVariantDark,
   onSurface = GriOnSurfaceDark,
   onBackground = GriOnSurfaceDark,
   onSurfaceVariant = GriOnSurfaceVariantDark,
-  outline = GriOutlineDark
+  outline = GriOutlineDark,
+  outlineVariant = Color(0xFF1E3A5F)
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -38,13 +47,22 @@ private val LightColorScheme = lightColorScheme(
   onSecondary = Color.White,
   secondaryContainer = GriGoldContainer,
   onSecondaryContainer = GriGoldOnContainer,
+  tertiary = GriAccentCyan,
+  onTertiary = Color.White,
+  tertiaryContainer = Color(0xFFE0F2FE),
+  onTertiaryContainer = Color(0xFF0369A1),
+  error = GriRedAlert,
+  onError = Color.White,
+  errorContainer = Color(0xFFFEE2E2),
+  onErrorContainer = Color(0xFF7F1D1D),
   background = GriBackgroundLight,
   surface = GriSurfaceLight,
   surfaceVariant = GriSurfaceVariant,
   onSurface = GriOnSurfaceLight,
   onBackground = GriOnSurfaceLight,
   onSurfaceVariant = GriOnSurfaceVariant,
-  outline = GriOutlineLight
+  outline = GriOutlineLight,
+  outlineVariant = Color(0xFFCBD5E1)
 )
 
 @Composable

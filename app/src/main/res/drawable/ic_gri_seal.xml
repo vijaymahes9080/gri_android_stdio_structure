@@ -1,94 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="120dp"
-    android:height="120dp"
-    android:viewportWidth="120"
-    android:viewportHeight="120">
-
-    <!-- Outer Navy Ring -->
+    android:height="200dp"
+    android:width="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="240">
     <path
-        android:fillColor="#0B2545"
-        android:pathData="M60,2 C27.96,2 2,27.96 2,60 C2,92.04 27.96,118 60,118 C92.04,118 118,92.04 118,60 C118,27.96 92.04,2 60,2 Z" />
-
-    <!-- Gold Accent Ring -->
+        android:fillColor="#ffffff"
+        android:pathData="M30,4 C15.64,4 4,15.64 4,30 L4,210 C4,224.36 15.64,236 30,236 L170,236 C184.36,236 196,224.36 196,210 L196,30 C196,15.64 184.36,4 170,4 Z"/>
     <path
-        android:fillColor="#C28437"
-        android:pathData="M60,6 C30.17,6 6,30.17 6,60 C6,89.83 30.17,114 60,114 C89.83,114 114,89.83 114,60 C114,30.17 89.83,6 60,6 Z" />
-
-    <!-- Inner Cream/White Background -->
+        android:fillColor="#00000000"
+        android:pathData="M30,4 C15.64,4 4,15.64 4,30 L4,210 C4,224.36 15.64,236 30,236 L170,236 C184.36,236 196,224.36 196,210 L196,30 C196,15.64 184.36,4 170,4 Z"
+        android:strokeColor="#e51a1a"
+        android:strokeWidth="4"/>
     <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M60,12 C33.49,12 12,33.49 12,60 C12,86.51 33.49,108 60,108 C86.51,108 108,86.51 108,60 C108,33.49 86.51,12 60,12 Z" />
-
-    <!-- Fine Inner Navy Border -->
+        android:fillColor="#00000000"
+        android:pathData="M30,12 C20.06,12 12,20.06 12,30 L12,210 C12,219.94 20.06,228 30,228 L170,228 C179.94,228 188,219.94 188,210 L188,30 C188,20.06 179.94,12 170,12 Z"
+        android:strokeColor="#e51a1a"
+        android:strokeWidth="1.5"/>
     <path
-        android:fillColor="#0B2545"
-        android:pathData="M60,16 C35.7,16 16,35.7 16,60 C16,84.3 35.7,104 60,104 C84.3,104 104,84.3 104,60 C104,35.7 84.3,16 60,16 Z" />
-
-    <!-- Core Center Disc (Soft Ivory) -->
+        android:fillColor="#00000000"
+        android:pathData="M24,36 L176,36 L176,204 L24,204 Z M24,76 L176,76 M24,164 L176,164 M60,36 L60,204 M140,36 L140,204"
+        android:strokeColor="#0d47a1"
+        android:strokeWidth="1.8"/>
     <path
-        android:fillColor="#FDFBF7"
-        android:pathData="M60,18 C36.8,18 18,36.8 18,60 C18,83.2 36.8,102 60,102 C83.2,102 102,83.2 102,60 C102,36.8 83.2,18 60,18 Z" />
-
-    <!-- Radiant Rays of Wisdom (Golden) -->
+        android:fillColor="#00000000"
+        android:pathData="M28,68 C34,68 44,66 52,48 L56,42"
+        android:strokeColor="#e51a1a"
+        android:strokeWidth="2.2"
+        android:strokeLineCap="round"/>
     <path
-        android:fillColor="#E5A93C"
-        android:pathData="M60,24 L62,32 L58,32 Z M76,28 L72,35 L68,32 Z M44,28 L52,32 L48,35 Z M88,40 L81,44 L79,40 Z M32,40 L41,40 L39,44 Z" />
-
-    <!-- Sacred Knowledge Lamp Base (Agal Vilakku / Deepam) -->
+        android:fillColor="#00000000"
+        android:pathData="M32,68 L48,68 L50,60 L38,60 Z"
+        android:strokeColor="#e51a1a"
+        android:strokeWidth="2.2"
+        android:strokeLineCap="round"/>
     <path
-        android:fillColor="#C28437"
-        android:pathData="M42,66 C42,66 48,74 60,74 C72,74 78,66 78,66 C75,69 69,72 60,72 C51,72 45,69 42,66 Z" />
+        android:fillColor="#00000000"
+        android:pathData="M26,52 C28,46 34,44 38,48 L32,56 Z"
+        android:strokeColor="#e51a1a"
+        android:strokeWidth="2"/>
     <path
-        android:fillColor="#0B2545"
-        android:pathData="M50,73 L70,73 L67,77 L53,77 Z" />
+        android:fillColor="#00000000"
+        android:pathData="M70,70 C66,62 66,54 74,44 C82,54 82,62 70,70 Z M90,70 C86,62 86,54 94,44 C102,54 102,62 90,70 Z M110,70 C106,62 106,54 114,44 C122,54 122,62 110,70 Z M130,70 C126,62 126,54 134,44 C142,54 142,62 130,70 Z"
+        android:strokeColor="#1565c0"
+        android:strokeWidth="1.8"/>
     <path
-        android:fillColor="#C28437"
-        android:pathData="M48,77 L72,77 L75,80 L45,80 Z" />
-
-    <!-- Open Book of Learning and Truth -->
-    <!-- Left Page -->
+        android:fillColor="#1565c0"
+        android:pathData="M74,66 A2,2 0 1,1 74,65.9 Z M94,66 A2,2 0 1,1 94,65.9 Z M114,66 A2,2 0 1,1 114,65.9 Z M134,66 A2,2 0 1,1 134,65.9 Z"/>
     <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M59,68 L36,62 C35,55 35,46 37,42 L59,48 Z" />
+        android:fillColor="#00000000"
+        android:pathData="M158,54 C158,47 163,42 170,42 C177,42 182,47 182,54 C182,61 177,66 170,66 C163,66 158,61 158,54 Z"
+        android:strokeColor="#e51a1a"
+        android:strokeWidth="2"/>
     <path
-        android:fillColor="#134074"
-        android:pathData="M40,48 L56,52 L56,53 L40,49 Z M40,54 L56,58 L56,59 L40,55 Z" />
-    <!-- Right Page -->
+        android:fillColor="#00000000"
+        android:pathData="M170,42 L170,66 M158,54 L182,54 M162,46 L178,62 M162,62 L178,46"
+        android:strokeColor="#e51a1a"
+        android:strokeWidth="1.2"/>
     <path
-        android:fillColor="#F0F4F8"
-        android:pathData="M61,68 L84,62 C85,55 85,46 83,42 L61,48 Z" />
+        android:fillColor="#00000000"
+        android:pathData="M144,70 L180,70 M148,70 L148,62 L154,62 L154,70 M154,66 L170,54"
+        android:strokeColor="#e51a1a"
+        android:strokeWidth="2"/>
     <path
-        android:fillColor="#134074"
-        android:pathData="M80,48 L64,52 L64,53 L80,49 Z M80,54 L64,58 L64,59 L80,55 Z" />
-    <!-- Book Spine -->
+        android:fillColor="#00000000"
+        android:pathData="M28,82 L56,82 L56,118 L28,118 Z M32,86 L52,86 L52,114 L32,114 Z M36,90 L48,90 L48,110 L36,110 Z M40,94 L44,94 L44,106 L40,106 Z"
+        android:strokeColor="#1e88e5"
+        android:strokeWidth="1.2"/>
     <path
-        android:fillColor="#C28437"
-        android:pathData="M59.5,47 L60.5,47 L60.5,70 L59.5,70 Z" />
-
-    <!-- Radiant Lamp Flame (Outer Glow) -->
+        android:fillColor="#00000000"
+        android:pathData="M28,124 L56,124 L56,158 L28,158 Z M32,128 L52,128 L52,154 L32,154 Z M36,132 L48,132 L48,150 L36,150 Z M40,136 L44,136 L44,146 L40,146 Z"
+        android:strokeColor="#1e88e5"
+        android:strokeWidth="1.2"/>
     <path
-        android:fillColor="#E65100"
-        android:pathData="M60,26 C57,32 54,37 54,41 C54,44.5 56.5,47 60,47 C63.5,47 66,44.5 66,41 C66,37 63,32 60,26 Z" />
-    <!-- Flame Core (Bright Gold) -->
+        android:fillColor="#00000000"
+        android:pathData="M100,80 A40,40 0 1,1 99.9,80 Z"
+        android:strokeColor="#e51a1a"
+        android:strokeWidth="2.5"/>
     <path
-        android:fillColor="#FFD54F"
-        android:pathData="M60,30 C58.5,33.5 56.5,37 56.5,40 C56.5,42 58,44 60,44 C62,44 63.5,42 63.5,40 C63.5,37 61.5,33.5 60,30 Z" />
-
-    <!-- Lotus Petals at Base -->
+        android:fillColor="#00000000"
+        android:pathData="M100,84 C104,84 106,88 110,87 C114,86 118,90 121,93 C124,96 128,98 129,102 C130,106 134,110 133,114 C132,118 135,123 133,127 C131,131 133,136 130,140 C127,144 127,149 123,151 C119,153 117,157 112,158 C107,159 104,162 100,162 C96,162 93,159 88,158 C83,157 81,153 77,151 C73,149 73,144 70,140 C67,136 69,131 67,127 C65,123 68,118 67,114 C66,110 70,106 71,102 C72,98 76,96 79,93 C82,90 86,86 90,87 C94,88 96,84 100,84 Z"
+        android:strokeColor="#e51a1a"
+        android:strokeWidth="1.5"/>
     <path
-        android:fillColor="#D97706"
-        android:pathData="M60,82 C55,82 48,87 40,84 C46,90 54,92 60,92 C66,92 74,90 80,84 C72,87 65,82 60,82 Z" />
+        android:fillColor="#00000000"
+        android:pathData="M100,92 A28,28 0 1,1 99.9,92 Z"
+        android:strokeColor="#e51a1a"
+        android:strokeWidth="1.8"/>
     <path
-        android:fillColor="#F59E0B"
-        android:pathData="M60,84 C56,84 50,88 44,86 C49,90 55,91 60,91 C65,91 71,90 76,86 C70,88 64,84 60,84 Z" />
-
-    <!-- Decorative Stars on Border -->
+        android:fillColor="#ffffff"
+        android:pathData="M98,132 C92,130 84,130 78,132 L78,108 C84,106 92,106 98,108 Z"
+        android:strokeColor="#e51a1a"
+        android:strokeWidth="1.8"/>
     <path
-        android:fillColor="#C28437"
-        android:pathData="M24,58 L25.5,59.5 L24,61 L22.5,59.5 Z M96,58 L97.5,59.5 L96,61 L94.5,59.5 Z" />
-
-    <!-- Foundation Year Inscription -->
+        android:fillColor="#ffffff"
+        android:pathData="M102,132 C108,130 116,130 122,132 L122,108 C116,106 108,106 102,108 Z"
+        android:strokeColor="#e51a1a"
+        android:strokeWidth="1.8"/>
     <path
-        android:fillColor="#0B2545"
-        android:pathData="M52,94 L68,94 L68,95 L52,95 Z" />
+        android:fillColor="#e51a1a"
+        android:pathData="M98.5,108 L101.5,108 L101.5,134 L98.5,134 Z"/>
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M144,82 L172,82 L172,118 L144,118 Z M148,86 L168,86 L168,114 L148,114 Z M152,90 L164,90 L164,110 L152,110 Z M156,94 L160,94 L160,106 L156,106 Z"
+        android:strokeColor="#1e88e5"
+        android:strokeWidth="1.2"/>
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M144,124 L172,124 L172,158 L144,158 Z M148,128 L168,128 L168,154 L148,154 Z M152,132 L164,132 L164,150 L152,150 Z M156,136 L160,136 L160,146 L156,146 Z"
+        android:strokeColor="#1e88e5"
+        android:strokeWidth="1.2"/>
+    <path
+        android:fillColor="#e51a1a"
+        android:pathData="M41,170 A3,3 0 1,1 40.9,170 Z"/>
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M41,173 L41,200"
+        android:strokeColor="#e51a1a"
+        android:strokeWidth="2.2"/>
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M33,178 C33,174 41,176 41,182 C41,188 49,186 49,182 C49,178 41,180 33,186 C33,192 41,194 41,198"
+        android:strokeColor="#e51a1a"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"/>
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M70,198 C66,190 66,182 74,172 C82,182 82,190 70,198 Z M90,198 C86,190 86,182 94,172 C102,182 102,190 90,198 Z M110,198 C106,190 106,182 114,172 C122,182 122,190 110,198 Z M130,198 C126,190 126,182 134,172 C142,182 142,190 130,198 Z"
+        android:strokeColor="#1565c0"
+        android:strokeWidth="1.8"/>
+    <path
+        android:fillColor="#1565c0"
+        android:pathData="M74,194 A2,2 0 1,1 74,193.9 Z M94,194 A2,2 0 1,1 94,193.9 Z M114,194 A2,2 0 1,1 114,193.9 Z M134,194 A2,2 0 1,1 134,193.9 Z"/>
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M152,190 C152,198 168,200 176,194 C178,192 176,188 168,188 C160,188 152,190 152,190 Z"
+        android:strokeColor="#e51a1a"
+        android:strokeWidth="2.2"/>
+    <path
+        android:fillColor="#e51a1a"
+        android:pathData="M162,198 L166,198 L168,201 L160,201 Z"/>
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M154,188 C150,182 152,176 156,172 C158,176 158,184 154,188 Z"
+        android:strokeColor="#e51a1a"
+        android:strokeWidth="1.8"/>
+    <path
+        android:fillColor="#e51a1a"
+        android:pathData="M154,182 C153,179 154,176 156,174 C157,176 157,180 154,182 Z"/>
+    <path
+        android:fillColor="#005a1e"
+        android:pathData="M18,30 A3,3 0 1,1 17.9,30 Z M182,30 A3,3 0 1,1 181.9,30 Z M18,210 A3,3 0 1,1 17.9,210 Z M182,210 A3,3 0 1,1 181.9,210 Z"/>
 </vector>

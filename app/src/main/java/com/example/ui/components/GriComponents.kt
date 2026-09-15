@@ -24,10 +24,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Launch
 import androidx.compose.material.icons.filled.Campaign
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.CloudDone
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Launch
 import androidx.compose.material.icons.filled.QrCode2
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
@@ -49,6 +51,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
@@ -119,17 +122,24 @@ fun GriTopBar(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.padding(vertical = 4.dp)
       ) {
-        // Official GRI Seal Vector
-        Image(
-          painter = painterResource(id = R.drawable.ic_gri_seal),
-          contentDescription = "GRI University Seal",
-          modifier = Modifier
-            .size(42.dp)
-            .clip(CircleShape)
-            .border(1.dp, GriGoldSecondary, CircleShape)
-        )
+        // Official GRI Seal Vector Emblem
+        Surface(
+          shape = RoundedCornerShape(6.dp),
+          color = Color.White,
+          shadowElevation = 1.dp,
+          border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFE51A1A).copy(alpha = 0.4f)),
+          modifier = Modifier.padding(end = 4.dp)
+        ) {
+          Image(
+            painter = painterResource(id = R.drawable.ic_gri_seal),
+            contentDescription = "Official GRI University Seal",
+            modifier = Modifier
+              .size(width = 36.dp, height = 44.dp)
+              .padding(2.dp)
+          )
+        }
 
-        Spacer(modifier = Modifier.width(10.dp))
+        Spacer(modifier = Modifier.width(8.dp))
 
         Column {
           Text(
@@ -137,16 +147,16 @@ fun GriTopBar(
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary,
-            fontSize = 14.sp,
-            lineHeight = 18.sp,
+            fontSize = 13.sp,
+            lineHeight = 16.sp,
             letterSpacing = 0.2.sp,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
           )
           Text(
-            text = "Deemed to be University • NAAC 'A+'",
+            text = "(Deemed to be University) • NAAC 'A+'",
             style = MaterialTheme.typography.bodySmall,
-            fontSize = 11.sp,
+            fontSize = 10.sp,
             color = GriGoldDark,
             fontWeight = FontWeight.SemiBold,
             maxLines = 1
@@ -1056,3 +1066,462 @@ fun GriErrorState(
     }
   }
 }
+
+// =========================================================================
+// UNIQUE GRI SIGNATURE COMPONENTS
+// =========================================================================
+
+data class GriDocument(
+  val id: String,
+  val title: String,
+  val category: String,
+  val date: String,
+  val fileType: String,
+  val fileSize: String,
+  val description: String
+)
+
+@Composable
+fun GriNoticeCard(
+  title: String,
+  message: String,
+  date: String,
+  isUrgent: Boolean,
+  onClick: () -> Unit,
+  modifier: Modifier = Modifier
+) {
+  Card(
+    modifier = modifier
+      .fillMaxWidth()
+      .padding(horizontal = GriSpacing.lg, vertical = 4.dp)
+      .clickable(onClick = onClick)
+      .testTag("gri_notice_card"),
+    shape = RoundedCornerShape(GriRadius.md),
+    colors = CardDefaults.cardColors(
+      containerColor = if (isUrgent) GriColors.AlertContainer.copy(alpha = 0.35f) else MaterialTheme.colorScheme.surface
+    ),
+    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+    border = CardDefaults.outlinedCardBorder()
+  ) {
+    Column(modifier = Modifier.padding(14.dp)) {
+      Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+      ) {
+        Surface(
+          color = if (isUrgent) GriColors.Alert else GriColors.NavyPrimary,
+          shape = RoundedCornerShape(GriRadius.xs)
+        ) {
+          Text(
+            text = if (isUrgent) "URGENT NOTICE" else "OFFICIAL ANNOUNCEMENT",
+            style = MaterialTheme.typography.labelSmall,
+            color = Color.White,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+          )
+        }
+        Text(date, style = MaterialTheme.typography.bodySmall, fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+      }
+      Spacer(modifier = Modifier.height(6.dp))
+      Text(title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+      Spacer(modifier = Modifier.height(4.dp))
+      Text(message, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 2)
+    }
+  }
+}
+
+@Composable
+fun GriDocumentCard(
+  document: GriDocument,
+  onOpen: () -> Unit,
+  modifier: Modifier = Modifier
+) {
+  Card(
+    modifier = modifier
+      .fillMaxWidth()
+      .padding(horizontal = GriSpacing.lg, vertical = 4.dp)
+      .clickable(onClick = onOpen)
+      .testTag("gri_doc_card_${document.id}"),
+    shape = RoundedCornerShape(GriRadius.md),
+    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+    border = CardDefaults.outlinedCardBorder()
+  ) {
+    Row(
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(14.dp),
+      verticalAlignment = Alignment.CenterVertically
+    ) {
+      Box(
+        modifier = Modifier
+          .size(40.dp)
+          .clip(RoundedCornerShape(GriRadius.sm))
+          .background(GriColors.NavyContainer),
+        contentAlignment = Alignment.Center
+      ) {
+        Text(
+          text = document.fileType,
+          style = MaterialTheme.typography.labelSmall,
+          fontWeight = FontWeight.Bold,
+          color = GriColors.NavyPrimary
+        )
+      }
+      Spacer(modifier = Modifier.width(12.dp))
+      Column(modifier = Modifier.weight(1f)) {
+        Row(
+          modifier = Modifier.fillMaxWidth(),
+          horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+          Surface(
+            color = GriColors.GoldContainer,
+            shape = RoundedCornerShape(GriRadius.xs)
+          ) {
+            Text(
+              text = document.category,
+              style = MaterialTheme.typography.labelSmall,
+              color = GriColors.GoldOnContainer,
+              fontWeight = FontWeight.Bold,
+              modifier = Modifier.padding(horizontal = 6.dp, vertical = 1.dp)
+            )
+          }
+          Text(document.date, style = MaterialTheme.typography.bodySmall, fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(document.title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+        Text(document.description, style = MaterialTheme.typography.bodySmall, fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1)
+      }
+    }
+  }
+}
+
+@Composable
+fun GriAcademicCard(
+  title: String,
+  code: String,
+  credits: String,
+  instructor: String,
+  modifier: Modifier = Modifier
+) {
+  Card(
+    modifier = modifier
+      .fillMaxWidth()
+      .padding(horizontal = GriSpacing.lg, vertical = 4.dp),
+    shape = RoundedCornerShape(GriRadius.md),
+    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+    border = CardDefaults.outlinedCardBorder()
+  ) {
+    Column(modifier = Modifier.padding(14.dp)) {
+      Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+      ) {
+        Surface(color = GriColors.NavyContainer, shape = RoundedCornerShape(GriRadius.xs)) {
+          Text(code, style = MaterialTheme.typography.labelSmall, color = GriColors.NavyPrimary, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp))
+        }
+        Text(credits, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+      }
+      Spacer(modifier = Modifier.height(6.dp))
+      Text(title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+      Text("Instructor: $instructor", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    }
+  }
+}
+
+@Composable
+fun GriServiceCard(
+  title: String,
+  subtitle: String,
+  icon: ImageVector,
+  onClick: () -> Unit,
+  modifier: Modifier = Modifier
+) {
+  Card(
+    modifier = modifier
+      .fillMaxWidth()
+      .padding(horizontal = GriSpacing.lg, vertical = 4.dp)
+      .clickable(onClick = onClick),
+    shape = RoundedCornerShape(GriRadius.md),
+    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+    border = CardDefaults.outlinedCardBorder()
+  ) {
+    Row(
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(14.dp),
+      verticalAlignment = Alignment.CenterVertically
+    ) {
+      Box(
+        modifier = Modifier
+          .size(42.dp)
+          .clip(CircleShape)
+          .background(GriColors.NavyContainer),
+        contentAlignment = Alignment.Center
+      ) {
+        Icon(icon, contentDescription = null, tint = GriColors.NavyPrimary, modifier = Modifier.size(20.dp))
+      }
+      Spacer(modifier = Modifier.width(12.dp))
+      Column(modifier = Modifier.weight(1f)) {
+        Text(title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+        Text(subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+      }
+    }
+  }
+}
+
+@Composable
+fun GriNewsCard(
+  title: String,
+  summary: String,
+  date: String,
+  category: String,
+  modifier: Modifier = Modifier
+) {
+  Card(
+    modifier = modifier
+      .fillMaxWidth()
+      .padding(horizontal = GriSpacing.lg, vertical = 4.dp),
+    shape = RoundedCornerShape(GriRadius.md),
+    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+    border = CardDefaults.outlinedCardBorder()
+  ) {
+    Column(modifier = Modifier.padding(14.dp)) {
+      Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+      ) {
+        Surface(color = GriColors.GoldContainer, shape = RoundedCornerShape(GriRadius.xs)) {
+          Text(category, style = MaterialTheme.typography.labelSmall, color = GriColors.GoldOnContainer, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp))
+        }
+        Text(date, style = MaterialTheme.typography.bodySmall, fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+      }
+      Spacer(modifier = Modifier.height(6.dp))
+      Text(title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+      Spacer(modifier = Modifier.height(4.dp))
+      Text(summary, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 2)
+    }
+  }
+}
+
+@Composable
+fun GriDepartmentCard(
+  name: String,
+  school: String,
+  head: String,
+  modifier: Modifier = Modifier
+) {
+  Card(
+    modifier = modifier
+      .fillMaxWidth()
+      .padding(horizontal = GriSpacing.lg, vertical = 4.dp),
+    shape = RoundedCornerShape(GriRadius.md),
+    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+    border = CardDefaults.outlinedCardBorder()
+  ) {
+    Column(modifier = Modifier.padding(14.dp)) {
+      Text(school, style = MaterialTheme.typography.labelSmall, color = GriColors.GoldDark, fontWeight = FontWeight.Bold)
+      Spacer(modifier = Modifier.height(2.dp))
+      Text(name, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+      Spacer(modifier = Modifier.height(4.dp))
+      Text("Head / Dean: $head", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    }
+  }
+}
+
+@Composable
+fun GriProgrammeCard(
+  title: String,
+  level: String,
+  duration: String,
+  eligibility: String,
+  modifier: Modifier = Modifier
+) {
+  Card(
+    modifier = modifier
+      .fillMaxWidth()
+      .padding(horizontal = GriSpacing.lg, vertical = 4.dp),
+    shape = RoundedCornerShape(GriRadius.md),
+    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+    border = CardDefaults.outlinedCardBorder()
+  ) {
+    Column(modifier = Modifier.padding(14.dp)) {
+      Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+      ) {
+        Surface(color = GriColors.NavyContainer, shape = RoundedCornerShape(GriRadius.xs)) {
+          Text(level, style = MaterialTheme.typography.labelSmall, color = GriColors.NavyPrimary, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp))
+        }
+        Text(duration, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+      }
+      Spacer(modifier = Modifier.height(6.dp))
+      Text(title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+      Spacer(modifier = Modifier.height(4.dp))
+      Text("Eligibility: $eligibility", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    }
+  }
+}
+
+@Composable
+fun GriCampusCard(
+  title: String,
+  description: String,
+  location: String,
+  modifier: Modifier = Modifier
+) {
+  Card(
+    modifier = modifier
+      .fillMaxWidth()
+      .padding(horizontal = GriSpacing.lg, vertical = 4.dp),
+    shape = RoundedCornerShape(GriRadius.md),
+    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+    border = CardDefaults.outlinedCardBorder()
+  ) {
+    Column(modifier = Modifier.padding(14.dp)) {
+      Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+      ) {
+        Text(title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+        Text(location, style = MaterialTheme.typography.labelSmall, color = GriColors.GoldDark, fontWeight = FontWeight.Bold)
+      }
+      Spacer(modifier = Modifier.height(4.dp))
+      Text(description, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    }
+  }
+}
+
+@Composable
+fun GriOfficialLinkCard(
+  title: String,
+  url: String,
+  modifier: Modifier = Modifier
+) {
+  Card(
+    modifier = modifier
+      .fillMaxWidth()
+      .padding(horizontal = GriSpacing.lg, vertical = 3.dp),
+    shape = RoundedCornerShape(GriRadius.md),
+    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+    border = CardDefaults.outlinedCardBorder()
+  ) {
+    Row(
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(12.dp),
+      horizontalArrangement = Arrangement.SpaceBetween,
+      verticalAlignment = Alignment.CenterVertically
+    ) {
+      Column(modifier = Modifier.weight(1f)) {
+        Text(title, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
+        Text(url, style = MaterialTheme.typography.bodySmall, color = GriColors.GoldDark, fontSize = 11.sp)
+      }
+      Icon(Icons.AutoMirrored.Filled.Launch, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
+    }
+  }
+}
+
+@Composable
+fun GriDocumentDialog(
+  document: GriDocument,
+  onDismiss: () -> Unit,
+  onDownload: () -> Unit
+) {
+  androidx.compose.ui.window.Dialog(onDismissRequest = onDismiss) {
+    Card(
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(16.dp)
+        .testTag("document_preview_dialog"),
+      shape = RoundedCornerShape(GriRadius.lg),
+      colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+      elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+    ) {
+      Column(modifier = Modifier.padding(20.dp)) {
+        Row(
+          modifier = Modifier.fillMaxWidth(),
+          horizontalArrangement = Arrangement.SpaceBetween,
+          verticalAlignment = Alignment.CenterVertically
+        ) {
+          Surface(
+            color = GriColors.GoldContainer,
+            shape = RoundedCornerShape(GriRadius.xs)
+          ) {
+            Text(
+              text = document.category.uppercase(),
+              style = MaterialTheme.typography.labelSmall,
+              color = GriColors.GoldOnContainer,
+              fontWeight = FontWeight.Bold,
+              modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
+            )
+          }
+          IconButton(onClick = onDismiss) {
+            Icon(Icons.Default.Close, contentDescription = "Close", tint = MaterialTheme.colorScheme.onSurfaceVariant)
+          }
+        }
+        
+        Spacer(modifier = Modifier.height(10.dp))
+        Text(document.title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(6.dp))
+        Text(document.description, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        
+        Spacer(modifier = Modifier.height(14.dp))
+        HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f))
+        Spacer(modifier = Modifier.height(12.dp))
+        
+        Row(
+          modifier = Modifier.fillMaxWidth(),
+          horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+          Column {
+            Text("Format / Size", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text("${document.fileType} • ${document.fileSize}", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold)
+          }
+          Column {
+            Text("Published Date", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(document.date, style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold)
+          }
+          Column(horizontalAlignment = Alignment.End) {
+            Text("Verification", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text("SHA-256 Valid", style = MaterialTheme.typography.bodySmall, color = GriColors.Success, fontWeight = FontWeight.Bold)
+          }
+        }
+        
+        Spacer(modifier = Modifier.height(18.dp))
+        
+        Row(
+          modifier = Modifier.fillMaxWidth(),
+          horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+          OutlinedButton(
+            onClick = onDismiss,
+            modifier = Modifier.weight(1f),
+            shape = RoundedCornerShape(GriRadius.sm)
+          ) {
+            Text("Dismiss")
+          }
+          Button(
+            onClick = onDownload,
+            colors = ButtonDefaults.buttonColors(containerColor = GriColors.NavyPrimary),
+            modifier = Modifier.weight(1f),
+            shape = RoundedCornerShape(GriRadius.sm)
+          ) {
+            Icon(Icons.AutoMirrored.Filled.Launch, contentDescription = null, modifier = Modifier.size(16.dp))
+            Spacer(modifier = Modifier.width(6.dp))
+            Text("Open Doc")
+          }
+        }
+      }
+    }
+  }
+}
+

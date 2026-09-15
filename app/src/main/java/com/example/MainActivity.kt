@@ -10,9 +10,9 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.EventNote
 import androidx.compose.material.icons.filled.DirectionsBus
 import androidx.compose.material.icons.filled.Dns
-import androidx.compose.material.icons.filled.EventNote
 import androidx.compose.material.icons.filled.FolderShared
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Public
@@ -45,10 +45,9 @@ import com.example.ui.NavigationTab
 import com.example.ui.components.GriTopBar
 import com.example.ui.components.HallTicketDialog
 import com.example.ui.components.RoleSelectorBar
-import com.example.ui.screens.AcademicsScreen
-import com.example.ui.screens.AdminScreen
-import com.example.ui.screens.GrievancesScreen
 import com.example.ui.screens.HomeScreen
+import com.example.ui.screens.NewsEventsScreen
+import com.example.ui.screens.ProfileAndAdminScreen
 import com.example.ui.screens.PublicExploreScreen
 import com.example.ui.screens.ServicesScreen
 import com.example.ui.theme.GriNavyPrimary
@@ -75,6 +74,8 @@ class MainActivity : ComponentActivity() {
           onToggleServer = { viewModel.toggleKtorServer() },
           onTriggerSync = { viewModel.triggerCloudSync() },
           onMarkCircularRead = { viewModel.markCircularRead(it) },
+          onPublishCircular = { title, cat, sum, isUrg, issuedBy -> viewModel.publishCircular(title, cat, sum, isUrg, issuedBy) },
+          onSendNotification = { title, msg, aud -> viewModel.sendNotification(title, msg, aud) },
           onClearNotification = { viewModel.clearNotification() }
         )
       }
@@ -86,7 +87,7 @@ sealed class NavItem(val tab: NavigationTab, val title: String, val icon: ImageV
   object Home : NavItem(NavigationTab.HOME, "Home", Icons.Default.Home, "nav_home")
   object Explore : NavItem(NavigationTab.EXPLORE, "Explore", Icons.Default.Public, "nav_explore")
   object Services : NavItem(NavigationTab.SERVICES, "Services", Icons.Default.DirectionsBus, "nav_services")
-  object News : NavItem(NavigationTab.NEWS, "News", Icons.Default.EventNote, "nav_news")
+  object News : NavItem(NavigationTab.NEWS, "News", Icons.AutoMirrored.Filled.EventNote, "nav_news")
   object Profile : NavItem(NavigationTab.PROFILE, "Profile", Icons.Default.FolderShared, "nav_profile")
 }
 
@@ -103,6 +104,8 @@ fun GriApp(
   onToggleServer: () -> Unit,
   onTriggerSync: () -> Unit,
   onMarkCircularRead: (String) -> Unit,
+  onPublishCircular: (String, String, String, Boolean, String) -> Unit,
+  onSendNotification: (String, String, String) -> Unit,
   onClearNotification: () -> Unit
 ) {
   val snackbarHostState = remember { SnackbarHostState() }
@@ -185,9 +188,9 @@ fun GriApp(
             HomeScreen(
               uiState = uiState,
               onFetchHallTicket = onFetchHallTicket,
-              onNavigateToGrievances = { onTabSelected(NavigationTab.PROFILE) },
+              onNavigateToGrievances = { onTabSelected(NavigationTab.SERVICES) },
               onNavigateToServices = { onTabSelected(NavigationTab.SERVICES) },
-              onNavigateToAcademics = { onTabSelected(NavigationTab.EXPLORE) },
+              onNavigateToAcademics = { onTabSelected(NavigationTab.SERVICES) },
               onMarkCircularRead = onMarkCircularRead
             )
           }
@@ -196,21 +199,29 @@ fun GriApp(
           }
           NavigationTab.SERVICES -> {
             ServicesScreen(
-              transportRoutes = uiState.transportRoutes
+              courses = uiState.courses,
+              onMarkAttendance = onMarkAttendance,
+              onFetchHallTicket = onFetchHallTicket,
+              transportRoutes = uiState.transportRoutes,
+              grievances = uiState.grievances,
+              userRole = uiState.currentRole,
+              onSubmitGrievance = onSubmitGrievance,
+              onResolveGrievance = onResolveGrievance
             )
           }
           NavigationTab.NEWS -> {
-            AcademicsScreen(
-              courses = uiState.courses,
-              onMarkAttendance = onMarkAttendance,
-              onFetchHallTicket = onFetchHallTicket
+            NewsEventsScreen(
+              circulars = uiState.circulars,
+              onMarkCircularRead = onMarkCircularRead
             )
           }
           NavigationTab.PROFILE -> {
-            AdminScreen(
+            ProfileAndAdminScreen(
               uiState = uiState,
               onToggleServer = onToggleServer,
-              onTriggerSync = onTriggerSync
+              onTriggerSync = onTriggerSync,
+              onPublishCircular = onPublishCircular,
+              onSendNotification = onSendNotification
             )
           }
         }

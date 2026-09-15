@@ -24,6 +24,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Assignment
+import androidx.compose.material.icons.automirrored.filled.LibraryBooks
+import androidx.compose.material.icons.automirrored.filled.OpenInNew
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Apartment
 import androidx.compose.material.icons.filled.Assignment
@@ -171,14 +174,20 @@ fun HomeScreen(
             .padding(16.dp),
           verticalAlignment = Alignment.CenterVertically
         ) {
-          Image(
-            painter = painterResource(id = R.drawable.ic_gri_seal),
-            contentDescription = "Official Seal",
-            modifier = Modifier
-              .size(60.dp)
-              .clip(CircleShape)
-              .border(1.5.dp, GriGoldSecondary, CircleShape)
-          )
+          Surface(
+            shape = RoundedCornerShape(8.dp),
+            color = Color.White,
+            shadowElevation = 2.dp,
+            border = androidx.compose.foundation.BorderStroke(1.5.dp, Color(0xFFE51A1A).copy(alpha = 0.5f))
+          ) {
+            Image(
+              painter = painterResource(id = R.drawable.ic_gri_seal),
+              contentDescription = "Official GRI Seal",
+              modifier = Modifier
+                .size(width = 56.dp, height = 68.dp)
+                .padding(3.dp)
+            )
+          }
 
           Spacer(modifier = Modifier.width(14.dp))
 
@@ -331,7 +340,7 @@ fun HomeScreen(
           title = "Active Courses",
           value = "${uiState.courses.size}",
           subtitle = "CBCS Registered Sem 4",
-          icon = Icons.Default.Assignment,
+          icon = Icons.AutoMirrored.Filled.Assignment,
           iconTint = MaterialTheme.colorScheme.primary,
           modifier = Modifier.weight(1f)
         )
@@ -542,7 +551,7 @@ fun HomeScreen(
         FacilityMiniCard(
           title = "Central Library",
           subtitle = "1.75L+ Volumes, OPAC, e-ShodhSindhu",
-          icon = Icons.Default.LibraryBooks,
+          icon = Icons.AutoMirrored.Filled.LibraryBooks,
           iconTint = GriNavyPrimary
         )
         FacilityMiniCard(
@@ -759,7 +768,7 @@ private fun LinkRowItem(title: String, url: String) {
       Text(title, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
       Text(url, style = MaterialTheme.typography.bodySmall, color = GriGoldDark, fontSize = 11.sp)
     }
-    Icon(Icons.Default.OpenInNew, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
+    Icon(Icons.AutoMirrored.Filled.OpenInNew, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
   }
 }
 
@@ -1074,16 +1083,23 @@ fun CourseAttendanceCard(
 }
 
 // =========================================================================
-// SERVICES SCREEN
+// SERVICES SCREEN — UNIFIED CAMPUS SERVICES
 // =========================================================================
 
 @Composable
 fun ServicesScreen(
-  transportRoutes: List<TransportRouteEntity>,
+  courses: List<CourseEntity> = emptyList(),
+  onMarkAttendance: (String) -> Unit = {},
+  onFetchHallTicket: () -> Unit = {},
+  transportRoutes: List<TransportRouteEntity> = emptyList(),
+  grievances: List<GrievanceEntity> = emptyList(),
+  userRole: UserRole = UserRole.STUDENT,
+  onSubmitGrievance: (String, String, String) -> Unit = { _, _, _ -> },
+  onResolveGrievance: (Long, String) -> Unit = { _, _ -> },
   modifier: Modifier = Modifier
 ) {
   var selectedTab by remember { mutableStateOf(0) }
-  val tabs = listOf("University Buses", "Hostels", "Central Library")
+  val tabs = listOf("Academics", "Transport", "Hostels", "Library", "GRI-Care")
 
   LazyColumn(
     modifier = modifier
@@ -1093,8 +1109,8 @@ fun ServicesScreen(
   ) {
     item {
       GriSectionHeader(
-        title = "Campus Facilities & Services",
-        subtitle = "Transport Fleet, Residential Hostels & Library Resources"
+        title = "GRI Campus Services",
+        subtitle = "Academics, Fleet, Hostels, Central Library & GRI-Care"
       )
     }
 
@@ -1102,6 +1118,7 @@ fun ServicesScreen(
       Row(
         modifier = Modifier
           .fillMaxWidth()
+          .horizontalScroll(rememberScrollState())
           .padding(horizontal = GriSpacing.lg, vertical = 4.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
       ) {
@@ -1114,8 +1131,7 @@ fun ServicesScreen(
             colors = FilterChipDefaults.filterChipColors(
               selectedContainerColor = GriNavyPrimary,
               selectedLabelColor = Color.White
-            ),
-            modifier = Modifier.weight(1f)
+            )
           )
         }
       }
@@ -1123,6 +1139,52 @@ fun ServicesScreen(
 
     when (selectedTab) {
       0 -> {
+        item {
+          Card(
+            modifier = Modifier
+              .fillMaxWidth()
+              .padding(horizontal = GriSpacing.lg, vertical = 6.dp),
+            shape = RoundedCornerShape(GriRadius.md),
+            colors = CardDefaults.cardColors(containerColor = GriNavyPrimary),
+            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+          ) {
+            Row(
+              modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+              horizontalArrangement = Arrangement.SpaceBetween,
+              verticalAlignment = Alignment.CenterVertically
+            ) {
+              Column(modifier = Modifier.weight(1f)) {
+                Text("Continuous Internal Assessment (CIA)", style = MaterialTheme.typography.titleSmall, color = Color.White, fontWeight = FontWeight.Bold)
+                Text("Minimum Attendance: 75% required for ESE", style = MaterialTheme.typography.bodySmall, color = GriGoldSecondary)
+              }
+              Button(
+                onClick = onFetchHallTicket,
+                colors = ButtonDefaults.buttonColors(containerColor = GriGoldSecondary),
+                shape = RoundedCornerShape(GriRadius.sm)
+              ) {
+                Text("Hall Ticket", color = Color.Black, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.labelMedium)
+              }
+            }
+          }
+        }
+
+        item {
+          GriSectionHeader(
+            title = "Enrolled CBCS Courses (${courses.size})",
+            subtitle = "Tap to mark live lecture period attendance"
+          )
+        }
+
+        items(courses) { course ->
+          CourseAttendanceCard(
+            course = course,
+            onMarkAttendance = { onMarkAttendance(course.id) }
+          )
+        }
+      }
+      1 -> {
         item {
           GriSectionHeader(
             title = "University Transport Schedule",
@@ -1133,14 +1195,24 @@ fun ServicesScreen(
           TransportRouteCard(route = route)
         }
       }
-      1 -> {
+      2 -> {
         item {
           HostelInfoSection()
         }
       }
-      2 -> {
+      3 -> {
         item {
           LibraryInfoSection()
+        }
+      }
+      4 -> {
+        item {
+          GrievancesSection(
+            grievances = grievances,
+            userRole = userRole,
+            onSubmitGrievance = onSubmitGrievance,
+            onResolveGrievance = onResolveGrievance
+          )
         }
       }
     }
@@ -1270,7 +1342,7 @@ fun LibraryInfoSection() {
     ) {
       Column(modifier = Modifier.padding(16.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-          Icon(Icons.Default.LibraryBooks, contentDescription = null, tint = GriNavyPrimary)
+          Icon(Icons.AutoMirrored.Filled.LibraryBooks, contentDescription = null, tint = GriNavyPrimary)
           Spacer(modifier = Modifier.width(8.dp))
           Text("Dr. Radhakrishnan Central Library", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
         }
@@ -1280,56 +1352,147 @@ fun LibraryInfoSection() {
         Text("• Automated RFID Book Issue & Return Kiosk", style = MaterialTheme.typography.bodySmall)
         Text("• Library Working Hours: 08:00 AM – 08:00 PM (Monday – Saturday)", style = MaterialTheme.typography.bodySmall)
         Spacer(modifier = Modifier.height(10.dp))
-        Button(
-          onClick = {},
-          colors = ButtonDefaults.buttonColors(containerColor = GriNavyPrimary),
-          shape = RoundedCornerShape(GriRadius.sm),
-          modifier = Modifier.fillMaxWidth()
+        Surface(
+          color = GriGoldContainer,
+          shape = RoundedCornerShape(GriRadius.xs)
         ) {
-          Text("Open OPAC Web Catalog Search")
+          Text(
+            text = "OPAC Web Catalog: opac.ruraluniv.ac.in",
+            style = MaterialTheme.typography.labelSmall,
+            color = GriGoldOnContainer,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+          )
         }
       }
     }
   }
 }
 
-// =========================================================================
-// GRIEVANCES SCREEN (GRI-CARE)
-// =========================================================================
-
 @Composable
-fun GrievancesScreen(
+fun GrievancesSection(
   grievances: List<GrievanceEntity>,
   userRole: UserRole,
   onSubmitGrievance: (String, String, String) -> Unit,
-  onResolveGrievance: (Long, String) -> Unit,
-  modifier: Modifier = Modifier
+  onResolveGrievance: (Long, String) -> Unit
 ) {
   var showForm by remember { mutableStateOf(false) }
   var category by remember { mutableStateOf("Hostel") }
   var subject by remember { mutableStateOf("") }
   var description by remember { mutableStateOf("") }
-
   val categories = listOf("Hostel", "Transport", "Academic", "Sanitation", "Infrastructure")
 
-  LazyColumn(
-    modifier = modifier
-      .fillMaxSize()
-      .testTag("grievances_screen"),
-    contentPadding = PaddingValues(bottom = 90.dp)
-  ) {
-    item {
-      GriSectionHeader(
-        title = "GRI-Care Grievance Redressal",
-        subtitle = "Direct, transparent portal for student & campus complaints"
-      )
+  Column(modifier = Modifier.fillMaxWidth()) {
+    Card(
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = GriSpacing.lg, vertical = 6.dp),
+      shape = RoundedCornerShape(GriRadius.md),
+      colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+      elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+      border = CardDefaults.outlinedCardBorder()
+    ) {
+      Column(modifier = Modifier.padding(14.dp)) {
+        Row(
+          modifier = Modifier.fillMaxWidth(),
+          horizontalArrangement = Arrangement.SpaceBetween,
+          verticalAlignment = Alignment.CenterVertically
+        ) {
+          Column(modifier = Modifier.weight(1f)) {
+            Text("GRI-Care Grievance Cell", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+            Text("UGC Regulations compliant anti-harassment committee", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+          }
+          Button(
+            onClick = { showForm = !showForm },
+            colors = ButtonDefaults.buttonColors(containerColor = GriNavyPrimary),
+            shape = RoundedCornerShape(GriRadius.sm),
+            modifier = Modifier.testTag("btn_toggle_grievance_form")
+          ) {
+            Text(if (showForm) "Close" else "Register Ticket")
+          }
+        }
+
+        AnimatedVisibility(visible = showForm) {
+          Column(modifier = Modifier.padding(top = 12.dp)) {
+            Text("Select Category:", style = MaterialTheme.typography.labelSmall)
+            Row(
+              modifier = Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState())
+                .padding(vertical = 4.dp),
+              horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+              categories.forEach { cat ->
+                FilterChip(
+                  selected = category == cat,
+                  onClick = { category = cat },
+                  label = { Text(cat, style = MaterialTheme.typography.labelSmall) }
+                )
+              }
+            }
+
+            OutlinedTextField(
+              value = subject,
+              onValueChange = { subject = it },
+              label = { Text("Subject") },
+              singleLine = true,
+              modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp)
+                .testTag("input_grievance_subject")
+            )
+
+            OutlinedTextField(
+              value = description,
+              onValueChange = { description = it },
+              label = { Text("Detailed Description") },
+              modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp)
+                .padding(vertical = 4.dp)
+                .testTag("input_grievance_description")
+            )
+
+            Button(
+              onClick = {
+                if (subject.isNotBlank() && description.isNotBlank()) {
+                  onSubmitGrievance(category, subject, description)
+                  subject = ""
+                  description = ""
+                  showForm = false
+                }
+              },
+              enabled = subject.isNotBlank() && description.isNotBlank(),
+              colors = ButtonDefaults.buttonColors(containerColor = GriNavyPrimary),
+              shape = RoundedCornerShape(GriRadius.sm),
+              modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp)
+                .testTag("btn_submit_grievance")
+            ) {
+              Text("Submit Ticket")
+            }
+          }
+        }
+      }
     }
 
-    item {
+    GriSectionHeader(
+      title = "Registered Tickets (${grievances.size})",
+      subtitle = "Track resolution status in real time"
+    )
+
+    grievances.forEach { ticket ->
+      val statusColor = when (ticket.status) {
+        "RESOLVED" -> GriGreenSuccess
+        "IN_PROGRESS" -> GriGoldSecondary
+        else -> GriRedAlert
+      }
       Card(
         modifier = Modifier
           .fillMaxWidth()
-          .padding(horizontal = GriSpacing.lg, vertical = 6.dp),
+          .padding(horizontal = GriSpacing.lg, vertical = 4.dp)
+          .testTag("ticket_card_${ticket.id}"),
         shape = RoundedCornerShape(GriRadius.md),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
@@ -1341,186 +1504,39 @@ fun GrievancesScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
           ) {
-            Column {
-              Text("Grievance Redressal Committee", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
-              Text("UGC Regulations compliant anti-harassment cell", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Row(verticalAlignment = Alignment.CenterVertically) {
+              Surface(
+                color = GriNavyPrimary.copy(alpha = 0.1f),
+                shape = RoundedCornerShape(GriRadius.xs)
+              ) {
+                Text(ticket.ticketNumber, style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = GriNavyPrimary, modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp))
+              }
+              Spacer(modifier = Modifier.width(6.dp))
+              Text(ticket.category, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
-            Button(
-              onClick = { showForm = !showForm },
-              colors = ButtonDefaults.buttonColors(containerColor = GriNavyPrimary),
-              shape = RoundedCornerShape(GriRadius.sm),
-              modifier = Modifier.testTag("btn_toggle_grievance_form")
+            Surface(
+              color = statusColor.copy(alpha = 0.12f),
+              shape = RoundedCornerShape(GriRadius.xs)
             ) {
-              Text(if (showForm) "Close" else "Register")
+              Text(ticket.status, style = MaterialTheme.typography.labelSmall, color = statusColor, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp))
             }
           }
 
-          AnimatedVisibility(visible = showForm) {
-            Column(modifier = Modifier.padding(top = 12.dp)) {
-              Text("Select Category:", style = MaterialTheme.typography.labelSmall)
-              Row(
-                modifier = Modifier
-                  .fillMaxWidth()
-                  .horizontalScroll(rememberScrollState())
-                  .padding(vertical = 4.dp),
-                horizontalArrangement = Arrangement.spacedBy(6.dp)
-              ) {
-                categories.forEach { cat ->
-                  FilterChip(
-                    selected = category == cat,
-                    onClick = { category = cat },
-                    label = { Text(cat, style = MaterialTheme.typography.labelSmall) }
-                  )
-                }
-              }
+          Spacer(modifier = Modifier.height(6.dp))
+          Text(ticket.subject, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+          Text(ticket.description, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
 
-              OutlinedTextField(
-                value = subject,
-                onValueChange = { subject = it },
-                label = { Text("Subject") },
-                singleLine = true,
-                modifier = Modifier
-                  .fillMaxWidth()
-                  .padding(vertical = 4.dp)
-                  .testTag("input_grievance_subject")
-              )
-
-              OutlinedTextField(
-                value = description,
-                onValueChange = { description = it },
-                label = { Text("Detailed Description") },
-                modifier = Modifier
-                  .fillMaxWidth()
-                  .height(100.dp)
-                  .padding(vertical = 4.dp)
-                  .testTag("input_grievance_description")
-              )
-
-              Button(
-                onClick = {
-                  if (subject.isNotBlank() && description.isNotBlank()) {
-                    onSubmitGrievance(category, subject, description)
-                    subject = ""
-                    description = ""
-                    showForm = false
-                  }
-                },
-                enabled = subject.isNotBlank() && description.isNotBlank(),
-                colors = ButtonDefaults.buttonColors(containerColor = GriNavyPrimary),
-                shape = RoundedCornerShape(GriRadius.sm),
-                modifier = Modifier
-                  .fillMaxWidth()
-                  .padding(top = 8.dp)
-                  .testTag("btn_submit_grievance")
-              ) {
-                Text("Submit Ticket")
-              }
+          if (ticket.remarks.isNotBlank()) {
+            Spacer(modifier = Modifier.height(8.dp))
+            Surface(color = MaterialTheme.colorScheme.surfaceVariant, shape = RoundedCornerShape(GriRadius.xs)) {
+              Text("Officer Remarks: ${ticket.remarks}", style = MaterialTheme.typography.bodySmall, fontSize = 11.sp, modifier = Modifier.padding(6.dp))
             }
           }
-        }
-      }
-    }
 
-    item {
-      GriSectionHeader(
-        title = "Ticket History (${grievances.size})",
-        subtitle = "Track resolution status in real time"
-      )
-    }
-
-    items(grievances) { ticket ->
-      GrievanceItemCard(
-        ticket = ticket,
-        isAdmin = userRole == UserRole.ADMIN,
-        onResolve = { remarks -> onResolveGrievance(ticket.id, remarks) }
-      )
-    }
-  }
-}
-
-@Composable
-fun GrievanceItemCard(
-  ticket: GrievanceEntity,
-  isAdmin: Boolean,
-  onResolve: (String) -> Unit
-) {
-  val statusColor = when (ticket.status) {
-    "RESOLVED" -> GriGreenSuccess
-    "IN_PROGRESS" -> GriGoldSecondary
-    else -> GriRedAlert
-  }
-
-  var showResolveInput by remember { mutableStateOf(false) }
-  var resolutionRemarks by remember { mutableStateOf("") }
-
-  Card(
-    modifier = Modifier
-      .fillMaxWidth()
-      .padding(horizontal = GriSpacing.lg, vertical = 4.dp)
-      .testTag("ticket_card_${ticket.id}"),
-    shape = RoundedCornerShape(GriRadius.md),
-    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
-    border = CardDefaults.outlinedCardBorder()
-  ) {
-    Column(modifier = Modifier.padding(14.dp)) {
-      Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-      ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-          Surface(
-            color = GriNavyPrimary.copy(alpha = 0.1f),
-            shape = RoundedCornerShape(GriRadius.xs)
-          ) {
-            Text(ticket.ticketNumber, style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = GriNavyPrimary, modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp))
-          }
-          Spacer(modifier = Modifier.width(6.dp))
-          Text(ticket.category, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        }
-        Surface(
-          color = statusColor.copy(alpha = 0.12f),
-          shape = RoundedCornerShape(GriRadius.xs)
-        ) {
-          Text(ticket.status, style = MaterialTheme.typography.labelSmall, color = statusColor, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp))
-        }
-      }
-
-      Spacer(modifier = Modifier.height(6.dp))
-      Text(ticket.subject, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
-      Text(ticket.description, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-
-      if (ticket.remarks.isNotBlank()) {
-        Spacer(modifier = Modifier.height(8.dp))
-        Surface(color = MaterialTheme.colorScheme.surfaceVariant, shape = RoundedCornerShape(GriRadius.xs)) {
-          Text("Officer Remarks: ${ticket.remarks}", style = MaterialTheme.typography.bodySmall, fontSize = 11.sp, modifier = Modifier.padding(6.dp))
-        }
-      }
-
-      if (isAdmin && ticket.status != "RESOLVED") {
-        Spacer(modifier = Modifier.height(8.dp))
-        if (!showResolveInput) {
-          OutlinedButton(
-            onClick = { showResolveInput = true },
-            shape = RoundedCornerShape(GriRadius.sm)
-          ) {
-            Text("Resolve as Admin", style = MaterialTheme.typography.labelMedium)
-          }
-        } else {
-          Column {
-            OutlinedTextField(
-              value = resolutionRemarks,
-              onValueChange = { resolutionRemarks = it },
-              label = { Text("Resolution note / action taken") },
-              modifier = Modifier.fillMaxWidth()
-            )
-            Spacer(modifier = Modifier.height(6.dp))
+          if (userRole == UserRole.ADMIN && ticket.status != "RESOLVED") {
+            Spacer(modifier = Modifier.height(8.dp))
             Button(
-              onClick = {
-                onResolve(resolutionRemarks.ifBlank { "Action taken by administrative officer" })
-                showResolveInput = false
-              },
+              onClick = { onResolveGrievance(ticket.id, "Action taken by administrative officer") },
               colors = ButtonDefaults.buttonColors(containerColor = GriGreenSuccess),
               shape = RoundedCornerShape(GriRadius.sm)
             ) {
@@ -1534,26 +1550,93 @@ fun GrievanceItemCard(
 }
 
 // =========================================================================
-// ADMIN CONSOLE SCREEN
+// NEWS & EVENTS SCREEN (NEWS TAB)
 // =========================================================================
 
 @Composable
-fun AdminScreen(
-  uiState: GriUiState,
-  onToggleServer: () -> Unit,
-  onTriggerSync: () -> Unit,
+fun NewsEventsScreen(
+  circulars: List<CircularEntity>,
+  onMarkCircularRead: (String) -> Unit,
   modifier: Modifier = Modifier
 ) {
+  var selectedCategory by remember { mutableStateOf("All") }
+  var searchQuery by remember { mutableStateOf("") }
+  val categories = listOf("All", "Examination", "Admissions", "Academic", "Administrative", "Events")
+
+  val filteredCirculars = remember(selectedCategory, searchQuery, circulars) {
+    circulars.filter { circular ->
+      val matchesCat = if (selectedCategory == "All") true else circular.category.equals(selectedCategory, ignoreCase = true)
+      val matchesSearch = if (searchQuery.isBlank()) true else {
+        circular.title.contains(searchQuery, ignoreCase = true) ||
+        circular.summary.contains(searchQuery, ignoreCase = true) ||
+        circular.issuedBy.contains(searchQuery, ignoreCase = true)
+      }
+      matchesCat && matchesSearch
+    }
+  }
+
   LazyColumn(
     modifier = modifier
       .fillMaxSize()
-      .testTag("admin_screen"),
+      .testTag("news_events_screen"),
     contentPadding = PaddingValues(bottom = 90.dp)
   ) {
     item {
       GriSectionHeader(
-        title = "Infrastructure & Server Console",
-        subtitle = "Embedded Ktor CIO Engine, Room SQLite & Cloud Queue"
+        title = "Official Gazette & Circulars",
+        subtitle = "Notices, Examinations, Campus Events & University Orders"
+      )
+    }
+
+    item {
+      GriSearchBar(
+        query = searchQuery,
+        onQueryChange = { searchQuery = it },
+        placeholder = "Search announcements, orders, notifications..."
+      )
+    }
+
+    item {
+      Row(
+        modifier = Modifier
+          .fillMaxWidth()
+          .horizontalScroll(rememberScrollState())
+          .padding(horizontal = GriSpacing.lg, vertical = 4.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+      ) {
+        categories.forEach { cat ->
+          val isSelected = selectedCategory == cat
+          FilterChip(
+            selected = isSelected,
+            onClick = { selectedCategory = cat },
+            label = { Text(cat, style = MaterialTheme.typography.labelMedium) },
+            colors = FilterChipDefaults.filterChipColors(
+              selectedContainerColor = GriNavyPrimary,
+              selectedLabelColor = Color.White
+            )
+          )
+        }
+      }
+    }
+
+    item {
+      GriSectionHeader(
+        title = "Announcements (${filteredCirculars.size})",
+        subtitle = "Tap any circular to mark as officially acknowledged"
+      )
+    }
+
+    items(filteredCirculars) { circular ->
+      CircularCardItem(
+        circular = circular,
+        onMarkRead = { onMarkCircularRead(circular.id) }
+      )
+    }
+
+    item {
+      GriSectionHeader(
+        title = "Upcoming University Events",
+        subtitle = "Gandhian Assemblies, Academic Conferences & Placement"
       )
     }
 
@@ -1561,53 +1644,25 @@ fun AdminScreen(
       Card(
         modifier = Modifier
           .fillMaxWidth()
-          .padding(horizontal = GriSpacing.lg, vertical = 6.dp),
+          .padding(horizontal = GriSpacing.lg, vertical = 4.dp),
         shape = RoundedCornerShape(GriRadius.md),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
         border = CardDefaults.outlinedCardBorder()
       ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(14.dp)) {
           Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+            horizontalArrangement = Arrangement.SpaceBetween
           ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-              Icon(Icons.Default.Dns, contentDescription = null, tint = GriNavyPrimary)
-              Spacer(modifier = Modifier.width(8.dp))
-              Text("Embedded Ktor 2.3 Server", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            Surface(color = GriGoldContainer, shape = RoundedCornerShape(GriRadius.xs)) {
+              Text("CONVOCATION", style = MaterialTheme.typography.labelSmall, color = GriGoldOnContainer, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp))
             }
-            Surface(
-              color = if (uiState.ktorServerStatus.contains("ONLINE")) GriGreenSuccess.copy(alpha = 0.12f) else GriRedAlert.copy(alpha = 0.12f),
-              shape = RoundedCornerShape(GriRadius.xs)
-            ) {
-              Text(
-                text = uiState.ktorServerStatus,
-                style = MaterialTheme.typography.labelSmall,
-                color = if (uiState.ktorServerStatus.contains("ONLINE")) GriGreenSuccess else GriRedAlert,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-              )
-            }
+            Text("18 Nov 2026", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold, color = GriNavyPrimary)
           }
-
-          Spacer(modifier = Modifier.height(10.dp))
-          Text("• Engine: CIO (Non-blocking Coroutine I/O on 0.0.0.0:${uiState.ktorServerPort})", style = MaterialTheme.typography.bodySmall)
-          Text("• Requests Handled: ${uiState.ktorRequestsCount}", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold)
-          Text("• Active Routes: /health, /auth/login, /examinations, /transport, /grievances, /sync", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-
-          Spacer(modifier = Modifier.height(14.dp))
-          Button(
-            onClick = onToggleServer,
-            colors = ButtonDefaults.buttonColors(
-              containerColor = if (uiState.ktorServerStatus.contains("ONLINE")) GriRedAlert else GriGreenSuccess
-            ),
-            shape = RoundedCornerShape(GriRadius.sm),
-            modifier = Modifier.fillMaxWidth()
-          ) {
-            Text(if (uiState.ktorServerStatus.contains("ONLINE")) "Stop Ktor Server" else "Start Ktor Server")
-          }
+          Spacer(modifier = Modifier.height(6.dp))
+          Text("41st Annual Convocation of GRI", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+          Text("Dr. T.S. Soundram Auditorium • Hon'ble Chancellor presiding. Degree conferment for UG, PG, and Ph.D. scholars.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
       }
     }
@@ -1616,62 +1671,25 @@ fun AdminScreen(
       Card(
         modifier = Modifier
           .fillMaxWidth()
-          .padding(horizontal = GriSpacing.lg, vertical = 6.dp),
+          .padding(horizontal = GriSpacing.lg, vertical = 4.dp),
         shape = RoundedCornerShape(GriRadius.md),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
         border = CardDefaults.outlinedCardBorder()
       ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-          Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(Icons.Default.Storage, contentDescription = null, tint = GriGoldSecondary)
-            Spacer(modifier = Modifier.width(8.dp))
-            Text("Room Database (Local SQLite)", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-          }
-          Spacer(modifier = Modifier.height(8.dp))
-          Text("• Database: gri_portal_database.db", style = MaterialTheme.typography.bodySmall)
-          Text("• Entities: Users (6), Courses (${uiState.courses.size}), Tickets (${uiState.grievances.size}), Buses (${uiState.transportRoutes.size})", style = MaterialTheme.typography.bodySmall)
-          Text("• Flow Queries: Reactive auto-updating StateFlow bindings", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        }
-      }
-    }
-
-    item {
-      Card(
-        modifier = Modifier
-          .fillMaxWidth()
-          .padding(horizontal = GriSpacing.lg, vertical = 6.dp),
-        shape = RoundedCornerShape(GriRadius.md),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
-        border = CardDefaults.outlinedCardBorder()
-      ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-          Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(Icons.Default.Sync, contentDescription = null, tint = GriNavyPrimary)
-            Spacer(modifier = Modifier.width(8.dp))
-            Text("Cloud Persistence (Firestore Sync)", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-          }
-          Spacer(modifier = Modifier.height(8.dp))
-          Text("• Pending Offline Mutations: ${uiState.pendingSyncCount}", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold)
-          Text("• Architecture: Room Write-First with background Sync Queue", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-
-          Spacer(modifier = Modifier.height(12.dp))
-          Button(
-            onClick = onTriggerSync,
-            enabled = !uiState.isSyncing,
-            colors = ButtonDefaults.buttonColors(containerColor = GriNavyPrimary),
-            shape = RoundedCornerShape(GriRadius.sm),
-            modifier = Modifier.fillMaxWidth()
+        Column(modifier = Modifier.padding(14.dp)) {
+          Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
           ) {
-            if (uiState.isSyncing) {
-              CircularProgressIndicator(color = Color.White, modifier = Modifier.size(16.dp))
-              Spacer(modifier = Modifier.width(8.dp))
-              Text("Synchronizing Records...")
-            } else {
-              Text("Trigger Immediate Cloud Sync")
+            Surface(color = GriNavyPrimary.copy(alpha = 0.1f), shape = RoundedCornerShape(GriRadius.xs)) {
+              Text("RURAL EXTENSION", style = MaterialTheme.typography.labelSmall, color = GriNavyPrimary, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp))
             }
+            Text("02 Oct 2026", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold, color = GriNavyPrimary)
           }
+          Spacer(modifier = Modifier.height(6.dp))
+          Text("Gandhi Jayanti & Sarvodaya Peace Gathering", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+          Text("Multipurpose Hall • Interfaith prayer, khadi spinning demonstration, and village cleanliness drive across adopted rural hamlets.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
       }
     }
@@ -1679,11 +1697,90 @@ fun AdminScreen(
 }
 
 // =========================================================================
-// PUBLIC EXPLORE SCREEN
+// PUBLIC EXPLORE SCREEN (EXPLORE TAB)
 // =========================================================================
 
 @Composable
-fun PublicExploreScreen(modifier: Modifier = Modifier) {
+fun PublicExploreScreen(
+  modifier: Modifier = Modifier
+) {
+  var selectedCategory by remember { mutableStateOf("All") }
+  var selectedDocForPreview by remember { mutableStateOf<com.example.ui.components.GriDocument?>(null) }
+
+  val categories = listOf(
+    "All",
+    "About GRI",
+    "Governance",
+    "Schools & Depts",
+    "Programmes",
+    "Admissions",
+    "Examinations",
+    "Facilities",
+    "Research",
+    "Alumni",
+    "Downloads",
+    "Contact"
+  )
+
+  val officialDocuments = remember {
+    listOf(
+      com.example.ui.components.GriDocument(
+        id = "doc_prospectus_2026",
+        title = "GRI Admission Prospectus 2026–2027",
+        category = "Admissions",
+        date = "15 Aug 2026",
+        fileType = "PDF",
+        fileSize = "4.2 MB",
+        description = "Complete eligibility criteria, CUET guidelines, intake capacity and fee structure for UG, PG, Diploma and Ph.D. programmes."
+      ),
+      com.example.ui.components.GriDocument(
+        id = "doc_cbcs_regulations",
+        title = "CBCS Academic Regulations & Grading System",
+        category = "Academics",
+        date = "10 Jul 2026",
+        fileType = "PDF",
+        fileSize = "1.8 MB",
+        description = "Official guidelines for Choice Based Credit System, CIA continuous evaluation, minimum 75% attendance rule and semester credits."
+      ),
+      com.example.ui.components.GriDocument(
+        id = "doc_exam_timetable_nov2026",
+        title = "End Semester Examinations Nov-Dec 2026 Timetable",
+        category = "Examinations",
+        date = "14 Sep 2026",
+        fileType = "PDF",
+        fileSize = "920 KB",
+        description = "Detailed slot-wise schedule for theory and practical examinations across all Schools and Departments."
+      ),
+      com.example.ui.components.GriDocument(
+        id = "doc_phd_guidelines",
+        title = "Ph.D. Research Regulations & Fellowship Manual",
+        category = "Research",
+        date = "01 Jun 2026",
+        fileType = "PDF",
+        fileSize = "1.1 MB",
+        description = "UGC Minimum Standards compliance for M.Phil/Ph.D. degree awards, course work credits, and ethical clearance."
+      ),
+      com.example.ui.components.GriDocument(
+        id = "doc_anti_ragging_policy",
+        title = "UGC Anti-Ragging & Internal Complaints Committee Handbook",
+        category = "Governance",
+        date = "01 Jan 2026",
+        fileType = "PDF",
+        fileSize = "650 KB",
+        description = "Zero-tolerance campus safety directives, committee member contacts, and confidential reporting protocols."
+      ),
+      com.example.ui.components.GriDocument(
+        id = "doc_annual_report_nirf",
+        title = "GRI Annual Report 2025–26 & NIRF Ranking Data",
+        category = "Reports",
+        date = "20 May 2026",
+        fileType = "PDF",
+        fileSize = "5.4 MB",
+        description = "University achievements in teaching, research publications, rural extension patents, and NAAC A+ 3.34 audit data."
+      )
+    )
+  }
+
   LazyColumn(
     modifier = modifier
       .fillMaxSize()
@@ -1692,58 +1789,730 @@ fun PublicExploreScreen(modifier: Modifier = Modifier) {
   ) {
     item {
       GriSectionHeader(
-        title = "Gandhigram Rural Institute",
-        subtitle = "Deemed to be University • Gandhigram, Dindigul, Tamil Nadu"
+        title = "Institutional Repository & Directory",
+        subtitle = "Gandhigram Rural Institute • Deemed to be University"
       )
     }
 
     item {
-      Card(
+      Row(
         modifier = Modifier
           .fillMaxWidth()
-          .padding(horizontal = GriSpacing.lg, vertical = 6.dp),
-        shape = RoundedCornerShape(GriRadius.md),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
-        border = CardDefaults.outlinedCardBorder()
+          .horizontalScroll(rememberScrollState())
+          .padding(horizontal = GriSpacing.lg, vertical = 4.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
       ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-          Row(verticalAlignment = Alignment.CenterVertically) {
-            Image(painter = painterResource(id = R.drawable.ic_gri_seal), contentDescription = null, modifier = Modifier.size(36.dp))
-            Spacer(modifier = Modifier.width(10.dp))
-            Text("Heritage & Gandhian Legacy", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-          }
-          Spacer(modifier = Modifier.height(8.dp))
-          Text(
-            text = "Founded in 1956 by Dr. T.S. Soundram and Dr. G. Ramachandran under the inspiring leadership of Mahatma Gandhi, GRI has dedicated over 70 years to rural higher education, sustainable agro-technologies, and extension.",
-            style = MaterialTheme.typography.bodySmall
+        categories.forEach { cat ->
+          val isSelected = selectedCategory == cat
+          FilterChip(
+            selected = isSelected,
+            onClick = { selectedCategory = cat },
+            label = { Text(cat, style = MaterialTheme.typography.labelMedium) },
+            colors = FilterChipDefaults.filterChipColors(
+              selectedContainerColor = GriNavyPrimary,
+              selectedLabelColor = Color.White
+            )
           )
         }
       }
     }
 
-    item {
-      GriSectionHeader(
-        title = "Statutory Leadership",
-        subtitle = "Ministry of Education, Government of India"
-      )
+    // 1. ABOUT GRI
+    if (selectedCategory == "All" || selectedCategory == "About GRI") {
+      item {
+        GriSectionHeader(
+          title = "About Gandhigram Rural Institute",
+          subtitle = "Nai Talim Philosophy, Heritage & Vision"
+        )
+      }
+      item {
+        Card(
+          modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = GriSpacing.lg, vertical = 4.dp),
+          shape = RoundedCornerShape(GriRadius.md),
+          colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+          elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+          border = CardDefaults.outlinedCardBorder()
+        ) {
+          Column(modifier = Modifier.padding(16.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+              Image(painter = painterResource(id = R.drawable.ic_gri_seal), contentDescription = null, modifier = Modifier.size(44.dp))
+              Spacer(modifier = Modifier.width(12.dp))
+              Column {
+                Text("Heritage of 70 Years (Est. 1956)", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                Text("NAAC A+ (3.34 CGPA) • Ministry of Education, GoI", style = MaterialTheme.typography.bodySmall, color = GriGoldDark)
+              }
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(
+              text = "Founded in 1956 by Dr. T.S. Soundram and Dr. G. Ramachandran under the direct guidance of Mahatma Gandhi, GRI has pioneered rural higher education in India. It was granted Deemed to be University status under Section 3 of the UGC Act in 1976.",
+              style = MaterialTheme.typography.bodySmall
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+              text = "• Core Mission: To promote a classless and casteless society through three-dimensional education: Teaching, Research, and Extension.\n• Hallmark: Village Placement Programme (VPP) where students live in rural hamlets to study and solve grassroots challenges.",
+              style = MaterialTheme.typography.bodySmall,
+              color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+          }
+        }
+      }
     }
 
-    item {
-      Card(
-        modifier = Modifier
-          .fillMaxWidth()
-          .padding(horizontal = GriSpacing.lg, vertical = 6.dp),
-        shape = RoundedCornerShape(GriRadius.md),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
-        border = CardDefaults.outlinedCardBorder()
-      ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-          Text("• Chancellor: Shri K.M. Annamalai", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold)
-          Text("• Vice-Chancellor: Prof. Dr. Panch. Ramalingam", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold)
-          Text("• Registrar: Dr. C. Sivapragasam", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold)
-          Text("• Controller of Examinations: Dr. R. Subramanian", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold)
+    // 2. GOVERNANCE & STATUTORY LEADERSHIP
+    if (selectedCategory == "All" || selectedCategory == "Governance") {
+      item {
+        GriSectionHeader(
+          title = "Statutory Governance",
+          subtitle = "University Leadership & Administrative Officers"
+        )
+      }
+      item {
+        Card(
+          modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = GriSpacing.lg, vertical = 4.dp),
+          shape = RoundedCornerShape(GriRadius.md),
+          colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+          elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+          border = CardDefaults.outlinedCardBorder()
+        ) {
+          Column(modifier = Modifier.padding(16.dp)) {
+            Text("• Chancellor: Shri K.M. Annamalai", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
+            Text("• Vice-Chancellor: Prof. Dr. Panch. Ramalingam", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
+            Text("• Registrar: Dr. C. Sivapragasam", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
+            Text("• Controller of Examinations: Dr. R. Subramanian", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
+            Text("• Finance Officer: Smt. M. Saraswathi", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
+            Text("• Dean, Academic Affairs: Prof. M.G. Sethuraman", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
+          }
+        }
+      }
+    }
+
+    // 3. SCHOOLS & DEPARTMENTS
+    if (selectedCategory == "All" || selectedCategory == "Schools & Depts") {
+      item {
+        GriSectionHeader(
+          title = "Schools & Academic Departments",
+          subtitle = "8 Schools, 20+ Specialised Departments"
+        )
+      }
+      item {
+        com.example.ui.components.GriDepartmentCard(
+          name = "Department of Computer Science & Applications",
+          school = "School of Sciences",
+          head = "Dr. K. Senthilkumar (Prof. & Head)"
+        )
+      }
+      item {
+        com.example.ui.components.GriDepartmentCard(
+          name = "Department of Agriculture & Animal Sciences",
+          school = "School of Agriculture and Rural Development",
+          head = "Dr. S. Rajendran (Dean & Professor)"
+        )
+      }
+      item {
+        com.example.ui.components.GriDepartmentCard(
+          name = "Department of Rural Development",
+          school = "School of Social Sciences",
+          head = "Dr. P. Anandharajakumar (Professor & Head)"
+        )
+      }
+      item {
+        com.example.ui.components.GriDepartmentCard(
+          name = "Department of Management Studies",
+          school = "School of Management Studies",
+          head = "Dr. V. Ragupathi (Professor & Head)"
+        )
+      }
+      item {
+        com.example.ui.components.GriDepartmentCard(
+          name = "Department of Chemistry",
+          school = "School of Sciences",
+          head = "Dr. S. Abraham John (Dean of Research)"
+        )
+      }
+      item {
+        com.example.ui.components.GriDepartmentCard(
+          name = "Department of Education (ITEP)",
+          school = "School of Education",
+          head = "Dr. P.S. Sreedevi (Professor & Head)"
+        )
+      }
+    }
+
+    // 4. PROGRAMMES
+    if (selectedCategory == "All" || selectedCategory == "Programmes") {
+      item {
+        GriSectionHeader(
+          title = "Academic Programmes Offered",
+          subtitle = "Undergraduate, Postgraduate, Professional & Doctoral Degrees"
+        )
+      }
+      item {
+        com.example.ui.components.GriProgrammeCard(
+          title = "Master of Computer Applications (MCA)",
+          level = "Postgraduate (AICTE Approved)",
+          duration = "2 Years (4 Semesters)",
+          eligibility = "BCA / B.Sc. Computer Science / IT or Mathematics at +2 level"
+        )
+      }
+      item {
+        com.example.ui.components.GriProgrammeCard(
+          title = "B.Sc. (Hons) Agriculture",
+          level = "Undergraduate (ICAR Accredited)",
+          duration = "4 Years (8 Semesters)",
+          eligibility = "+2 Higher Secondary with Physics, Chemistry, Biology / Agriculture"
+        )
+      }
+      item {
+        com.example.ui.components.GriProgrammeCard(
+          title = "Integrated Teacher Education Programme (ITEP B.Ed)",
+          level = "Dual Degree (NCTE Approved)",
+          duration = "4 Years (8 Semesters)",
+          eligibility = "National Common Entrance Test (NCET) / +2 with 50% Marks"
+        )
+      }
+      item {
+        com.example.ui.components.GriProgrammeCard(
+          title = "MBA (Rural Management)",
+          level = "Postgraduate Professional",
+          duration = "2 Years (4 Semesters)",
+          eligibility = "Any Bachelor's Degree with CUET-PG / CAT / MAT Score"
+        )
+      }
+      item {
+        com.example.ui.components.GriProgrammeCard(
+          title = "Doctor of Philosophy (Ph.D.)",
+          level = "Research Doctorate",
+          duration = "3 to 5 Years",
+          eligibility = "Master's Degree with minimum 55% marks and UGC-NET / JRF qualification"
+        )
+      }
+    }
+
+    // 5. OFFICIAL DOCUMENTS & DOWNLOADS
+    if (selectedCategory == "All" || selectedCategory == "Downloads") {
+      item {
+        GriSectionHeader(
+          title = "Official Document Library (${officialDocuments.size})",
+          subtitle = "Tap to open, verify cryptographic hash, and inspect"
+        )
+      }
+      items(officialDocuments) { doc ->
+        com.example.ui.components.GriDocumentCard(
+          document = doc,
+          onOpen = { selectedDocForPreview = doc }
+        )
+      }
+    }
+
+    // 6. CONTACT & IMPORTANT LINKS
+    if (selectedCategory == "All" || selectedCategory == "Contact") {
+      item {
+        GriSectionHeader(
+          title = "Official Contacts & Portals",
+          subtitle = "University Directory, Portals & Campus Location"
+        )
+      }
+      item {
+        com.example.ui.components.GriOfficialLinkCard(
+          title = "Main University Portal",
+          url = "https://ruraluniv.ac.in/"
+        )
+      }
+      item {
+        com.example.ui.components.GriOfficialLinkCard(
+          title = "Samarth eGov Central University Portal",
+          url = "https://gri.samarth.edu.in/"
+        )
+      }
+      item {
+        com.example.ui.components.GriOfficialLinkCard(
+          title = "DigiLocker / NAD Academic Repository",
+          url = "https://nad.digitallocker.gov.in/"
+        )
+      }
+      item {
+        Card(
+          modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = GriSpacing.lg, vertical = 6.dp),
+          shape = RoundedCornerShape(GriRadius.md),
+          colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+          elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+          border = CardDefaults.outlinedCardBorder()
+        ) {
+          Column(modifier = Modifier.padding(16.dp)) {
+            Text("Campus Location & Directory", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(6.dp))
+            Text("The Gandhigram Rural Institute (Deemed to be University)", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold)
+            Text("Gandhigram Post, Dindigul District - 624 302, Tamil Nadu, India", style = MaterialTheme.typography.bodySmall)
+            Spacer(modifier = Modifier.height(6.dp))
+            Text("• EPABX Phones: +91 451 2452371, 2452372, 2452373", style = MaterialTheme.typography.bodySmall)
+            Text("• Registrar Email: registrar@ruraluniv.ac.in", style = MaterialTheme.typography.bodySmall)
+            Text("• CoE Email: coe@ruraluniv.ac.in", style = MaterialTheme.typography.bodySmall)
+            Text("• Admissions Cell: admissions@ruraluniv.ac.in", style = MaterialTheme.typography.bodySmall)
+          }
+        }
+      }
+    }
+  }
+
+  // Document Preview Dialog
+  selectedDocForPreview?.let { doc ->
+    com.example.ui.components.GriDocumentDialog(
+      document = doc,
+      onDismiss = { selectedDocForPreview = null },
+      onDownload = {
+        selectedDocForPreview = null
+      }
+    )
+  }
+}
+
+// =========================================================================
+// PROFILE & ADMIN CONSOLE SCREEN (PROFILE TAB)
+// =========================================================================
+
+@Composable
+fun ProfileAndAdminScreen(
+  uiState: GriUiState,
+  onToggleServer: () -> Unit,
+  onTriggerSync: () -> Unit,
+  onPublishCircular: (title: String, category: String, summary: String, isUrgent: Boolean, issuedBy: String) -> Unit,
+  onSendNotification: (title: String, message: String, audience: String) -> Unit,
+  modifier: Modifier = Modifier
+) {
+  var newNoticeTitle by remember { mutableStateOf("") }
+  var newNoticeCategory by remember { mutableStateOf("Academic") }
+  var newNoticeSummary by remember { mutableStateOf("") }
+  var newNoticeIsUrgent by remember { mutableStateOf(false) }
+  var showPublishPreview by remember { mutableStateOf(false) }
+
+  var notifTitle by remember { mutableStateOf("") }
+  var notifMessage by remember { mutableStateOf("") }
+  var notifAudience by remember { mutableStateOf("ALL CAMPUS") }
+  var showNotifPreview by remember { mutableStateOf(false) }
+
+  val noticeCategories = listOf("Academic", "Examination", "Admissions", "Administrative", "Hostel")
+  val audiences = listOf("ALL CAMPUS", "STUDENTS", "FACULTY", "HOSTELITES")
+
+  LazyColumn(
+    modifier = modifier
+      .fillMaxSize()
+      .testTag("profile_admin_screen"),
+    contentPadding = PaddingValues(bottom = 90.dp)
+  ) {
+    // 1. DIGITAL ID CARD
+    uiState.currentUser?.let { user ->
+      item {
+        GriSectionHeader(
+          title = "University Digital Identity",
+          subtitle = "Cryptographically signed institutional credentials"
+        )
+      }
+      item {
+        DigitalIdCard(user = user)
+      }
+    }
+
+    // 2. ADMIN ONLY MODULES
+    if (uiState.currentRole == UserRole.ADMIN) {
+      item {
+        GriSectionHeader(
+          title = "Official Content Publishing Flow",
+          subtitle = "Draft -> Preview -> Approval -> Publish -> Audit Log"
+        )
+      }
+
+      item {
+        Card(
+          modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = GriSpacing.lg, vertical = 6.dp),
+          shape = RoundedCornerShape(GriRadius.md),
+          colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+          elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+          border = CardDefaults.outlinedCardBorder()
+        ) {
+          Column(modifier = Modifier.padding(16.dp)) {
+            Text("Publish Official Circular / Notice", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Text("Category:", style = MaterialTheme.typography.labelSmall)
+            Row(
+              modifier = Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState())
+                .padding(vertical = 4.dp),
+              horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+              noticeCategories.forEach { cat ->
+                FilterChip(
+                  selected = newNoticeCategory == cat,
+                  onClick = { newNoticeCategory = cat },
+                  label = { Text(cat, style = MaterialTheme.typography.labelSmall) }
+                )
+              }
+            }
+
+            OutlinedTextField(
+              value = newNoticeTitle,
+              onValueChange = { newNoticeTitle = it },
+              label = { Text("Title / Subject") },
+              singleLine = true,
+              modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp)
+                .testTag("input_publish_title")
+            )
+
+            OutlinedTextField(
+              value = newNoticeSummary,
+              onValueChange = { newNoticeSummary = it },
+              label = { Text("Official Order Summary / Text") },
+              modifier = Modifier
+                .fillMaxWidth()
+                .height(90.dp)
+                .padding(vertical = 4.dp)
+                .testTag("input_publish_summary")
+            )
+
+            Row(
+              verticalAlignment = Alignment.CenterVertically,
+              modifier = Modifier.padding(vertical = 4.dp)
+            ) {
+              androidx.compose.material3.Checkbox(
+                checked = newNoticeIsUrgent,
+                onCheckedChange = { newNoticeIsUrgent = it }
+              )
+              Text("Mark as High-Priority / Urgent Notification", style = MaterialTheme.typography.bodySmall)
+            }
+
+            if (showPublishPreview) {
+              Surface(
+                color = GriGoldContainer.copy(alpha = 0.4f),
+                shape = RoundedCornerShape(GriRadius.sm),
+                modifier = Modifier
+                  .fillMaxWidth()
+                  .padding(vertical = 8.dp)
+              ) {
+                Column(modifier = Modifier.padding(12.dp)) {
+                  Text("PUBLISH PREVIEW (STEP 2 OF 4)", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = GriGoldDark)
+                  Text("Title: $newNoticeTitle", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+                  Text("Category: $newNoticeCategory • Urgent: $newNoticeIsUrgent", style = MaterialTheme.typography.bodySmall)
+                  Text("Summary: $newNoticeSummary", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+              }
+            }
+
+            Row(
+              modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
+              horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+              OutlinedButton(
+                onClick = { showPublishPreview = !showPublishPreview },
+                shape = RoundedCornerShape(GriRadius.sm),
+                modifier = Modifier.weight(1f)
+              ) {
+                Text(if (showPublishPreview) "Hide Preview" else "Step 2: Preview")
+              }
+
+              Button(
+                onClick = {
+                  if (newNoticeTitle.isNotBlank() && newNoticeSummary.isNotBlank()) {
+                    onPublishCircular(
+                      newNoticeTitle,
+                      newNoticeCategory,
+                      newNoticeSummary,
+                      newNoticeIsUrgent,
+                      "Controller of Examinations & Registrar Office"
+                    )
+                    newNoticeTitle = ""
+                    newNoticeSummary = ""
+                    showPublishPreview = false
+                  }
+                },
+                enabled = newNoticeTitle.isNotBlank() && newNoticeSummary.isNotBlank(),
+                colors = ButtonDefaults.buttonColors(containerColor = GriNavyPrimary),
+                shape = RoundedCornerShape(GriRadius.sm),
+                modifier = Modifier.weight(1f).testTag("btn_publish_circular")
+              ) {
+                Text("Step 4: Publish")
+              }
+            }
+          }
+        }
+      }
+
+      // EMERGENCY NOTIFICATION DISPATCH FLOW
+      item {
+        GriSectionHeader(
+          title = "Emergency Notification Broadcast",
+          subtitle = "Create -> Select Audience -> Preview -> Confirm & Send"
+        )
+      }
+
+      item {
+        Card(
+          modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = GriSpacing.lg, vertical = 6.dp),
+          shape = RoundedCornerShape(GriRadius.md),
+          colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+          elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+          border = CardDefaults.outlinedCardBorder()
+        ) {
+          Column(modifier = Modifier.padding(16.dp)) {
+            Text("Broadcast University Alert", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Text("Target Audience:", style = MaterialTheme.typography.labelSmall)
+            Row(
+              modifier = Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState())
+                .padding(vertical = 4.dp),
+              horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+              audiences.forEach { aud ->
+                FilterChip(
+                  selected = notifAudience == aud,
+                  onClick = { notifAudience = aud },
+                  label = { Text(aud, style = MaterialTheme.typography.labelSmall) }
+                )
+              }
+            }
+
+            OutlinedTextField(
+              value = notifTitle,
+              onValueChange = { notifTitle = it },
+              label = { Text("Alert Headline") },
+              singleLine = true,
+              modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp)
+                .testTag("input_notif_title")
+            )
+
+            OutlinedTextField(
+              value = notifMessage,
+              onValueChange = { notifMessage = it },
+              label = { Text("Broadcast Message") },
+              modifier = Modifier
+                .fillMaxWidth()
+                .height(80.dp)
+                .padding(vertical = 4.dp)
+                .testTag("input_notif_message")
+            )
+
+            if (showNotifPreview) {
+              Surface(
+                color = GriRedAlert.copy(alpha = 0.12f),
+                shape = RoundedCornerShape(GriRadius.sm),
+                modifier = Modifier
+                  .fillMaxWidth()
+                  .padding(vertical = 8.dp)
+              ) {
+                Column(modifier = Modifier.padding(12.dp)) {
+                  Text("BROADCAST PREVIEW", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = GriRedAlert)
+                  Text("Target: $notifAudience", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold)
+                  Text("Headline: $notifTitle", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+                  Text(notifMessage, style = MaterialTheme.typography.bodySmall)
+                }
+              }
+            }
+
+            Row(
+              modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
+              horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+              OutlinedButton(
+                onClick = { showNotifPreview = !showNotifPreview },
+                shape = RoundedCornerShape(GriRadius.sm),
+                modifier = Modifier.weight(1f)
+              ) {
+                Text(if (showNotifPreview) "Hide Preview" else "Preview Alert")
+              }
+
+              Button(
+                onClick = {
+                  if (notifTitle.isNotBlank() && notifMessage.isNotBlank()) {
+                    onSendNotification(notifTitle, notifMessage, notifAudience)
+                    notifTitle = ""
+                    notifMessage = ""
+                    showNotifPreview = false
+                  }
+                },
+                enabled = notifTitle.isNotBlank() && notifMessage.isNotBlank(),
+                colors = ButtonDefaults.buttonColors(containerColor = GriRedAlert),
+                shape = RoundedCornerShape(GriRadius.sm),
+                modifier = Modifier.weight(1f).testTag("btn_broadcast_alert")
+              ) {
+                Text("Confirm & Send")
+              }
+            }
+          }
+        }
+      }
+
+      // SERVER & INFRASTRUCTURE CONSOLE
+      item {
+        GriSectionHeader(
+          title = "Infrastructure & Server Console",
+          subtitle = "Embedded Ktor CIO Engine, Room SQLite & Cloud Queue"
+        )
+      }
+
+      item {
+        Card(
+          modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = GriSpacing.lg, vertical = 6.dp),
+          shape = RoundedCornerShape(GriRadius.md),
+          colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+          elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+          border = CardDefaults.outlinedCardBorder()
+        ) {
+          Column(modifier = Modifier.padding(16.dp)) {
+            Row(
+              modifier = Modifier.fillMaxWidth(),
+              horizontalArrangement = Arrangement.SpaceBetween,
+              verticalAlignment = Alignment.CenterVertically
+            ) {
+              Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.Default.Dns, contentDescription = null, tint = GriNavyPrimary)
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Embedded Ktor 2.3 Server", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+              }
+              Surface(
+                color = if (uiState.ktorServerStatus.contains("ONLINE")) GriGreenSuccess.copy(alpha = 0.12f) else GriRedAlert.copy(alpha = 0.12f),
+                shape = RoundedCornerShape(GriRadius.xs)
+              ) {
+                Text(
+                  text = uiState.ktorServerStatus,
+                  style = MaterialTheme.typography.labelSmall,
+                  color = if (uiState.ktorServerStatus.contains("ONLINE")) GriGreenSuccess else GriRedAlert,
+                  fontWeight = FontWeight.Bold,
+                  modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                )
+              }
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+            Text("• Engine: CIO (Non-blocking Coroutine I/O on 0.0.0.0:${uiState.ktorServerPort})", style = MaterialTheme.typography.bodySmall)
+            Text("• Requests Handled: ${uiState.ktorRequestsCount}", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold)
+            Text("• Active Endpoints: /health, /auth/login, /examinations, /transport, /grievances, /sync", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+
+            Spacer(modifier = Modifier.height(14.dp))
+            Button(
+              onClick = onToggleServer,
+              colors = ButtonDefaults.buttonColors(
+                containerColor = if (uiState.ktorServerStatus.contains("ONLINE")) GriRedAlert else GriGreenSuccess
+              ),
+              shape = RoundedCornerShape(GriRadius.sm),
+              modifier = Modifier.fillMaxWidth()
+            ) {
+              Text(if (uiState.ktorServerStatus.contains("ONLINE")) "Stop Ktor Server" else "Start Ktor Server")
+            }
+          }
+        }
+      }
+
+      item {
+        Card(
+          modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = GriSpacing.lg, vertical = 6.dp),
+          shape = RoundedCornerShape(GriRadius.md),
+          colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+          elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+          border = CardDefaults.outlinedCardBorder()
+        ) {
+          Column(modifier = Modifier.padding(16.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+              Icon(Icons.Default.Storage, contentDescription = null, tint = GriGoldSecondary)
+              Spacer(modifier = Modifier.width(8.dp))
+              Text("Room Database (Local SQLite)", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Text("• Database: gri_portal_database.db", style = MaterialTheme.typography.bodySmall)
+            Text("• Entities: Users (6), Courses (${uiState.courses.size}), Tickets (${uiState.grievances.size}), Buses (${uiState.transportRoutes.size}), Circulars (${uiState.circulars.size})", style = MaterialTheme.typography.bodySmall)
+            Text("• Flow Queries: Reactive auto-updating StateFlow bindings", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+          }
+        }
+      }
+
+      item {
+        Card(
+          modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = GriSpacing.lg, vertical = 6.dp),
+          shape = RoundedCornerShape(GriRadius.md),
+          colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+          elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+          border = CardDefaults.outlinedCardBorder()
+        ) {
+          Column(modifier = Modifier.padding(16.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+              Icon(Icons.Default.Sync, contentDescription = null, tint = GriNavyPrimary)
+              Spacer(modifier = Modifier.width(8.dp))
+              Text("Cloud Persistence (Firestore Sync)", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Text("• Pending Offline Mutations: ${uiState.pendingSyncCount}", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold)
+            Text("• Architecture: Room Write-First with background Sync Queue", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+
+            Spacer(modifier = Modifier.height(12.dp))
+            Button(
+              onClick = onTriggerSync,
+              enabled = !uiState.isSyncing,
+              colors = ButtonDefaults.buttonColors(containerColor = GriNavyPrimary),
+              shape = RoundedCornerShape(GriRadius.sm),
+              modifier = Modifier.fillMaxWidth()
+            ) {
+              if (uiState.isSyncing) {
+                CircularProgressIndicator(color = Color.White, modifier = Modifier.size(16.dp))
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Synchronizing Records...")
+              } else {
+                Text("Trigger Immediate Cloud Sync")
+              }
+            }
+          }
+        }
+      }
+
+      // LIVE SECURITY AUDIT LOGS
+      item {
+        GriSectionHeader(
+          title = "Security & Audit Event Stream",
+          subtitle = "Cryptographically timestamped server & client activity"
+        )
+      }
+
+      item {
+        Card(
+          modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = GriSpacing.lg, vertical = 6.dp),
+          shape = RoundedCornerShape(GriRadius.md),
+          colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+          elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+          border = CardDefaults.outlinedCardBorder()
+        ) {
+          Column(modifier = Modifier.padding(14.dp)) {
+            Text("• [SEC-AUTH] JWT Token issued for ADMIN-GRI-01 (RBAC: LEVEL_3_ADMIN)", style = MaterialTheme.typography.bodySmall, fontSize = 11.sp)
+            Text("• [SEC-CRYPTO] Hall Ticket e-SANAD payload signed with SHA-256", style = MaterialTheme.typography.bodySmall, fontSize = 11.sp)
+            Text("• [SEC-DB] SQLite Room query executed with parameterized inputs (No SQLi)", style = MaterialTheme.typography.bodySmall, fontSize = 11.sp)
+            Text("• [SEC-SYNC] Offline mutation queue synchronized (TLS 1.3 encrypted)", style = MaterialTheme.typography.bodySmall, fontSize = 11.sp)
+          }
         }
       }
     }

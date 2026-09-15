@@ -1,6 +1,8 @@
 {
   "name": "GRI Portal",
-  "description": "Gandhigram Rural Institute official campus ecosystem portal featuring multi-role access, embedded Ktor backend, Room local persistence, and campus services.",
+  "description": "Comprehensive Gandhigram Rural Institute digital campus portal featuring academic management, hall ticket generation, digital ID cards, grievance management, campus bus transport tracking, and announcements.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

@@ -21,6 +21,13 @@ val Typography = Typography(
     lineHeight = 32.sp,
     letterSpacing = 0.sp
   ),
+  displaySmall = TextStyle(
+    fontFamily = FontFamily.Default,
+    fontWeight = FontWeight.Bold,
+    fontSize = 20.sp,
+    lineHeight = 28.sp,
+    letterSpacing = 0.sp
+  ),
   headlineLarge = TextStyle(
     fontFamily = FontFamily.Default,
     fontWeight = FontWeight.Bold,
