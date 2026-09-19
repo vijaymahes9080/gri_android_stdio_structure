@@ -124,6 +124,8 @@ fun GriTopBar(
   onSignInClick: () -> Unit = {},
   onLogoutClick: () -> Unit = {},
   onOpenSahayak: () -> Unit = {},
+  onOpenDocumentCenter: () -> Unit = {},
+  onOpenFacultyPortal: () -> Unit = {},
   pendingSyncs: Int = 0,
   isSyncing: Boolean = false,
   onSyncClick: () -> Unit = {},
@@ -201,16 +203,31 @@ fun GriTopBar(
       }
     },
     actions = {
+      // Document Center Action Button
+      IconButton(
+        onClick = onOpenDocumentCenter,
+        modifier = Modifier
+          .size(38.dp)
+          .testTag("btn_top_document_center")
+      ) {
+        Icon(
+          imageVector = Icons.Default.PictureAsPdf,
+          contentDescription = "Official Document Center",
+          tint = MaterialTheme.colorScheme.primary,
+          modifier = Modifier.size(20.dp)
+        )
+      }
+
       // GRI-Sahayak AI Assistant Action Button
       IconButton(
         onClick = onOpenSahayak,
         modifier = Modifier
-          .size(42.dp)
+          .size(38.dp)
           .testTag("btn_gri_sahayak_ai")
       ) {
         Box(
           modifier = Modifier
-            .size(34.dp)
+            .size(30.dp)
             .clip(CircleShape)
             .background(GriGoldSecondary.copy(alpha = 0.15f)),
           contentAlignment = Alignment.Center
@@ -219,12 +236,12 @@ fun GriTopBar(
             imageVector = Icons.Default.AutoAwesome,
             contentDescription = "GRI-Sahayak Institutional AI Assistant",
             tint = GriGoldDark,
-            modifier = Modifier.size(20.dp)
+            modifier = Modifier.size(18.dp)
           )
         }
       }
 
-      // Live System Status (Institutional indicator, without exposing raw ports)
+      // Live System Status (Institutional indicator)
       Surface(
         color = GriGreenSuccess.copy(alpha = 0.12f),
         shape = RoundedCornerShape(GriRadius.xs),
@@ -257,30 +274,32 @@ fun GriTopBar(
           onClick = onSignInClick,
           shape = RoundedCornerShape(GriRadius.sm),
           colors = ButtonDefaults.filledTonalButtonColors(
-            containerColor = GriNavyPrimary.copy(alpha = 0.1f),
-            contentColor = GriNavyPrimary
+            containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+            contentColor = MaterialTheme.colorScheme.primary
           ),
           modifier = Modifier
-            .padding(start = 4.dp, end = 2.dp)
-            .height(32.dp)
-            .testTag("btn_top_sign_in")
+            .padding(start = 2.dp, end = 2.dp)
+            .height(30.dp)
+            .testTag("btn_top_sign_in"),
+          contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 8.dp, vertical = 2.dp)
         ) {
           Icon(
             imageVector = Icons.Default.Lock,
             contentDescription = null,
-            modifier = Modifier.size(13.dp)
+            modifier = Modifier.size(12.dp)
           )
-          Spacer(modifier = Modifier.width(4.dp))
+          Spacer(modifier = Modifier.width(3.dp))
           Text(
             text = "Sign In",
             style = MaterialTheme.typography.labelSmall,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            fontSize = 10.sp
           )
         }
       } else {
         // Authenticated Role Badge with 1-tap Logout
         Surface(
-          color = GriNavyPrimary,
+          color = MaterialTheme.colorScheme.primary,
           shape = RoundedCornerShape(GriRadius.xs),
           modifier = Modifier.padding(horizontal = 4.dp)
         ) {
@@ -313,7 +332,7 @@ fun GriTopBar(
       IconButton(
         onClick = onSyncClick,
         modifier = Modifier
-          .size(40.dp)
+          .size(36.dp)
           .testTag("cloud_sync_button")
       ) {
         BadgedBox(badge = {
@@ -329,8 +348,8 @@ fun GriTopBar(
           Icon(
             imageVector = if (isSyncing) Icons.Outlined.Sync else if (pendingSyncs == 0) Icons.Default.CloudDone else Icons.Default.Sync,
             contentDescription = "Sync Cloud Records",
-            tint = if (isSyncing) GriNavyPrimary else if (pendingSyncs > 0) GriGoldSecondary else GriGreenSuccess,
-            modifier = Modifier.size(20.dp)
+            tint = if (isSyncing) MaterialTheme.colorScheme.primary else if (pendingSyncs > 0) GriGoldSecondary else GriGreenSuccess,
+            modifier = Modifier.size(18.dp)
           )
         }
       }

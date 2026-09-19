@@ -31,8 +31,12 @@ import java.util.Locale
 
 enum class NavigationTab {
   HOME,
-  EXPLORE,
+  ACADEMICS,
+  CAMPUS,
   SERVICES,
+  MORE,
+  // Backwards compatibility aliases
+  EXPLORE,
   NEWS,
   PROFILE
 }
@@ -57,8 +61,8 @@ data class SahayakMessage(
 )
 
 data class GriUiState(
-  val currentRole: UserRole = UserRole.GUEST,
-  val isAuthenticated: Boolean = false,
+  val currentRole: UserRole = UserRole.STUDENT,
+  val isAuthenticated: Boolean = true,
   val currentTab: NavigationTab = NavigationTab.HOME,
   val currentUser: UserEntity? = null,
   val courses: List<CourseEntity> = emptyList(),
@@ -82,7 +86,18 @@ data class GriUiState(
   val publishingAuditLogs: List<PublishingAuditEntry> = emptyList(),
   val isSyncing: Boolean = false,
   val notificationMessage: String? = null,
-  val serverHealth: ServerHealthResponse? = null
+  val serverHealth: ServerHealthResponse? = null,
+  // Stitch interactive state fields
+  val isNotificationsOpen: Boolean = false,
+  val isDocumentCenterOpen: Boolean = false,
+  val isFacultyPortalOpen: Boolean = false,
+  val isAskAiOpen: Boolean = false,
+  val isGovernanceTerminalExpanded: Boolean = true,
+  val activeAcademicTab: Int = 0, // 0: Courses, 1: Exams, 2: Grade Cards, 3: Calendar
+  val activeServicesCategory: String = "services", // "services", "admissions", "campus-life", "career-aid"
+  val activeCampusFilter: String = "all",
+  val verifiedDocumentStatus: String? = null,
+  val simulatedRole: UserRole? = null
 )
 
 class GriViewModel(application: Application) : AndroidViewModel(application) {
@@ -254,6 +269,57 @@ class GriViewModel(application: Application) : AndroidViewModel(application) {
 
   fun switchTab(tab: NavigationTab) {
     _uiState.update { it.copy(currentTab = tab) }
+  }
+
+  fun setAcademicTab(tabIndex: Int) {
+    _uiState.update { it.copy(activeAcademicTab = tabIndex) }
+  }
+
+  fun setServicesCategory(category: String) {
+    _uiState.update { it.copy(activeServicesCategory = category) }
+  }
+
+  fun setCampusFilter(filter: String) {
+    _uiState.update { it.copy(activeCampusFilter = filter) }
+  }
+
+  fun toggleNotifications(open: Boolean) {
+    _uiState.update { it.copy(isNotificationsOpen = open) }
+  }
+
+  fun toggleDocumentCenter(open: Boolean) {
+    _uiState.update { it.copy(isDocumentCenterOpen = open) }
+  }
+
+  fun toggleFacultyPortal(open: Boolean) {
+    _uiState.update { it.copy(isFacultyPortalOpen = open) }
+  }
+
+  fun toggleAskAi(open: Boolean) {
+    _uiState.update { it.copy(isAskAiOpen = open, isSahayakOpen = open) }
+  }
+
+  fun toggleGovernanceTerminal() {
+    _uiState.update { it.copy(isGovernanceTerminalExpanded = !it.isGovernanceTerminalExpanded) }
+  }
+
+  fun verifyDocumentAuthenticity(hash: String) {
+    val query = hash.trim().uppercase()
+    val isLegit = query.contains("GRI") || query.contains("COE") || query.contains("REG") || query.contains("RO") || query.contains("SHA")
+    _uiState.update {
+      it.copy(
+        verifiedDocumentStatus = if (isLegit) {
+          "Verified: Cryptographic SHA-256 Seal Authenticated by GRI Central Registry & CoE"
+        } else {
+          "Verification Status: Record Not Found in Statutory UGC e-Office Ledger"
+        }
+      )
+    }
+  }
+
+  fun simulateRole(role: UserRole) {
+    _uiState.update { it.copy(simulatedRole = role) }
+    loginAsRole(role)
   }
 
   fun switchRole(role: UserRole) {

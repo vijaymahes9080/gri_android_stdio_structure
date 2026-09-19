@@ -14,56 +14,80 @@ import androidx.compose.ui.unit.sp
  */
 
 object GriColors {
-  // Primary Institutional Palette
-  val NavyPrimary = Color(0xFF0B2545)
-  val NavyDeep = Color(0xFF05192D)
-  val NavySurface = Color(0xFF133660)
-  val NavyContainer = Color(0xFFE8EEF5)
-  val NavyOnContainer = Color(0xFF071A30)
+  // Stitch Primary Institutional Palette (Forest Green)
+  val ForestPrimary = Color(0xFF003622)
+  val ForestContainer = Color(0xFF134E35)
+  val ForestOnContainer = Color(0xFF85BE9E)
+  val ForestFixed = Color(0xFFB4F0CD)
+  val ForestOnFixed = Color(0xFF002113)
 
-  // Institutional Gold / Brass Accents
-  val GoldAccent = Color(0xFFC28437)
-  val GoldDark = Color(0xFF925E1F)
-  val GoldLight = Color(0xFFF7E7D2)
-  val GoldContainer = Color(0xFFFFF3E0)
-  val GoldOnContainer = Color(0xFF422700)
+  // Stitch Secondary Academic Palette (Academic Teal)
+  val TealSecondary = Color(0xFF006A62)
+  val TealContainer = Color(0xFF9CF2E6)
+  val TealOnContainer = Color(0xFF047168)
+  val TealFixed = Color(0xFF9CF2E6)
+  val TealOnFixed = Color(0xFF00201D)
 
-  // Rural Innovation / Nai Talim Terracotta Accent
-  val RuralTerracotta = Color(0xFFC85A32)
-  val RuralTerracottaLight = Color(0xFFFDF0EC)
-  val RuralTerracottaDark = Color(0xFF8F3414)
+  // Stitch Tertiary Gandhian Heritage Saffron / Ochre
+  val OchreTertiary = Color(0xFF4A2500)
+  val OchreContainer = Color(0xFF6B3700)
+  val OchreOnContainer = Color(0xFFFF993B)
+  val OchreFixed = Color(0xFFFFDCC3)
+  val OchreOnFixed = Color(0xFF2F1500)
 
-  // Neutral Foundations (Clean Institutional)
-  val Background = Color(0xFFF8FAFC)
-  val BackgroundIvory = Color(0xFFFCFDFE)
+  // Stitch Surfaces
+  val Background = Color(0xFFF9F9FF)
   val Surface = Color(0xFFFFFFFF)
-  val SurfaceSubtle = Color(0xFFF1F5F9)
-  val SurfaceBorder = Color(0xFFE2E8F0)
-  val SurfaceBorderFocused = Color(0xFF0B2545)
+  val SurfaceLow = Color(0xFFF1F3FF)
+  val SurfaceContainer = Color(0xFFE9EDFF)
+  val SurfaceHigh = Color(0xFFE1E8FD)
+  val SurfaceHighest = Color(0xFFDCE2F7)
+  val SurfaceBorder = Color(0xFFC0C9C1)
+  val SurfaceBorderFocused = Color(0xFF003622)
 
   // Typography Colors
-  val TextPrimary = Color(0xFF0F172A)
-  val TextSecondary = Color(0xFF475569)
-  val TextMuted = Color(0xFF64748B)
+  val TextPrimary = Color(0xFF141B2B)
+  val TextSecondary = Color(0xFF404943)
+  val TextMuted = Color(0xFF707972)
   val TextInverse = Color(0xFFFFFFFF)
-  val TextGold = Color(0xFF925E1F)
+  val TextGold = Color(0xFF6B3700)
 
   // Status & Semantic Feedback
-  val Success = Color(0xFF15803D)
-  val SuccessContainer = Color(0xFFDCFCE7)
-  val SuccessText = Color(0xFF14532D)
+  val Success = Color(0xFF059669)
+  val SuccessContainer = Color(0xFFD1FAE5)
+  val SuccessText = Color(0xFF065F46)
 
-  val Alert = Color(0xFFB91C1C)
-  val AlertContainer = Color(0xFFFEE2E2)
-  val AlertText = Color(0xFF7F1D1D)
+  val Alert = Color(0xFFBA1A1A)
+  val AlertContainer = Color(0xFFFFDAD6)
+  val AlertText = Color(0xFF93000A)
 
   val Warning = Color(0xFFD97706)
-  val WarningContainer = Color(0xFFFEF3C7)
-  val WarningText = Color(0xFF78350F)
+  val WarningContainer = Color(0xFFFFDCC3)
+  val WarningText = Color(0xFF6E3900)
 
-  val Info = Color(0xFF0284C7)
-  val InfoContainer = Color(0xFFE0F2FE)
-  val InfoText = Color(0xFF0369A1)
+  val Info = Color(0xFF006A62)
+  val InfoContainer = Color(0xFF9CF2E6)
+  val InfoText = Color(0xFF047168)
+
+  // Backwards compatibility mappings
+  val NavyPrimary = ForestPrimary
+  val NavyDeep = ForestContainer
+  val NavySurface = ForestContainer
+  val NavyContainer = ForestFixed
+  val NavyOnContainer = ForestOnFixed
+
+  val GoldAccent = OchreContainer
+  val GoldDark = OchreTertiary
+  val GoldLight = OchreFixed
+  val GoldContainer = OchreFixed
+  val GoldOnContainer = OchreOnFixed
+
+  val RuralTerracotta = OchreContainer
+  val RuralTerracottaLight = OchreFixed
+  val RuralTerracottaDark = OchreTertiary
+
+  val BackgroundIvory = Background
+  val SurfaceSubtle = SurfaceLow
 }
 
 object GriSpacing {
