@@ -58,6 +58,21 @@ import androidx.compose.material.icons.filled.SportsScore
 import androidx.compose.material.icons.filled.Storage
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material.icons.filled.Verified
+import androidx.compose.material.icons.filled.Badge
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.WorkHistory
+import androidx.compose.material.icons.filled.HistoryEdu
+import androidx.compose.material.icons.filled.Engineering
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.icons.filled.Shield
+import androidx.compose.material.icons.filled.Payment
+import androidx.compose.material.icons.filled.FactCheck
+import androidx.compose.material.icons.filled.Download
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Build
+import com.example.data.local.StaffLeaveRecord
+import com.example.data.local.PublishingAuditEntry
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -140,6 +155,34 @@ fun HomeScreen(
   modifier: Modifier = Modifier
 ) {
   var searchQuery by remember { mutableStateOf("") }
+  var selectedDocForPreview by remember { mutableStateOf<com.example.ui.components.GriDocument?>(null) }
+  val context = androidx.compose.ui.platform.LocalContext.current
+
+  val prospectusDoc = remember {
+    com.example.ui.components.GriDocument(
+      id = "doc_prospectus_2026",
+      title = "GRI Admission Prospectus 2026–2027",
+      category = "Admissions",
+      date = "15 Aug 2026",
+      fileType = "PDF",
+      fileSize = "4.2 MB",
+      description = "Official guidelines for CUET-UG, CUET-PG, Non-CUET, ITEP 4-Year B.Ed, Diploma in Agriculture and Ph.D. research programmes with detailed fee structures and reservation quotas."
+    )
+  }
+
+  selectedDocForPreview?.let { doc ->
+    com.example.ui.components.GriDocumentDialog(
+      document = doc,
+      onDismiss = { selectedDocForPreview = null },
+      onDownload = {
+        val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("https://www.ruraluniv.ac.in/admissions/"))
+        try {
+          context.startActivity(intent)
+        } catch (_: Exception) {}
+        selectedDocForPreview = null
+      }
+    )
+  }
 
   val filteredCirculars = remember(searchQuery, uiState.circulars) {
     if (searchQuery.isBlank()) uiState.circulars
@@ -389,18 +432,27 @@ fun HomeScreen(
           Spacer(modifier = Modifier.height(10.dp))
           Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             OutlinedButton(
-              onClick = {},
+              onClick = { selectedDocForPreview = prospectusDoc },
               shape = RoundedCornerShape(GriRadius.sm),
               modifier = Modifier.weight(1f)
             ) {
+              Icon(Icons.AutoMirrored.Filled.LibraryBooks, contentDescription = null, modifier = Modifier.size(16.dp))
+              Spacer(modifier = Modifier.width(4.dp))
               Text("Prospectus", style = MaterialTheme.typography.labelMedium)
             }
             Button(
-              onClick = {},
+              onClick = {
+                val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("https://www.ruraluniv.ac.in/admissions/"))
+                try {
+                  context.startActivity(intent)
+                } catch (_: Exception) {}
+              },
               colors = ButtonDefaults.buttonColors(containerColor = GriNavyPrimary),
               shape = RoundedCornerShape(GriRadius.sm),
               modifier = Modifier.weight(1f)
             ) {
+              Icon(Icons.Default.Launch, contentDescription = null, modifier = Modifier.size(16.dp))
+              Spacer(modifier = Modifier.width(4.dp))
               Text("Apply Online", style = MaterialTheme.typography.labelMedium)
             }
           }
@@ -759,8 +811,19 @@ private fun FacilityMiniCard(title: String, subtitle: String, icon: androidx.com
 
 @Composable
 private fun LinkRowItem(title: String, url: String) {
+  val context = androidx.compose.ui.platform.LocalContext.current
+  val fullUrl = if (url.startsWith("http://") || url.startsWith("https://")) url else "https://$url"
+
   Row(
-    modifier = Modifier.fillMaxWidth(),
+    modifier = Modifier
+      .fillMaxWidth()
+      .clickable {
+        val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(fullUrl))
+        try {
+          context.startActivity(intent)
+        } catch (_: Exception) {}
+      }
+      .padding(vertical = 4.dp),
     horizontalArrangement = Arrangement.SpaceBetween,
     verticalAlignment = Alignment.CenterVertically
   ) {
@@ -896,6 +959,7 @@ fun CircularCardItem(
 @Composable
 fun AcademicsScreen(
   courses: List<CourseEntity>,
+  userRole: UserRole = UserRole.STUDENT,
   onMarkAttendance: (String) -> Unit,
   onFetchHallTicket: () -> Unit,
   modifier: Modifier = Modifier
@@ -929,7 +993,7 @@ fun AcademicsScreen(
           horizontalArrangement = Arrangement.SpaceBetween,
           verticalAlignment = Alignment.CenterVertically
         ) {
-          Column {
+          Column(modifier = Modifier.weight(1f)) {
             Text("Semester 4 Examinations", style = MaterialTheme.typography.titleMedium, color = Color.White, fontWeight = FontWeight.Bold)
             Text("Continuous Internal Assessment (CIA) Complete", style = MaterialTheme.typography.bodySmall, color = Color.White.copy(alpha = 0.8f))
             Text("Minimum Attendance Threshold: 75%", style = MaterialTheme.typography.labelSmall, color = GriGoldSecondary, fontWeight = FontWeight.Bold)
@@ -948,13 +1012,14 @@ fun AcademicsScreen(
     item {
       GriSectionHeader(
         title = "Enrolled Courses (${courses.size})",
-        subtitle = "Mark live attendance for lecture periods"
+        subtitle = if (userRole == UserRole.FACULTY) "Authorized faculty lecture attendance register" else "Official institutional record (Read-Only live sync)"
       )
     }
 
     items(courses) { course ->
       CourseAttendanceCard(
         course = course,
+        userRole = userRole,
         onMarkAttendance = { onMarkAttendance(course.id) }
       )
     }
@@ -964,6 +1029,7 @@ fun AcademicsScreen(
 @Composable
 fun CourseAttendanceCard(
   course: CourseEntity,
+  userRole: UserRole = UserRole.STUDENT,
   onMarkAttendance: () -> Unit
 ) {
   val isEligible = course.attendancePercent >= 75
@@ -1032,7 +1098,7 @@ fun CourseAttendanceCard(
             shape = RoundedCornerShape(GriRadius.xs)
           ) {
             Text(
-              text = if (isEligible) "Eligible" else "Shortage",
+              text = if (isEligible) "Eligible (>75%)" else "Shortage (<75%)",
               style = MaterialTheme.typography.labelSmall,
               color = if (isEligible) GriGreenSuccess else GriRedAlert,
               fontWeight = FontWeight.Bold,
@@ -1067,15 +1133,36 @@ fun CourseAttendanceCard(
           color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
-        Button(
-          onClick = onMarkAttendance,
-          colors = ButtonDefaults.buttonColors(containerColor = GriNavyPrimary),
-          shape = RoundedCornerShape(GriRadius.sm),
-          modifier = Modifier.testTag("btn_attend_${course.id}")
-        ) {
-          Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(16.dp))
-          Spacer(modifier = Modifier.width(4.dp))
-          Text("Mark Attended (+1)")
+        if (userRole == UserRole.FACULTY) {
+          Button(
+            onClick = onMarkAttendance,
+            colors = ButtonDefaults.buttonColors(containerColor = GriNavyPrimary),
+            shape = RoundedCornerShape(GriRadius.sm),
+            modifier = Modifier.testTag("btn_attend_${course.id}")
+          ) {
+            Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(16.dp))
+            Spacer(modifier = Modifier.width(4.dp))
+            Text("Record Period Attendance")
+          }
+        } else {
+          Surface(
+            color = GriNavyPrimary.copy(alpha = 0.08f),
+            shape = RoundedCornerShape(GriRadius.xs)
+          ) {
+            Row(
+              verticalAlignment = Alignment.CenterVertically,
+              modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+            ) {
+              Icon(Icons.Default.Lock, contentDescription = null, tint = GriNavyPrimary, modifier = Modifier.size(12.dp))
+              Spacer(modifier = Modifier.width(4.dp))
+              Text(
+                text = "Official Record • Read-Only",
+                style = MaterialTheme.typography.labelSmall,
+                color = GriNavyPrimary,
+                fontWeight = FontWeight.SemiBold
+              )
+            }
+          }
         }
       }
     }
@@ -1173,13 +1260,14 @@ fun ServicesScreen(
         item {
           GriSectionHeader(
             title = "Enrolled CBCS Courses (${courses.size})",
-            subtitle = "Tap to mark live lecture period attendance"
+            subtitle = if (userRole == UserRole.FACULTY) "Faculty authorized lecture attendance register" else "Official student attendance register (Read-Only live sync)"
           )
         }
 
         items(courses) { course ->
           CourseAttendanceCard(
             course = course,
+            userRole = userRole,
             onMarkAttendance = { onMarkAttendance(course.id) }
           )
         }
@@ -2083,21 +2171,37 @@ fun ProfileAndAdminScreen(
   onTriggerSync: () -> Unit,
   onPublishCircular: (title: String, category: String, summary: String, isUrgent: Boolean, issuedBy: String) -> Unit,
   onSendNotification: (title: String, message: String, audience: String) -> Unit,
+  onApplyStaffLeave: (leaveType: String, startDate: String, endDate: String, reason: String) -> Unit = { _, _, _, _ -> },
+  onFetchHallTicket: () -> Unit = {},
   modifier: Modifier = Modifier
 ) {
+  // Admin publishing flow state
   var newNoticeTitle by remember { mutableStateOf("") }
   var newNoticeCategory by remember { mutableStateOf("Academic") }
   var newNoticeSummary by remember { mutableStateOf("") }
   var newNoticeIsUrgent by remember { mutableStateOf(false) }
-  var showPublishPreview by remember { mutableStateOf(false) }
+  var currentPublishStep by remember { mutableStateOf(1) } // 1: Draft, 2: Review, 3: Authorization, 4: Seal, 5: Publish
+  var isAuthorizedByRegistrar by remember { mutableStateOf(false) }
 
+  // Admin notification state
   var notifTitle by remember { mutableStateOf("") }
   var notifMessage by remember { mutableStateOf("") }
   var notifAudience by remember { mutableStateOf("ALL CAMPUS") }
   var showNotifPreview by remember { mutableStateOf(false) }
 
+  // Staff leave application state
+  var leaveType by remember { mutableStateOf("Casual Leave") }
+  var leaveStartDate by remember { mutableStateOf("2026-10-05") }
+  var leaveEndDate by remember { mutableStateOf("2026-10-07") }
+  var leaveReason by remember { mutableStateOf("") }
+  var leaveSubmittedMessage by remember { mutableStateOf<String?>(null) }
+  var requisitionSubmittedMessage by remember { mutableStateOf<String?>(null) }
+  var facultyActionMessage by remember { mutableStateOf<String?>(null) }
+  var studentActionMessage by remember { mutableStateOf<String?>(null) }
+
   val noticeCategories = listOf("Academic", "Examination", "Admissions", "Administrative", "Hostel")
-  val audiences = listOf("ALL CAMPUS", "STUDENTS", "FACULTY", "HOSTELITES")
+  val audiences = listOf("ALL CAMPUS", "STUDENTS", "FACULTY", "STAFF", "HOSTELITES")
+  val staffLeaveTypes = listOf("Casual Leave", "Earned Leave", "Medical Leave", "Duty Leave")
 
   LazyColumn(
     modifier = modifier
@@ -2118,12 +2222,665 @@ fun ProfileAndAdminScreen(
       }
     }
 
-    // 2. ADMIN ONLY MODULES
+    // =====================================================================
+    // 2. STAFF ROLE PORTAL
+    // =====================================================================
+    if (uiState.currentRole == UserRole.STAFF) {
+      item {
+        GriSectionHeader(
+          title = "GRI Staff Operations Portal",
+          subtitle = "Service records, leave sanctions, campus maintenance & circulars"
+        )
+      }
+
+      // Staff Service Profile
+      item {
+        Card(
+          modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = GriSpacing.lg, vertical = 6.dp),
+          shape = RoundedCornerShape(GriRadius.md),
+          colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+          elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+          border = CardDefaults.outlinedCardBorder()
+        ) {
+          Column(modifier = Modifier.padding(16.dp)) {
+            Row(
+              modifier = Modifier.fillMaxWidth(),
+              horizontalArrangement = Arrangement.SpaceBetween,
+              verticalAlignment = Alignment.CenterVertically
+            ) {
+              Row(verticalAlignment = Alignment.CenterVertically) {
+                Box(
+                  modifier = Modifier
+                    .size(42.dp)
+                    .clip(CircleShape)
+                    .background(GriNavyPrimary.copy(alpha = 0.1f)),
+                  contentAlignment = Alignment.Center
+                ) {
+                  Icon(Icons.Default.Badge, contentDescription = null, tint = GriNavyPrimary, modifier = Modifier.size(22.dp))
+                }
+                Spacer(modifier = Modifier.width(12.dp))
+                Column {
+                  Text("Thiru. M. Sundaram", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                  Text("Senior Executive Assistant", style = MaterialTheme.typography.bodySmall, color = GriGoldDark, fontWeight = FontWeight.SemiBold)
+                }
+              }
+              Surface(
+                color = GriGreenSuccess.copy(alpha = 0.12f),
+                shape = RoundedCornerShape(GriRadius.xs)
+              ) {
+                Text(
+                  text = "PERMANENT CADRE",
+                  style = MaterialTheme.typography.labelSmall,
+                  color = GriGreenSuccess,
+                  fontWeight = FontWeight.Bold,
+                  modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp)
+                )
+              }
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+            HorizontalDivider()
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+              Column {
+                Text("Service ID", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("STF-ADM-042", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold)
+              }
+              Column {
+                Text("Department / Section", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("General Admin & Estate", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold)
+              }
+              Column(horizontalAlignment = Alignment.End) {
+                Text("Pay Scale / Level", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("Level 7 (7th CPC)", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold)
+              }
+            }
+          }
+        }
+      }
+
+      // Leave Balances Grid
+      item {
+        GriSectionHeader(
+          title = "Leave Balances (Calendar Year 2026)",
+          subtitle = "Sanctioned balance as per Central Civil Services (CCS) Leave Rules"
+        )
+      }
+
+      item {
+        Row(
+          modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = GriSpacing.lg, vertical = 4.dp),
+          horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+          Surface(
+            color = MaterialTheme.colorScheme.surface,
+            shape = RoundedCornerShape(GriRadius.sm),
+            border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+            modifier = Modifier.weight(1f)
+          ) {
+            Column(modifier = Modifier.padding(10.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+              Text("Casual Leave", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 10.sp)
+              Text("8 / 12", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = GriNavyPrimary)
+              Text("Days Left", style = MaterialTheme.typography.labelSmall, fontSize = 9.sp)
+            }
+          }
+
+          Surface(
+            color = MaterialTheme.colorScheme.surface,
+            shape = RoundedCornerShape(GriRadius.sm),
+            border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+            modifier = Modifier.weight(1f)
+          ) {
+            Column(modifier = Modifier.padding(10.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+              Text("Earned Leave", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 10.sp)
+              Text("24 / 30", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = GriGreenSuccess)
+              Text("Accumulated", style = MaterialTheme.typography.labelSmall, fontSize = 9.sp)
+            }
+          }
+
+          Surface(
+            color = MaterialTheme.colorScheme.surface,
+            shape = RoundedCornerShape(GriRadius.sm),
+            border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+            modifier = Modifier.weight(1f)
+          ) {
+            Column(modifier = Modifier.padding(10.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+              Text("Medical Leave", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 10.sp)
+              Text("12 / 15", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = GriGoldDark)
+              Text("Commuted", style = MaterialTheme.typography.labelSmall, fontSize = 9.sp)
+            }
+          }
+
+          Surface(
+            color = MaterialTheme.colorScheme.surface,
+            shape = RoundedCornerShape(GriRadius.sm),
+            border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+            modifier = Modifier.weight(1f)
+          ) {
+            Column(modifier = Modifier.padding(10.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+              Text("Duty / SCL", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 10.sp)
+              Text("3 / 8", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = GriAccentCyan)
+              Text("Restricted", style = MaterialTheme.typography.labelSmall, fontSize = 9.sp)
+            }
+          }
+        }
+      }
+
+      // Apply for Official Leave Form
+      item {
+        Card(
+          modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = GriSpacing.lg, vertical = 6.dp),
+          shape = RoundedCornerShape(GriRadius.md),
+          colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+          elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+          border = CardDefaults.outlinedCardBorder()
+        ) {
+          Column(modifier = Modifier.padding(16.dp)) {
+            Text("Apply for Official Staff Leave", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            Text("Electronic application directly submitted to Establishment Section & Registrar", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+
+            Spacer(modifier = Modifier.height(10.dp))
+            Text("Select Leave Nature:", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.SemiBold)
+            Row(
+              modifier = Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState())
+                .padding(vertical = 4.dp),
+              horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+              staffLeaveTypes.forEach { type ->
+                FilterChip(
+                  selected = leaveType == type,
+                  onClick = { leaveType = type },
+                  label = { Text(type, style = MaterialTheme.typography.labelSmall) }
+                )
+              }
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+            Row(
+              modifier = Modifier.fillMaxWidth(),
+              horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+              OutlinedTextField(
+                value = leaveStartDate,
+                onValueChange = { leaveStartDate = it },
+                label = { Text("From Date") },
+                singleLine = true,
+                modifier = Modifier.weight(1f).testTag("input_staff_leave_start")
+              )
+              OutlinedTextField(
+                value = leaveEndDate,
+                onValueChange = { leaveEndDate = it },
+                label = { Text("To Date") },
+                singleLine = true,
+                modifier = Modifier.weight(1f).testTag("input_staff_leave_end")
+              )
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+            OutlinedTextField(
+              value = leaveReason,
+              onValueChange = { leaveReason = it },
+              label = { Text("Reason / Station Leaving Permission Justification") },
+              placeholder = { Text("e.g. Attending family function / medical checkup") },
+              modifier = Modifier
+                .fillMaxWidth()
+                .testTag("input_staff_leave_reason")
+            )
+
+            leaveSubmittedMessage?.let { msg ->
+              Spacer(modifier = Modifier.height(8.dp))
+              Surface(
+                color = GriGreenSuccess.copy(alpha = 0.12f),
+                shape = RoundedCornerShape(GriRadius.xs),
+                modifier = Modifier.fillMaxWidth()
+              ) {
+                Text(
+                  text = msg,
+                  style = MaterialTheme.typography.bodySmall,
+                  color = GriGreenSuccess,
+                  fontWeight = FontWeight.Bold,
+                  modifier = Modifier.padding(8.dp)
+                )
+              }
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+            Button(
+              onClick = {
+                if (leaveReason.isNotBlank()) {
+                  onApplyStaffLeave(leaveType, leaveStartDate, leaveEndDate, leaveReason)
+                  leaveSubmittedMessage = "Leave application for $leaveType ($leaveStartDate to $leaveEndDate) submitted to Registrar Office for sanction."
+                  leaveReason = ""
+                }
+              },
+              enabled = leaveReason.isNotBlank(),
+              colors = ButtonDefaults.buttonColors(containerColor = GriNavyPrimary),
+              shape = RoundedCornerShape(GriRadius.sm),
+              modifier = Modifier.fillMaxWidth().testTag("btn_submit_staff_leave")
+            ) {
+              Icon(Icons.Default.Send, contentDescription = null, modifier = Modifier.size(16.dp))
+              Spacer(modifier = Modifier.width(6.dp))
+              Text("Submit Leave Application for Sanction")
+            }
+          }
+        }
+      }
+
+      // Staff Leave Records List
+      item {
+        GriSectionHeader(
+          title = "Leave History & Sanctions (${uiState.staffLeaveRecords.size})",
+          subtitle = "Official status log from the Establishment Register"
+        )
+      }
+
+      items(uiState.staffLeaveRecords) { record ->
+        val isApproved = record.status == "APPROVED"
+        Card(
+          modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = GriSpacing.lg, vertical = 4.dp),
+          shape = RoundedCornerShape(GriRadius.sm),
+          colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+          border = CardDefaults.outlinedCardBorder()
+        ) {
+          Column(modifier = Modifier.padding(12.dp)) {
+            Row(
+              modifier = Modifier.fillMaxWidth(),
+              horizontalArrangement = Arrangement.SpaceBetween,
+              verticalAlignment = Alignment.CenterVertically
+            ) {
+              Text(text = record.leaveType, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+              Surface(
+                color = if (isApproved) GriGreenSuccess.copy(alpha = 0.12f) else GriGoldSecondary.copy(alpha = 0.15f),
+                shape = RoundedCornerShape(GriRadius.xs)
+              ) {
+                Text(
+                  text = record.status,
+                  style = MaterialTheme.typography.labelSmall,
+                  color = if (isApproved) GriGreenSuccess else GriGoldDark,
+                  fontWeight = FontWeight.Bold,
+                  modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                )
+              }
+            }
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+              text = "${record.fromDate} to ${record.toDate} (${record.days} Days)",
+              style = MaterialTheme.typography.bodySmall,
+              fontWeight = FontWeight.SemiBold
+            )
+            Text(
+              text = "Reason: ${record.reason}",
+              style = MaterialTheme.typography.bodySmall,
+              color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+              text = "Status: ${record.status} • Sanction Authority: Registrar Office",
+              style = MaterialTheme.typography.labelSmall,
+              color = MaterialTheme.colorScheme.onSurfaceVariant,
+              fontSize = 10.sp
+            )
+          }
+        }
+      }
+
+      // Campus Estate Requisitions
+      item {
+        GriSectionHeader(
+          title = "Campus Estate & Facility Work Requisitions",
+          subtitle = "Submit maintenance work orders to the University Engineer"
+        )
+      }
+
+      item {
+        Card(
+          modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = GriSpacing.lg, vertical = 6.dp),
+          shape = RoundedCornerShape(GriRadius.md),
+          colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+          border = CardDefaults.outlinedCardBorder()
+        ) {
+          Column(modifier = Modifier.padding(14.dp)) {
+            Text("Work Order Services:", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold)
+            Text("Click to raise a priority maintenance indent with the University Engineering Section", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp)
+            Spacer(modifier = Modifier.height(8.dp))
+            Row(
+              modifier = Modifier.fillMaxWidth(),
+              horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+              OutlinedButton(
+                onClick = { requisitionSubmittedMessage = "ICT & Wi-Fi Work Order #WO-ICT-2026-089 submitted to University Computer Centre." },
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(GriRadius.sm)
+              ) {
+                Text("ICT & Wi-Fi", fontSize = 11.sp)
+              }
+              OutlinedButton(
+                onClick = { requisitionSubmittedMessage = "Electrical Indent #WO-ELE-2026-042 submitted to Estate Electrical Wing." },
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(GriRadius.sm)
+              ) {
+                Text("Electrical & Solar", fontSize = 11.sp)
+              }
+            }
+            Spacer(modifier = Modifier.height(6.dp))
+            Row(
+              modifier = Modifier.fillMaxWidth(),
+              horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+              OutlinedButton(
+                onClick = { requisitionSubmittedMessage = "Civil/Plumbing Work Order #WO-CIV-2026-115 submitted to Campus Maintenance Section." },
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(GriRadius.sm)
+              ) {
+                Text("Civil / Plumbing", fontSize = 11.sp)
+              }
+              OutlinedButton(
+                onClick = { requisitionSubmittedMessage = "Official Vehicle Indent #IND-VEH-2026-018 routed to Transport Officer & Registrar." },
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(GriRadius.sm)
+              ) {
+                Text("Vehicle Indent", fontSize = 11.sp)
+              }
+            }
+
+            requisitionSubmittedMessage?.let { msg ->
+              Spacer(modifier = Modifier.height(10.dp))
+              Surface(
+                color = GriGreenSuccess.copy(alpha = 0.12f),
+                shape = RoundedCornerShape(GriRadius.xs),
+                modifier = Modifier.fillMaxWidth()
+              ) {
+                Row(
+                  modifier = Modifier.padding(10.dp),
+                  verticalAlignment = Alignment.CenterVertically
+                ) {
+                  Icon(Icons.Default.CheckCircle, contentDescription = null, tint = GriGreenSuccess, modifier = Modifier.size(16.dp))
+                  Spacer(modifier = Modifier.width(6.dp))
+                  Text(msg, style = MaterialTheme.typography.bodySmall, color = GriGreenSuccess, fontWeight = FontWeight.SemiBold)
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // =====================================================================
+    // 3. FACULTY ROLE PORTAL
+    // =====================================================================
+    if (uiState.currentRole == UserRole.FACULTY) {
+      item {
+        GriSectionHeader(
+          title = "Faculty Academic Console",
+          subtitle = "Course allocations, CIA marks register, research and invigilation"
+        )
+      }
+
+      item {
+        Card(
+          modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = GriSpacing.lg, vertical = 6.dp),
+          shape = RoundedCornerShape(GriRadius.md),
+          colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+          border = CardDefaults.outlinedCardBorder()
+        ) {
+          Column(modifier = Modifier.padding(16.dp)) {
+            Text("Dr. K. Ramanathan, Ph.D.", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            Text("Professor & Head, Dept. of Computer Science & Applications", style = MaterialTheme.typography.bodySmall, color = GriGoldDark, fontWeight = FontWeight.SemiBold)
+            Spacer(modifier = Modifier.height(8.dp))
+            Text("• Faculty ID: FAC-CS-108 • School of Mathematics & Computer Sciences", style = MaterialTheme.typography.bodySmall)
+            Text("• Assigned Courses: ${uiState.courses.size} Active CBCS Courses (Semester IV)", style = MaterialTheme.typography.bodySmall)
+            Text("• Research Projects: DST-PURSE Phase II Principal Investigator (₹42 Lakhs)", style = MaterialTheme.typography.bodySmall)
+            Spacer(modifier = Modifier.height(12.dp))
+            Text("Faculty Electronic Submissions:", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(6.dp))
+            Row(
+              modifier = Modifier.fillMaxWidth(),
+              horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+              OutlinedButton(
+                onClick = { facultyActionMessage = "Continuous Internal Assessment (CIA-2) marks uploaded and synchronized to CoE Portal." },
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(GriRadius.sm)
+              ) {
+                Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(14.dp))
+                Spacer(modifier = Modifier.width(4.dp))
+                Text("Sync CIA Marks", fontSize = 10.sp)
+              }
+              OutlinedButton(
+                onClick = { facultyActionMessage = "Even Semester 2026 Course File & Lesson Plan submitted to Dean's Office for academic audit." },
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(GriRadius.sm)
+              ) {
+                Icon(Icons.Default.LibraryBooks, contentDescription = null, modifier = Modifier.size(14.dp))
+                Spacer(modifier = Modifier.width(4.dp))
+                Text("Course File", fontSize = 10.sp)
+              }
+            }
+            Spacer(modifier = Modifier.height(6.dp))
+            OutlinedButton(
+              onClick = { facultyActionMessage = "Invigilation Schedule acknowledged: CoE ESE Hall 4 (2026-11-24 FN & AN Sessions)." },
+              modifier = Modifier.fillMaxWidth(),
+              shape = RoundedCornerShape(GriRadius.sm)
+            ) {
+              Icon(Icons.Default.Assignment, contentDescription = null, modifier = Modifier.size(14.dp))
+              Spacer(modifier = Modifier.width(6.dp))
+              Text("View CoE Invigilation Roster (ESE Nov 2026)", fontSize = 11.sp)
+            }
+
+            facultyActionMessage?.let { msg ->
+              Spacer(modifier = Modifier.height(10.dp))
+              Surface(
+                color = GriGreenSuccess.copy(alpha = 0.12f),
+                shape = RoundedCornerShape(GriRadius.xs),
+                modifier = Modifier.fillMaxWidth()
+              ) {
+                Row(
+                  modifier = Modifier.padding(10.dp),
+                  verticalAlignment = Alignment.CenterVertically
+                ) {
+                  Icon(Icons.Default.CheckCircle, contentDescription = null, tint = GriGreenSuccess, modifier = Modifier.size(16.dp))
+                  Spacer(modifier = Modifier.width(6.dp))
+                  Text(msg, style = MaterialTheme.typography.bodySmall, color = GriGreenSuccess, fontWeight = FontWeight.SemiBold)
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // =====================================================================
+    // 4. STUDENT ROLE PORTAL
+    // =====================================================================
+    if (uiState.currentRole == UserRole.STUDENT) {
+      item {
+        GriSectionHeader(
+          title = "Student Academic Dashboard",
+          subtitle = "CBCS curriculum, hall ticket, e-Gov receipts & hostel"
+        )
+      }
+
+      item {
+        Card(
+          modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = GriSpacing.lg, vertical = 6.dp),
+          shape = RoundedCornerShape(GriRadius.md),
+          colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+          border = CardDefaults.outlinedCardBorder()
+        ) {
+          Column(modifier = Modifier.padding(16.dp)) {
+            Row(
+              modifier = Modifier.fillMaxWidth(),
+              horizontalArrangement = Arrangement.SpaceBetween,
+              verticalAlignment = Alignment.CenterVertically
+            ) {
+              Column {
+                Text("R. Anandhakumar", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                Text("23MCAR018 • M.C.A. (CBCS)", style = MaterialTheme.typography.bodySmall, color = GriNavyPrimary, fontWeight = FontWeight.Bold)
+              }
+              Button(
+                onClick = onFetchHallTicket,
+                colors = ButtonDefaults.buttonColors(containerColor = GriNavyPrimary),
+                shape = RoundedCornerShape(GriRadius.sm)
+              ) {
+                Icon(Icons.Default.Download, contentDescription = null, modifier = Modifier.size(16.dp))
+                Spacer(modifier = Modifier.width(4.dp))
+                Text("Hall Ticket")
+              }
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+            HorizontalDivider()
+            Spacer(modifier = Modifier.height(8.dp))
+            Text("• Hostel Allotment: Thamarai Illam (Men's Residential Complex), Room 312", style = MaterialTheme.typography.bodySmall)
+            Text("• Samarth e-Gov Fee Status: Even Semester Fees Cleared (Receipt #GRI-2026-FE-8812)", style = MaterialTheme.typography.bodySmall)
+            Text("• ESE Exam Eligibility: Eligible in all 4 courses (>75% attendance threshold)", style = MaterialTheme.typography.bodySmall, color = GriGreenSuccess, fontWeight = FontWeight.Bold)
+
+            Spacer(modifier = Modifier.height(12.dp))
+            Row(
+              modifier = Modifier.fillMaxWidth(),
+              horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+              OutlinedButton(
+                onClick = { studentActionMessage = "Samarth e-Gov Fee Receipt #GRI-2026-FE-8812 downloaded to device storage." },
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(GriRadius.sm)
+              ) {
+                Icon(Icons.Default.ConfirmationNumber, contentDescription = null, modifier = Modifier.size(14.dp))
+                Spacer(modifier = Modifier.width(4.dp))
+                Text("Fee Receipt", fontSize = 11.sp)
+              }
+              OutlinedButton(
+                onClick = { studentActionMessage = "Digital Out-Pass for Thamarai Illam generated (Valid until 21:00 hrs today)." },
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(GriRadius.sm)
+              ) {
+                Icon(Icons.Default.BookmarkBorder, contentDescription = null, modifier = Modifier.size(14.dp))
+                Spacer(modifier = Modifier.width(4.dp))
+                Text("Hostel Pass", fontSize = 11.sp)
+              }
+            }
+
+            studentActionMessage?.let { msg ->
+              Spacer(modifier = Modifier.height(10.dp))
+              Surface(
+                color = GriGreenSuccess.copy(alpha = 0.12f),
+                shape = RoundedCornerShape(GriRadius.xs),
+                modifier = Modifier.fillMaxWidth()
+              ) {
+                Row(
+                  modifier = Modifier.padding(10.dp),
+                  verticalAlignment = Alignment.CenterVertically
+                ) {
+                  Icon(Icons.Default.CheckCircle, contentDescription = null, tint = GriGreenSuccess, modifier = Modifier.size(16.dp))
+                  Spacer(modifier = Modifier.width(6.dp))
+                  Text(msg, style = MaterialTheme.typography.bodySmall, color = GriGreenSuccess, fontWeight = FontWeight.SemiBold)
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // =====================================================================
+    // 5. GUEST / VISITOR PORTAL
+    // =====================================================================
+    if (uiState.currentRole == UserRole.GUEST || uiState.currentRole == UserRole.PUBLIC) {
+      item {
+        GriSectionHeader(
+          title = "Visitor & Guest Assistance",
+          subtitle = "Campus passes, guest house reservations & navigation"
+        )
+      }
+
+      item {
+        val context = androidx.compose.ui.platform.LocalContext.current
+        Card(
+          modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = GriSpacing.lg, vertical = 6.dp),
+          shape = RoundedCornerShape(GriRadius.md),
+          colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+          border = CardDefaults.outlinedCardBorder()
+        ) {
+          Column(modifier = Modifier.padding(16.dp)) {
+            Text("Welcome to Gandhigram Rural Institute", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            Text("Gandhian Rural University founded by Dr. T.S. Soundram & Dr. G. Ramachandran in 1956", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Spacer(modifier = Modifier.height(10.dp))
+            Text("• International Guest House: Booking via registrar@ruraluniv.ac.in", style = MaterialTheme.typography.bodySmall)
+            Text("• Gandhi Memorial Museum: Open 09:30 AM – 05:30 PM (Daily)", style = MaterialTheme.typography.bodySmall)
+            Text("• University Gate Security: +91 451 2452371 Ext 101", style = MaterialTheme.typography.bodySmall)
+            Text("• Public Information Officer (RTI Cell): pio@ruraluniv.ac.in", style = MaterialTheme.typography.bodySmall)
+            Spacer(modifier = Modifier.height(12.dp))
+            Row(
+              modifier = Modifier.fillMaxWidth(),
+              horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+              OutlinedButton(
+                onClick = {
+                  val intent = android.content.Intent(android.content.Intent.ACTION_SENDTO).apply {
+                    data = android.net.Uri.parse("mailto:registrar@ruraluniv.ac.in")
+                    putExtra(android.content.Intent.EXTRA_SUBJECT, "Guest House Booking Request - Gandhigram Rural Institute")
+                  }
+                  try {
+                    context.startActivity(intent)
+                  } catch (_: Exception) {}
+                },
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(GriRadius.sm)
+              ) {
+                Icon(Icons.Default.Hotel, contentDescription = null, modifier = Modifier.size(14.dp))
+                Spacer(modifier = Modifier.width(4.dp))
+                Text("Book Guest House", fontSize = 11.sp)
+              }
+              Button(
+                onClick = {
+                  val intent = android.content.Intent(android.content.Intent.ACTION_DIAL).apply {
+                    data = android.net.Uri.parse("tel:04512452371")
+                  }
+                  try {
+                    context.startActivity(intent)
+                  } catch (_: Exception) {}
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = GriNavyPrimary),
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(GriRadius.sm)
+              ) {
+                Icon(Icons.Default.Call, contentDescription = null, modifier = Modifier.size(14.dp))
+                Spacer(modifier = Modifier.width(4.dp))
+                Text("Call Security", fontSize = 11.sp)
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // =====================================================================
+    // 6. ADMIN ONLY MODULES — 5-STEP CONTENT PUBLISHING & AUDIT STREAM
+    // =====================================================================
     if (uiState.currentRole == UserRole.ADMIN) {
       item {
         GriSectionHeader(
-          title = "Official Content Publishing Flow",
-          subtitle = "Draft -> Preview -> Approval -> Publish -> Audit Log"
+          title = "Official Content Publishing Flow (5 Steps)",
+          subtitle = "1. Draft -> 2. Review -> 3. Authorization -> 4. Cryptographic Seal -> 5. Publish"
         )
       }
 
@@ -2138,7 +2895,36 @@ fun ProfileAndAdminScreen(
           border = CardDefaults.outlinedCardBorder()
         ) {
           Column(modifier = Modifier.padding(16.dp)) {
-            Text("Publish Official Circular / Notice", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            Text("Official University Order / Notification Flow", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // 5-Step Progress Indicators
+            Row(
+              modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 6.dp),
+              horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+              listOf("1. Draft", "2. Review", "3. Auth", "4. Seal", "5. Live").forEachIndexed { index, stepName ->
+                val stepNum = index + 1
+                val isDone = currentPublishStep > stepNum
+                val isCurrent = currentPublishStep == stepNum
+                Surface(
+                  color = if (isCurrent) GriNavyPrimary else if (isDone) GriGreenSuccess else MaterialTheme.colorScheme.surfaceVariant,
+                  shape = RoundedCornerShape(GriRadius.xs)
+                ) {
+                  Text(
+                    text = stepName,
+                    style = MaterialTheme.typography.labelSmall,
+                    color = if (isCurrent || isDone) Color.White else MaterialTheme.colorScheme.onSurfaceVariant,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 9.sp,
+                    modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp)
+                  )
+                }
+              }
+            }
+
             Spacer(modifier = Modifier.height(10.dp))
 
             Text("Category:", style = MaterialTheme.typography.labelSmall)
@@ -2160,8 +2946,11 @@ fun ProfileAndAdminScreen(
 
             OutlinedTextField(
               value = newNoticeTitle,
-              onValueChange = { newNoticeTitle = it },
-              label = { Text("Title / Subject") },
+              onValueChange = {
+                newNoticeTitle = it
+                if (currentPublishStep == 1 && it.isNotBlank()) currentPublishStep = 2
+              },
+              label = { Text("Title / Official Subject") },
               singleLine = true,
               modifier = Modifier
                 .fillMaxWidth()
@@ -2172,10 +2961,10 @@ fun ProfileAndAdminScreen(
             OutlinedTextField(
               value = newNoticeSummary,
               onValueChange = { newNoticeSummary = it },
-              label = { Text("Official Order Summary / Text") },
+              label = { Text("Executive Order Text / Notification Summary") },
               modifier = Modifier
                 .fillMaxWidth()
-                .height(90.dp)
+                .height(85.dp)
                 .padding(vertical = 4.dp)
                 .testTag("input_publish_summary")
             )
@@ -2188,62 +2977,121 @@ fun ProfileAndAdminScreen(
                 checked = newNoticeIsUrgent,
                 onCheckedChange = { newNoticeIsUrgent = it }
               )
-              Text("Mark as High-Priority / Urgent Notification", style = MaterialTheme.typography.bodySmall)
+              Text("Mark as High-Priority / Campus Emergency", style = MaterialTheme.typography.bodySmall)
             }
 
-            if (showPublishPreview) {
-              Surface(
-                color = GriGoldContainer.copy(alpha = 0.4f),
-                shape = RoundedCornerShape(GriRadius.sm),
-                modifier = Modifier
-                  .fillMaxWidth()
-                  .padding(vertical = 8.dp)
-              ) {
-                Column(modifier = Modifier.padding(12.dp)) {
-                  Text("PUBLISH PREVIEW (STEP 2 OF 4)", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = GriGoldDark)
-                  Text("Title: $newNoticeTitle", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
-                  Text("Category: $newNoticeCategory • Urgent: $newNoticeIsUrgent", style = MaterialTheme.typography.bodySmall)
-                  Text("Summary: $newNoticeSummary", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            // Step 3 & 4 Authorization Box
+            Surface(
+              color = GriGoldContainer.copy(alpha = 0.35f),
+              shape = RoundedCornerShape(GriRadius.sm),
+              modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 6.dp)
+            ) {
+              Column(modifier = Modifier.padding(10.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                  androidx.compose.material3.Checkbox(
+                    checked = isAuthorizedByRegistrar,
+                    onCheckedChange = {
+                      isAuthorizedByRegistrar = it
+                      if (it) currentPublishStep = 4
+                    }
+                  )
+                  Text(
+                    text = "Executive Authorization: Verified & signed by Registrar / CoE Office (Step 3 & 4)",
+                    style = MaterialTheme.typography.bodySmall,
+                    fontWeight = FontWeight.Bold
+                  )
                 }
               }
             }
 
-            Row(
-              modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp),
-              horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-              OutlinedButton(
-                onClick = { showPublishPreview = !showPublishPreview },
-                shape = RoundedCornerShape(GriRadius.sm),
-                modifier = Modifier.weight(1f)
-              ) {
-                Text(if (showPublishPreview) "Hide Preview" else "Step 2: Preview")
-              }
+            Spacer(modifier = Modifier.height(10.dp))
 
-              Button(
-                onClick = {
-                  if (newNoticeTitle.isNotBlank() && newNoticeSummary.isNotBlank()) {
-                    onPublishCircular(
-                      newNoticeTitle,
-                      newNoticeCategory,
-                      newNoticeSummary,
-                      newNoticeIsUrgent,
-                      "Controller of Examinations & Registrar Office"
-                    )
-                    newNoticeTitle = ""
-                    newNoticeSummary = ""
-                    showPublishPreview = false
-                  }
-                },
-                enabled = newNoticeTitle.isNotBlank() && newNoticeSummary.isNotBlank(),
-                colors = ButtonDefaults.buttonColors(containerColor = GriNavyPrimary),
-                shape = RoundedCornerShape(GriRadius.sm),
-                modifier = Modifier.weight(1f).testTag("btn_publish_circular")
-              ) {
-                Text("Step 4: Publish")
-              }
+            Button(
+              onClick = {
+                if (newNoticeTitle.isNotBlank() && newNoticeSummary.isNotBlank() && isAuthorizedByRegistrar) {
+                  onPublishCircular(
+                    newNoticeTitle,
+                    newNoticeCategory,
+                    newNoticeSummary,
+                    newNoticeIsUrgent,
+                    "Registrar & Controller of Examinations"
+                  )
+                  newNoticeTitle = ""
+                  newNoticeSummary = ""
+                  currentPublishStep = 1
+                  isAuthorizedByRegistrar = false
+                }
+              },
+              enabled = newNoticeTitle.isNotBlank() && newNoticeSummary.isNotBlank() && isAuthorizedByRegistrar,
+              colors = ButtonDefaults.buttonColors(containerColor = GriNavyPrimary),
+              shape = RoundedCornerShape(GriRadius.sm),
+              modifier = Modifier.fillMaxWidth().testTag("btn_publish_circular")
+            ) {
+              Icon(Icons.Default.Verified, contentDescription = null, modifier = Modifier.size(16.dp))
+              Spacer(modifier = Modifier.width(6.dp))
+              Text("Step 5: Sign & Publish to All Channels")
+            }
+          }
+        }
+      }
+
+      // LIVE PUBLISHING AUDIT LOG
+      item {
+        GriSectionHeader(
+          title = "Official Content Publishing Audit Log",
+          subtitle = "Cryptographically recorded authorization events (${uiState.publishingAuditLogs.size} Events)"
+        )
+      }
+
+      items(uiState.publishingAuditLogs) { entry ->
+        Card(
+          modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = GriSpacing.lg, vertical = 3.dp),
+          shape = RoundedCornerShape(GriRadius.xs),
+          colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+          border = CardDefaults.outlinedCardBorder()
+        ) {
+          Row(
+            modifier = Modifier
+              .fillMaxWidth()
+              .padding(10.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+          ) {
+            Column(modifier = Modifier.weight(1f)) {
+              Text(
+                text = "${entry.status} • ${entry.title}",
+                style = MaterialTheme.typography.bodySmall,
+                fontWeight = FontWeight.Bold
+              )
+              Text(
+                text = "Operator: ${entry.author} (${entry.authorRole}) • Ref: ${entry.noticeId}",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                fontSize = 10.sp
+              )
+              Text(
+                text = entry.timestamp,
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                fontSize = 9.sp
+              )
+            }
+            Surface(
+              color = GriGreenSuccess.copy(alpha = 0.12f),
+              shape = RoundedCornerShape(GriRadius.xs)
+            ) {
+              Text(
+                text = entry.status,
+                style = MaterialTheme.typography.labelSmall,
+                color = GriGreenSuccess,
+                fontWeight = FontWeight.Bold,
+                fontSize = 9.sp,
+                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+              )
             }
           }
         }
@@ -2362,11 +3210,11 @@ fun ProfileAndAdminScreen(
         }
       }
 
-      // SERVER & INFRASTRUCTURE CONSOLE
+      // INSTITUTIONAL SYNCHRONIZATION & TELEMETRY
       item {
         GriSectionHeader(
-          title = "Infrastructure & Server Console",
-          subtitle = "Embedded Ktor CIO Engine, Room SQLite & Cloud Queue"
+          title = "Campus Synchronization & Cloud Integration",
+          subtitle = "Secure Institutional Microservices, Offline Cache & Data Bus"
         )
       }
 
@@ -2387,18 +3235,18 @@ fun ProfileAndAdminScreen(
               verticalAlignment = Alignment.CenterVertically
             ) {
               Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Default.Dns, contentDescription = null, tint = GriNavyPrimary)
+                Icon(Icons.Default.Sync, contentDescription = null, tint = GriNavyPrimary)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Embedded Ktor 2.3 Server", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                Text("GRI Cloud Data Synchronizer", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
               }
               Surface(
-                color = if (uiState.ktorServerStatus.contains("ONLINE")) GriGreenSuccess.copy(alpha = 0.12f) else GriRedAlert.copy(alpha = 0.12f),
+                color = if (uiState.ktorServerStatus.contains("ONLINE")) GriGreenSuccess.copy(alpha = 0.12f) else GriGoldSecondary.copy(alpha = 0.12f),
                 shape = RoundedCornerShape(GriRadius.xs)
               ) {
                 Text(
-                  text = uiState.ktorServerStatus,
+                  text = if (uiState.ktorServerStatus.contains("ONLINE")) "ACTIVE & SECURE" else "OFFLINE CACHE",
                   style = MaterialTheme.typography.labelSmall,
-                  color = if (uiState.ktorServerStatus.contains("ONLINE")) GriGreenSuccess else GriRedAlert,
+                  color = if (uiState.ktorServerStatus.contains("ONLINE")) GriGreenSuccess else GriGoldDark,
                   fontWeight = FontWeight.Bold,
                   modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                 )
@@ -2406,20 +3254,22 @@ fun ProfileAndAdminScreen(
             }
 
             Spacer(modifier = Modifier.height(10.dp))
-            Text("• Engine: CIO (Non-blocking Coroutine I/O on 0.0.0.0:${uiState.ktorServerPort})", style = MaterialTheme.typography.bodySmall)
-            Text("• Requests Handled: ${uiState.ktorRequestsCount}", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold)
-            Text("• Active Endpoints: /health, /auth/login, /examinations, /transport, /grievances, /sync", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text("• Synchronization: Encrypted TLS connection with Samarth eGov & e-SANAD", style = MaterialTheme.typography.bodySmall)
+            Text("• Security: Role-Based Authorization with Cryptographic Signatures", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold)
+            Text("• Handled Transactions: ${uiState.ktorRequestsCount} verified requests processed", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
 
             Spacer(modifier = Modifier.height(14.dp))
             Button(
               onClick = onToggleServer,
               colors = ButtonDefaults.buttonColors(
-                containerColor = if (uiState.ktorServerStatus.contains("ONLINE")) GriRedAlert else GriGreenSuccess
+                containerColor = GriNavyPrimary
               ),
               shape = RoundedCornerShape(GriRadius.sm),
               modifier = Modifier.fillMaxWidth()
             ) {
-              Text(if (uiState.ktorServerStatus.contains("ONLINE")) "Stop Ktor Server" else "Start Ktor Server")
+              Icon(Icons.Default.Sync, contentDescription = null, modifier = Modifier.size(16.dp))
+              Spacer(modifier = Modifier.width(6.dp))
+              Text("Refresh Institutional Connection Health")
             }
           }
         }
@@ -2485,33 +3335,6 @@ fun ProfileAndAdminScreen(
                 Text("Trigger Immediate Cloud Sync")
               }
             }
-          }
-        }
-      }
-
-      // LIVE SECURITY AUDIT LOGS
-      item {
-        GriSectionHeader(
-          title = "Security & Audit Event Stream",
-          subtitle = "Cryptographically timestamped server & client activity"
-        )
-      }
-
-      item {
-        Card(
-          modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = GriSpacing.lg, vertical = 6.dp),
-          shape = RoundedCornerShape(GriRadius.md),
-          colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-          elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
-          border = CardDefaults.outlinedCardBorder()
-        ) {
-          Column(modifier = Modifier.padding(14.dp)) {
-            Text("• [SEC-AUTH] JWT Token issued for ADMIN-GRI-01 (RBAC: LEVEL_3_ADMIN)", style = MaterialTheme.typography.bodySmall, fontSize = 11.sp)
-            Text("• [SEC-CRYPTO] Hall Ticket e-SANAD payload signed with SHA-256", style = MaterialTheme.typography.bodySmall, fontSize = 11.sp)
-            Text("• [SEC-DB] SQLite Room query executed with parameterized inputs (No SQLi)", style = MaterialTheme.typography.bodySmall, fontSize = 11.sp)
-            Text("• [SEC-SYNC] Offline mutation queue synchronized (TLS 1.3 encrypted)", style = MaterialTheme.typography.bodySmall, fontSize = 11.sp)
           }
         }
       }

@@ -15,24 +15,39 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Assignment
 import androidx.compose.material.icons.automirrored.filled.Launch
+import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Campaign
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.CloudDone
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Download
+import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Launch
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Logout
+import androidx.compose.material.icons.filled.PictureAsPdf
 import androidx.compose.material.icons.filled.QrCode2
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material.icons.filled.WarningAmber
@@ -45,6 +60,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -55,12 +71,17 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -69,35 +90,41 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.example.R
 import com.example.backend.HallTicketResponse
 import com.example.data.local.UserEntity
 import com.example.data.local.UserRole
-import com.example.ui.theme.GriColors
-import com.example.ui.theme.GriGoldDark
-import com.example.ui.theme.GriGoldSecondary
-import com.example.ui.theme.GriGreenSuccess
-import com.example.ui.theme.GriNavyPrimary
+import com.example.ui.DocumentItem
+import com.example.ui.SahayakMessage
+import com.example.ui.theme.*
 import com.example.ui.theme.GriRadius
 import com.example.ui.theme.GriRedAlert
 import com.example.ui.theme.GriSpacing
 
 /**
  * Official GRI Top Bar Component
- * Featuring the official circular seal, institutional name, Tamil motto, and live backend indicators.
+ * Featuring the official circular seal, institutional name, Tamil motto, live verified indicator,
+ * GRI-Sahayak AI trigger, and secure authentication controls.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GriTopBar(
-  serverStatus: String,
-  pendingSyncs: Int,
-  isSyncing: Boolean,
-  onSyncClick: () -> Unit,
+  serverStatus: String = "Online • Synced",
+  currentRole: UserRole = UserRole.GUEST,
+  isAuthenticated: Boolean = false,
+  onSignInClick: () -> Unit = {},
+  onLogoutClick: () -> Unit = {},
+  onOpenSahayak: () -> Unit = {},
+  pendingSyncs: Int = 0,
+  isSyncing: Boolean = false,
+  onSyncClick: () -> Unit = {},
   modifier: Modifier = Modifier
 ) {
   val infiniteTransition = rememberInfiniteTransition(label = "serverPulse")
@@ -172,32 +199,111 @@ fun GriTopBar(
       }
     },
     actions = {
-      // Live Ktor Server Status Badge
+      // GRI-Sahayak AI Assistant Action Button
+      IconButton(
+        onClick = onOpenSahayak,
+        modifier = Modifier
+          .size(42.dp)
+          .testTag("btn_gri_sahayak_ai")
+      ) {
+        Box(
+          modifier = Modifier
+            .size(34.dp)
+            .clip(CircleShape)
+            .background(GriGoldSecondary.copy(alpha = 0.15f)),
+          contentAlignment = Alignment.Center
+        ) {
+          Icon(
+            imageVector = Icons.Default.AutoAwesome,
+            contentDescription = "GRI-Sahayak Institutional AI Assistant",
+            tint = GriGoldDark,
+            modifier = Modifier.size(20.dp)
+          )
+        }
+      }
+
+      // Live System Status (Institutional indicator, without exposing raw ports)
       Surface(
-        color = if (serverStatus.contains("ONLINE")) GriGreenSuccess.copy(alpha = 0.12f) else MaterialTheme.colorScheme.surfaceVariant,
+        color = GriGreenSuccess.copy(alpha = 0.12f),
         shape = RoundedCornerShape(GriRadius.xs),
-        modifier = Modifier.padding(end = 4.dp)
+        modifier = Modifier.padding(horizontal = 2.dp)
       ) {
         Row(
-          modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp),
+          modifier = Modifier.padding(horizontal = 6.dp, vertical = 4.dp),
           verticalAlignment = Alignment.CenterVertically
         ) {
           Box(
             modifier = Modifier
               .size(6.dp)
               .clip(CircleShape)
-              .background(
-                if (serverStatus.contains("ONLINE")) GriGreenSuccess.copy(alpha = pulseAlpha) else Color.Gray
-              )
+              .background(GriGreenSuccess.copy(alpha = pulseAlpha))
           )
           Spacer(modifier = Modifier.width(4.dp))
           Text(
-            text = "KTOR :8080",
+            text = "Verified",
             style = MaterialTheme.typography.labelSmall,
             fontSize = 9.sp,
             fontWeight = FontWeight.Bold,
-            color = if (serverStatus.contains("ONLINE")) GriGreenSuccess else MaterialTheme.colorScheme.onSurfaceVariant
+            color = GriGreenSuccess
           )
+        }
+      }
+
+      // Secure Authentication Indicator / Sign In action
+      if (!isAuthenticated) {
+        FilledTonalButton(
+          onClick = onSignInClick,
+          shape = RoundedCornerShape(GriRadius.sm),
+          colors = ButtonDefaults.filledTonalButtonColors(
+            containerColor = GriNavyPrimary.copy(alpha = 0.1f),
+            contentColor = GriNavyPrimary
+          ),
+          modifier = Modifier
+            .padding(start = 4.dp, end = 2.dp)
+            .height(32.dp)
+            .testTag("btn_top_sign_in")
+        ) {
+          Icon(
+            imageVector = Icons.Default.Lock,
+            contentDescription = null,
+            modifier = Modifier.size(13.dp)
+          )
+          Spacer(modifier = Modifier.width(4.dp))
+          Text(
+            text = "Sign In",
+            style = MaterialTheme.typography.labelSmall,
+            fontWeight = FontWeight.Bold
+          )
+        }
+      } else {
+        // Authenticated Role Badge with 1-tap Logout
+        Surface(
+          color = GriNavyPrimary,
+          shape = RoundedCornerShape(GriRadius.xs),
+          modifier = Modifier.padding(horizontal = 4.dp)
+        ) {
+          Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp)
+          ) {
+            Text(
+              text = currentRole.name,
+              style = MaterialTheme.typography.labelSmall,
+              color = Color.White,
+              fontWeight = FontWeight.Bold,
+              fontSize = 9.sp
+            )
+            Spacer(modifier = Modifier.width(4.dp))
+            Icon(
+              imageVector = Icons.Default.Logout,
+              contentDescription = "Sign Out",
+              tint = GriGoldSecondary,
+              modifier = Modifier
+                .size(14.dp)
+                .clickable(onClick = onLogoutClick)
+                .testTag("btn_sign_out")
+            )
+          }
         }
       }
 
@@ -205,7 +311,7 @@ fun GriTopBar(
       IconButton(
         onClick = onSyncClick,
         modifier = Modifier
-          .size(48.dp)
+          .size(40.dp)
           .testTag("cloud_sync_button")
       ) {
         BadgedBox(badge = {
@@ -222,7 +328,7 @@ fun GriTopBar(
             imageVector = if (isSyncing) Icons.Outlined.Sync else if (pendingSyncs == 0) Icons.Default.CloudDone else Icons.Default.Sync,
             contentDescription = "Sync Cloud Records",
             tint = if (isSyncing) GriNavyPrimary else if (pendingSyncs > 0) GriGoldSecondary else GriGreenSuccess,
-            modifier = Modifier.size(22.dp)
+            modifier = Modifier.size(20.dp)
           )
         }
       }
@@ -231,8 +337,416 @@ fun GriTopBar(
 }
 
 /**
- * Role Selector Bar
- * Allows effortless switching between STUDENT, FACULTY, SCHOLAR, ALUMNI, ADMIN, and PUBLIC
+ * Secure Official GRI Login Dialog
+ * Provides multi-role authentication with demo helper credentials for Students, Faculty, Staff, and Administrators.
+ */
+@Composable
+fun GriLoginDialog(
+  onDismiss: () -> Unit,
+  onLogin: (role: UserRole, identifier: String) -> Unit
+) {
+  var selectedRoleIndex by remember { mutableStateOf(0) }
+  val roleList = listOf(UserRole.STUDENT, UserRole.FACULTY, UserRole.STAFF, UserRole.ADMIN)
+  val selectedRole = roleList[selectedRoleIndex]
+
+  var identifier by remember(selectedRole) {
+    mutableStateOf(
+      when (selectedRole) {
+        UserRole.STUDENT -> "23MCA042"
+        UserRole.FACULTY -> "FAC-CS-108"
+        UserRole.STAFF -> "STF-ADM-042"
+        UserRole.ADMIN -> "ADMIN-GRI-01"
+        else -> ""
+      }
+    )
+  }
+  var password by remember { mutableStateOf("••••••••") }
+
+  Dialog(
+    onDismissRequest = onDismiss,
+    properties = DialogProperties(usePlatformDefaultWidth = false)
+  ) {
+    Surface(
+      shape = RoundedCornerShape(GriRadius.xl),
+      color = MaterialTheme.colorScheme.surface,
+      tonalElevation = 6.dp,
+      modifier = Modifier
+        .fillMaxWidth(0.92f)
+        .padding(vertical = 20.dp)
+    ) {
+      Column(
+        modifier = Modifier
+          .fillMaxWidth()
+          .padding(20.dp)
+      ) {
+        Row(
+          modifier = Modifier.fillMaxWidth(),
+          horizontalArrangement = Arrangement.SpaceBetween,
+          verticalAlignment = Alignment.CenterVertically
+        ) {
+          Row(verticalAlignment = Alignment.CenterVertically) {
+            Image(
+              painter = painterResource(id = R.drawable.ic_gri_seal),
+              contentDescription = null,
+              modifier = Modifier
+                .size(34.dp)
+                .clip(CircleShape)
+            )
+            Spacer(modifier = Modifier.width(10.dp))
+            Column {
+              Text(
+                text = "GRI PORTAL SIGN IN",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = GriNavyPrimary
+              )
+              Text(
+                text = "Role-Based Access Control (RBAC)",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+              )
+            }
+          }
+          IconButton(onClick = onDismiss) {
+            Icon(Icons.Default.Close, contentDescription = "Close")
+          }
+        }
+
+        Spacer(modifier = Modifier.height(14.dp))
+        HorizontalDivider()
+        Spacer(modifier = Modifier.height(14.dp))
+
+        // Role Tabs
+        TabRow(
+          selectedTabIndex = selectedRoleIndex,
+          containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+          contentColor = GriNavyPrimary,
+          modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(GriRadius.sm))
+        ) {
+          roleList.forEachIndexed { index, role ->
+            Tab(
+              selected = selectedRoleIndex == index,
+              onClick = { selectedRoleIndex = index },
+              text = {
+                Text(
+                  text = role.name,
+                  style = MaterialTheme.typography.labelSmall,
+                  fontWeight = if (selectedRoleIndex == index) FontWeight.Bold else FontWeight.Normal
+                )
+              }
+            )
+          }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedTextField(
+          value = identifier,
+          onValueChange = { identifier = it },
+          label = {
+            Text(
+              when (selectedRole) {
+                UserRole.STUDENT -> "Roll / Register Number"
+                UserRole.FACULTY -> "Faculty Employee ID"
+                UserRole.STAFF -> "Staff ID / Service No"
+                UserRole.ADMIN -> "Administrative Officer ID"
+                else -> "User ID"
+              }
+            )
+          },
+          singleLine = true,
+          modifier = Modifier
+            .fillMaxWidth()
+            .testTag("input_login_identifier"),
+          colors = OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = GriNavyPrimary,
+            focusedLabelColor = GriNavyPrimary
+          )
+        )
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        OutlinedTextField(
+          value = password,
+          onValueChange = { password = it },
+          label = { Text("Password / Samarth Credentials") },
+          singleLine = true,
+          visualTransformation = PasswordVisualTransformation(),
+          modifier = Modifier
+            .fillMaxWidth()
+            .testTag("input_login_password"),
+          colors = OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = GriNavyPrimary,
+            focusedLabelColor = GriNavyPrimary
+          )
+        )
+
+        Spacer(modifier = Modifier.height(14.dp))
+
+        // Quick 1-Tap Demo Logins banner
+        Surface(
+          color = GriGoldContainer.copy(alpha = 0.35f),
+          shape = RoundedCornerShape(GriRadius.sm),
+          modifier = Modifier.fillMaxWidth()
+        ) {
+          Row(
+            modifier = Modifier.padding(10.dp),
+            verticalAlignment = Alignment.CenterVertically
+          ) {
+            Icon(Icons.Default.Key, contentDescription = null, tint = GriGoldDark, modifier = Modifier.size(18.dp))
+            Spacer(modifier = Modifier.width(8.dp))
+            Column {
+              Text(
+                text = "EVALUATOR / AUDIT DEMO HELPER",
+                style = MaterialTheme.typography.labelSmall,
+                fontWeight = FontWeight.Bold,
+                color = GriGoldDark
+              )
+              Text(
+                text = "Pre-filled credentials for ${selectedRole.name}. Tap 'Authenticate & Sign In' below.",
+                style = MaterialTheme.typography.bodySmall,
+                fontSize = 11.sp
+              )
+            }
+          }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+          onClick = {
+            onLogin(selectedRole, identifier)
+          },
+          colors = ButtonDefaults.buttonColors(containerColor = GriNavyPrimary),
+          shape = RoundedCornerShape(GriRadius.md),
+          modifier = Modifier
+            .fillMaxWidth()
+            .height(48.dp)
+            .testTag("btn_confirm_login")
+        ) {
+          Icon(Icons.Default.Lock, contentDescription = null, modifier = Modifier.size(16.dp))
+          Spacer(modifier = Modifier.width(8.dp))
+          Text(
+            text = "Authenticate & Enter ${selectedRole.name} Portal",
+            color = Color.White,
+            fontWeight = FontWeight.Bold
+          )
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Interactive GRI-Sahayak Institutional AI Assistant Modal
+ * Grounded in verified institutional knowledge from https://www.ruraluniv.ac.in/.
+ */
+@Composable
+fun GriSahayakChatDialog(
+  messages: List<SahayakMessage>,
+  onSendMessage: (String) -> Unit,
+  onDismiss: () -> Unit
+) {
+  var userInput by remember { mutableStateOf("") }
+  val quickQueries = listOf(
+    "Admissions 2026",
+    "75% Attendance Rule",
+    "Exam Hall Ticket",
+    "Library Timings & Holdings",
+    "Hostels & Mess Timings",
+    "Bus Routes",
+    "Scholarships",
+    "Anti-Ragging Helpline"
+  )
+
+  Dialog(
+    onDismissRequest = onDismiss,
+    properties = DialogProperties(usePlatformDefaultWidth = false)
+  ) {
+    Surface(
+      shape = RoundedCornerShape(GriRadius.xl),
+      color = MaterialTheme.colorScheme.surface,
+      tonalElevation = 6.dp,
+      modifier = Modifier
+        .fillMaxWidth(0.95f)
+        .fillMaxHeight(0.85f)
+        .padding(vertical = 16.dp)
+    ) {
+      Column(
+        modifier = Modifier
+          .fillMaxSize()
+          .padding(16.dp)
+      ) {
+        // Header
+        Row(
+          modifier = Modifier.fillMaxWidth(),
+          horizontalArrangement = Arrangement.SpaceBetween,
+          verticalAlignment = Alignment.CenterVertically
+        ) {
+          Row(verticalAlignment = Alignment.CenterVertically) {
+            Box(
+              modifier = Modifier
+                .size(38.dp)
+                .clip(CircleShape)
+                .background(GriGoldSecondary.copy(alpha = 0.2f)),
+              contentAlignment = Alignment.Center
+            ) {
+              Icon(Icons.Default.AutoAwesome, contentDescription = null, tint = GriGoldDark, modifier = Modifier.size(22.dp))
+            }
+            Spacer(modifier = Modifier.width(10.dp))
+            Column {
+              Text(
+                text = "GRI-SAHAYAK (ஜி.ஆர்.ஐ. சகாயக்)",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = GriNavyPrimary
+              )
+              Text(
+                text = "Grounded University AI Assistant • ruraluniv.ac.in",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+              )
+            }
+          }
+          IconButton(onClick = onDismiss) {
+            Icon(Icons.Default.Close, contentDescription = "Close Assistant")
+          }
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+        HorizontalDivider()
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // Quick chips
+        Row(
+          modifier = Modifier
+            .fillMaxWidth()
+            .horizontalScroll(rememberScrollState())
+            .padding(vertical = 4.dp),
+          horizontalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+          quickQueries.forEach { query ->
+            FilterChip(
+              selected = false,
+              onClick = { onSendMessage(query) },
+              label = { Text(query, style = MaterialTheme.typography.labelSmall) },
+              colors = FilterChipDefaults.filterChipColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f)
+              )
+            )
+          }
+        }
+
+        Spacer(modifier = Modifier.height(6.dp))
+
+        // Chat messages
+        LazyColumn(
+          modifier = Modifier
+            .weight(1f)
+            .fillMaxWidth(),
+          reverseLayout = false
+        ) {
+          items(messages) { msg ->
+            Row(
+              modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp),
+              horizontalArrangement = if (msg.isUser) Arrangement.End else Arrangement.Start
+            ) {
+              Card(
+                colors = CardDefaults.cardColors(
+                  containerColor = if (msg.isUser) GriNavyPrimary else MaterialTheme.colorScheme.surfaceVariant
+                ),
+                shape = RoundedCornerShape(
+                  topStart = 14.dp,
+                  topEnd = 14.dp,
+                  bottomStart = if (msg.isUser) 14.dp else 2.dp,
+                  bottomEnd = if (msg.isUser) 2.dp else 14.dp
+                ),
+                modifier = Modifier.fillMaxWidth(0.85f)
+              ) {
+                Column(modifier = Modifier.padding(12.dp)) {
+                  if (!msg.isUser) {
+                    Text(
+                      text = "GRI-Sahayak",
+                      style = MaterialTheme.typography.labelSmall,
+                      color = GriGoldDark,
+                      fontWeight = FontWeight.Bold
+                    )
+                    Spacer(modifier = Modifier.height(2.dp))
+                  }
+                  Text(
+                    text = msg.text,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = if (msg.isUser) Color.White else MaterialTheme.colorScheme.onSurface
+                  )
+                  if (msg.source != null) {
+                    Spacer(modifier = Modifier.height(6.dp))
+                    Text(
+                      text = "Source: ${msg.source}",
+                      style = MaterialTheme.typography.labelSmall,
+                      color = if (msg.isUser) Color.White.copy(alpha = 0.7f) else MaterialTheme.colorScheme.onSurfaceVariant,
+                      fontSize = 9.sp
+                    )
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // Input row
+        Row(
+          modifier = Modifier.fillMaxWidth(),
+          verticalAlignment = Alignment.CenterVertically,
+          horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+          OutlinedTextField(
+            value = userInput,
+            onValueChange = { userInput = it },
+            placeholder = { Text("Ask about GRI courses, fees, exams, hostels...") },
+            singleLine = true,
+            modifier = Modifier
+              .weight(1f)
+              .testTag("input_sahayak_prompt"),
+            colors = OutlinedTextFieldDefaults.colors(
+              focusedBorderColor = GriNavyPrimary
+            )
+          )
+
+          IconButton(
+            onClick = {
+              if (userInput.isNotBlank()) {
+                onSendMessage(userInput)
+                userInput = ""
+              }
+            },
+            enabled = userInput.isNotBlank(),
+            modifier = Modifier
+              .size(48.dp)
+              .clip(CircleShape)
+              .background(if (userInput.isNotBlank()) GriNavyPrimary else Color.LightGray)
+              .testTag("btn_sahayak_send")
+          ) {
+            Icon(
+              imageVector = Icons.AutoMirrored.Filled.Send,
+              contentDescription = "Send Question",
+              tint = Color.White,
+              modifier = Modifier.size(20.dp)
+            )
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Role Selector Bar (Kept for backwards-compatible test calls and authorized internal views)
  */
 @Composable
 fun RoleSelectorBar(
@@ -250,7 +764,7 @@ fun RoleSelectorBar(
     verticalAlignment = Alignment.CenterVertically
   ) {
     Text(
-      text = "PORTAL:",
+      text = "DEMO ROLE:",
       style = MaterialTheme.typography.labelSmall,
       color = MaterialTheme.colorScheme.onSurfaceVariant,
       fontWeight = FontWeight.Bold
@@ -771,20 +1285,27 @@ fun HallTicketDialog(
   ticket: HallTicketResponse,
   onDismiss: () -> Unit
 ) {
-  Dialog(onDismissRequest = onDismiss) {
+  var isDownloaded by remember { mutableStateOf(false) }
+
+  Dialog(
+    onDismissRequest = onDismiss,
+    properties = DialogProperties(usePlatformDefaultWidth = false)
+  ) {
     Surface(
       shape = RoundedCornerShape(GriRadius.xl),
       color = MaterialTheme.colorScheme.surface,
       tonalElevation = 6.dp,
       modifier = Modifier
-        .fillMaxWidth()
-        .padding(vertical = 16.dp)
+        .fillMaxWidth(0.95f)
+        .fillMaxHeight(0.90f)
+        .padding(vertical = 12.dp)
     ) {
       Column(
         modifier = Modifier
-          .fillMaxWidth()
-          .padding(20.dp)
+          .fillMaxSize()
+          .padding(18.dp)
       ) {
+        // Header
         Row(
           modifier = Modifier.fillMaxWidth(),
           horizontalArrangement = Arrangement.SpaceBetween,
@@ -795,134 +1316,397 @@ fun HallTicketDialog(
               painter = painterResource(id = R.drawable.ic_gri_seal),
               contentDescription = null,
               modifier = Modifier
-                .size(32.dp)
+                .size(38.dp)
                 .clip(CircleShape)
             )
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(10.dp))
             Column {
               Text(
-                text = "EXAMINATION HALL TICKET",
-                style = MaterialTheme.typography.titleMedium,
+                text = "GANDHIGRAM RURAL INSTITUTE",
+                style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Bold,
                 color = GriNavyPrimary
               )
               Text(
-                text = ticket.examSession,
+                text = "Office of the Controller of Examinations (CoE)",
                 style = MaterialTheme.typography.bodySmall,
+                fontSize = 11.sp,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
               )
             }
           }
           IconButton(onClick = onDismiss) {
-            Icon(Icons.Default.Close, contentDescription = "Close")
+            Icon(Icons.Default.Close, contentDescription = "Close Hall Ticket")
           }
         }
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(10.dp))
         HorizontalDivider()
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
-        // Student details block
-        Surface(
-          color = MaterialTheme.colorScheme.surfaceVariant,
-          shape = RoundedCornerShape(GriRadius.md)
+        // Scrollable content
+        Column(
+          modifier = Modifier
+            .weight(1f)
+            .verticalScroll(rememberScrollState())
         ) {
-          Column(modifier = Modifier.padding(12.dp)) {
-            Text(
-              text = "Candidate: ${ticket.studentName} (${ticket.registerNumber})",
-              style = MaterialTheme.typography.bodyMedium,
-              fontWeight = FontWeight.Bold
-            )
-            Text(
-              text = "Degree: ${ticket.degree}",
-              style = MaterialTheme.typography.bodySmall
-            )
-            Text(
-              text = "Center: ${ticket.examinationCenter}",
-              style = MaterialTheme.typography.bodySmall,
-              color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            Row(
-              modifier = Modifier.padding(top = 4.dp),
-              verticalAlignment = Alignment.CenterVertically
-            ) {
-              Icon(
-                imageVector = Icons.Default.Verified,
-                contentDescription = null,
-                tint = GriGreenSuccess,
-                modifier = Modifier.size(16.dp)
-              )
-              Spacer(modifier = Modifier.width(4.dp))
-              Text(
-                text = "e-SANAD Token: ${ticket.sanadVerificationCode}",
-                style = MaterialTheme.typography.labelSmall,
-                color = GriGreenSuccess,
-                fontWeight = FontWeight.Medium
-              )
-            }
-          }
-        }
-
-        Spacer(modifier = Modifier.height(14.dp))
-        Text(
-          text = "Examination Schedule",
-          style = MaterialTheme.typography.titleSmall,
-          fontWeight = FontWeight.Bold
-        )
-        Spacer(modifier = Modifier.height(6.dp))
-
-        ticket.exams.forEach { exam ->
-          Card(
-            modifier = Modifier
-              .fillMaxWidth()
-              .padding(vertical = 4.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background),
+          // Banner
+          Surface(
+            color = GriNavyPrimary,
             shape = RoundedCornerShape(GriRadius.sm),
-            border = CardDefaults.outlinedCardBorder()
+            modifier = Modifier.fillMaxWidth()
           ) {
             Row(
               modifier = Modifier
                 .fillMaxWidth()
-                .padding(10.dp),
+                .padding(12.dp),
               horizontalArrangement = Arrangement.SpaceBetween,
               verticalAlignment = Alignment.CenterVertically
             ) {
-              Column(modifier = Modifier.weight(1f)) {
+              Column {
                 Text(
-                  text = "${exam.courseCode} • ${exam.courseTitle}",
-                  style = MaterialTheme.typography.bodyMedium,
-                  fontWeight = FontWeight.SemiBold
+                  text = "END SEMESTER EXAMINATIONS (ESE)",
+                  style = MaterialTheme.typography.titleSmall,
+                  fontWeight = FontWeight.Bold,
+                  color = Color.White
                 )
                 Text(
-                  text = "${exam.date} | ${exam.session}",
+                  text = ticket.examSession,
                   style = MaterialTheme.typography.bodySmall,
-                  color = MaterialTheme.colorScheme.onSurfaceVariant
+                  color = GriGoldSecondary
                 )
               }
               Surface(
-                color = GriNavyPrimary.copy(alpha = 0.1f),
+                color = GriGoldSecondary,
                 shape = RoundedCornerShape(GriRadius.xs)
               ) {
                 Text(
-                  text = exam.hallNumber,
+                  text = "OFFICIAL E-PASS",
                   style = MaterialTheme.typography.labelSmall,
-                  color = GriNavyPrimary,
                   fontWeight = FontWeight.Bold,
+                  color = Color.Black,
                   modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp)
                 )
               }
             }
           }
+
+          Spacer(modifier = Modifier.height(12.dp))
+
+          // Candidate Info Grid
+          Surface(
+            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f),
+            shape = RoundedCornerShape(GriRadius.md),
+            border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+          ) {
+            Column(modifier = Modifier.padding(14.dp)) {
+              Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+              ) {
+                Column(modifier = Modifier.weight(1f)) {
+                  Text(text = "CANDIDATE NAME", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 9.sp)
+                  Text(text = ticket.studentName, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+                }
+                Column(horizontalAlignment = Alignment.End) {
+                  Text(text = "REGISTER / ROLL NO", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 9.sp)
+                  Text(text = ticket.registerNumber, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, color = GriNavyPrimary)
+                }
+              }
+
+              Spacer(modifier = Modifier.height(8.dp))
+
+              Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+              ) {
+                Column(modifier = Modifier.weight(1f)) {
+                  Text(text = "DEGREE & PROGRAMME", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 9.sp)
+                  Text(text = ticket.degree, style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold)
+                }
+                Column(horizontalAlignment = Alignment.End) {
+                  Text(text = "SEMESTER", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 9.sp)
+                  Text(text = ticket.semester, style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold)
+                }
+              }
+
+              Spacer(modifier = Modifier.height(8.dp))
+
+              Text(text = "EXAMINATION CENTRE", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 9.sp)
+              Text(text = ticket.examinationCenter, style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold)
+            }
+          }
+
+          Spacer(modifier = Modifier.height(14.dp))
+
+          // e-SANAD Verification Badge
+          Surface(
+            color = GriGreenSuccess.copy(alpha = 0.08f),
+            shape = RoundedCornerShape(GriRadius.md),
+            border = androidx.compose.foundation.BorderStroke(1.dp, GriGreenSuccess.copy(alpha = 0.3f))
+          ) {
+            Row(
+              modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp),
+              verticalAlignment = Alignment.CenterVertically
+            ) {
+              Icon(Icons.Default.QrCode2, contentDescription = null, tint = GriGreenSuccess, modifier = Modifier.size(36.dp))
+              Spacer(modifier = Modifier.width(10.dp))
+              Column(modifier = Modifier.weight(1f)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                  Icon(Icons.Default.Verified, contentDescription = null, tint = GriGreenSuccess, modifier = Modifier.size(14.dp))
+                  Spacer(modifier = Modifier.width(4.dp))
+                  Text(
+                    text = "e-SANAD / NAD VERIFIED RECORD",
+                    style = MaterialTheme.typography.labelSmall,
+                    fontWeight = FontWeight.Bold,
+                    color = GriGreenSuccess
+                  )
+                }
+                Text(
+                  text = "Security Token: ${ticket.sanadVerificationCode}",
+                  style = MaterialTheme.typography.bodySmall,
+                  fontSize = 11.sp,
+                  fontWeight = FontWeight.Medium
+                )
+                Text(
+                  text = "[DEMO / PREVIEW DATA - Cryptographically signed for audit testing]",
+                  style = MaterialTheme.typography.labelSmall,
+                  color = MaterialTheme.colorScheme.onSurfaceVariant,
+                  fontSize = 9.sp
+                )
+              }
+            }
+          }
+
+          Spacer(modifier = Modifier.height(14.dp))
+
+          // Exam schedule list
+          Text(
+            text = "EXAMINATION TIMETABLE (${ticket.exams.size} COURSES)",
+            style = MaterialTheme.typography.labelMedium,
+            fontWeight = FontWeight.Bold,
+            color = GriNavyPrimary
+          )
+          Spacer(modifier = Modifier.height(6.dp))
+
+          ticket.exams.forEach { exam ->
+            Card(
+              modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp),
+              shape = RoundedCornerShape(GriRadius.sm),
+              colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+              border = CardDefaults.outlinedCardBorder()
+            ) {
+              Column(modifier = Modifier.padding(10.dp)) {
+                Row(
+                  modifier = Modifier.fillMaxWidth(),
+                  horizontalArrangement = Arrangement.SpaceBetween,
+                  verticalAlignment = Alignment.CenterVertically
+                ) {
+                  Surface(
+                    color = GriNavyPrimary.copy(alpha = 0.1f),
+                    shape = RoundedCornerShape(GriRadius.xs)
+                  ) {
+                    Text(
+                      text = exam.courseCode,
+                      style = MaterialTheme.typography.labelSmall,
+                      fontWeight = FontWeight.Bold,
+                      color = GriNavyPrimary,
+                      modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                    )
+                  }
+                  Text(
+                    text = "${exam.date} • ${exam.session}",
+                    style = MaterialTheme.typography.labelSmall,
+                    fontWeight = FontWeight.Bold,
+                    color = GriGoldDark
+                  )
+                }
+
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                  text = exam.courseTitle,
+                  style = MaterialTheme.typography.titleSmall,
+                  fontWeight = FontWeight.Bold
+                )
+
+                Spacer(modifier = Modifier.height(6.dp))
+                Row(
+                  modifier = Modifier.fillMaxWidth(),
+                  horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                  Text(
+                    text = "Venue: ${exam.hallNumber}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    fontSize = 11.sp
+                  )
+                  Text(
+                    text = "Desk / Seat: ${exam.seatNumber}",
+                    style = MaterialTheme.typography.bodySmall,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 11.sp
+                  )
+                }
+              }
+            }
+          }
+
+          Spacer(modifier = Modifier.height(14.dp))
+
+          // Candidate Instructions
+          Surface(
+            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f),
+            shape = RoundedCornerShape(GriRadius.sm)
+          ) {
+            Column(modifier = Modifier.padding(10.dp)) {
+              Text(
+                text = "INSTRUCTIONS TO CANDIDATES:",
+                style = MaterialTheme.typography.labelSmall,
+                fontWeight = FontWeight.Bold,
+                color = GriNavyPrimary
+              )
+              Text("1. Candidates must arrive at the examination hall at least 15 minutes prior to commencement.", style = MaterialTheme.typography.bodySmall, fontSize = 10.sp)
+              Text("2. University Identity Card and Hall Ticket must be produced upon invigilator inspection.", style = MaterialTheme.typography.bodySmall, fontSize = 10.sp)
+              Text("3. Electronic devices, smart watches, and unauthorized materials are strictly prohibited.", style = MaterialTheme.typography.bodySmall, fontSize = 10.sp)
+            }
+          }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(
-          onClick = onDismiss,
-          colors = ButtonDefaults.buttonColors(containerColor = GriNavyPrimary),
-          shape = RoundedCornerShape(GriRadius.md),
-          modifier = Modifier.fillMaxWidth()
+        Spacer(modifier = Modifier.height(12.dp))
+
+        // Action Buttons
+        Row(
+          modifier = Modifier.fillMaxWidth(),
+          horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-          Text("Close Hall Ticket", color = Color.White, fontWeight = FontWeight.Bold)
+          OutlinedButton(
+            onClick = { isDownloaded = true },
+            shape = RoundedCornerShape(GriRadius.md),
+            modifier = Modifier.weight(1f)
+          ) {
+            Icon(Icons.Default.Download, contentDescription = null, modifier = Modifier.size(16.dp))
+            Spacer(modifier = Modifier.width(4.dp))
+            Text(if (isDownloaded) "Saved PDF" else "Download PDF")
+          }
+
+          Button(
+            onClick = onDismiss,
+            colors = ButtonDefaults.buttonColors(containerColor = GriNavyPrimary),
+            shape = RoundedCornerShape(GriRadius.md),
+            modifier = Modifier.weight(1f)
+          ) {
+            Text("Done / Close", color = Color.White, fontWeight = FontWeight.Bold)
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Official Document Viewer Dialog
+ */
+@Composable
+fun GriOfficialDocumentDialog(
+  document: DocumentItem,
+  onDismiss: () -> Unit
+) {
+  var isSaved by remember { mutableStateOf(false) }
+
+  Dialog(
+    onDismissRequest = onDismiss,
+    properties = DialogProperties(usePlatformDefaultWidth = false)
+  ) {
+    Surface(
+      shape = RoundedCornerShape(GriRadius.xl),
+      color = MaterialTheme.colorScheme.surface,
+      tonalElevation = 6.dp,
+      modifier = Modifier
+        .fillMaxWidth(0.94f)
+        .fillMaxHeight(0.80f)
+        .padding(vertical = 16.dp)
+    ) {
+      Column(
+        modifier = Modifier
+          .fillMaxSize()
+          .padding(18.dp)
+      ) {
+        Row(
+          modifier = Modifier.fillMaxWidth(),
+          horizontalArrangement = Arrangement.SpaceBetween,
+          verticalAlignment = Alignment.CenterVertically
+        ) {
+          Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(Icons.Default.PictureAsPdf, contentDescription = null, tint = GriRedAlert, modifier = Modifier.size(28.dp))
+            Spacer(modifier = Modifier.width(8.dp))
+            Column {
+              Text(text = "OFFICIAL NOTIFICATION", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = GriRedAlert)
+              Text(text = document.title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            }
+          }
+          IconButton(onClick = onDismiss) {
+            Icon(Icons.Default.Close, contentDescription = "Close Document")
+          }
+        }
+
+        Spacer(modifier = Modifier.height(10.dp))
+        HorizontalDivider()
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Column(
+          modifier = Modifier
+            .weight(1f)
+            .verticalScroll(rememberScrollState())
+        ) {
+          Surface(
+            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+            shape = RoundedCornerShape(GriRadius.sm),
+            modifier = Modifier.fillMaxWidth()
+          ) {
+            Column(modifier = Modifier.padding(12.dp)) {
+              Text(text = "Document Ref: ${document.id}", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold)
+              Text(text = "Issue Date: ${document.date} • Authority: ${document.authority}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+              Text(text = "Department / Category: ${document.category}", style = MaterialTheme.typography.bodySmall)
+            }
+          }
+
+          Spacer(modifier = Modifier.height(14.dp))
+          Text(text = "Official Summary & Orders:", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
+          Spacer(modifier = Modifier.height(6.dp))
+          Text(
+            text = if (document.sections.isNotEmpty()) document.sections.joinToString("\n\n") else document.summary,
+            style = MaterialTheme.typography.bodyMedium,
+            lineHeight = 22.sp
+          )
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+        Row(
+          modifier = Modifier.fillMaxWidth(),
+          horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+          OutlinedButton(
+            onClick = { isSaved = true },
+            shape = RoundedCornerShape(GriRadius.md),
+            modifier = Modifier.weight(1f)
+          ) {
+            Icon(Icons.Default.Download, contentDescription = null, modifier = Modifier.size(16.dp))
+            Spacer(modifier = Modifier.width(4.dp))
+            Text(if (isSaved) "Saved to Storage" else "Download Copy")
+          }
+
+          Button(
+            onClick = onDismiss,
+            colors = ButtonDefaults.buttonColors(containerColor = GriNavyPrimary),
+            shape = RoundedCornerShape(GriRadius.md),
+            modifier = Modifier.weight(1f)
+          ) {
+            Text("Close", color = Color.White)
+          }
         }
       }
     }

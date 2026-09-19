@@ -102,6 +102,32 @@ class GriRepository(
           validThru = "Permanent"
         ),
         UserEntity(
+          id = "usr_staff",
+          name = "K. Shanmugasundaram",
+          email = "k.shanmugam@ruraluniv.ac.in",
+          role = UserRole.STAFF.name,
+          rollNo = "STF-ADM-042",
+          department = "Finance & Establishment Section",
+          semester = "Section Officer / Superintendent",
+          cgpa = "Cadre: Group B Non-Teaching",
+          isHostelite = false,
+          busPassActive = true,
+          validThru = "2032-03-31"
+        ),
+        UserEntity(
+          id = "usr_guest",
+          name = "Gandhigram Visitor",
+          email = "guest@ruraluniv.ac.in",
+          role = UserRole.GUEST.name,
+          rollNo = "GUEST-VISITOR",
+          department = "Gandhigram Rural Institute",
+          semester = "Prospective Student / Campus Visitor",
+          cgpa = "N/A",
+          isHostelite = false,
+          busPassActive = false,
+          validThru = "2026-12-31"
+        ),
+        UserEntity(
           id = "usr_public",
           name = "Gandhigram Visitor",
           email = "guest@ruraluniv.ac.in",
@@ -116,6 +142,45 @@ class GriRepository(
         )
       )
       database.userDao().insertUsers(defaultUsers)
+    } else {
+      // Ensure staff and guest accounts exist even if database was previously seeded
+      val staffUser = database.userDao().getUserByRole(UserRole.STAFF.name).first()
+      if (staffUser == null) {
+        database.userDao().insertUser(
+          UserEntity(
+            id = "usr_staff",
+            name = "K. Shanmugasundaram",
+            email = "k.shanmugam@ruraluniv.ac.in",
+            role = UserRole.STAFF.name,
+            rollNo = "STF-ADM-042",
+            department = "Finance & Establishment Section",
+            semester = "Section Officer / Superintendent",
+            cgpa = "Cadre: Group B Non-Teaching",
+            isHostelite = false,
+            busPassActive = true,
+            validThru = "2032-03-31"
+          )
+        )
+      }
+      val guestUser = database.userDao().getUserByRole(UserRole.GUEST.name).first()
+      if (guestUser == null) {
+        database.userDao().insertUser(
+          UserEntity(
+            id = "usr_guest",
+            name = "Gandhigram Visitor",
+            email = "guest@ruraluniv.ac.in",
+            role = UserRole.GUEST.name,
+            rollNo = "GUEST-VISITOR",
+            department = "Gandhigram Rural Institute",
+            semester = "Prospective Student / Campus Visitor",
+            cgpa = "N/A",
+            isHostelite = false,
+            busPassActive = false,
+            validThru = "2026-12-31"
+          )
+        )
+      }
+    }
 
       // Seed courses
       val courses = listOf(
@@ -170,7 +235,6 @@ class GriRepository(
       )
       grievances.forEach { database.grievanceDao().insertGrievance(it) }
     }
-  }
 
   suspend fun markAttendance(courseId: String) = withContext(Dispatchers.IO) {
     database.courseDao().markAttendance(courseId)

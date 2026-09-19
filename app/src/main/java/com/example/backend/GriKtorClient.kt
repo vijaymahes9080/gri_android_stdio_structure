@@ -39,9 +39,11 @@ class GriKtorClient(
     }
   }
 
-  suspend fun getHallTicket(): Result<HallTicketResponse> = withContext(Dispatchers.IO) {
+  suspend fun getHallTicket(token: String = "Bearer gri_auth_student_token"): Result<HallTicketResponse> = withContext(Dispatchers.IO) {
     runCatching {
-      client.get("$baseUrl/examinations/hallticket").body<HallTicketResponse>()
+      client.get("$baseUrl/examinations/hallticket") {
+        headers.append(io.ktor.http.HttpHeaders.Authorization, token)
+      }.body<HallTicketResponse>()
     }
   }
 

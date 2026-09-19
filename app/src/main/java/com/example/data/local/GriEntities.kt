@@ -92,3 +92,25 @@ data class SyncQueueEntity(
     val timestamp: Long = System.currentTimeMillis(),
     val isSynced: Boolean = false
 )
+
+data class StaffLeaveRecord(
+    val id: String,
+    val leaveType: String,
+    val days: Int,
+    val fromDate: String,
+    val toDate: String,
+    val status: String,
+    val reason: String
+)
+
+data class PublishingAuditEntry(
+    val id: String,
+    val noticeId: String,
+    val title: String,
+    val author: String,
+    val authorRole: String,
+    val authorizedBy: String,
+    val timestamp: String,
+    val status: String
+)
+

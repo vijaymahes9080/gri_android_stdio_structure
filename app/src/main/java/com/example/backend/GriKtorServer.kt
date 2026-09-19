@@ -60,14 +60,16 @@ data class GrievanceRequest(
 )
 
 data class HallTicketResponse(
-  val hallTicketNo: String,
-  val examSession: String,
-  val studentName: String,
-  val registerNumber: String,
-  val degree: String,
-  val examinationCenter: String,
-  val sanadVerificationCode: String,
-  val exams: List<ExamScheduleItem>
+  val hallTicketNo: String = "HT-2026-NOV-7842",
+  val examSession: String = "November / December 2026",
+  val studentName: String = "Srimari Vijay",
+  val registerNumber: String = "23MCA042",
+  val degree: String = "Master of Computer Applications (MCA)",
+  val semester: String = "Semester IV (Final Year)",
+  val department: String = "Computer Science & Applications",
+  val examinationCenter: String = "Multipurpose Examination Hall - Block B, GRI Main Campus",
+  val sanadVerificationCode: String = "SANAD-TN-GRI-2026-98124",
+  val exams: List<ExamScheduleItem> = emptyList()
 )
 
 data class ExamScheduleItem(
@@ -75,7 +77,9 @@ data class ExamScheduleItem(
   val courseTitle: String,
   val date: String,
   val session: String,
-  val hallNumber: String
+  val hallNumber: String,
+  val seatNumber: String = "Desk 12",
+  val reportingTime: String = "09:30 AM"
 )
 
 data class SecurityAuditLog(
@@ -233,13 +237,15 @@ class GriKtorServer(
                     studentName = "Srimari Vijay",
                     registerNumber = "23MCA042",
                     degree = "Master of Computer Applications (MCA)",
+                    semester = "Semester IV (Final Year)",
+                    department = "Computer Science & Applications",
                     examinationCenter = "Multipurpose Examination Hall - Block B, GRI Main Campus",
                     sanadVerificationCode = "SANAD-TN-GRI-2026-98124",
                     exams = listOf(
-                      ExamScheduleItem("CS501", "Advanced Cloud Computing", "2026-11-24", "FN 10:00 AM - 01:00 PM", "Hall 4 - Desk 12"),
-                      ExamScheduleItem("RD402", "Gandhian Reconstruction & Ethics", "2026-11-26", "FN 10:00 AM - 01:00 PM", "Hall 4 - Desk 12"),
-                      ExamScheduleItem("CS505", "Distributed Microservices & APIs", "2026-11-29", "AN 02:00 PM - 05:00 PM", "Hall 2 - Desk 05"),
-                      ExamScheduleItem("MA301", "Applied Statistical Analytics", "2026-12-02", "FN 10:00 AM - 01:00 PM", "Hall 4 - Desk 12")
+                      ExamScheduleItem("CS501", "Advanced Cloud Computing", "2026-11-24", "FN 10:00 AM - 01:00 PM", "Hall 4", "Desk A-12", "09:30 AM"),
+                      ExamScheduleItem("RD402", "Gandhian Reconstruction & Ethics", "2026-11-26", "FN 10:00 AM - 01:00 PM", "Hall 4", "Desk A-12", "09:30 AM"),
+                      ExamScheduleItem("CS505", "Distributed Mobile & Web Architectures", "2026-11-29", "AN 02:00 PM - 05:00 PM", "Hall 2", "Desk B-05", "01:30 PM"),
+                      ExamScheduleItem("MA301", "Applied Statistical Analytics", "2026-12-02", "FN 10:00 AM - 01:00 PM", "Hall 4", "Desk A-12", "09:30 AM")
                     )
                   )
                 )

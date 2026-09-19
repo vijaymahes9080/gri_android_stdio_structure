@@ -12,12 +12,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.EventNote
 import androidx.compose.material.icons.filled.DirectionsBus
-import androidx.compose.material.icons.filled.Dns
 import androidx.compose.material.icons.filled.FolderShared
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Public
-import androidx.compose.material.icons.filled.ReportProblem
-import androidx.compose.material.icons.filled.School
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -31,9 +28,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
@@ -42,9 +40,10 @@ import com.example.data.local.UserRole
 import com.example.ui.GriUiState
 import com.example.ui.GriViewModel
 import com.example.ui.NavigationTab
+import com.example.ui.components.GriLoginDialog
+import com.example.ui.components.GriSahayakChatDialog
 import com.example.ui.components.GriTopBar
 import com.example.ui.components.HallTicketDialog
-import com.example.ui.components.RoleSelectorBar
 import com.example.ui.screens.HomeScreen
 import com.example.ui.screens.NewsEventsScreen
 import com.example.ui.screens.ProfileAndAdminScreen
@@ -76,7 +75,11 @@ class MainActivity : ComponentActivity() {
           onMarkCircularRead = { viewModel.markCircularRead(it) },
           onPublishCircular = { title, cat, sum, isUrg, issuedBy -> viewModel.publishCircular(title, cat, sum, isUrg, issuedBy) },
           onSendNotification = { title, msg, aud -> viewModel.sendNotification(title, msg, aud) },
-          onClearNotification = { viewModel.clearNotification() }
+          onClearNotification = { viewModel.clearNotification() },
+          onLogin = { role, id -> viewModel.loginAsRole(role, id) },
+          onLogout = { viewModel.logout() },
+          onSendMessage = { query -> viewModel.sendSahayakMessage(query) },
+          onApplyStaffLeave = { type, start, end, reason -> viewModel.applyStaffLeave(type, start, end, reason) }
         )
       }
     }
@@ -106,9 +109,15 @@ fun GriApp(
   onMarkCircularRead: (String) -> Unit,
   onPublishCircular: (String, String, String, Boolean, String) -> Unit,
   onSendNotification: (String, String, String) -> Unit,
-  onClearNotification: () -> Unit
+  onClearNotification: () -> Unit,
+  onLogin: (UserRole, String) -> Unit,
+  onLogout: () -> Unit,
+  onSendMessage: (String) -> Unit,
+  onApplyStaffLeave: (String, String, String, String) -> Unit
 ) {
   val snackbarHostState = remember { SnackbarHostState() }
+  var showLoginDialog by remember { mutableStateOf(false) }
+  var showSahayakDialog by remember { mutableStateOf(false) }
 
   LaunchedEffect(uiState.notificationMessage) {
     uiState.notificationMessage?.let { msg ->
@@ -129,18 +138,16 @@ fun GriApp(
     modifier = Modifier.fillMaxSize(),
     contentWindowInsets = WindowInsets(0, 0, 0, 0),
     topBar = {
-      Column {
-        GriTopBar(
-          serverStatus = uiState.ktorServerStatus,
-          pendingSyncs = uiState.pendingSyncCount,
-          isSyncing = uiState.isSyncing,
-          onSyncClick = onTriggerSync
-        )
-        RoleSelectorBar(
-          currentRole = uiState.currentRole,
-          onRoleSelected = onRoleSelected
-        )
-      }
+      GriTopBar(
+        currentRole = uiState.currentRole,
+        isAuthenticated = uiState.isAuthenticated,
+        pendingSyncs = uiState.pendingSyncCount,
+        isSyncing = uiState.isSyncing,
+        onSignInClick = { showLoginDialog = true },
+        onLogoutClick = onLogout,
+        onOpenSahayak = { showSahayakDialog = true },
+        onSyncClick = onTriggerSync
+      )
     },
     bottomBar = {
       NavigationBar(
@@ -180,52 +187,70 @@ fun GriApp(
         .fillMaxSize()
         .padding(innerPadding)
     ) {
-      if (uiState.currentRole == UserRole.PUBLIC) {
-        PublicExploreScreen()
-      } else {
-        when (uiState.currentTab) {
-          NavigationTab.HOME -> {
-            HomeScreen(
-              uiState = uiState,
-              onFetchHallTicket = onFetchHallTicket,
-              onNavigateToGrievances = { onTabSelected(NavigationTab.SERVICES) },
-              onNavigateToServices = { onTabSelected(NavigationTab.SERVICES) },
-              onNavigateToAcademics = { onTabSelected(NavigationTab.SERVICES) },
-              onMarkCircularRead = onMarkCircularRead
-            )
-          }
-          NavigationTab.EXPLORE -> {
-            PublicExploreScreen()
-          }
-          NavigationTab.SERVICES -> {
-            ServicesScreen(
-              courses = uiState.courses,
-              onMarkAttendance = onMarkAttendance,
-              onFetchHallTicket = onFetchHallTicket,
-              transportRoutes = uiState.transportRoutes,
-              grievances = uiState.grievances,
-              userRole = uiState.currentRole,
-              onSubmitGrievance = onSubmitGrievance,
-              onResolveGrievance = onResolveGrievance
-            )
-          }
-          NavigationTab.NEWS -> {
-            NewsEventsScreen(
-              circulars = uiState.circulars,
-              onMarkCircularRead = onMarkCircularRead
-            )
-          }
-          NavigationTab.PROFILE -> {
-            ProfileAndAdminScreen(
-              uiState = uiState,
-              onToggleServer = onToggleServer,
-              onTriggerSync = onTriggerSync,
-              onPublishCircular = onPublishCircular,
-              onSendNotification = onSendNotification
-            )
-          }
+      when (uiState.currentTab) {
+        NavigationTab.HOME -> {
+          HomeScreen(
+            uiState = uiState,
+            onFetchHallTicket = onFetchHallTicket,
+            onNavigateToGrievances = { onTabSelected(NavigationTab.SERVICES) },
+            onNavigateToServices = { onTabSelected(NavigationTab.SERVICES) },
+            onNavigateToAcademics = { onTabSelected(NavigationTab.SERVICES) },
+            onMarkCircularRead = onMarkCircularRead
+          )
+        }
+        NavigationTab.EXPLORE -> {
+          PublicExploreScreen()
+        }
+        NavigationTab.SERVICES -> {
+          ServicesScreen(
+            courses = uiState.courses,
+            onMarkAttendance = onMarkAttendance,
+            onFetchHallTicket = onFetchHallTicket,
+            transportRoutes = uiState.transportRoutes,
+            grievances = uiState.grievances,
+            userRole = uiState.currentRole,
+            onSubmitGrievance = onSubmitGrievance,
+            onResolveGrievance = onResolveGrievance
+          )
+        }
+        NavigationTab.NEWS -> {
+          NewsEventsScreen(
+            circulars = uiState.circulars,
+            onMarkCircularRead = onMarkCircularRead
+          )
+        }
+        NavigationTab.PROFILE -> {
+          ProfileAndAdminScreen(
+            uiState = uiState,
+            onToggleServer = onToggleServer,
+            onTriggerSync = onTriggerSync,
+            onPublishCircular = onPublishCircular,
+            onSendNotification = onSendNotification,
+            onApplyStaffLeave = onApplyStaffLeave,
+            onFetchHallTicket = onFetchHallTicket
+          )
         }
       }
+    }
+
+    // Official Secure Login Dialog
+    if (showLoginDialog) {
+      GriLoginDialog(
+        onDismiss = { showLoginDialog = false },
+        onLogin = { role, id ->
+          onLogin(role, id)
+          showLoginDialog = false
+        }
+      )
+    }
+
+    // GRI-Sahayak Institutional AI Assistant Modal
+    if (showSahayakDialog) {
+      GriSahayakChatDialog(
+        messages = uiState.sahayakMessages,
+        onSendMessage = onSendMessage,
+        onDismiss = { showSahayakDialog = false }
+      )
     }
 
     // Modal dialog for Examination Hall Ticket
@@ -236,9 +261,4 @@ fun GriApp(
       )
     }
   }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-  Text(text = "Hello $name!", modifier = modifier)
 }
