@@ -5,6 +5,7 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -38,6 +39,7 @@ import androidx.compose.material.icons.filled.Campaign
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.CloudDone
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.ConfirmationNumber
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Launch
@@ -588,23 +590,39 @@ fun GriSahayakChatDialog(
           Row(verticalAlignment = Alignment.CenterVertically) {
             Box(
               modifier = Modifier
-                .size(38.dp)
+                .size(42.dp)
                 .clip(CircleShape)
-                .background(GriGoldSecondary.copy(alpha = 0.2f)),
+                .background(GriNavyPrimary),
               contentAlignment = Alignment.Center
             ) {
-              Icon(Icons.Default.AutoAwesome, contentDescription = null, tint = GriGoldDark, modifier = Modifier.size(22.dp))
+              Icon(Icons.Default.AutoAwesome, contentDescription = null, tint = GriGoldSecondary, modifier = Modifier.size(24.dp))
             }
-            Spacer(modifier = Modifier.width(10.dp))
+            Spacer(modifier = Modifier.width(12.dp))
             Column {
+              Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                  text = "GRI-SAHAYAK",
+                  style = MaterialTheme.typography.titleMedium,
+                  fontWeight = FontWeight.Bold,
+                  color = GriNavyPrimary
+                )
+                Spacer(modifier = Modifier.width(6.dp))
+                Surface(
+                  color = GriGoldContainer,
+                  shape = RoundedCornerShape(GriRadius.xs)
+                ) {
+                  Text(
+                    text = "AI Verified",
+                    style = MaterialTheme.typography.labelSmall,
+                    fontSize = 9.sp,
+                    color = GriGoldOnContainer,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp)
+                  )
+                }
+              }
               Text(
-                text = "GRI-SAHAYAK (ஜி.ஆர்.ஐ. சகாயக்)",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                color = GriNavyPrimary
-              )
-              Text(
-                text = "Grounded University AI Assistant • ruraluniv.ac.in",
+                text = "Grounded University Knowledge Base • ruraluniv.ac.in",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
               )
@@ -615,8 +633,8 @@ fun GriSahayakChatDialog(
           }
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
-        HorizontalDivider()
+        Spacer(modifier = Modifier.height(10.dp))
+        HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f))
         Spacer(modifier = Modifier.height(8.dp))
 
         // Quick chips
@@ -628,14 +646,20 @@ fun GriSahayakChatDialog(
           horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
           quickQueries.forEach { query ->
-            FilterChip(
-              selected = false,
+            Surface(
               onClick = { onSendMessage(query) },
-              label = { Text(query, style = MaterialTheme.typography.labelSmall) },
-              colors = FilterChipDefaults.filterChipColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f)
+              shape = RoundedCornerShape(GriRadius.pill),
+              color = GriNavyPrimary.copy(alpha = 0.08f),
+              border = BorderStroke(1.dp, GriNavyPrimary.copy(alpha = 0.2f))
+            ) {
+              Text(
+                text = query,
+                style = MaterialTheme.typography.labelSmall,
+                color = GriNavyPrimary,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp)
               )
-            )
+            }
           }
         }
 
@@ -652,30 +676,46 @@ fun GriSahayakChatDialog(
             Row(
               modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 4.dp),
+                .padding(vertical = 5.dp),
               horizontalArrangement = if (msg.isUser) Arrangement.End else Arrangement.Start
             ) {
               Card(
                 colors = CardDefaults.cardColors(
-                  containerColor = if (msg.isUser) GriNavyPrimary else MaterialTheme.colorScheme.surfaceVariant
+                  containerColor = if (msg.isUser) GriNavyPrimary else MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f)
                 ),
                 shape = RoundedCornerShape(
-                  topStart = 14.dp,
-                  topEnd = 14.dp,
-                  bottomStart = if (msg.isUser) 14.dp else 2.dp,
-                  bottomEnd = if (msg.isUser) 2.dp else 14.dp
+                  topStart = 16.dp,
+                  topEnd = 16.dp,
+                  bottomStart = if (msg.isUser) 16.dp else 4.dp,
+                  bottomEnd = if (msg.isUser) 4.dp else 16.dp
                 ),
+                elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+                border = if (!msg.isUser) BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.2f)) else null,
                 modifier = Modifier.fillMaxWidth(0.85f)
               ) {
-                Column(modifier = Modifier.padding(12.dp)) {
+                Column(modifier = Modifier.padding(14.dp)) {
                   if (!msg.isUser) {
-                    Text(
-                      text = "GRI-Sahayak",
-                      style = MaterialTheme.typography.labelSmall,
-                      color = GriGoldDark,
-                      fontWeight = FontWeight.Bold
-                    )
-                    Spacer(modifier = Modifier.height(2.dp))
+                    Row(
+                      verticalAlignment = Alignment.CenterVertically,
+                      horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                      Box(
+                        modifier = Modifier
+                          .size(16.dp)
+                          .clip(CircleShape)
+                          .background(GriGoldSecondary),
+                        contentAlignment = Alignment.Center
+                      ) {
+                        Icon(Icons.Default.AutoAwesome, contentDescription = null, tint = Color.Black, modifier = Modifier.size(10.dp))
+                      }
+                      Text(
+                        text = "GRI Knowledge Assistant",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = GriNavyPrimary,
+                        fontWeight = FontWeight.Bold
+                      )
+                    }
+                    Spacer(modifier = Modifier.height(6.dp))
                   }
                   Text(
                     text = msg.text,
@@ -683,13 +723,20 @@ fun GriSahayakChatDialog(
                     color = if (msg.isUser) Color.White else MaterialTheme.colorScheme.onSurface
                   )
                   if (msg.source != null) {
-                    Spacer(modifier = Modifier.height(6.dp))
-                    Text(
-                      text = "Source: ${msg.source}",
-                      style = MaterialTheme.typography.labelSmall,
-                      color = if (msg.isUser) Color.White.copy(alpha = 0.7f) else MaterialTheme.colorScheme.onSurfaceVariant,
-                      fontSize = 9.sp
-                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Surface(
+                      color = if (msg.isUser) Color.White.copy(alpha = 0.15f) else GriGoldContainer.copy(alpha = 0.6f),
+                      shape = RoundedCornerShape(GriRadius.xs)
+                    ) {
+                      Text(
+                        text = "Official Source: ${msg.source}",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = if (msg.isUser) Color.White else GriGoldOnContainer,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 9.sp,
+                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                      )
+                    }
                   }
                 }
               }
@@ -708,13 +755,15 @@ fun GriSahayakChatDialog(
           OutlinedTextField(
             value = userInput,
             onValueChange = { userInput = it },
-            placeholder = { Text("Ask about GRI courses, fees, exams, hostels...") },
+            placeholder = { Text("Ask about courses, syllabus, fees, exams...", fontSize = 13.sp) },
             singleLine = true,
+            shape = RoundedCornerShape(GriRadius.md),
             modifier = Modifier
               .weight(1f)
               .testTag("input_sahayak_prompt"),
             colors = OutlinedTextFieldDefaults.colors(
-              focusedBorderColor = GriNavyPrimary
+              focusedBorderColor = GriNavyPrimary,
+              unfocusedBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.4f)
             )
           )
 
@@ -2305,6 +2354,276 @@ fun GriDocumentDialog(
           }
         }
       }
+    }
+  }
+}
+
+// =========================================================================
+// GRI REDESIGNED COMPONENT ECOSYSTEM (Institutional + Future Ready)
+// =========================================================================
+
+/**
+ * Intelligent Priority Hub Card
+ * Displays urgent academic, examination, or administrative action with institutional styling
+ */
+@Composable
+fun GriPriorityHubCard(
+  tag: String,
+  title: String,
+  subtitle: String,
+  actionText: String,
+  onActionClick: () -> Unit,
+  modifier: Modifier = Modifier,
+  secondaryActionText: String? = null,
+  onSecondaryActionClick: (() -> Unit)? = null
+) {
+  Card(
+    modifier = modifier
+      .fillMaxWidth()
+      .padding(horizontal = GriSpacing.lg, vertical = 6.dp)
+      .testTag("gri_priority_hub_card"),
+    shape = RoundedCornerShape(GriRadius.lg),
+    colors = CardDefaults.cardColors(containerColor = GriNavyPrimary),
+    elevation = CardDefaults.cardElevation(defaultElevation = 2.5.dp)
+  ) {
+    Column(
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(18.dp)
+    ) {
+      Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+      ) {
+        Surface(
+          color = GriGoldSecondary,
+          shape = RoundedCornerShape(GriRadius.xs)
+        ) {
+          Text(
+            text = tag.uppercase(),
+            style = MaterialTheme.typography.labelSmall,
+            fontWeight = FontWeight.Bold,
+            color = Color.Black,
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
+          )
+        }
+
+        Row(
+          verticalAlignment = Alignment.CenterVertically,
+          horizontalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+          Box(
+            modifier = Modifier
+              .size(8.dp)
+              .clip(CircleShape)
+              .background(GriGreenSuccess)
+          )
+          Text(
+            text = "Active Session",
+            style = MaterialTheme.typography.labelSmall,
+            color = Color.White.copy(alpha = 0.85f),
+            fontSize = 10.sp
+          )
+        }
+      }
+
+      Spacer(modifier = Modifier.height(10.dp))
+
+      Text(
+        text = title,
+        style = MaterialTheme.typography.titleMedium,
+        fontWeight = FontWeight.Bold,
+        color = Color.White
+      )
+
+      Spacer(modifier = Modifier.height(4.dp))
+
+      Text(
+        text = subtitle,
+        style = MaterialTheme.typography.bodySmall,
+        color = Color.White.copy(alpha = 0.8f),
+        lineHeight = 18.sp
+      )
+
+      Spacer(modifier = Modifier.height(14.dp))
+
+      Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(10.dp)
+      ) {
+        Button(
+          onClick = onActionClick,
+          colors = ButtonDefaults.buttonColors(
+            containerColor = GriGoldSecondary,
+            contentColor = Color.Black
+          ),
+          shape = RoundedCornerShape(GriRadius.sm),
+          modifier = Modifier.weight(1f)
+        ) {
+          Icon(Icons.Default.ConfirmationNumber, contentDescription = null, modifier = Modifier.size(16.dp))
+          Spacer(modifier = Modifier.width(6.dp))
+          Text(
+            text = actionText,
+            style = MaterialTheme.typography.labelMedium,
+            fontWeight = FontWeight.Bold
+          )
+        }
+
+        if (secondaryActionText != null && onSecondaryActionClick != null) {
+          OutlinedButton(
+            onClick = onSecondaryActionClick,
+            shape = RoundedCornerShape(GriRadius.sm),
+            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White),
+            border = androidx.compose.foundation.BorderStroke(1.dp, Color.White.copy(alpha = 0.4f)),
+            modifier = Modifier.weight(1f)
+          ) {
+            Text(
+              text = secondaryActionText,
+              style = MaterialTheme.typography.labelMedium
+            )
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Modern Quick Service Pill Button
+ */
+@Composable
+fun GriQuickActionPill(
+  title: String,
+  icon: ImageVector,
+  iconTint: Color,
+  onClick: () -> Unit,
+  modifier: Modifier = Modifier
+) {
+  Card(
+    modifier = modifier
+      .clickable(onClick = onClick)
+      .testTag("quick_action_${title.lowercase().replace(" ", "_")}"),
+    shape = RoundedCornerShape(GriRadius.md),
+    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+    border = CardDefaults.outlinedCardBorder()
+  ) {
+    Column(
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(vertical = 14.dp, horizontal = 6.dp),
+      horizontalAlignment = Alignment.CenterHorizontally,
+      verticalArrangement = Arrangement.Center
+    ) {
+      Box(
+        modifier = Modifier
+          .size(44.dp)
+          .clip(CircleShape)
+          .background(iconTint.copy(alpha = 0.12f)),
+        contentAlignment = Alignment.Center
+      ) {
+        Icon(
+          imageVector = icon,
+          contentDescription = title,
+          tint = iconTint,
+          modifier = Modifier.size(22.dp)
+        )
+      }
+      Spacer(modifier = Modifier.height(8.dp))
+      Text(
+        text = title,
+        style = MaterialTheme.typography.labelMedium,
+        color = MaterialTheme.colorScheme.onSurface,
+        fontWeight = FontWeight.SemiBold,
+        textAlign = TextAlign.Center,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis
+      )
+    }
+  }
+}
+
+/**
+ * Metric Progress Card with Radial / Gauge styled stats
+ */
+@Composable
+fun GriMetricProgressCard(
+  title: String,
+  value: String,
+  badgeText: String,
+  isPositive: Boolean,
+  progress: Float,
+  subtitle: String,
+  modifier: Modifier = Modifier,
+  onClick: (() -> Unit)? = null
+) {
+  Card(
+    modifier = modifier
+      .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier),
+    shape = RoundedCornerShape(GriRadius.md),
+    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+    border = CardDefaults.outlinedCardBorder()
+  ) {
+    Column(modifier = Modifier.padding(14.dp)) {
+      Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+      ) {
+        Text(
+          text = title,
+          style = MaterialTheme.typography.labelSmall,
+          color = MaterialTheme.colorScheme.onSurfaceVariant,
+          fontWeight = FontWeight.Medium
+        )
+        Surface(
+          color = if (isPositive) GriGreenSuccess.copy(alpha = 0.12f) else GriRedAlert.copy(alpha = 0.12f),
+          shape = RoundedCornerShape(GriRadius.xs)
+        ) {
+          Text(
+            text = badgeText,
+            style = MaterialTheme.typography.labelSmall,
+            color = if (isPositive) GriGreenSuccess else GriRedAlert,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+            fontSize = 9.sp
+          )
+        }
+      }
+
+      Spacer(modifier = Modifier.height(8.dp))
+
+      Text(
+        text = value,
+        style = MaterialTheme.typography.headlineMedium,
+        fontWeight = FontWeight.Bold,
+        color = MaterialTheme.colorScheme.onSurface
+      )
+
+      Spacer(modifier = Modifier.height(6.dp))
+
+      androidx.compose.material3.LinearProgressIndicator(
+        progress = { progress },
+        modifier = Modifier
+          .fillMaxWidth()
+          .height(5.dp)
+          .clip(RoundedCornerShape(3.dp)),
+        color = if (isPositive) GriGreenSuccess else GriRedAlert,
+        trackColor = MaterialTheme.colorScheme.surfaceVariant
+      )
+
+      Spacer(modifier = Modifier.height(6.dp))
+
+      Text(
+        text = subtitle,
+        style = MaterialTheme.typography.bodySmall,
+        fontSize = 11.sp,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis
+      )
     }
   }
 }

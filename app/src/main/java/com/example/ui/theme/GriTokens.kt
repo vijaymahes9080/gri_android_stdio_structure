@@ -28,6 +28,11 @@ object GriColors {
   val GoldContainer = Color(0xFFFFF3E0)
   val GoldOnContainer = Color(0xFF422700)
 
+  // Rural Innovation / Nai Talim Terracotta Accent
+  val RuralTerracotta = Color(0xFFC85A32)
+  val RuralTerracottaLight = Color(0xFFFDF0EC)
+  val RuralTerracottaDark = Color(0xFF8F3414)
+
   // Neutral Foundations (Clean Institutional)
   val Background = Color(0xFFF8FAFC)
   val BackgroundIvory = Color(0xFFFCFDFE)

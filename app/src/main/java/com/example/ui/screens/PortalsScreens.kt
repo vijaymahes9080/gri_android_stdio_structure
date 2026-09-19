@@ -200,7 +200,7 @@ fun HomeScreen(
     contentPadding = PaddingValues(bottom = 90.dp)
   ) {
 
-    // 1. GRI BRANDING HERO BANNER
+    // 1. INTELLIGENT GRI BRANDING & HERITAGE BANNER
     item {
       Card(
         modifier = Modifier
@@ -211,53 +211,61 @@ fun HomeScreen(
         elevation = CardDefaults.cardElevation(defaultElevation = 1.5.dp),
         border = CardDefaults.outlinedCardBorder()
       ) {
-        Row(
-          modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-          verticalAlignment = Alignment.CenterVertically
-        ) {
-          Surface(
-            shape = RoundedCornerShape(8.dp),
-            color = Color.White,
-            shadowElevation = 2.dp,
-            border = androidx.compose.foundation.BorderStroke(1.5.dp, Color(0xFFE51A1A).copy(alpha = 0.5f))
+        Column(modifier = Modifier.padding(16.dp)) {
+          Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
           ) {
-            Image(
-              painter = painterResource(id = R.drawable.ic_gri_seal),
-              contentDescription = "Official GRI Seal",
-              modifier = Modifier
-                .size(width = 56.dp, height = 68.dp)
-                .padding(3.dp)
-            )
+            Surface(
+              shape = RoundedCornerShape(8.dp),
+              color = Color.White,
+              shadowElevation = 2.dp,
+              border = androidx.compose.foundation.BorderStroke(1.5.dp, Color(0xFFE51A1A).copy(alpha = 0.5f))
+            ) {
+              Image(
+                painter = painterResource(id = R.drawable.ic_gri_seal),
+                contentDescription = "Official GRI Seal",
+                modifier = Modifier
+                  .size(width = 54.dp, height = 64.dp)
+                  .padding(3.dp)
+              )
+            }
+
+            Spacer(modifier = Modifier.width(14.dp))
+
+            Column(modifier = Modifier.weight(1f)) {
+              Text(
+                text = "The Gandhigram Rural Institute",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary
+              )
+              Text(
+                text = "(Deemed to be University) • Govt. of India",
+                style = MaterialTheme.typography.bodySmall,
+                color = GriGoldDark,
+                fontWeight = FontWeight.SemiBold
+              )
+              Spacer(modifier = Modifier.height(2.dp))
+              Text(
+                text = "Gandhigram, Dindigul - 624 302, Tamil Nadu, India",
+                style = MaterialTheme.typography.bodySmall,
+                fontSize = 11.sp,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+              )
+            }
           }
 
-          Spacer(modifier = Modifier.width(14.dp))
+          Spacer(modifier = Modifier.height(10.dp))
+          HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f))
+          Spacer(modifier = Modifier.height(8.dp))
 
-          Column(modifier = Modifier.weight(1f)) {
-            Text(
-              text = "The Gandhigram Rural Institute",
-              style = MaterialTheme.typography.titleMedium,
-              fontWeight = FontWeight.Bold,
-              color = MaterialTheme.colorScheme.primary
-            )
-            Text(
-              text = "(Deemed to be University) • Govt. of India",
-              style = MaterialTheme.typography.bodySmall,
-              color = GriGoldDark,
-              fontWeight = FontWeight.SemiBold
-            )
-            Spacer(modifier = Modifier.height(2.dp))
-            Text(
-              text = "Gandhigram, Dindigul - 624 302, Tamil Nadu, India",
-              style = MaterialTheme.typography.bodySmall,
-              fontSize = 11.sp,
-              color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            Row(
-              modifier = Modifier.padding(top = 4.dp),
-              horizontalArrangement = Arrangement.spacedBy(6.dp)
-            ) {
+          Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+          ) {
+            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
               Surface(
                 color = GriGreenSuccess.copy(alpha = 0.12f),
                 shape = RoundedCornerShape(GriRadius.xs)
@@ -275,7 +283,7 @@ fun HomeScreen(
                 shape = RoundedCornerShape(GriRadius.xs)
               ) {
                 Text(
-                  text = "Nai Talim Heritage (Est. 1956)",
+                  text = "Nai Talim (Est. 1956)",
                   style = MaterialTheme.typography.labelSmall,
                   color = GriNavyPrimary,
                   fontWeight = FontWeight.Medium,
@@ -283,12 +291,20 @@ fun HomeScreen(
                 )
               }
             }
+
+            Text(
+              text = "கிராமம் உயர நாடு உயரும்",
+              style = MaterialTheme.typography.labelSmall,
+              color = GriGoldDark,
+              fontWeight = FontWeight.Bold,
+              fontSize = 10.sp
+            )
           }
         }
       }
     }
 
-    // 2. SEARCH
+    // 2. INTELLIGENT SEARCH & DISCOVERY
     item {
       GriSearchBar(
         query = searchQuery,
@@ -297,21 +313,24 @@ fun HomeScreen(
       )
     }
 
-    // 3. IMPORTANT NOTICE / ALERT
+    // 3. PRIORITY HUB — DYNAMIC INSTITUTIONAL ACTIONS
     item {
-      GriNoticeAlert(
-        title = "ESE Semester Examination & Admissions 2026",
-        message = "Continuous Internal Assessment (CIA) marks frozen. Download verified e-SANAD hall ticket for upcoming exams.",
-        isUrgent = true,
-        onClick = onFetchHallTicket
+      com.example.ui.components.GriPriorityHubCard(
+        tag = "EXAMINATION PRIORITY",
+        title = "ESE Semester Examination & Hall Ticket",
+        subtitle = "Continuous Internal Assessment (CIA) marks verified. Download official digitally signed e-SANAD hall ticket for examination hall entry.",
+        actionText = "Get Hall Ticket",
+        onActionClick = onFetchHallTicket,
+        secondaryActionText = "Admissions 2026",
+        onSecondaryActionClick = { selectedDocForPreview = prospectusDoc }
       )
     }
 
-    // 4. QUICK SERVICES
+    // 4. QUICK SERVICES GRID (HIGH VISUAL HIERARCHY)
     item {
       GriSectionHeader(
-        title = "Institutional Services",
-        subtitle = "Fast access to essential campus modules"
+        title = "Essential Services",
+        subtitle = "Fast access to central university modules"
       )
     }
 
@@ -322,28 +341,28 @@ fun HomeScreen(
           .padding(horizontal = GriSpacing.lg, vertical = 4.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp)
       ) {
-        QuickServiceButton(
+        com.example.ui.components.GriQuickActionPill(
           title = "Hall Ticket",
           icon = Icons.Default.ConfirmationNumber,
           iconTint = GriGoldSecondary,
           onClick = onFetchHallTicket,
           modifier = Modifier.weight(1f)
         )
-        QuickServiceButton(
+        com.example.ui.components.GriQuickActionPill(
           title = "Attendance",
           icon = Icons.Default.CheckCircle,
           iconTint = GriGreenSuccess,
           onClick = onNavigateToAcademics,
           modifier = Modifier.weight(1f)
         )
-        QuickServiceButton(
-          title = "Bus Tracker",
+        com.example.ui.components.GriQuickActionPill(
+          title = "Bus Fleet",
           icon = Icons.Default.DirectionsBus,
           iconTint = MaterialTheme.colorScheme.primary,
           onClick = onNavigateToServices,
           modifier = Modifier.weight(1f)
         )
-        QuickServiceButton(
+        com.example.ui.components.GriQuickActionPill(
           title = "GRI-Care",
           icon = Icons.Default.ReportProblem,
           iconTint = GriRedAlert,
@@ -353,39 +372,46 @@ fun HomeScreen(
       }
     }
 
-    // 5. ACADEMICS
+    // 5. ACADEMIC SNAPSHOT & CBCS PERFORMANCE
     item {
       GriSectionHeader(
         title = "Academic Performance",
-        subtitle = "CBCS Curriculum & Course Attendance",
-        actionText = "Details",
+        subtitle = "CBCS Curriculum & Continuous Internal Assessment",
+        actionText = "View All",
         onActionClick = onNavigateToAcademics
       )
     }
 
     item {
+      val avgAttendance = uiState.courses.map { it.attendancePercent }.average().takeIf { !it.isNaN() }?.toInt() ?: 84
+      val isEligible = avgAttendance >= 75
+      val progress = (avgAttendance / 100f).coerceIn(0f, 1f)
+
       Row(
         modifier = Modifier
           .fillMaxWidth()
           .padding(horizontal = GriSpacing.lg, vertical = 4.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp)
       ) {
-        val avgAttendance = uiState.courses.map { it.attendancePercent }.average().takeIf { !it.isNaN() }?.toInt() ?: 84
-        StatCard(
-          title = "Avg Attendance",
+        com.example.ui.components.GriMetricProgressCard(
+          title = "Attendance Rate",
           value = "$avgAttendance%",
-          subtitle = if (avgAttendance >= 75) "Eligible for ESE (>75%)" else "Condonation Required",
-          icon = Icons.Default.CheckCircle,
-          iconTint = if (avgAttendance >= 75) GriGreenSuccess else GriRedAlert,
-          modifier = Modifier.weight(1f)
+          badgeText = if (isEligible) "Eligible (>75%)" else "Shortage (<75%)",
+          isPositive = isEligible,
+          progress = progress,
+          subtitle = if (isEligible) "Permitted for ESE End Semester" else "Condonation Required",
+          modifier = Modifier.weight(1f),
+          onClick = onNavigateToAcademics
         )
-        StatCard(
+        com.example.ui.components.GriMetricProgressCard(
           title = "Active Courses",
           value = "${uiState.courses.size}",
-          subtitle = "CBCS Registered Sem 4",
-          icon = Icons.AutoMirrored.Filled.Assignment,
-          iconTint = MaterialTheme.colorScheme.primary,
-          modifier = Modifier.weight(1f)
+          badgeText = "CBCS Sem 4",
+          isPositive = true,
+          progress = 1.0f,
+          subtitle = "Total 22 Credits Enrolled",
+          modifier = Modifier.weight(1f),
+          onClick = onNavigateToAcademics
         )
       }
     }
@@ -1391,29 +1417,84 @@ fun TransportRouteCard(route: TransportRouteEntity) {
 fun HostelInfoSection() {
   Column(modifier = Modifier.padding(horizontal = GriSpacing.lg, vertical = 6.dp)) {
     Card(
-      shape = RoundedCornerShape(GriRadius.md),
+      shape = RoundedCornerShape(GriRadius.lg),
       colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-      elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+      elevation = CardDefaults.cardElevation(defaultElevation = 1.5.dp),
       border = CardDefaults.outlinedCardBorder()
     ) {
-      Column(modifier = Modifier.padding(16.dp)) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-          Icon(Icons.Default.Hotel, contentDescription = null, tint = GriGoldSecondary)
-          Spacer(modifier = Modifier.width(8.dp))
-          Text("Residential Hostels & Mess", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+      Column(modifier = Modifier.padding(18.dp)) {
+        Row(
+          modifier = Modifier.fillMaxWidth(),
+          horizontalArrangement = Arrangement.SpaceBetween,
+          verticalAlignment = Alignment.CenterVertically
+        ) {
+          Row(verticalAlignment = Alignment.CenterVertically) {
+            Box(
+              modifier = Modifier
+                .size(36.dp)
+                .clip(CircleShape)
+                .background(GriGoldSecondary.copy(alpha = 0.15f)),
+              contentAlignment = Alignment.Center
+            ) {
+              Icon(Icons.Default.Hotel, contentDescription = null, tint = GriGoldDark, modifier = Modifier.size(20.dp))
+            }
+            Spacer(modifier = Modifier.width(10.dp))
+            Column {
+              Text("Residential Hostels & Mess", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+              Text("Eco-friendly solar heated campus complexes", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+          }
+
+          Surface(color = GriGreenSuccess.copy(alpha = 0.12f), shape = RoundedCornerShape(GriRadius.xs)) {
+            Text("24/7 Security", style = MaterialTheme.typography.labelSmall, color = GriGreenSuccess, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp))
+          }
         }
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-          text = "GRI provides residential complexes with modern dining facilities, high-speed campus Wi-Fi, and solar water heating:",
-          style = MaterialTheme.typography.bodySmall
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text("• Thamarai Illam (Men's Hostel) — 450 beds", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold)
-        Text("• Malligai Illam (Women's Hostel) — 500 beds", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold)
-        Text("• Kasturba Research Scholars Hostel — 120 single suites", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold)
-        Text("• Working Women's Hostel — Safe faculty accommodation", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold)
+
+        Spacer(modifier = Modifier.height(12.dp))
+        HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f))
         Spacer(modifier = Modifier.height(10.dp))
-        Text("Chief Warden Office: +91 451 2452371 Ext 310", style = MaterialTheme.typography.labelSmall, color = GriGoldDark)
+
+        listOf(
+          Triple("Thamarai Illam", "Men's Residential Complex • 450 capacity", "Thiru. S. Murugesan (Warden)"),
+          Triple("Malligai Illam", "Women's Residential Complex • 500 capacity", "Dr. V. Radha (Warden)"),
+          Triple("Kasturba Scholars Hostel", "Ph.D. & Post-Doctoral Single Suites • 120 rooms", "Quiet Study Wing"),
+          Triple("Working Women's Hostel", "Safe residential suites for women faculty & staff", "Guest Rooms Available")
+        ).forEach { (name, desc, contact) ->
+          Row(
+            modifier = Modifier
+              .fillMaxWidth()
+              .padding(vertical = 4.dp),
+            verticalAlignment = Alignment.CenterVertically
+          ) {
+            Box(
+              modifier = Modifier
+                .size(6.dp)
+                .clip(CircleShape)
+                .background(GriNavyPrimary)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Column(modifier = Modifier.weight(1f)) {
+              Text(name, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
+              Text("$desc • $contact", style = MaterialTheme.typography.bodySmall, fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+          }
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+        Surface(
+          color = GriNavyPrimary.copy(alpha = 0.06f),
+          shape = RoundedCornerShape(GriRadius.sm),
+          modifier = Modifier.fillMaxWidth()
+        ) {
+          Row(
+            modifier = Modifier.padding(10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+          ) {
+            Text("Chief Warden Office: Ext 310", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = GriNavyPrimary)
+            Text("Mess Hours: 07:30 - 21:00", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+          }
+        }
       }
     }
   }
@@ -1423,34 +1504,61 @@ fun HostelInfoSection() {
 fun LibraryInfoSection() {
   Column(modifier = Modifier.padding(horizontal = GriSpacing.lg, vertical = 6.dp)) {
     Card(
-      shape = RoundedCornerShape(GriRadius.md),
+      shape = RoundedCornerShape(GriRadius.lg),
       colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-      elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+      elevation = CardDefaults.cardElevation(defaultElevation = 1.5.dp),
       border = CardDefaults.outlinedCardBorder()
     ) {
-      Column(modifier = Modifier.padding(16.dp)) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-          Icon(Icons.AutoMirrored.Filled.LibraryBooks, contentDescription = null, tint = GriNavyPrimary)
-          Spacer(modifier = Modifier.width(8.dp))
-          Text("Dr. Radhakrishnan Central Library", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+      Column(modifier = Modifier.padding(18.dp)) {
+        Row(
+          modifier = Modifier.fillMaxWidth(),
+          horizontalArrangement = Arrangement.SpaceBetween,
+          verticalAlignment = Alignment.CenterVertically
+        ) {
+          Row(verticalAlignment = Alignment.CenterVertically) {
+            Box(
+              modifier = Modifier
+                .size(36.dp)
+                .clip(CircleShape)
+                .background(GriNavyPrimary.copy(alpha = 0.1f)),
+              contentAlignment = Alignment.Center
+            ) {
+              Icon(Icons.AutoMirrored.Filled.LibraryBooks, contentDescription = null, tint = GriNavyPrimary, modifier = Modifier.size(20.dp))
+            }
+            Spacer(modifier = Modifier.width(10.dp))
+            Column {
+              Text("Dr. Radhakrishnan Central Library", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+              Text("Automated RFID Kiosk & e-ShodhSindhu Consortia", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+          }
+
+          Surface(color = GriGoldContainer, shape = RoundedCornerShape(GriRadius.xs)) {
+            Text("OPEN", style = MaterialTheme.typography.labelSmall, color = GriGoldOnContainer, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp))
+          }
         }
-        Spacer(modifier = Modifier.height(8.dp))
-        Text("• Total Print Volumes: 1,75,000+ books, 3,500 rare Gandhian manuscripts", style = MaterialTheme.typography.bodySmall)
-        Text("• E-Journals & Consortia: DELNET, e-ShodhSindhu, IEEE Xplore, ScienceDirect", style = MaterialTheme.typography.bodySmall)
-        Text("• Automated RFID Book Issue & Return Kiosk", style = MaterialTheme.typography.bodySmall)
-        Text("• Library Working Hours: 08:00 AM – 08:00 PM (Monday – Saturday)", style = MaterialTheme.typography.bodySmall)
+
+        Spacer(modifier = Modifier.height(12.dp))
+        HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f))
         Spacer(modifier = Modifier.height(10.dp))
+
+        Text("• Holdings: 1,75,000+ Print Volumes, 3,500 Rare Gandhian Historical Manuscripts", style = MaterialTheme.typography.bodySmall)
+        Text("• Electronic Access: DELNET, ScienceDirect, Springer, JSTOR, IEEE Xplore digital library", style = MaterialTheme.typography.bodySmall)
+        Text("• Working Hours: 08:00 AM – 08:00 PM (Monday – Saturday, Exam hours extended to 22:00)", style = MaterialTheme.typography.bodySmall)
+
+        Spacer(modifier = Modifier.height(12.dp))
         Surface(
           color = GriGoldContainer,
-          shape = RoundedCornerShape(GriRadius.xs)
+          shape = RoundedCornerShape(GriRadius.sm),
+          modifier = Modifier.fillMaxWidth()
         ) {
-          Text(
-            text = "OPAC Web Catalog: opac.ruraluniv.ac.in",
-            style = MaterialTheme.typography.labelSmall,
-            color = GriGoldOnContainer,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-          )
+          Row(
+            modifier = Modifier.padding(10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+          ) {
+            Text("Web OPAC Catalog: opac.ruraluniv.ac.in", style = MaterialTheme.typography.labelSmall, color = GriGoldOnContainer, fontWeight = FontWeight.Bold)
+            Icon(Icons.Default.Launch, contentDescription = null, tint = GriGoldDark, modifier = Modifier.size(16.dp))
+          }
         }
       }
     }
@@ -1952,8 +2060,8 @@ fun PublicExploreScreen(
     if (selectedCategory == "All" || selectedCategory == "Governance") {
       item {
         GriSectionHeader(
-          title = "Statutory Governance",
-          subtitle = "University Leadership & Administrative Officers"
+          title = "Statutory Governance & Authorities",
+          subtitle = "Executive Council, Statutory Officers & Academic Senate"
         )
       }
       item {
@@ -1961,18 +2069,69 @@ fun PublicExploreScreen(
           modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = GriSpacing.lg, vertical = 4.dp),
-          shape = RoundedCornerShape(GriRadius.md),
+          shape = RoundedCornerShape(GriRadius.lg),
           colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-          elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+          elevation = CardDefaults.cardElevation(defaultElevation = 1.5.dp),
           border = CardDefaults.outlinedCardBorder()
         ) {
-          Column(modifier = Modifier.padding(16.dp)) {
-            Text("• Chancellor: Shri K.M. Annamalai", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
-            Text("• Vice-Chancellor: Prof. Dr. Panch. Ramalingam", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
-            Text("• Registrar: Dr. C. Sivapragasam", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
-            Text("• Controller of Examinations: Dr. R. Subramanian", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
-            Text("• Finance Officer: Smt. M. Saraswathi", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
-            Text("• Dean, Academic Affairs: Prof. M.G. Sethuraman", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
+          Column(modifier = Modifier.padding(18.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+              Box(
+                modifier = Modifier
+                  .size(36.dp)
+                  .clip(CircleShape)
+                  .background(GriNavyPrimary.copy(alpha = 0.1f)),
+                contentAlignment = Alignment.Center
+              ) {
+                Icon(Icons.Default.Apartment, contentDescription = null, tint = GriNavyPrimary, modifier = Modifier.size(20.dp))
+              }
+              Spacer(modifier = Modifier.width(10.dp))
+              Column {
+                Text("Statutory Officers of the Institute", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                Text("Appointed under UGC Deemed to be University Regulations", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+              }
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+            HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f))
+            Spacer(modifier = Modifier.height(8.dp))
+
+            listOf(
+              Triple("Chancellor", "Shri K.M. Annamalai", "Presiding Head of the University"),
+              Triple("Vice-Chancellor", "Prof. Dr. Panch. Ramalingam", "Chief Academic & Executive Officer"),
+              Triple("Registrar", "Dr. C. Sivapragasam", "Custodian of University Records & Administration"),
+              Triple("Controller of Examinations", "Dr. R. Subramanian", "Evaluation, Convocation & Degree Sanctions"),
+              Triple("Finance Officer", "Smt. M. Saraswathi", "University Treasury & Grants Management"),
+              Triple("Dean, Academic Affairs", "Prof. M.G. Sethuraman", "Curriculum, CBCS & Quality Assurance")
+            ).forEach { (role, name, designation) ->
+              Row(
+                modifier = Modifier
+                  .fillMaxWidth()
+                  .padding(vertical = 5.dp),
+                verticalAlignment = Alignment.CenterVertically
+              ) {
+                Surface(
+                  color = GriNavyPrimary.copy(alpha = 0.08f),
+                  shape = RoundedCornerShape(GriRadius.xs),
+                  modifier = Modifier.width(110.dp)
+                ) {
+                  Text(
+                    text = role,
+                    style = MaterialTheme.typography.labelSmall,
+                    color = GriNavyPrimary,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 10.sp,
+                    maxLines = 1,
+                    modifier = Modifier.padding(horizontal = 6.dp, vertical = 4.dp)
+                  )
+                }
+                Spacer(modifier = Modifier.width(10.dp))
+                Column(modifier = Modifier.weight(1f)) {
+                  Text(name, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
+                  Text(designation, style = MaterialTheme.typography.bodySmall, fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+              }
+            }
           }
         }
       }

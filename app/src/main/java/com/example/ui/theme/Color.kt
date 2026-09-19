@@ -19,6 +19,8 @@ val GriGoldContainer = Color(0xFFFFF3E0)        // Soft Cream Container
 val GriGoldOnContainer = Color(0xFF422700)
 
 val GriAccentCyan = Color(0xFF0077B6)           // Academic Cyan for Information Tags
+val GriTerracotta = Color(0xFFC85A32)            // Nai Talim Rural Development Terracotta
+val GriTerracottaContainer = Color(0xFFFDF0EC)   // Soft Terracotta Tint
 val GriGreenSuccess = Color(0xFF15803D)         // Institutional Green (Verified, Attendance OK)
 val GriRedAlert = Color(0xFFB91C1C)             // Urgent / Alert Red (Deadlines, Exam Notices)
 val GriWarningAmber = Color(0xFFD97706)         // Warning Amber
