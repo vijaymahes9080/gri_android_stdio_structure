@@ -20,6 +20,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.AutoAwesome
@@ -359,13 +362,18 @@ fun HomeDashboardScreen(
             .padding(horizontal = 12.dp, vertical = 6.dp),
           verticalAlignment = Alignment.CenterVertically
         ) {
-          Icon(
-            imageVector = Icons.Default.Search,
-            contentDescription = "Search",
-            tint = GriForestPrimary,
-            modifier = Modifier.size(20.dp)
-          )
-          Spacer(modifier = Modifier.width(8.dp))
+          IconButton(
+            onClick = onOpenAiSearch,
+            modifier = Modifier.size(32.dp)
+          ) {
+            Icon(
+              imageVector = Icons.Default.Search,
+              contentDescription = "Search",
+              tint = GriForestPrimary,
+              modifier = Modifier.size(20.dp)
+            )
+          }
+          Spacer(modifier = Modifier.width(4.dp))
           Box(modifier = Modifier.weight(1f)) {
             if (searchQuery.isEmpty()) {
               Text(
@@ -377,6 +385,11 @@ fun HomeDashboardScreen(
             androidx.compose.foundation.text.BasicTextField(
               value = searchQuery,
               onValueChange = { searchQuery = it },
+              singleLine = true,
+              keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+              keyboardActions = KeyboardActions(onSearch = {
+                if (searchQuery.isNotBlank()) onOpenAiSearch()
+              }),
               textStyle = androidx.compose.ui.text.TextStyle(
                 fontSize = 13.sp,
                 color = GriOnSurface
@@ -1124,6 +1137,67 @@ fun HomeDashboardScreen(
         }
       }
     }
+  }
+
+  // Role Switcher Dialog
+  if (showRoleDialog) {
+    androidx.compose.material3.AlertDialog(
+      onDismissRequest = { showRoleDialog = false },
+      title = {
+        Text("Switch Role View", fontWeight = FontWeight.Bold, color = GriForestPrimary)
+      },
+      text = {
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+          UserRole.values().forEach { role ->
+            val isCurrent = role == uiState.currentRole
+            Surface(
+              shape = RoundedCornerShape(8.dp),
+              color = if (isCurrent) GriForestPrimary.copy(alpha = 0.12f) else GriSurfaceContainerLow,
+              border = if (isCurrent) androidx.compose.foundation.BorderStroke(1.5.dp, GriForestPrimary) else null,
+              modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                  onRoleSelected(role)
+                  showRoleDialog = false
+                }
+            ) {
+              Row(
+                modifier = Modifier.padding(12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+              ) {
+                Text(
+                  text = when (role) {
+                    UserRole.STUDENT -> "Student View"
+                    UserRole.FACULTY -> "Faculty / Staff Portal"
+                    UserRole.ADMIN -> "Administrator"
+                    UserRole.SCHOLAR -> "Research Scholar"
+                    UserRole.ALUMNI -> "Alumni Network"
+                    UserRole.GUEST -> "Guest / Visitor"
+                    else -> role.name
+                  },
+                  fontWeight = if (isCurrent) FontWeight.Bold else FontWeight.Medium,
+                  color = if (isCurrent) GriForestPrimary else GriOnSurface
+                )
+                if (isCurrent) {
+                  Icon(
+                    imageVector = Icons.Default.CheckCircle,
+                    contentDescription = null,
+                    tint = GriForestPrimary,
+                    modifier = Modifier.size(18.dp)
+                  )
+                }
+              }
+            }
+          }
+        }
+      },
+      confirmButton = {
+        androidx.compose.material3.TextButton(onClick = { showRoleDialog = false }) {
+          Text("Close", color = GriForestPrimary, fontWeight = FontWeight.Bold)
+        }
+      }
+    )
   }
 }
 

@@ -155,17 +155,17 @@ fun GriTopBar(
       ) {
         // Official GRI Seal Vector Emblem
         Surface(
-          shape = RoundedCornerShape(6.dp),
+          shape = RoundedCornerShape(8.dp),
           color = Color.White,
-          shadowElevation = 1.dp,
-          border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFE51A1A).copy(alpha = 0.4f)),
+          shadowElevation = 0.5.dp,
+          border = androidx.compose.foundation.BorderStroke(1.dp, GriForestPrimary.copy(alpha = 0.15f)),
           modifier = Modifier.padding(end = 4.dp)
         ) {
           Image(
             painter = painterResource(id = R.drawable.ic_gri_seal),
             contentDescription = "Official GRI University Seal",
             modifier = Modifier
-              .size(width = 36.dp, height = 44.dp)
+              .size(34.dp)
               .padding(2.dp)
           )
         }
@@ -173,30 +173,35 @@ fun GriTopBar(
         Spacer(modifier = Modifier.width(8.dp))
 
         Column {
+          Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+              text = "GRI Mobile",
+              style = MaterialTheme.typography.titleMedium,
+              fontWeight = FontWeight.Bold,
+              color = GriForestPrimary,
+              fontSize = 16.sp,
+              maxLines = 1
+            )
+            Spacer(modifier = Modifier.width(6.dp))
+            Surface(
+              shape = RoundedCornerShape(999.dp),
+              color = GriForestPrimary.copy(alpha = 0.10f)
+            ) {
+              Text(
+                text = "NAAC A+",
+                style = MaterialTheme.typography.labelSmall,
+                color = GriForestPrimary,
+                fontWeight = FontWeight.Bold,
+                fontSize = 9.sp,
+                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+              )
+            }
+          }
           Text(
-            text = "GANDHIGRAM RURAL INSTITUTE",
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary,
-            fontSize = 13.sp,
-            lineHeight = 16.sp,
-            letterSpacing = 0.2.sp,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-          )
-          Text(
-            text = "(Deemed to be University) • NAAC 'A+'",
+            text = "Deemed to be University • MoE",
             style = MaterialTheme.typography.bodySmall,
             fontSize = 10.sp,
-            color = GriGoldDark,
-            fontWeight = FontWeight.SemiBold,
-            maxLines = 1
-          )
-          Text(
-            text = "கிராமம் உயர நாடு உயரும்",
-            style = MaterialTheme.typography.labelSmall,
-            fontSize = 9.sp,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            color = GriOnSurfaceVariant,
             maxLines = 1
           )
         }
@@ -207,14 +212,14 @@ fun GriTopBar(
       IconButton(
         onClick = onOpenDocumentCenter,
         modifier = Modifier
-          .size(38.dp)
+          .size(36.dp)
           .testTag("btn_top_document_center")
       ) {
         Icon(
           imageVector = Icons.Default.PictureAsPdf,
           contentDescription = "Official Document Center",
-          tint = MaterialTheme.colorScheme.primary,
-          modifier = Modifier.size(20.dp)
+          tint = GriForestPrimary,
+          modifier = Modifier.size(19.dp)
         )
       }
 
@@ -222,109 +227,70 @@ fun GriTopBar(
       IconButton(
         onClick = onOpenSahayak,
         modifier = Modifier
-          .size(38.dp)
+          .size(36.dp)
           .testTag("btn_gri_sahayak_ai")
       ) {
         Box(
           modifier = Modifier
-            .size(30.dp)
+            .size(28.dp)
             .clip(CircleShape)
-            .background(GriGoldSecondary.copy(alpha = 0.15f)),
+            .background(GriForestPrimary.copy(alpha = 0.10f)),
           contentAlignment = Alignment.Center
         ) {
           Icon(
             imageVector = Icons.Default.AutoAwesome,
             contentDescription = "GRI-Sahayak Institutional AI Assistant",
-            tint = GriGoldDark,
-            modifier = Modifier.size(18.dp)
+            tint = GriForestPrimary,
+            modifier = Modifier.size(16.dp)
           )
         }
       }
 
-      // Live System Status (Institutional indicator)
-      Surface(
-        color = GriGreenSuccess.copy(alpha = 0.12f),
-        shape = RoundedCornerShape(GriRadius.xs),
-        modifier = Modifier.padding(horizontal = 2.dp)
+      // Notification Bell with Amber Dot Badge
+      IconButton(
+        onClick = { onSyncClick() },
+        modifier = Modifier
+          .size(36.dp)
+          .testTag("btn_top_notifications")
       ) {
-        Row(
-          modifier = Modifier.padding(horizontal = 6.dp, vertical = 4.dp),
-          verticalAlignment = Alignment.CenterVertically
-        ) {
+        Box(contentAlignment = Alignment.TopEnd) {
+          Icon(
+            imageVector = Icons.Default.Campaign,
+            contentDescription = "Notifications & Dispatch",
+            tint = GriOnSurfaceVariant,
+            modifier = Modifier.size(20.dp)
+          )
           Box(
             modifier = Modifier
-              .size(6.dp)
+              .size(7.dp)
               .clip(CircleShape)
-              .background(GriGreenSuccess.copy(alpha = pulseAlpha))
-          )
-          Spacer(modifier = Modifier.width(4.dp))
-          Text(
-            text = "Verified",
-            style = MaterialTheme.typography.labelSmall,
-            fontSize = 9.sp,
-            fontWeight = FontWeight.Bold,
-            color = GriGreenSuccess
+              .background(GriOchreOnContainer)
           )
         }
       }
 
-      // Secure Authentication Indicator / Sign In action
-      if (!isAuthenticated) {
-        FilledTonalButton(
-          onClick = onSignInClick,
-          shape = RoundedCornerShape(GriRadius.sm),
-          colors = ButtonDefaults.filledTonalButtonColors(
-            containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-            contentColor = MaterialTheme.colorScheme.primary
-          ),
-          modifier = Modifier
-            .padding(start = 2.dp, end = 2.dp)
-            .height(30.dp)
-            .testTag("btn_top_sign_in"),
-          contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 8.dp, vertical = 2.dp)
-        ) {
-          Icon(
-            imageVector = Icons.Default.Lock,
-            contentDescription = null,
-            modifier = Modifier.size(12.dp)
-          )
-          Spacer(modifier = Modifier.width(3.dp))
+      // User Profile Avatar Circle
+      Surface(
+        shape = CircleShape,
+        color = GriForestPrimary,
+        modifier = Modifier
+          .padding(start = 4.dp, end = 8.dp)
+          .size(32.dp)
+          .clickable(onClick = onSignInClick)
+          .testTag("btn_profile_avatar")
+      ) {
+        Box(contentAlignment = Alignment.Center) {
           Text(
-            text = "Sign In",
-            style = MaterialTheme.typography.labelSmall,
+            text = when (currentRole) {
+              UserRole.STUDENT -> "PS"
+              UserRole.FACULTY -> "RS"
+              UserRole.ADMIN -> "AD"
+              else -> "G"
+            },
+            color = Color.White,
             fontWeight = FontWeight.Bold,
-            fontSize = 10.sp
+            fontSize = 11.sp
           )
-        }
-      } else {
-        // Authenticated Role Badge with 1-tap Logout
-        Surface(
-          color = MaterialTheme.colorScheme.primary,
-          shape = RoundedCornerShape(GriRadius.xs),
-          modifier = Modifier.padding(horizontal = 4.dp)
-        ) {
-          Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp)
-          ) {
-            Text(
-              text = currentRole.name,
-              style = MaterialTheme.typography.labelSmall,
-              color = Color.White,
-              fontWeight = FontWeight.Bold,
-              fontSize = 9.sp
-            )
-            Spacer(modifier = Modifier.width(4.dp))
-            Icon(
-              imageVector = Icons.Default.Logout,
-              contentDescription = "Sign Out",
-              tint = GriGoldSecondary,
-              modifier = Modifier
-                .size(14.dp)
-                .clickable(onClick = onLogoutClick)
-                .testTag("btn_sign_out")
-            )
-          }
         }
       }
 

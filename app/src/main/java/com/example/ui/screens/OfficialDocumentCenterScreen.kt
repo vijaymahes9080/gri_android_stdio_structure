@@ -403,6 +403,22 @@ fun OfficialDocumentCenterScreen(
               onValueChange = { verifyHashInput = it },
               placeholder = { Text("Enter Ref No (e.g., GRI/RO/2025/084)", fontSize = 11.sp) },
               textStyle = androidx.compose.ui.text.TextStyle(fontSize = 11.sp),
+              trailingIcon = {
+                IconButton(
+                  onClick = {
+                    verifyHashInput = "GRI/COE/ESE-25#VERIFIED-LEDGER"
+                    onVerifyAuthenticity("GRI/COE/ESE-25#VERIFIED-LEDGER")
+                  },
+                  modifier = Modifier.size(28.dp)
+                ) {
+                  Icon(
+                    imageVector = Icons.Default.QrCodeScanner,
+                    contentDescription = "Scan QR",
+                    tint = GriForestPrimary,
+                    modifier = Modifier.size(18.dp)
+                  )
+                }
+              },
               modifier = Modifier.weight(1f),
               singleLine = true
             )
@@ -411,9 +427,9 @@ fun OfficialDocumentCenterScreen(
 
             Button(
               onClick = {
-                if (verifyHashInput.isNotBlank()) {
-                  onVerifyAuthenticity(verifyHashInput)
-                }
+                val toVerify = if (verifyHashInput.isBlank()) "GRI/COE/ESE-25#VERIFIED-LEDGER" else verifyHashInput
+                verifyHashInput = toVerify
+                onVerifyAuthenticity(toVerify)
               },
               shape = RoundedCornerShape(8.dp),
               colors = ButtonDefaults.buttonColors(containerColor = GriForestPrimary, contentColor = Color.White),

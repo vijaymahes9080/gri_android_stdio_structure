@@ -17,11 +17,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Apartment
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.DirectionsBus
-import androidx.compose.material.icons.filled.Explore
-import androidx.compose.material.icons.filled.FolderShared
+import androidx.compose.material.icons.filled.Domain
+import androidx.compose.material.icons.filled.GridView
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.School
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -112,9 +113,9 @@ class MainActivity : ComponentActivity() {
 sealed class NavItem(val tab: NavigationTab, val title: String, val icon: ImageVector, val tag: String) {
   object Home : NavItem(NavigationTab.HOME, "Home", Icons.Default.Home, "nav_home")
   object Academics : NavItem(NavigationTab.ACADEMICS, "Academics", Icons.Default.School, "nav_academics")
-  object Campus : NavItem(NavigationTab.CAMPUS, "Campus", Icons.Default.Explore, "nav_campus")
-  object Services : NavItem(NavigationTab.SERVICES, "Services", Icons.Default.DirectionsBus, "nav_services")
-  object More : NavItem(NavigationTab.MORE, "More", Icons.Default.FolderShared, "nav_more")
+  object Campus : NavItem(NavigationTab.CAMPUS, "Campus", Icons.Default.Domain, "nav_campus")
+  object Services : NavItem(NavigationTab.SERVICES, "Services", Icons.Default.GridView, "nav_services")
+  object More : NavItem(NavigationTab.MORE, "More", Icons.Default.Menu, "nav_more")
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

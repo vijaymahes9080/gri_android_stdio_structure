@@ -307,7 +307,7 @@ fun CampusFacilitiesScreen(
       LazyColumn(
         modifier = Modifier
           .fillMaxSize()
-          .testTag("campus_explore_screen"),
+          .testTag("landmarks_directory_list"),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 10.dp),
         verticalArrangement = Arrangement.spacedBy(14.dp)
       ) {
@@ -423,28 +423,63 @@ fun CampusFacilitiesScreen(
             }
           }
 
-          Spacer(modifier = Modifier.height(10.dp))
+          Spacer(modifier = Modifier.height(12.dp))
 
           Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
           ) {
-            Column(modifier = Modifier.weight(1f)) {
-              Text("Spatial Campus Guide", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = GriOnSurface)
-              Text("Walking routes, e-cart shuttle stops & offline vector zones.", fontSize = 11.sp, color = GriOnSurfaceVariant)
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.weight(1f)) {
+              Box(
+                modifier = Modifier
+                  .size(34.dp)
+                  .clip(CircleShape)
+                  .background(GriTealContainer),
+                contentAlignment = Alignment.Center
+              ) {
+                Icon(
+                  imageVector = Icons.Default.Explore,
+                  contentDescription = null,
+                  tint = GriTealOnContainer,
+                  modifier = Modifier.size(18.dp)
+                )
+              }
+              Spacer(modifier = Modifier.width(10.dp))
+              Column {
+                Text("Live GPS Spatial Guide", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = GriForestPrimary)
+                Text("Turn-by-turn walking & e-cart directions", fontSize = 11.sp, color = GriOnSurfaceVariant)
+              }
             }
 
-            Button(
-              onClick = { activeTab = 0 },
-              shape = RoundedCornerShape(8.dp),
-              colors = ButtonDefaults.buttonColors(containerColor = GriForestPrimary, contentColor = Color.White),
-              contentPadding = PaddingValues(horizontal = 10.dp, vertical = 6.dp)
+            Surface(
+              shape = RoundedCornerShape(6.dp),
+              color = GriSurfaceContainer
             ) {
-              Icon(Icons.Default.Map, contentDescription = null, modifier = Modifier.size(13.dp))
-              Spacer(modifier = Modifier.width(4.dp))
-              Text("Interactive Grid", fontSize = 11.sp, fontWeight = FontWeight.Bold)
+              Text(
+                text = "Offline Sync",
+                fontSize = 10.sp,
+                fontWeight = FontWeight.Medium,
+                color = GriOnSurface,
+                modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
+              )
             }
+          }
+
+          Spacer(modifier = Modifier.height(10.dp))
+
+          Button(
+            onClick = { activeTab = 0 },
+            shape = RoundedCornerShape(10.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = GriForestPrimary, contentColor = Color.White),
+            modifier = Modifier
+              .fillMaxWidth()
+              .height(48.dp)
+              .testTag("btn_open_interactive_map")
+          ) {
+            Icon(Icons.Default.Navigation, contentDescription = null, modifier = Modifier.size(18.dp))
+            Spacer(modifier = Modifier.width(8.dp))
+            Text("Open Interactive GPS Campus Navigation", fontSize = 13.sp, fontWeight = FontWeight.Bold)
           }
         }
       }

@@ -117,6 +117,7 @@ fun StudentServicesHubScreen(
   var grievanceTitle by remember { mutableStateOf("") }
   var grievanceCategory by remember { mutableStateOf("Hostel & Infrastructure") }
   var grievanceDesc by remember { mutableStateOf("") }
+  var selectedPortalModal by remember { mutableStateOf<StudentPortalCardData?>(null) }
 
   val portalCards = listOf(
     StudentPortalCardData(
@@ -377,6 +378,13 @@ fun StudentServicesHubScreen(
       Card(
         modifier = Modifier
           .fillMaxWidth()
+          .clickable {
+            if (card.id == "grievance") {
+              showGrievanceModal = true
+            } else {
+              selectedPortalModal = card
+            }
+          }
           .testTag("portal_${card.id}"),
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
@@ -412,8 +420,7 @@ fun StudentServicesHubScreen(
                 if (card.id == "grievance") {
                   showGrievanceModal = true
                 } else {
-                  val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.ruraluniv.ac.in/"))
-                  try { context.startActivity(intent) } catch (_: Exception) {}
+                  selectedPortalModal = card
                 }
               }
             ) {
@@ -531,6 +538,56 @@ fun StudentServicesHubScreen(
         }
       }
     }
+  }
+
+  selectedPortalModal?.let { portal ->
+    androidx.compose.material3.AlertDialog(
+      onDismissRequest = { selectedPortalModal = null },
+      icon = {
+        Icon(portal.icon, contentDescription = null, tint = GriForestPrimary, modifier = Modifier.size(32.dp))
+      },
+      title = {
+        Text(portal.title, fontWeight = FontWeight.Bold, color = GriForestPrimary, fontSize = 16.sp)
+      },
+      text = {
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+          Text(portal.subtitle, fontSize = 12.sp, color = GriOnSurfaceVariant)
+          Surface(
+            shape = RoundedCornerShape(8.dp),
+            color = GriSurfaceContainerLow,
+            modifier = Modifier.fillMaxWidth()
+          ) {
+            Column(modifier = Modifier.padding(10.dp)) {
+              Text(portal.detail1, fontSize = 11.sp, fontWeight = FontWeight.SemiBold, color = GriOnSurface)
+              Spacer(modifier = Modifier.height(2.dp))
+              Text(portal.detail2, fontSize = 10.sp, color = GriTealSecondary, fontWeight = FontWeight.Bold)
+            }
+          }
+          Text(
+            text = "Integrated with GRI ERP, RFID & Samarth Gateway.",
+            fontSize = 10.sp,
+            color = GriOutline
+          )
+        }
+      },
+      confirmButton = {
+        Button(
+          onClick = {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.ruraluniv.ac.in/"))
+            try { context.startActivity(intent) } catch (_: Exception) {}
+            selectedPortalModal = null
+          },
+          colors = ButtonDefaults.buttonColors(containerColor = GriForestPrimary)
+        ) {
+          Text(portal.actionLabel, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+        }
+      },
+      dismissButton = {
+        androidx.compose.material3.TextButton(onClick = { selectedPortalModal = null }) {
+          Text("Close", color = GriOnSurfaceVariant)
+        }
+      }
+    )
   }
 }
 

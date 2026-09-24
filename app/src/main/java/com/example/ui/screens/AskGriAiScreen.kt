@@ -23,6 +23,9 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.AutoAwesome
@@ -449,8 +452,15 @@ fun AskGriAiScreen(
           modifier = Modifier.fillMaxWidth(),
           verticalAlignment = Alignment.CenterVertically
         ) {
-          IconButton(onClick = {}, modifier = Modifier.size(32.dp)) {
-            Icon(Icons.Default.QrCodeScanner, contentDescription = "Scan QR", tint = GriOutline, modifier = Modifier.size(18.dp))
+          IconButton(
+            onClick = {
+              val sample = "Verify Clause 7.2 Academic Council Regulations on Attendance"
+              inputQuery = sample
+              onSendQuery(sample)
+            },
+            modifier = Modifier.size(32.dp)
+          ) {
+            Icon(Icons.Default.QrCodeScanner, contentDescription = "Scan QR", tint = GriForestPrimary, modifier = Modifier.size(18.dp))
           }
 
           Box(modifier = Modifier.weight(1f).padding(horizontal = 6.dp)) {
@@ -460,13 +470,28 @@ fun AskGriAiScreen(
             androidx.compose.foundation.text.BasicTextField(
               value = inputQuery,
               onValueChange = { inputQuery = it },
+              singleLine = true,
+              keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
+              keyboardActions = KeyboardActions(onSend = {
+                if (inputQuery.isNotBlank()) {
+                  onSendQuery(inputQuery)
+                  inputQuery = ""
+                }
+              }),
               textStyle = androidx.compose.ui.text.TextStyle(fontSize = 12.sp, color = GriOnSurface),
               modifier = Modifier.fillMaxWidth()
             )
           }
 
-          IconButton(onClick = {}, modifier = Modifier.size(32.dp)) {
-            Icon(Icons.Default.Mic, contentDescription = "Mic", tint = GriOutline, modifier = Modifier.size(18.dp))
+          IconButton(
+            onClick = {
+              val sample = "What are the hostel dining timings and outpass rules?"
+              inputQuery = sample
+              onSendQuery(sample)
+            },
+            modifier = Modifier.size(32.dp)
+          ) {
+            Icon(Icons.Default.Mic, contentDescription = "Mic", tint = GriForestPrimary, modifier = Modifier.size(18.dp))
           }
 
           IconButton(
