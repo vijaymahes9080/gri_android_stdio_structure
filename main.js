@@ -1,13 +1,115 @@
 /**
  * ============================================================================
- * GRI MOBILE PORTAL 2026 — CORE APPLICATION LOGIC & INTERACTION ENGINE
- * Gandhigram Rural Institute (Deemed to be University)
+ * GRI MOBILE PORTAL 2026 — INSTITUTIONAL MULTI-ROLE & AUTHENTICATION ENGINE
+ * The Gandhigram Rural Institute (Deemed to be University)
  * ============================================================================
  */
 
-// --- 1. Comprehensive State Store ---
+// --- 1. Institutional Permissions Definition ---
+const PERMISSIONS = {
+  // Public
+  VIEW_PUBLIC: 'view_public',
+  VIEW_ANNOUNCEMENTS: 'view_announcements',
+  VIEW_CAMPUS_INFO: 'view_campus_info',
+  // Student
+  VIEW_STUDENT_DASHBOARD: 'view_student_dashboard',
+  VIEW_ACADEMICS: 'view_academics',
+  MARK_STUDENT_ATTENDANCE: 'mark_student_attendance',
+  VIEW_HALL_TICKET: 'view_hall_ticket',
+  FILE_GRIEVANCE: 'file_grievance',
+  VIEW_DIGITAL_ID: 'view_digital_id',
+  // Faculty
+  VIEW_FACULTY_DASHBOARD: 'view_faculty_dashboard',
+  MANAGE_COURSES: 'manage_courses',
+  TAKE_LECTURE_ATTENDANCE: 'take_lecture_attendance',
+  APPLY_STAFF_LEAVE: 'apply_staff_leave',
+  // CoE Staff
+  VIEW_COE_DASHBOARD: 'view_coe_dashboard',
+  MANAGE_EXAM_SCHEDULES: 'manage_exam_schedules',
+  ISSUE_HALL_TICKETS: 'issue_hall_tickets',
+  VERIFY_SANAD_SEAL: 'verify_sanad_seal',
+  // Scholar
+  VIEW_SCHOLAR_DASHBOARD: 'view_scholar_dashboard',
+  ACCESS_RESEARCH_LIBRARY: 'access_research_library',
+  // Admin & Governance
+  VIEW_ADMIN_DASHBOARD: 'view_admin_dashboard',
+  MANAGE_REGISTRATIONS: 'manage_registrations',
+  APPROVE_REJECT_APPLICATIONS: 'approve_reject_applications',
+  ASSIGN_ROLES: 'assign_roles',
+  PUBLISH_STATUTORY_CIRCULARS: 'publish_statutory_circulars',
+  VIEW_AUDIT_LOGS: 'view_audit_logs',
+  SYNC_CLOUD_LEDGER: 'sync_cloud_ledger',
+  // Universal
+  USE_SAHAYAK_AI: 'use_sahayak_ai',
+  VIEW_TRANSIT_RADAR: 'view_transit_radar'
+};
+
+const ROLE_PERMISSIONS_MAP = {
+  PUBLIC: [
+    PERMISSIONS.VIEW_PUBLIC,
+    PERMISSIONS.VIEW_ANNOUNCEMENTS,
+    PERMISSIONS.VIEW_CAMPUS_INFO
+  ],
+  GUEST: [
+    PERMISSIONS.VIEW_PUBLIC,
+    PERMISSIONS.VIEW_ANNOUNCEMENTS,
+    PERMISSIONS.VIEW_CAMPUS_INFO,
+    PERMISSIONS.USE_SAHAYAK_AI,
+    PERMISSIONS.VIEW_TRANSIT_RADAR
+  ],
+  STUDENT: [
+    PERMISSIONS.VIEW_STUDENT_DASHBOARD,
+    PERMISSIONS.VIEW_ACADEMICS,
+    PERMISSIONS.MARK_STUDENT_ATTENDANCE,
+    PERMISSIONS.VIEW_HALL_TICKET,
+    PERMISSIONS.FILE_GRIEVANCE,
+    PERMISSIONS.VIEW_DIGITAL_ID,
+    PERMISSIONS.VIEW_TRANSIT_RADAR,
+    PERMISSIONS.USE_SAHAYAK_AI,
+    PERMISSIONS.VIEW_ANNOUNCEMENTS
+  ],
+  FACULTY: [
+    PERMISSIONS.VIEW_FACULTY_DASHBOARD,
+    PERMISSIONS.MANAGE_COURSES,
+    PERMISSIONS.TAKE_LECTURE_ATTENDANCE,
+    PERMISSIONS.APPLY_STAFF_LEAVE,
+    PERMISSIONS.VIEW_ANNOUNCEMENTS,
+    PERMISSIONS.USE_SAHAYAK_AI,
+    PERMISSIONS.VIEW_TRANSIT_RADAR
+  ],
+  COE_STAFF: [
+    PERMISSIONS.VIEW_COE_DASHBOARD,
+    PERMISSIONS.MANAGE_EXAM_SCHEDULES,
+    PERMISSIONS.ISSUE_HALL_TICKETS,
+    PERMISSIONS.VERIFY_SANAD_SEAL,
+    PERMISSIONS.PUBLISH_STATUTORY_CIRCULARS,
+    PERMISSIONS.VIEW_ANNOUNCEMENTS,
+    PERMISSIONS.USE_SAHAYAK_AI
+  ],
+  SCHOLAR: [
+    PERMISSIONS.VIEW_SCHOLAR_DASHBOARD,
+    PERMISSIONS.ACCESS_RESEARCH_LIBRARY,
+    PERMISSIONS.VIEW_ACADEMICS,
+    PERMISSIONS.USE_SAHAYAK_AI,
+    PERMISSIONS.VIEW_ANNOUNCEMENTS,
+    PERMISSIONS.VIEW_TRANSIT_RADAR
+  ],
+  ADMIN: [
+    PERMISSIONS.VIEW_ADMIN_DASHBOARD,
+    PERMISSIONS.MANAGE_REGISTRATIONS,
+    PERMISSIONS.APPROVE_REJECT_APPLICATIONS,
+    PERMISSIONS.ASSIGN_ROLES,
+    PERMISSIONS.PUBLISH_STATUTORY_CIRCULARS,
+    PERMISSIONS.VIEW_AUDIT_LOGS,
+    PERMISSIONS.SYNC_CLOUD_LEDGER,
+    PERMISSIONS.VIEW_ANNOUNCEMENTS,
+    PERMISSIONS.USE_SAHAYAK_AI,
+    PERMISSIONS.VIEW_TRANSIT_RADAR
+  ]
+};
+
+// --- 2. Institutional Application State Store ---
 const state = {
-  currentRole: 'STUDENT',
   theme: 'dark',
   hasBezel: true,
   currentTab: 'home',
@@ -15,13 +117,36 @@ const state = {
   offlineQueueCount: 0,
   unreadNotifsCount: 3,
 
-  // Users per role (matches GriRepository.kt)
-  users: {
-    STUDENT: {
+  // Authenticated Current User (Default: Admin to allow testing approval center out of the box)
+  currentUser: null,
+
+  // Registered Accounts in Institutional Ledger
+  accounts: [
+    {
+      id: 'usr_admin',
+      name: 'GRI Controller of Examinations',
+      email: 'admin@ruraluniv.ac.in',
+      mobile: '+91 451 2452371',
+      institutionalId: 'ADMIN-GRI-01',
+      status: 'APPROVED',
+      approvedRoles: ['ADMIN'],
+      activeRole: 'ADMIN',
+      department: 'Central Administration & Samarth ERP Hub',
+      program: 'Office of the Controller of Examinations',
+      designation: 'Controller of Examinations & Authorized Statutory Officer',
+      submittedAt: '10 Jan 2026, 09:00 AM',
+      reviewedAt: '10 Jan 2026, 10:00 AM',
+      reviewedBy: 'Vice-Chancellor Secretariat'
+    },
+    {
       id: 'usr_student',
       name: 'Srimari Vijay',
-      email: 'srimarivijay@gmail.com',
-      rollNo: '23MCA042',
+      email: 'student@ruraluniv.ac.in',
+      mobile: '+91 94882 14209',
+      institutionalId: '23MCA042',
+      status: 'APPROVED',
+      approvedRoles: ['STUDENT'],
+      activeRole: 'STUDENT',
       department: 'Computer Science & Applications',
       program: 'Master of Computer Applications (MCA)',
       semester: 'Semester IV (Final Year)',
@@ -30,86 +155,151 @@ const state = {
       isHostelite: true,
       hostelName: 'Thamarai Illam (Room 214)',
       busPass: 'Route 1: Dindigul ↔ GRI',
-      validThru: '2026-12-31'
+      validThru: '2026-12-31',
+      submittedAt: '15 Jul 2026, 10:30 AM',
+      reviewedAt: '16 Jul 2026, 02:00 PM',
+      reviewedBy: 'Dean of Student Welfare'
     },
-    FACULTY: {
+    {
       id: 'usr_faculty',
       name: 'Dr. R. Subramanian',
-      email: 'r.subramanian@ruraluniv.ac.in',
-      rollNo: 'FAC-CS-108',
+      email: 'faculty@ruraluniv.ac.in',
+      mobile: '+91 98421 95431',
+      institutionalId: 'FAC-CS-108',
+      status: 'APPROVED',
+      approvedRoles: ['FACULTY', 'SCHOLAR'], // Legitimate Multi-Role User
+      activeRole: 'FACULTY',
       department: 'School of Sciences & Rural Technology',
       program: 'Faculty of Computer Science',
-      semester: 'Senior Associate Professor',
+      designation: 'Senior Associate Professor & Research Supervisor',
       cgpa: 'Ph.D. IIT Madras',
       attendance: 96.0,
       isHostelite: false,
       hostelName: 'Staff Quarters Type IV-B',
       busPass: 'University Shuttle',
-      validThru: '2030-05-31'
+      validThru: '2030-05-31',
+      submittedAt: '01 Jun 2026, 11:00 AM',
+      reviewedAt: '02 Jun 2026, 04:00 PM',
+      reviewedBy: "Registrar's Office"
     },
-    ADMIN: {
-      id: 'usr_admin',
-      name: 'GRI Controller of Examinations',
+    {
+      id: 'usr_coe',
+      name: 'M. Sadasivam',
       email: 'coe@ruraluniv.ac.in',
-      rollNo: 'ADMIN-GRI-01',
-      department: 'Central Administration & Samarth ERP Hub',
-      program: 'Administrative Directorate',
-      semester: 'Office of the Controller of Examinations',
-      cgpa: 'Authorized Statutory Officer',
-      attendance: 100.0,
+      mobile: '+91 94431 82415',
+      institutionalId: 'COE-SEC-09',
+      status: 'APPROVED',
+      approvedRoles: ['COE_STAFF'],
+      activeRole: 'COE_STAFF',
+      department: 'Examination Confidential Branch',
+      program: 'Examination Administration',
+      designation: 'Deputy Registrar (Examinations)',
+      attendance: 98.0,
       isHostelite: false,
-      hostelName: 'Administrative Secretariat',
-      busPass: 'Official Fleet',
-      validThru: 'Permanent'
+      validThru: '2032-12-31',
+      submittedAt: '12 Jan 2026, 09:30 AM',
+      reviewedAt: '13 Jan 2026, 11:15 AM',
+      reviewedBy: 'Controller of Examinations'
     },
-    STAFF: {
-      id: 'usr_staff',
-      name: 'K. Shanmugasundaram',
-      email: 'k.shanmugam@ruraluniv.ac.in',
-      rollNo: 'STF-ADM-042',
-      department: 'Finance & Establishment Section',
-      program: 'Administrative Staff',
-      semester: 'Section Officer / Superintendent',
-      cgpa: 'Cadre: Group B Non-Teaching',
-      attendance: 94.2,
-      isHostelite: false,
-      hostelName: 'N/A',
-      busPass: 'Route 2: Madurai ↔ GRI',
-      validThru: '2032-03-31'
-    },
-    SCHOLAR: {
+    {
       id: 'usr_scholar',
       name: 'Ananya Murugan',
-      email: 'ananya.m@ruraluniv.ac.in',
-      rollNo: '24PHD-ECO-09',
+      email: 'scholar@ruraluniv.ac.in',
+      mobile: '+91 97880 34120',
+      institutionalId: '24PHD-ECO-09',
+      status: 'APPROVED',
+      approvedRoles: ['SCHOLAR'],
+      activeRole: 'SCHOLAR',
       department: 'Rural Development & Sustainable Agro-Economy',
       program: 'Doctor of Philosophy (Ph.D.)',
-      semester: 'Year 2 Research Scholar',
-      cgpa: 'UGC JRF Fellow',
+      designation: 'Year 2 Research Scholar & UGC JRF Fellow',
       attendance: 92.4,
       isHostelite: true,
       hostelName: 'Kasturba Scholars Hostel',
-      busPass: 'Campus Pass',
-      validThru: '2028-06-30'
+      validThru: '2028-06-30',
+      submittedAt: '20 Aug 2026, 03:00 PM',
+      reviewedAt: '22 Aug 2026, 10:00 AM',
+      reviewedBy: 'Dean of Academic Affairs'
     },
-    GUEST: {
-      id: 'usr_guest',
-      name: 'Gandhigram Visitor',
-      email: 'guest@ruraluniv.ac.in',
-      rollNo: 'GUEST-2026',
-      department: 'Prospective Student / Campus Visitor',
-      program: 'Visitor Portal',
-      semester: 'Public Access',
-      cgpa: 'N/A',
-      attendance: 0,
-      isHostelite: false,
-      hostelName: 'University Guest House',
-      busPass: 'Visitor Day Ticket',
-      validThru: '2026-12-31'
+    {
+      id: 'usr_pending',
+      name: 'Kavitha Mohan',
+      email: 'pending@ruraluniv.ac.in',
+      mobile: '+91 98421 78420',
+      institutionalId: '26MSC-CHE-12',
+      status: 'PENDING',
+      requestedRole: 'STUDENT',
+      approvedRoles: [],
+      activeRole: 'GUEST',
+      applicationId: 'GRI-2026-APP-8104',
+      department: 'Department of Chemistry',
+      program: 'M.Sc. Applied Chemistry & Rural Industries',
+      semester: 'Semester I',
+      submittedAt: '24 Sep 2026, 11:30 AM',
+      reviewedAt: null,
+      reviewedBy: null,
+      rejectionReason: null,
+      infoRequested: null,
+      infoProvided: null
+    },
+    {
+      id: 'usr_review',
+      name: 'Arun Kumar',
+      email: 'review@ruraluniv.ac.in',
+      mobile: '+91 94881 23091',
+      institutionalId: '26BED-ENG-08',
+      status: 'UNDER_REVIEW',
+      requestedRole: 'STUDENT',
+      approvedRoles: [],
+      activeRole: 'GUEST',
+      applicationId: 'GRI-2026-APP-7890',
+      department: 'Department of Education',
+      program: 'ITEP 4-Year B.Ed. Integrated Programme',
+      semester: 'Semester I',
+      submittedAt: '23 Sep 2026, 04:15 PM',
+      reviewedAt: '24 Sep 2026, 09:30 AM',
+      reviewedBy: 'Dean of Academic Affairs',
+      rejectionReason: null,
+      infoRequested: 'Please provide your UG Consolidated Marksheet Reference Number and official community quota verification document.',
+      infoProvided: null
     }
-  },
+  ],
 
-  // Courses with live attendance calculator data
+  // Real-Time Audit Log Ledger
+  auditTrail: [
+    {
+      id: 'aud_1',
+      timestamp: '24 Sep 2026, 09:30 AM',
+      actor: 'GRI Controller of Examinations (ADMIN)',
+      targetUser: 'Arun Kumar (26BED-ENG-08)',
+      action: 'INFO_REQUESTED',
+      previousStatus: 'PENDING',
+      newStatus: 'UNDER_REVIEW',
+      remarks: 'Requested UG Consolidated Marksheet Reference & Community Certificate'
+    },
+    {
+      id: 'aud_2',
+      timestamp: '24 Sep 2026, 11:30 AM',
+      actor: 'Kavitha Mohan (Applicant)',
+      targetUser: 'Kavitha Mohan (26MSC-CHE-12)',
+      action: 'REGISTRATION_SUBMITTED',
+      previousStatus: 'NONE',
+      newStatus: 'PENDING',
+      remarks: 'Application logged to Central Registry. Ref: GRI-2026-APP-8104'
+    },
+    {
+      id: 'aud_3',
+      timestamp: '24 Sep 2026, 08:40 AM',
+      actor: 'Dr. R. Subramanian (Faculty)',
+      targetUser: 'Dr. R. Subramanian',
+      action: 'ROLE_SWITCHED',
+      previousStatus: 'FACULTY',
+      newStatus: 'SCHOLAR',
+      remarks: 'User switched between authorized approved roles'
+    }
+  ],
+
+  // Courses with live attendance calculator
   courses: [
     { code: 'CS501', title: 'Advanced Cloud Computing', credits: 4, instructor: 'Dr. K. Senthilkumar', schedule: 'Mon, Wed 10:00 AM', attendance: 91, total: 36, attended: 33 },
     { code: 'RD402', title: 'Gandhian Reconstruction & Ethics', credits: 3, instructor: 'Prof. R. Mani', schedule: 'Tue, Thu 11:30 AM', attendance: 84, total: 32, attended: 27 },
@@ -134,112 +324,52 @@ const state = {
 
   // Bus Transit Routes
   busRoutes: [
-    {
-      id: 'route_1',
-      name: 'Route 1: Dindigul Railway Jn ↔ GRI Main Gate',
-      busNo: 'TN-57-N-2418',
-      driver: 'M. Murugesan',
-      phone: '+91 94431 82410',
-      eta: '8 mins',
-      progress: 68,
-      status: 'Approaching Chinnalapatti Four-Roads'
-    },
-    {
-      id: 'route_2',
-      name: 'Route 2: Madurai Periyar Bus Stand ↔ GRI',
-      busNo: 'TN-57-N-3102',
-      driver: 'S. Palanichamy',
-      phone: '+91 98421 95430',
-      eta: '22 mins',
-      progress: 35,
-      status: 'Crossed Vadipatti Toll Plaza'
-    },
-    {
-      id: 'route_3',
-      name: 'Route 3: Batlagundu Bus Terminus ↔ GRI',
-      busNo: 'TN-57-N-1894',
-      driver: 'K. Vellingiri',
-      phone: '+91 97880 14209',
-      eta: '14 mins',
-      progress: 82,
-      status: 'Entering University South Gate'
-    }
+    { id: 'route_1', name: 'Route 1: Dindigul Railway Jn ↔ GRI Main Gate', busNo: 'TN-57-N-2418', driver: 'M. Murugesan', phone: '+91 94431 82410', eta: '8 mins', progress: 68, status: 'Approaching Chinnalapatti Four-Roads' },
+    { id: 'route_2', name: 'Route 2: Madurai Periyar Bus Stand ↔ GRI', busNo: 'TN-57-N-3102', driver: 'S. Palanichamy', phone: '+91 98421 95430', eta: '22 mins', progress: 35, status: 'Crossed Vadipatti Toll Plaza' },
+    { id: 'route_3', name: 'Route 3: Batlagundu Bus Terminus ↔ GRI', busNo: 'TN-57-N-1894', driver: 'K. Vellingiri', phone: '+91 97880 14209', eta: '14 mins', progress: 82, status: 'Entering University South Gate' }
   ],
 
-  // Grievances list
+  // Grievances
   grievances: [
-    {
-      id: 'GRI-2026-TKT-8912',
-      category: 'Infrastructure & Labs',
-      subject: 'High-speed Wi-Fi access point in Computer Science Block Lab 3',
-      date: '22 Sep 2026',
-      status: 'RESOLVED',
-      progress: 100,
-      remarks: 'Access Point dual-band router replaced and calibrated by Central Computer Centre.'
-    },
-    {
-      id: 'GRI-2026-TKT-9204',
-      category: 'Hostel & Mess',
-      subject: 'Drinking water RO plant scheduled maintenance in Thamarai Illam',
-      date: '23 Sep 2026',
-      status: 'IN_PROGRESS',
-      progress: 65,
-      remarks: 'Estate maintenance team assigned; filter replacement underway today.'
-    }
+    { id: 'GRI-2026-TKT-8912', category: 'Infrastructure & Labs', subject: 'High-speed Wi-Fi access point in Computer Science Block Lab 3', date: '22 Sep 2026', status: 'RESOLVED', remarks: 'Access Point replaced and calibrated by Central Computer Centre.' },
+    { id: 'GRI-2026-TKT-9204', category: 'Hostel & Mess', subject: 'Drinking water RO plant scheduled maintenance in Thamarai Illam', date: '23 Sep 2026', status: 'IN_PROGRESS', remarks: 'Estate maintenance team assigned; filter replacement underway today.' }
   ],
 
-  // Circulars
+  // Statutory Circulars
   circulars: [
-    {
-      id: 'CIR-2026-NOV-01',
-      title: 'Samarth@GRI Semester Examination Hall Tickets Released',
-      category: 'Examinations',
-      date: '24 Sep 2026',
-      issuedBy: 'Controller of Examinations',
-      urgent: true,
-      summary: 'Candidates appearing for Nov/Dec 2026 End Semester Examinations can download verified hall tickets with e-SANAD QR tokens.'
-    },
-    {
-      id: 'CIR-2026-NOV-02',
-      title: 'Nai Talim Village Internship Fieldwork Orientation',
-      category: 'Academics',
-      date: '21 Sep 2026',
-      issuedBy: 'Dean of Academic Affairs',
-      urgent: false,
-      summary: 'Mandatory rural development orientation for postgraduate students at Kasturba Hospital and Gandhigram Seva Ashram.'
-    },
-    {
-      id: 'CIR-2026-NOV-03',
-      title: 'e-SANAD Digital Transcripts & Degree Verification Service',
-      category: 'Administration',
-      date: '18 Sep 2026',
-      issuedBy: "Registrar's Secretariat",
-      urgent: false,
-      summary: 'University degree records and mark transcripts are now integrated with National Academic Depository (NAD) and DigiLocker.'
-    }
+    { id: 'CIR-2026-NOV-01', title: 'Samarth@GRI Semester Examination Hall Tickets Released', category: 'Examinations', date: '24 Sep 2026', issuedBy: 'Controller of Examinations', urgent: true, summary: 'Candidates appearing for Nov/Dec 2026 End Semester Examinations can download verified hall tickets with e-SANAD QR tokens.' },
+    { id: 'CIR-2026-NOV-02', title: 'Nai Talim Village Internship Fieldwork Orientation', category: 'Academics', date: '21 Sep 2026', issuedBy: 'Dean of Academic Affairs', urgent: false, summary: 'Mandatory rural development orientation for postgraduate students at Kasturba Hospital and Gandhigram Seva Ashram.' },
+    { id: 'CIR-2026-NOV-03', title: 'e-SANAD Digital Transcripts & Degree Verification Service', category: 'Administration', date: '18 Sep 2026', issuedBy: "Registrar's Secretariat", urgent: false, summary: 'University degree records and mark transcripts are now integrated with National Academic Depository (NAD) and DigiLocker.' }
   ],
 
-  // Sahayak AI messages
+  // Sahayak AI
   sahayakMessages: [
-    {
-      isBot: true,
-      text: "Vanakkam! I am GRI-Sahayak, your institutional AI guide for The Gandhigram Rural Institute (Deemed to be University). Ask me about Admissions 2026, CBCS courses, examination hall tickets, 75% attendance criteria, hostels, or campus transit.",
-      source: 'ruraluniv.ac.in • Official UGC Registry'
-    }
+    { isBot: true, text: "Vanakkam! I am GRI-Sahayak, your institutional AI guide for The Gandhigram Rural Institute (Deemed to be University). Ask me about Admissions 2026, CBCS courses, examination hall tickets, 75% attendance criteria, hostels, or campus transit.", source: 'ruraluniv.ac.in • Official UGC Registry' }
   ]
 };
 
-// --- 2. Audio & Haptic Feedback ---
-class HapticFeedback {
-  static click() {
-    if (navigator.vibrate) navigator.vibrate(10);
+// Set default current user to Admin
+state.currentUser = state.accounts[0];
+
+// --- 3. Authorization & Permissions Engine ---
+function checkPermission(permissionName) {
+  if (!state.currentUser) return permissionName === PERMISSIONS.VIEW_PUBLIC;
+  if (state.currentUser.status !== 'APPROVED') {
+    return permissionName === PERMISSIONS.VIEW_PUBLIC || permissionName === PERMISSIONS.USE_SAHAYAK_AI;
   }
-  static success() {
-    if (navigator.vibrate) navigator.vibrate([15, 50, 20]);
-  }
+  const role = state.currentUser.activeRole || 'GUEST';
+  const allowedPermissions = ROLE_PERMISSIONS_MAP[role] || [];
+  return allowedPermissions.includes(permissionName);
 }
 
-// --- 3. DOM Elements Cache ---
+// --- 4. Haptic Feedback ---
+class HapticFeedback {
+  static click() { if (navigator.vibrate) navigator.vibrate(10); }
+  static success() { if (navigator.vibrate) navigator.vibrate([15, 50, 20]); }
+  static error() { if (navigator.vibrate) navigator.vibrate([40, 40, 40]); }
+}
+
+// --- 5. DOM Cache ---
 const el = {
   simulatorWrapper: document.getElementById('simulatorWrapper'),
   mobileFrameContainer: document.getElementById('mobileFrameContainer'),
@@ -248,13 +378,48 @@ const el = {
   toggleGlobalThemeBtn: document.getElementById('toggleGlobalThemeBtn'),
   themeBtnText: document.getElementById('themeBtnText'),
   quickSyncBtn: document.getElementById('quickSyncBtn'),
-  globalRoleSelect: document.getElementById('globalRoleSelect'),
+  globalAccountSelect: document.getElementById('globalAccountSelect'),
+  openRegisterBtn: document.getElementById('openRegisterBtn'),
   currentRoleChip: document.getElementById('currentRoleChip'),
+  roleBadgeBtn: document.getElementById('roleBadgeBtn'),
   statusClock: document.getElementById('statusClock'),
   bottomNav: document.getElementById('bottomNav'),
   toastContainer: document.getElementById('toastContainer'),
   
   // Modals
+  authModal: document.getElementById('authModal'),
+  closeAuthBtn: document.getElementById('closeAuthBtn'),
+  loginForm: document.getElementById('loginForm'),
+  loginEmail: document.getElementById('loginEmail'),
+  loginPassword: document.getElementById('loginPassword'),
+  quickAuthButtonsGrid: document.getElementById('quickAuthButtonsGrid'),
+  linkOpenRegister: document.getElementById('linkOpenRegister'),
+  linkPublicVisitor: document.getElementById('linkPublicVisitor'),
+
+  registerModal: document.getElementById('registerModal'),
+  closeRegisterBtn: document.getElementById('closeRegisterBtn'),
+  registrationWizardForm: document.getElementById('registrationWizardForm'),
+  stepIndicator1: document.getElementById('stepIndicator1'),
+  stepIndicator2: document.getElementById('stepIndicator2'),
+  stepIndicator3: document.getElementById('stepIndicator3'),
+  regStep1: document.getElementById('regStep1'),
+  regStep2: document.getElementById('regStep2'),
+  regStep3: document.getElementById('regStep3'),
+  btnNextToStep2: document.getElementById('btnNextToStep2'),
+  btnNextToStep3: document.getElementById('btnNextToStep3'),
+  btnBackToStep1: document.getElementById('btnBackToStep1'),
+  btnBackToStep2: document.getElementById('btnBackToStep2'),
+  dynamicRoleFieldsContainer: document.getElementById('dynamicRoleFieldsContainer'),
+
+  adminReviewModal: document.getElementById('adminReviewModal'),
+  closeAdminReviewBtn: document.getElementById('closeAdminReviewBtn'),
+  adminReviewDetails: document.getElementById('adminReviewDetails'),
+  reviewSubtitle: document.getElementById('reviewSubtitle'),
+
+  roleSwitcherModal: document.getElementById('roleSwitcherModal'),
+  closeRoleSwitcherBtn: document.getElementById('closeRoleSwitcherBtn'),
+  authorizedRolesList: document.getElementById('authorizedRolesList'),
+
   sahayakModal: document.getElementById('sahayakModal'),
   openSahayakBtn: document.getElementById('openSahayakBtn'),
   closeSahayakBtn: document.getElementById('closeSahayakBtn'),
@@ -295,10 +460,15 @@ const el = {
   screenAcademics: document.getElementById('screenAcademics'),
   screenCampus: document.getElementById('screenCampus'),
   screenServices: document.getElementById('screenServices'),
-  screenAdmin: document.getElementById('screenAdmin')
+  screenAdmin: document.getElementById('screenAdmin'),
+  screenStatus: document.getElementById('screenStatus'),
+  screenApprovals: document.getElementById('screenApprovals'),
+  screenCoe: document.getElementById('screenCoe'),
+  screenScholar: document.getElementById('screenScholar'),
+  screenFaculty: document.getElementById('screenFaculty')
 };
 
-// --- 4. Live Clock Updater ---
+// --- 6. Live Clock Updater ---
 function updateClock() {
   const now = new Date();
   let hours = now.getHours();
@@ -308,9 +478,11 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
-// --- 5. Toast Notification System ---
+// --- 7. Toast Alerts ---
 function showToast(message, type = 'success') {
-  HapticFeedback.click();
+  if (type === 'error') HapticFeedback.error();
+  else HapticFeedback.click();
+
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
   toast.innerHTML = `
@@ -328,15 +500,15 @@ function showToast(message, type = 'success') {
   }, 3500);
 }
 
-// --- 6. 3D Card Tilt Interaction Engine ---
+// --- 8. 3D Card Tilt Interaction ---
 function attach3DTiltHandlers() {
   document.querySelectorAll('.tilt-card').forEach(card => {
     card.addEventListener('mousemove', e => {
       const rect = card.getBoundingClientRect();
       const x = e.clientX - rect.left - rect.width / 2;
       const y = e.clientY - rect.top - rect.height / 2;
-      const rotateX = -(y / (rect.height / 2)) * 6;
-      const rotateY = (x / (rect.width / 2)) * 6;
+      const rotateX = -(y / (rect.height / 2)) * 5;
+      const rotateY = (x / (rect.width / 2)) * 5;
       card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-2px)`;
     });
     card.addEventListener('mouseleave', () => {
@@ -345,95 +517,411 @@ function attach3DTiltHandlers() {
   });
 }
 
-// --- 7. Screen Renderers ---
+// --- 9. Dynamic Navigation Renderer ---
+function updateDynamicNavigation() {
+  const u = state.currentUser;
+  const isApproved = u && u.status === 'APPROVED';
+  const role = isApproved ? u.activeRole : (u ? u.status : 'PUBLIC');
 
-// Screen 1: Home Dashboard
+  // Determine accessible tabs
+  let navItems = [];
+
+  if (!u || u.status === 'PUBLIC') {
+    navItems = [
+      { id: 'home', label: 'Home', icon: '<path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>' },
+      { id: 'campus', label: 'Campus', icon: '<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>' },
+      { id: 'gazettes', label: 'Gazettes', icon: '<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>' },
+      { id: 'auth', label: 'Sign In', icon: '<path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.89-2-2-2z"/>' }
+    ];
+  } else if (u.status === 'PENDING' || u.status === 'UNDER_REVIEW' || u.status === 'REJECTED' || u.status === 'SUSPENDED') {
+    navItems = [
+      { id: 'status', label: 'Status', icon: '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>' },
+      { id: 'home', label: 'Campus Info', icon: '<path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>' },
+      { id: 'auth', label: 'Accounts', icon: '<path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>' }
+    ];
+  } else if (role === 'STUDENT') {
+    navItems = [
+      { id: 'home', label: 'Home', icon: '<path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>' },
+      { id: 'academics', label: 'Academics', icon: '<path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>' },
+      { id: 'campus', label: 'Transit', icon: '<path d="M12 2c-4.42 0-8 .5-8 4v10c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4z"/>' },
+      { id: 'services', label: 'Services', icon: '<path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/>' }
+    ];
+  } else if (role === 'FACULTY') {
+    navItems = [
+      { id: 'home', label: 'Faculty Hub', icon: '<path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>' },
+      { id: 'faculty', label: 'Teaching', icon: '<path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>' },
+      { id: 'campus', label: 'Campus', icon: '<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>' },
+      { id: 'gazettes', label: 'Orders', icon: '<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>' }
+    ];
+  } else if (role === 'COE_STAFF') {
+    navItems = [
+      { id: 'home', label: 'CoE Hub', icon: '<path d="M22 10V6c0-1.11-.9-2-2-2H4c-1.1 0-1.99.89-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2z"/>' },
+      { id: 'coe', label: 'Exam Ops', icon: '<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>' },
+      { id: 'campus', label: 'Campus', icon: '<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>' },
+      { id: 'admin', label: 'Notices', icon: '<path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/>' }
+    ];
+  } else if (role === 'SCHOLAR') {
+    navItems = [
+      { id: 'home', label: 'Scholar Hub', icon: '<path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>' },
+      { id: 'scholar', label: 'Research', icon: '<path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/>' },
+      { id: 'campus', label: 'Library', icon: '<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>' },
+      { id: 'services', label: 'Care', icon: '<path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>' }
+    ];
+  } else if (role === 'ADMIN') {
+    navItems = [
+      { id: 'home', label: 'Dashboard', icon: '<path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>' },
+      { id: 'approvals', label: 'Approvals', icon: '<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>' },
+      { id: 'admin', label: 'Registry', icon: '<path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/>' },
+      { id: 'campus', label: 'Transit', icon: '<path d="M12 2c-4.42 0-8 .5-8 4v10c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4z"/>' }
+    ];
+  }
+
+  // Render bottom nav HTML
+  el.bottomNav.innerHTML = navItems.map(item => `
+    <button class="nav-item ${state.currentTab === item.id ? 'active' : ''}" data-tab="${item.id}" id="nav_${item.id}">
+      <div class="nav-icon-wrap">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">${item.icon}</svg>
+      </div>
+      <span class="nav-label">${item.label}</span>
+    </button>
+  `).join('');
+
+  // Re-attach bottom nav clicks
+  document.querySelectorAll('.nav-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tab = btn.getAttribute('data-tab');
+      if (tab === 'auth') {
+        openAuthModal();
+      } else if (tab === 'gazettes') {
+        openDocCenterModal();
+      } else {
+        switchTab(tab);
+      }
+    });
+  });
+
+  // Update top role badge chip
+  if (!u || u.status === 'PUBLIC') {
+    el.currentRoleChip.textContent = 'PUBLIC';
+    el.currentRoleChip.style.color = 'var(--color-text-muted)';
+  } else if (u.status !== 'APPROVED') {
+    el.currentRoleChip.textContent = u.status;
+    el.currentRoleChip.style.color = u.status === 'PENDING' ? 'var(--color-warning)' : 'var(--color-info)';
+  } else {
+    el.currentRoleChip.textContent = u.activeRole;
+    el.currentRoleChip.style.color = 'var(--color-primary)';
+  }
+}
+
+// --- 10. Switch Tab Engine with Permission Gate ---
+function switchTab(tabId) {
+  HapticFeedback.click();
+
+  // If user is unapproved and tries to access protected tab -> redirect to status screen
+  if (state.currentUser && state.currentUser.status !== 'APPROVED') {
+    if (tabId !== 'status' && tabId !== 'home') {
+      tabId = 'status';
+      showToast('Account is pending approval. Showing registration status.', 'info');
+    }
+  }
+
+  // Permission Gate
+  if (tabId === 'approvals' && !checkPermission(PERMISSIONS.APPROVE_REJECT_APPLICATIONS)) {
+    showToast('Unauthorized: Administrator approval permission required.', 'error');
+    return;
+  }
+  if (tabId === 'admin' && !checkPermission(PERMISSIONS.VIEW_ADMIN_DASHBOARD) && !checkPermission(PERMISSIONS.PUBLISH_STATUTORY_CIRCULARS)) {
+    showToast('Unauthorized: Institutional admin access required.', 'error');
+    return;
+  }
+
+  state.currentTab = tabId;
+
+  // Update bottom nav active state
+  document.querySelectorAll('.nav-item').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-tab') === tabId);
+  });
+
+  // Update screen visibility
+  document.querySelectorAll('.screen-view').forEach(view => {
+    view.classList.toggle('active', view.getAttribute('data-screen') === tabId);
+  });
+
+  // Render content
+  if (tabId === 'home') renderHomeScreen();
+  else if (tabId === 'status') renderStatusScreen();
+  else if (tabId === 'approvals') renderApprovalsScreen();
+  else if (tabId === 'academics') renderAcademicsScreen();
+  else if (tabId === 'campus') renderCampusScreen();
+  else if (tabId === 'services') renderServicesScreen();
+  else if (tabId === 'admin') renderAdminScreen();
+  else if (tabId === 'coe') renderCoeScreen();
+  else if (tabId === 'scholar') renderScholarScreen();
+  else if (tabId === 'faculty') renderFacultyScreen();
+}
+
+// --- 11. Authentication & Session Engine ---
+function authenticateUser(userAccountId) {
+  const account = state.accounts.find(a => a.id === userAccountId);
+  if (!account) return;
+
+  state.currentUser = account;
+  el.globalAccountSelect.value = userAccountId;
+  HapticFeedback.success();
+
+  if (account.status === 'APPROVED') {
+    showToast(`Signed in as ${account.name} (${account.activeRole})`);
+    state.currentTab = 'home';
+  } else {
+    showToast(`Account status: ${account.status.replace('_', ' ')}`, 'info');
+    state.currentTab = 'status';
+  }
+
+  updateDynamicNavigation();
+  switchTab(state.currentTab);
+}
+
+function openAuthModal() {
+  HapticFeedback.click();
+  renderQuickAuthButtons();
+  el.authModal.classList.add('active');
+}
+
+function closeAuthModal() {
+  el.authModal.classList.remove('active');
+}
+
+function renderQuickAuthButtons() {
+  el.quickAuthButtonsGrid.innerHTML = state.accounts.map(acc => `
+    <button class="btn btn-sm ${acc.id === state.currentUser?.id ? 'btn-primary' : 'btn-outline'} btn-quick-auth" data-id="${acc.id}" style="text-align: left; padding: 6px 8px; font-size: 10px;">
+      <div style="font-weight: 700; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${acc.name.split(' ')[0]} (${acc.activeRole || acc.status})</div>
+      <div style="font-size: 9px; opacity: 0.8;">Status: ${acc.status}</div>
+    </button>
+  `).join('');
+
+  document.querySelectorAll('.btn-quick-auth').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const id = e.currentTarget.getAttribute('data-id');
+      authenticateUser(id);
+      closeAuthModal();
+    });
+  });
+}
+
+// --- 12. Registration & Institutional Approval Workflow ---
+function openRegisterModal() {
+  HapticFeedback.click();
+  el.registrationWizardForm.reset();
+  showRegisterStep(1);
+  renderDynamicRoleFields('STUDENT');
+  el.registerModal.classList.add('active');
+}
+
+function closeRegisterModal() {
+  el.registerModal.classList.remove('active');
+}
+
+function showRegisterStep(stepNum) {
+  el.stepIndicator1.classList.toggle('active', stepNum >= 1);
+  el.stepIndicator2.classList.toggle('active', stepNum >= 2);
+  el.stepIndicator3.classList.toggle('active', stepNum >= 3);
+
+  el.regStep1.style.display = stepNum === 1 ? 'block' : 'none';
+  el.regStep2.style.display = stepNum === 2 ? 'block' : 'none';
+  el.regStep3.style.display = stepNum === 3 ? 'block' : 'none';
+}
+
+function renderDynamicRoleFields(role) {
+  let fieldsHtml = '';
+  if (role === 'STUDENT') {
+    fieldsHtml = `
+      <div class="form-group">
+        <label class="form-label">Student Register / Roll Number</label>
+        <input type="text" class="form-input" id="dynInstId" placeholder="e.g. 26MCA018" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Academic Department</label>
+        <select class="form-select" id="dynDept">
+          <option value="Computer Science & Applications">Computer Science & Applications</option>
+          <option value="Rural Development & Extension">Rural Development & Extension</option>
+          <option value="School of Agriculture & Animal Husbandry">School of Agriculture & Animal Husbandry</option>
+          <option value="Chemistry & Renewable Energy">Chemistry & Renewable Energy</option>
+          <option value="Faculty of Rural Social Sciences">Faculty of Rural Social Sciences</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Degree Programme & Semester</label>
+        <input type="text" class="form-input" id="dynProgram" placeholder="e.g. Master of Computer Applications • Semester I" required>
+      </div>
+    `;
+  } else if (role === 'FACULTY') {
+    fieldsHtml = `
+      <div class="form-group">
+        <label class="form-label">Faculty Employee ID</label>
+        <input type="text" class="form-input" id="dynInstId" placeholder="e.g. FAC-CS-204" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">School / Department</label>
+        <input type="text" class="form-input" id="dynDept" placeholder="e.g. School of Sciences" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Academic Designation</label>
+        <input type="text" class="form-input" id="dynProgram" placeholder="e.g. Assistant Professor (Stage II)" required>
+      </div>
+    `;
+  } else if (role === 'COE_STAFF') {
+    fieldsHtml = `
+      <div class="form-group">
+        <label class="form-label">CoE Staff ID</label>
+        <input type="text" class="form-input" id="dynInstId" placeholder="e.g. COE-TAB-14" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Office Branch / Section</label>
+        <input type="text" class="form-input" id="dynDept" placeholder="e.g. End Semester Tabulation & Hall Tickets" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Staff Designation</label>
+        <input type="text" class="form-input" id="dynProgram" placeholder="e.g. Section Superintendent" required>
+      </div>
+    `;
+  } else if (role === 'SCHOLAR') {
+    fieldsHtml = `
+      <div class="form-group">
+        <label class="form-label">Doctoral Scholar Registration No</label>
+        <input type="text" class="form-input" id="dynInstId" placeholder="e.g. 26PHD-ENG-03" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Research Department</label>
+        <input type="text" class="form-input" id="dynDept" placeholder="e.g. Department of English & Foreign Languages" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Research Guide / Specialization</label>
+        <input type="text" class="form-input" id="dynProgram" placeholder="e.g. Guide: Dr. S. Kanthimathi • Gandhian Literature" required>
+      </div>
+    `;
+  } else {
+    fieldsHtml = `
+      <div class="form-group">
+        <label class="form-label">Affiliation / Purpose of Visit</label>
+        <input type="text" class="form-input" id="dynProgram" placeholder="e.g. Prospective Applicant / Research Collaboration" required>
+      </div>
+    `;
+  }
+
+  el.dynamicRoleFieldsContainer.innerHTML = fieldsHtml;
+}
+
+// --- 13. Screen Renderers ---
+
+// Screen 1: Home Dashboard (Intelligent Role-Aware Dashboard)
 function renderHomeScreen() {
-  const u = state.users[state.currentRole] || state.users.STUDENT;
-  const isStudent = state.currentRole === 'STUDENT';
-  const isAdmin = state.currentRole === 'ADMIN';
-  const isFaculty = state.currentRole === 'FACULTY';
+  const u = state.currentUser || state.accounts[1];
+  const isStudent = u.activeRole === 'STUDENT';
+  const isAdmin = u.activeRole === 'ADMIN';
+  const isFaculty = u.activeRole === 'FACULTY';
+  const isCoE = u.activeRole === 'COE_STAFF';
 
   el.screenHome.innerHTML = `
-    <!-- 1. Hero Identity Card -->
+    <!-- Hero Identity Card -->
     <div class="card hero-student-card tilt-card" id="heroStudentCard">
       <div class="hero-profile-row">
         <div class="student-meta-info">
           <h1>${u.name}</h1>
-          <div class="student-sub">${u.rollNo} • ${u.program}</div>
-          <div class="student-dept">${u.department}</div>
+          <div class="student-sub">${u.institutionalId || 'GRI-MEMBER'} • ${u.program || u.activeRole}</div>
+          <div class="student-dept">${u.department || 'The Gandhigram Rural Institute'}</div>
         </div>
         <div class="student-avatar-wrap">
-          <img src="/assets/student_avatar.jpg" alt="${u.name}" class="student-avatar-img">
-          <span class="hero-badge-live">LIVE</span>
+          <img src="/assets/${isStudent ? 'student_avatar.jpg' : 'gri_official_logo.png'}" alt="${u.name}" class="student-avatar-img">
+          <span class="hero-badge-live">VERIFIED</span>
         </div>
       </div>
       <div class="hero-stats-row">
         <div class="mini-stat-col">
-          <span class="mini-stat-label">${isStudent ? 'CGPA' : 'Designation'}</span>
-          <span class="mini-stat-val highlight">${u.cgpa}</span>
+          <span class="mini-stat-label">Active Role</span>
+          <span class="mini-stat-val highlight">${u.activeRole}</span>
         </div>
         <div class="mini-stat-col">
-          <span class="mini-stat-label">Biometric</span>
-          <span class="mini-stat-val">${u.attendance}%</span>
+          <span class="mini-stat-label">Approval Status</span>
+          <span class="mini-stat-val" style="color: var(--color-success);">✓ ${u.status}</span>
         </div>
         <div class="mini-stat-col">
-          <span class="mini-stat-label">Status</span>
-          <span class="mini-stat-val" style="color: var(--color-success);">Verified</span>
+          <span class="mini-stat-label">Authorized Roles</span>
+          <span class="mini-stat-val" style="font-size: 11px;">${u.approvedRoles.join(', ')}</span>
         </div>
       </div>
     </div>
 
-    <!-- 2. Biometric Attendance Pulse Donut (for student/faculty) -->
-    <div class="card attendance-widget-card tilt-card">
-      <div class="progress-donut-wrap">
-        <svg class="donut-svg" viewBox="0 0 72 72">
-          <circle class="donut-bg" cx="36" cy="36" r="32"></circle>
-          <circle class="donut-fill" cx="36" cy="36" r="32" style="stroke-dashoffset: ${(1 - u.attendance / 100) * 201};"></circle>
-        </svg>
-        <div class="donut-label-center">
-          <span class="donut-percent">${u.attendance}%</span>
-          <span class="donut-sub">UGC Safe</span>
+    ${isAdmin ? `
+      <!-- Admin Governance Quick Launch Bar -->
+      <div class="card tilt-card" style="border-left: 4px solid var(--color-primary); background: linear-gradient(135deg, var(--color-surface-card), var(--color-surface-elevated));">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h3 style="font-family: var(--font-display); font-size: 14px; font-weight: 700;">Institutional Registration & Role Approvals</h3>
+            <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">
+              ${state.accounts.filter(a => a.status === 'PENDING').length} Pending • ${state.accounts.filter(a => a.status === 'UNDER_REVIEW').length} Under Review
+            </p>
+          </div>
+          <button class="btn btn-sm btn-primary" id="btnGoToApprovals">Open Approval Center →</button>
         </div>
       </div>
-      <div class="attendance-details-col">
-        <h3 class="attendance-title">Smart Attendance Ledger</h3>
-        <p class="attendance-desc">All registered courses comply with the mandatory 75% CBCS examination threshold.</p>
-        <div class="attendance-status-badge">
-          <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-          Biometric Check-in Safe Zone
-        </div>
-      </div>
-    </div>
+    ` : ''}
 
-    <!-- 3. Quick Action Grid -->
+    ${isStudent ? `
+      <!-- Biometric Attendance Donut Card -->
+      <div class="card attendance-widget-card tilt-card">
+        <div class="progress-donut-wrap">
+          <svg class="donut-svg" viewBox="0 0 72 72">
+            <circle class="donut-bg" cx="36" cy="36" r="32"></circle>
+            <circle class="donut-fill" cx="36" cy="36" r="32" style="stroke-dashoffset: ${(1 - (u.attendance || 88.5) / 100) * 201};"></circle>
+          </svg>
+          <div class="donut-label-center">
+            <span class="donut-percent">${u.attendance || 88.5}%</span>
+            <span class="donut-sub">UGC Safe</span>
+          </div>
+        </div>
+        <div class="attendance-details-col">
+          <h3 class="attendance-title">Smart Attendance Ledger</h3>
+          <p class="attendance-desc">All courses fulfill the mandatory 75% CBCS examination criteria.</p>
+          <div class="attendance-status-badge">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            Biometric Check-in Safe Zone
+          </div>
+        </div>
+      </div>
+    ` : ''}
+
+    <!-- Quick Action Grid -->
     <div class="section-header-row">
-      <span class="section-title">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/></svg>
-        Quick Institutional Actions
-      </span>
+      <span class="section-title">Institutional Portals & Services</span>
     </div>
+
     <div class="quick-action-grid">
-      <button class="action-card-btn" id="btnQuickHallTicket">
-        <div class="action-icon-circle">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M22 10V6c0-1.11-.9-2-2-2H4c-1.1 0-1.99.89-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2zm-2-1.53c-1.29.83-2.16 2.27-2.16 3.53 0 1.26.87 2.7 2.16 3.53V18H4v-2.47c1.29-.83 2.16-2.27 2.16-3.53 0-1.26-.87-2.7-2.16-3.53V6h16v2.47z"/></svg>
-        </div>
-        <span class="action-btn-label">Hall Ticket</span>
-      </button>
+      ${checkPermission(PERMISSIONS.VIEW_HALL_TICKET) ? `
+        <button class="action-card-btn" id="btnQuickHallTicket">
+          <div class="action-icon-circle">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M22 10V6c0-1.11-.9-2-2-2H4c-1.1 0-1.99.89-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2z"/></svg>
+          </div>
+          <span class="action-btn-label">Hall Ticket</span>
+        </button>
+      ` : ''}
 
-      <button class="action-card-btn" id="btnQuickGrievance">
-        <div class="action-icon-circle">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-        </div>
-        <span class="action-btn-label">GRI-Care</span>
-      </button>
+      ${checkPermission(PERMISSIONS.FILE_GRIEVANCE) ? `
+        <button class="action-card-btn" id="btnQuickGrievance">
+          <div class="action-icon-circle">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+          </div>
+          <span class="action-btn-label">GRI-Care</span>
+        </button>
+      ` : ''}
 
-      <button class="action-card-btn" id="btnQuickBus">
-        <div class="action-icon-circle">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2c-4.42 0-8 .5-8 4v10c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4zm5.5 13c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm-11 0c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM18 10H6V7h12v3z"/></svg>
-        </div>
-        <span class="action-btn-label">Live Transit</span>
-      </button>
+      ${checkPermission(PERMISSIONS.VIEW_TRANSIT_RADAR) ? `
+        <button class="action-card-btn" id="btnQuickBus">
+          <div class="action-icon-circle">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2c-4.42 0-8 .5-8 4v10c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4z"/></svg>
+          </div>
+          <span class="action-btn-label">Transit Radar</span>
+        </button>
+      ` : ''}
 
       <button class="action-card-btn accent" id="btnQuickSahayak">
         <div class="action-icon-circle">
@@ -449,35 +937,27 @@ function renderHomeScreen() {
         <span class="action-btn-label">e-Gazettes</span>
       </button>
 
-      <button class="action-card-btn" id="btnQuickIDCard">
-        <div class="action-icon-circle">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
-        </div>
-        <span class="action-btn-label">Digital ID</span>
-      </button>
+      ${checkPermission(PERMISSIONS.VIEW_DIGITAL_ID) ? `
+        <button class="action-card-btn" id="btnQuickIDCard">
+          <div class="action-icon-circle">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+          </div>
+          <span class="action-btn-label">Digital ID</span>
+        </button>
+      ` : `
+        <button class="action-card-btn" id="btnQuickAuthAction">
+          <div class="action-icon-circle">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          </div>
+          <span class="action-btn-label">User Status</span>
+        </button>
+      `}
     </div>
 
-    <!-- 4. Real-Time Transit Alert Banner -->
-    <div class="card transit-preview-card tilt-card" id="transitAlertCard">
-      <div class="transit-icon-box">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2c-4.42 0-8 .5-8 4v10c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4z"/></svg>
-      </div>
-      <div class="transit-info-col">
-        <div class="transit-title-row">
-          <span class="transit-route-name">Route 1: Dindigul ↔ GRI</span>
-          <span class="transit-eta-badge">ETA 8 mins</span>
-        </div>
-        <p class="transit-subtext">Bus TN-57-N-2418 • Approaching Chinnalapatti Four-Roads Stop</p>
-      </div>
-    </div>
-
-    <!-- 5. Urgent University Circulars -->
+    <!-- Official Notices Feed -->
     <div class="section-header-row">
-      <span class="section-title">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"/></svg>
-        Statutory Circulars & Gazettes
-      </span>
-      <a href="#" class="section-action-link" id="viewAllCircularsLink">View all</a>
+      <span class="section-title">University Circulars & Statutory Orders</span>
+      <a href="#" class="section-action-link" id="homeViewGazettesLink">View all</a>
     </div>
 
     <div class="circulars-list">
@@ -494,15 +974,16 @@ function renderHomeScreen() {
     </div>
   `;
 
-  // Attach button triggers
+  // Attach button events
+  document.getElementById('btnGoToApprovals')?.addEventListener('click', () => switchTab('approvals'));
   document.getElementById('btnQuickHallTicket')?.addEventListener('click', openHallTicketModal);
   document.getElementById('btnQuickGrievance')?.addEventListener('click', () => switchTab('services'));
   document.getElementById('btnQuickBus')?.addEventListener('click', () => switchTab('campus'));
   document.getElementById('btnQuickSahayak')?.addEventListener('click', openSahayakModal);
   document.getElementById('btnQuickDocCenter')?.addEventListener('click', openDocCenterModal);
   document.getElementById('btnQuickIDCard')?.addEventListener('click', () => switchTab('services'));
-  document.getElementById('transitAlertCard')?.addEventListener('click', () => switchTab('campus'));
-  document.getElementById('viewAllCircularsLink')?.addEventListener('click', (e) => {
+  document.getElementById('btnQuickAuthAction')?.addEventListener('click', openAuthModal);
+  document.getElementById('homeViewGazettesLink')?.addEventListener('click', (e) => {
     e.preventDefault();
     openDocCenterModal();
   });
@@ -510,61 +991,519 @@ function renderHomeScreen() {
   attach3DTiltHandlers();
 }
 
-// Screen 2: Academics Hub
-function renderAcademicsScreen() {
-  el.screenAcademics.innerHTML = `
-    <!-- Subtabs -->
-    <div class="subtab-pill-bar">
-      <button class="subtab-pill active" data-sub="courses">Registered Courses</button>
-      <button class="subtab-pill" data-sub="exams">Exam Timetable</button>
-      <button class="subtab-pill" data-sub="hallticket">Hall Ticket</button>
-      <button class="subtab-pill" data-sub="calculator">Attendance Calc</button>
-    </div>
+// Screen 6: Dedicated Application Status Dashboard
+function renderStatusScreen() {
+  const u = state.currentUser;
+  if (!u) {
+    switchTab('home');
+    return;
+  }
 
-    <!-- Courses View -->
-    <div class="courses-container" id="coursesSubtabView">
-      <div class="section-header-row">
-        <span class="section-title">CBCS Curriculum • Even Semester 2026</span>
-        <span style="font-size: 11px; font-weight: 700; color: var(--color-primary);">17 Total Credits</span>
+  const isPending = u.status === 'PENDING';
+  const isReview = u.status === 'UNDER_REVIEW';
+  const isRejected = u.status === 'REJECTED';
+  const isSuspended = u.status === 'SUSPENDED';
+
+  let statusTitle = 'Application Status';
+  let badgeClass = 'pending';
+  if (isPending) { statusTitle = 'Pending Institutional Verification'; badgeClass = 'pending'; }
+  else if (isReview) { statusTitle = 'Additional Information Required'; badgeClass = 'under_review'; }
+  else if (isRejected) { statusTitle = 'Application Not Approved'; badgeClass = 'rejected'; }
+  else if (isSuspended) { statusTitle = 'Account Suspended'; badgeClass = 'suspended'; }
+
+  el.screenStatus.innerHTML = `
+    <div class="card tilt-card" style="text-align: center; padding: var(--space-lg) var(--space-md);">
+      <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--color-${badgeClass}-bg, var(--color-surface-elevated)); color: var(--color-${badgeClass}, var(--color-primary)); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+          ${isPending ? '<path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/>' : ''}
+          ${isReview ? '<path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/>' : ''}
+          ${isRejected ? '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/>' : ''}
+          ${isSuspended ? '<path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>' : ''}
+        </svg>
       </div>
 
-      ${state.courses.map(course => {
-        const isSafe = course.attendance >= 80;
-        const isWarning = course.attendance >= 75 && course.attendance < 80;
-        const fillClass = isSafe ? 'safe' : (isWarning ? 'warning' : 'danger');
+      <span class="status-badge-pill ${badgeClass}">${u.status.replace('_', ' ')}</span>
+      <h2 style="font-family: var(--font-display); font-size: 17px; font-weight: 700; margin-top: 8px;">${statusTitle}</h2>
+      <p style="font-size: 12px; color: var(--color-text-secondary); margin-top: 4px;">
+        Application Ref: <strong style="font-family: var(--font-mono); color: var(--color-primary);">${u.applicationId || 'GRI-2026-APP-8104'}</strong>
+      </p>
+    </div>
 
-        return `
-          <div class="card course-item-card tilt-card">
-            <div class="course-header-row">
-              <div>
-                <span class="course-code-badge">${course.code} • ${course.credits} Credits</span>
-                <h3 class="course-title">${course.title}</h3>
-                <span class="course-instructor">${course.instructor} • ${course.schedule}</span>
-              </div>
-              <button class="btn btn-sm btn-outline btn-mark-att" data-code="${course.code}">Check-in</button>
-            </div>
-            <div class="course-attendance-bar">
-              <div class="bar-labels-row">
-                <span>Biometric Attendance: ${course.attended}/${course.total} Hours</span>
-                <span style="color: var(--color-${isSafe ? 'success' : (isWarning ? 'warning' : 'error')}); font-weight: 700;">${course.attendance}%</span>
-              </div>
-              <div class="progress-track">
-                <div class="progress-fill ${fillClass}" style="width: ${course.attendance}%;"></div>
-              </div>
-            </div>
+    <!-- Verification Timeline -->
+    <div class="card tilt-card">
+      <div style="font-size: 12px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 8px;">Institutional Verification Timeline</div>
+      <div class="status-timeline-track">
+        <div class="status-step-node completed">
+          <div class="step-circle">✓</div>
+          <span class="step-node-label">Submitted</span>
+        </div>
+        <div class="status-step-node ${isPending || isReview ? 'current' : (isRejected ? '' : 'completed')}">
+          <div class="step-circle">${isPending || isReview ? '2' : '✓'}</div>
+          <span class="step-node-label">Registry Check</span>
+        </div>
+        <div class="status-step-node ${isReview ? 'current' : ''}">
+          <div class="step-circle">3</div>
+          <span class="step-node-label">Dean Review</span>
+        </div>
+        <div class="status-step-node">
+          <div class="step-circle">4</div>
+          <span class="step-node-label">Role Active</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Applicant Summary Details -->
+    <div class="card tilt-card">
+      <h4 style="font-family: var(--font-display); font-size: 13px; font-weight: 700; margin-bottom: 10px;">Registered Application Dossier</h4>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 11px;">
+        <div><strong>Applicant Name:</strong> ${u.name}</div>
+        <div><strong>Institutional ID:</strong> ${u.institutionalId || 'N/A'}</div>
+        <div><strong>Requested Role:</strong> ${u.requestedRole || u.activeRole}</div>
+        <div><strong>Department:</strong> ${u.department}</div>
+        <div><strong>Programme:</strong> ${u.program || 'N/A'}</div>
+        <div><strong>Submitted Date:</strong> ${u.submittedAt}</div>
+      </div>
+    </div>
+
+    ${isReview ? `
+      <!-- Additional Info Submission Box -->
+      <div class="card tilt-card" style="border: 2px solid var(--color-info);">
+        <h4 style="font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--color-info); margin-bottom: 4px;">
+          Administrative Query / Clarification Needed
+        </h4>
+        <p style="font-size: 12px; color: var(--color-text-secondary); background: var(--color-surface-elevated); padding: 8px; border-radius: 6px; margin-bottom: 10px;">
+          "${u.infoRequested || 'Please provide your registered admission quota credentials.'}"
+        </p>
+        <form id="provideAdditionalInfoForm">
+          <div class="form-group">
+            <label class="form-label">Your Clarification & Document Details</label>
+            <textarea class="form-textarea" id="applicantInfoResponse" placeholder="Enter requested certificate numbers, marks, or clarifications..." required></textarea>
           </div>
-        `;
-      }).join('')}
+          <button type="submit" class="btn btn-primary btn-full">
+            Submit Clarification to Registry →
+          </button>
+        </form>
+      </div>
+    ` : ''}
 
-      <div class="card" style="margin-top: var(--space-md); text-align: center; padding: var(--space-lg);">
-        <h4 style="font-family: var(--font-display); font-size: 14px; margin-bottom: 6px;">End Semester Examinations (ESE) Nov/Dec 2026</h4>
-        <p style="font-size: 11px; color: var(--color-text-secondary); margin-bottom: var(--space-md);">Cryptographic QR Hall Tickets are authenticated by e-SANAD.</p>
-        <button class="btn btn-primary" id="btnOpenHallTicketFromAcad">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M22 10V6c0-1.11-.9-2-2-2H4c-1.1 0-1.99.89-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2z"/></svg>
-          View e-SANAD Hall Ticket
+    ${isRejected ? `
+      <div class="card tilt-card" style="border-left: 4px solid var(--color-error);">
+        <h4 style="font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--color-error);">Official Rejection Reason</h4>
+        <p style="font-size: 12px; color: var(--color-text-secondary); margin-top: 4px;">
+          "${u.rejectionReason || 'Institutional records did not match provided register credentials. Please contact Registrar office.'}"
+        </p>
+        <div style="margin-top: 10px;">
+          <a href="mailto:registrar@ruraluniv.ac.in" class="btn btn-sm btn-outline">Email Registrar Helpdesk</a>
+        </div>
+      </div>
+    ` : ''}
+
+    <div style="display: flex; gap: 8px; margin-top: var(--space-md);">
+      <button class="btn btn-outline btn-full" id="btnRefreshStatus">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+        Check Real-Time Status
+      </button>
+      <button class="btn btn-primary btn-full" id="btnSwitchToOtherAccount">Sign in as Other</button>
+    </div>
+  `;
+
+  document.getElementById('btnRefreshStatus')?.addEventListener('click', () => {
+    HapticFeedback.click();
+    showToast('Registry synchronized. Account state refreshed.');
+    renderStatusScreen();
+  });
+
+  document.getElementById('btnSwitchToOtherAccount')?.addEventListener('click', openAuthModal);
+
+  const infoForm = document.getElementById('provideAdditionalInfoForm');
+  if (infoForm) {
+    infoForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const responseText = document.getElementById('applicantInfoResponse').value;
+      u.infoProvided = responseText;
+      u.status = 'UNDER_REVIEW';
+
+      state.auditTrail.unshift({
+        id: `aud_${Date.now()}`,
+        timestamp: 'Just now',
+        actor: `${u.name} (Applicant)`,
+        targetUser: `${u.name} (${u.institutionalId})`,
+        action: 'INFO_PROVIDED',
+        previousStatus: 'INFO_REQUESTED',
+        newStatus: 'UNDER_REVIEW',
+        remarks: responseText
+      });
+
+      HapticFeedback.success();
+      showToast('Additional documentation submitted to Dean Office!');
+      renderStatusScreen();
+    });
+  }
+
+  attach3DTiltHandlers();
+}
+
+// Screen 7: Registration & Role Approval Center (Admin Portal)
+function renderApprovalsScreen() {
+  if (!checkPermission(PERMISSIONS.APPROVE_REJECT_APPLICATIONS)) {
+    showToast('Access denied: Administrator permissions required.', 'error');
+    switchTab('home');
+    return;
+  }
+
+  const pendingList = state.accounts.filter(a => a.status === 'PENDING');
+  const reviewList = state.accounts.filter(a => a.status === 'UNDER_REVIEW');
+  const approvedList = state.accounts.filter(a => a.status === 'APPROVED');
+  const rejectedList = state.accounts.filter(a => a.status === 'REJECTED');
+
+  el.screenApprovals.innerHTML = `
+    <!-- Top Metrics Overview -->
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: var(--space-md);">
+      <div class="card" style="padding: 10px; margin-bottom: 0; text-align: center; border-bottom: 3px solid var(--color-warning);">
+        <div style="font-family: var(--font-display); font-size: 18px; font-weight: 800; color: var(--color-warning);">${pendingList.length}</div>
+        <div style="font-size: 9px; font-weight: 700; text-transform: uppercase;">Pending</div>
+      </div>
+      <div class="card" style="padding: 10px; margin-bottom: 0; text-align: center; border-bottom: 3px solid var(--color-info);">
+        <div style="font-family: var(--font-display); font-size: 18px; font-weight: 800; color: var(--color-info);">${reviewList.length}</div>
+        <div style="font-size: 9px; font-weight: 700; text-transform: uppercase;">Review</div>
+      </div>
+      <div class="card" style="padding: 10px; margin-bottom: 0; text-align: center; border-bottom: 3px solid var(--color-success);">
+        <div style="font-family: var(--font-display); font-size: 18px; font-weight: 800; color: var(--color-success);">${approvedList.length}</div>
+        <div style="font-size: 9px; font-weight: 700; text-transform: uppercase;">Approved</div>
+      </div>
+      <div class="card" style="padding: 10px; margin-bottom: 0; text-align: center; border-bottom: 3px solid var(--color-error);">
+        <div style="font-family: var(--font-display); font-size: 18px; font-weight: 800; color: var(--color-error);">${rejectedList.length}</div>
+        <div style="font-size: 9px; font-weight: 700; text-transform: uppercase;">Rejected</div>
+      </div>
+    </div>
+
+    <!-- Search & Filter Controls -->
+    <div style="display: flex; gap: 6px; margin-bottom: var(--space-sm);">
+      <input type="text" class="form-input" id="approvalSearchInput" placeholder="Search applicant, ID, email, role..." style="padding: 8px 12px; font-size: 12px;">
+    </div>
+
+    <!-- Queue List -->
+    <div class="section-header-row">
+      <span class="section-title">Institutional Registration Applications</span>
+      <span style="font-size: 11px; font-weight: 700; color: var(--color-primary);">Registry Queue</span>
+    </div>
+
+    <div id="approvalsListContainer">
+      <!-- Populated below -->
+    </div>
+  `;
+
+  renderApprovalQueueItems();
+
+  document.getElementById('approvalSearchInput')?.addEventListener('input', (e) => {
+    const q = e.target.value.toLowerCase();
+    renderApprovalQueueItems(q);
+  });
+}
+
+function renderApprovalQueueItems(searchQuery = '') {
+  const container = document.getElementById('approvalsListContainer');
+  if (!container) return;
+
+  const filtered = state.accounts.filter(a => {
+    if (!searchQuery) return true;
+    return a.name.toLowerCase().includes(searchQuery) ||
+           (a.institutionalId && a.institutionalId.toLowerCase().includes(searchQuery)) ||
+           a.email.toLowerCase().includes(searchQuery) ||
+           (a.requestedRole && a.requestedRole.toLowerCase().includes(searchQuery)) ||
+           a.status.toLowerCase().includes(searchQuery);
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = `<div class="card" style="text-align: center; padding: var(--space-md); color: var(--color-text-muted);">No institutional applications matching criteria.</div>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map(app => `
+    <div class="card applicant-card tilt-card" data-id="${app.id}">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+          <span class="status-badge-pill ${app.status.toLowerCase()}">${app.status.replace('_', ' ')}</span>
+          <h4 style="font-family: var(--font-display); font-size: 14px; font-weight: 700; margin-top: 4px;">${app.name}</h4>
+          <div style="font-size: 11px; color: var(--color-text-secondary);">
+            Role: <strong>${app.requestedRole || app.activeRole}</strong> • ID: ${app.institutionalId || 'N/A'}
+          </div>
+          <div style="font-size: 10px; color: var(--color-text-muted); margin-top: 2px;">
+            ${app.department} • Submitted: ${app.submittedAt}
+          </div>
+        </div>
+        <button class="btn btn-sm btn-primary btn-inspect-app" data-id="${app.id}">Review Dossier →</button>
+      </div>
+    </div>
+  `).join('');
+
+  document.querySelectorAll('.btn-inspect-app').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = e.currentTarget.getAttribute('data-id');
+      openAdminReviewModal(id);
+    });
+  });
+
+  attach3DTiltHandlers();
+}
+
+function openAdminReviewModal(accountId) {
+  const app = state.accounts.find(a => a.id === accountId);
+  if (!app) return;
+
+  el.reviewSubtitle.textContent = `Dossier: ${app.name} (${app.institutionalId || app.id})`;
+
+  el.adminReviewDetails.innerHTML = `
+    <div class="card" style="background: var(--color-surface-elevated); margin-bottom: var(--space-sm);">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <h3 style="font-family: var(--font-display); font-size: 16px; font-weight: 700;">${app.name}</h3>
+          <div style="font-size: 12px; color: var(--color-text-secondary);">${app.email} • ${app.mobile}</div>
+        </div>
+        <span class="status-badge-pill ${app.status.toLowerCase()}">${app.status.replace('_', ' ')}</span>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom: var(--space-sm);">
+      <h4 style="font-family: var(--font-display); font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--color-primary); margin-bottom: 8px;">Institutional Credentials</h4>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 11px;">
+        <div><strong>Requested Role:</strong> ${app.requestedRole || app.activeRole}</div>
+        <div><strong>Institutional ID:</strong> ${app.institutionalId || 'Pending'}</div>
+        <div><strong>Department:</strong> ${app.department}</div>
+        <div><strong>Programme:</strong> ${app.program || 'N/A'}</div>
+        <div><strong>Submitted At:</strong> ${app.submittedAt}</div>
+        <div><strong>Reviewed By:</strong> ${app.reviewedBy || 'Pending Action'}</div>
+      </div>
+    </div>
+
+    ${app.infoRequested ? `
+      <div class="card" style="border-left: 3px solid var(--color-info); margin-bottom: var(--space-sm);">
+        <div style="font-size: 11px; font-weight: 700; color: var(--color-info);">Information Requested:</div>
+        <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">${app.infoRequested}</div>
+        ${app.infoProvided ? `<div style="font-size: 11px; color: var(--color-success); margin-top: 6px;"><strong>Applicant Response:</strong> ${app.infoProvided}</div>` : '<div style="font-size: 10px; color: var(--color-text-muted); margin-top: 4px;">Awaiting response from applicant.</div>'}
+      </div>
+    ` : ''}
+
+    <!-- Decision Action Panel -->
+    <div style="margin-top: var(--space-md); padding-top: var(--space-sm); border-top: 1px solid var(--color-surface-border);">
+      <div style="font-size: 12px; font-weight: 700; margin-bottom: 8px;">Administrative Decision</div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;">
+        <button class="btn btn-sm btn-primary" id="btnAdminApprove" style="background: var(--color-success); border-color: var(--color-success);">
+          ✓ Approve
+        </button>
+        <button class="btn btn-sm btn-outline" id="btnAdminRequestInfo">
+          ? Request Info
+        </button>
+        <button class="btn btn-sm btn-outline" id="btnAdminReject" style="color: var(--color-error); border-color: var(--color-error);">
+          ✕ Reject
         </button>
       </div>
     </div>
+
+    <!-- Inline Action Forms (Hidden initially) -->
+    <div id="adminActionFormContainer" style="margin-top: var(--space-sm);"></div>
+  `;
+
+  // Approve Handler
+  document.getElementById('btnAdminApprove')?.addEventListener('click', () => {
+    const roleToActivate = app.requestedRole || app.activeRole || 'STUDENT';
+    const formBox = document.getElementById('adminActionFormContainer');
+    formBox.innerHTML = `
+      <div style="background: var(--color-success-bg); padding: 10px; border-radius: var(--radius-md); border: 1px solid var(--color-success);">
+        <div style="font-size: 12px; font-weight: 700; color: var(--color-success);">Confirm Institutional Approval</div>
+        <p style="font-size: 11px; color: var(--color-text-secondary); margin: 4px 0 8px;">
+          Activating approved role <strong>${roleToActivate}</strong> for ${app.name}. Assigning institutional permissions.
+        </p>
+        <div style="display: flex; gap: 6px;">
+          <button class="btn btn-sm btn-primary" id="btnConfirmApprovalAction">Confirm & Activate Role</button>
+          <button class="btn btn-sm btn-outline" id="btnCancelAction">Cancel</button>
+        </div>
+      </div>
+    `;
+
+    document.getElementById('btnConfirmApprovalAction')?.addEventListener('click', () => {
+      app.status = 'APPROVED';
+      if (!app.approvedRoles.includes(roleToActivate)) {
+        app.approvedRoles.push(roleToActivate);
+      }
+      app.activeRole = roleToActivate;
+      app.reviewedAt = 'Just now';
+      app.reviewedBy = state.currentUser.name;
+
+      state.auditTrail.unshift({
+        id: `aud_${Date.now()}`,
+        timestamp: 'Just now',
+        actor: `${state.currentUser.name} (ADMIN)`,
+        targetUser: `${app.name} (${app.institutionalId})`,
+        action: 'APPLICATION_APPROVED',
+        previousStatus: 'PENDING',
+        newStatus: 'APPROVED',
+        remarks: `Role ${roleToActivate} activated with institutional permissions.`
+      });
+
+      HapticFeedback.success();
+      showToast(`Account approved! Role ${roleToActivate} activated for ${app.name}.`);
+      el.adminReviewModal.classList.remove('active');
+      renderApprovalsScreen();
+      renderAdminScreen();
+    });
+
+    document.getElementById('btnCancelAction')?.addEventListener('click', () => {
+      formBox.innerHTML = '';
+    });
+  });
+
+  // Request More Info Handler
+  document.getElementById('btnAdminRequestInfo')?.addEventListener('click', () => {
+    const formBox = document.getElementById('adminActionFormContainer');
+    formBox.innerHTML = `
+      <div style="background: var(--color-info-bg); padding: 10px; border-radius: var(--radius-md); border: 1px solid var(--color-info);">
+        <div style="font-size: 12px; font-weight: 700; color: var(--color-info);">Request Specific Information / Documents</div>
+        <textarea class="form-textarea" id="adminQueryText" placeholder="Specify document, certificate, or verification needed..." style="margin: 6px 0;"></textarea>
+        <div style="display: flex; gap: 6px;">
+          <button class="btn btn-sm btn-primary" id="btnSendQueryAction">Send Query to Applicant</button>
+          <button class="btn btn-sm btn-outline" id="btnCancelAction2">Cancel</button>
+        </div>
+      </div>
+    `;
+
+    document.getElementById('btnSendQueryAction')?.addEventListener('click', () => {
+      const q = document.getElementById('adminQueryText').value;
+      if (!q.trim()) return;
+
+      app.status = 'UNDER_REVIEW';
+      app.infoRequested = q;
+      app.reviewedAt = 'Just now';
+      app.reviewedBy = state.currentUser.name;
+
+      state.auditTrail.unshift({
+        id: `aud_${Date.now()}`,
+        timestamp: 'Just now',
+        actor: `${state.currentUser.name} (ADMIN)`,
+        targetUser: `${app.name} (${app.institutionalId})`,
+        action: 'INFO_REQUESTED',
+        previousStatus: 'PENDING',
+        newStatus: 'UNDER_REVIEW',
+        remarks: q
+      });
+
+      HapticFeedback.click();
+      showToast('Information request dispatched to applicant.');
+      el.adminReviewModal.classList.remove('active');
+      renderApprovalsScreen();
+    });
+
+    document.getElementById('btnCancelAction2')?.addEventListener('click', () => {
+      formBox.innerHTML = '';
+    });
+  });
+
+  // Reject Handler
+  document.getElementById('btnAdminReject')?.addEventListener('click', () => {
+    const formBox = document.getElementById('adminActionFormContainer');
+    formBox.innerHTML = `
+      <div style="background: var(--color-error-bg); padding: 10px; border-radius: var(--radius-md); border: 1px solid var(--color-error);">
+        <div style="font-size: 12px; font-weight: 700; color: var(--color-error);">Official Rejection Reason (Mandatory)</div>
+        <input type="text" class="form-input" id="adminRejectReason" placeholder="e.g. Register number not found in Samarth 2026 roll" style="margin: 6px 0;">
+        <div style="display: flex; gap: 6px;">
+          <button class="btn btn-sm btn-primary" id="btnConfirmRejectAction" style="background: var(--color-error);">Confirm Rejection</button>
+          <button class="btn btn-sm btn-outline" id="btnCancelAction3">Cancel</button>
+        </div>
+      </div>
+    `;
+
+    document.getElementById('btnConfirmRejectAction')?.addEventListener('click', () => {
+      const r = document.getElementById('adminRejectReason').value;
+      if (!r.trim()) {
+        showToast('Please state a reason for rejection.', 'error');
+        return;
+      }
+
+      app.status = 'REJECTED';
+      app.rejectionReason = r;
+      app.reviewedAt = 'Just now';
+      app.reviewedBy = state.currentUser.name;
+
+      state.auditTrail.unshift({
+        id: `aud_${Date.now()}`,
+        timestamp: 'Just now',
+        actor: `${state.currentUser.name} (ADMIN)`,
+        targetUser: `${app.name} (${app.institutionalId})`,
+        action: 'APPLICATION_REJECTED',
+        previousStatus: 'PENDING',
+        newStatus: 'REJECTED',
+        remarks: r
+      });
+
+      HapticFeedback.click();
+      showToast('Application marked as REJECTED in Central Registry.');
+      el.adminReviewModal.classList.remove('active');
+      renderApprovalsScreen();
+    });
+
+    document.getElementById('btnCancelAction3')?.addEventListener('click', () => {
+      formBox.innerHTML = '';
+    });
+  });
+
+  el.adminReviewModal.classList.add('active');
+}
+
+// Screen 2: Academics Hub (For Approved Students & Scholars)
+function renderAcademicsScreen() {
+  if (!checkPermission(PERMISSIONS.VIEW_ACADEMICS)) {
+    showToast('Unauthorized: Academic enrollment permissions required.', 'error');
+    switchTab('home');
+    return;
+  }
+
+  el.screenAcademics.innerHTML = `
+    <div class="section-header-row">
+      <span class="section-title">CBCS Curriculum • Even Semester 2026</span>
+      <span style="font-size: 11px; font-weight: 700; color: var(--color-primary);">17 Total Credits</span>
+    </div>
+
+    ${state.courses.map(course => {
+      const isSafe = course.attendance >= 80;
+      const isWarning = course.attendance >= 75 && course.attendance < 80;
+      const fillClass = isSafe ? 'safe' : (isWarning ? 'warning' : 'danger');
+
+      return `
+        <div class="card course-item-card tilt-card">
+          <div class="course-header-row">
+            <div>
+              <span class="course-code-badge">${course.code} • ${course.credits} Credits</span>
+              <h3 class="course-title">${course.title}</h3>
+              <span class="course-instructor">${course.instructor} • ${course.schedule}</span>
+            </div>
+            ${checkPermission(PERMISSIONS.MARK_STUDENT_ATTENDANCE) ? `
+              <button class="btn btn-sm btn-outline btn-mark-att" data-code="${course.code}">Check-in</button>
+            ` : ''}
+          </div>
+          <div class="course-attendance-bar">
+            <div class="bar-labels-row">
+              <span>Biometric Attendance: ${course.attended}/${course.total} Hours</span>
+              <span style="color: var(--color-${isSafe ? 'success' : (isWarning ? 'warning' : 'error')}); font-weight: 700;">${course.attendance}%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill ${fillClass}" style="width: ${course.attendance}%;"></div>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('')}
+
+    ${checkPermission(PERMISSIONS.VIEW_HALL_TICKET) ? `
+      <div class="card" style="margin-top: var(--space-md); text-align: center; padding: var(--space-lg);">
+        <h4 style="font-family: var(--font-display); font-size: 14px; margin-bottom: 6px;">End Semester Examinations (ESE) Nov/Dec 2026</h4>
+        <p style="font-size: 11px; color: var(--color-text-secondary); margin-bottom: var(--space-md);">Cryptographic QR Hall Tickets authenticated by e-SANAD.</p>
+        <button class="btn btn-primary" id="btnOpenHallTicketFromAcad">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M22 10V6c0-1.11-.9-2-2-2H4c-1.1 0-1.99.89-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2z"/></svg>
+          View e-SANAD Hall Ticket
+        </button>
+      </div>
+    ` : ''}
   `;
 
   document.getElementById('btnOpenHallTicketFromAcad')?.addEventListener('click', openHallTicketModal);
@@ -572,7 +1511,7 @@ function renderAcademicsScreen() {
   document.querySelectorAll('.btn-mark-att').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const code = e.currentTarget.getAttribute('data-code');
-      showToast(`Biometric check-in recorded for course ${code}. Attendance verified!`);
+      showToast(`Biometric lecture check-in recorded for course ${code}.`);
     });
   });
 
@@ -594,9 +1533,9 @@ function renderCampusScreen() {
     <div class="transit-map-simulation" id="transitMapSim">
       <div class="map-grid-overlay"></div>
       <div class="map-route-line"></div>
-      <div class="map-station-stop stop-start" title="Origin Terminus"></div>
-      <div class="map-station-stop stop-mid" title="Chinnalapatti Gate"></div>
-      <div class="map-station-stop stop-end" title="GRI Main Gate"></div>
+      <div class="map-station-stop stop-start"></div>
+      <div class="map-station-stop stop-mid"></div>
+      <div class="map-station-stop stop-end"></div>
       <div class="map-bus-pin" id="busRadarPin" style="left: 68%;">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M4 16c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10z"/></svg>
       </div>
@@ -631,7 +1570,7 @@ function renderCampusScreen() {
       </div>
     `).join('')}
 
-    <!-- Campus Landmarks -->
+    <!-- Landmarks -->
     <div class="section-header-row" style="margin-top: var(--space-lg);">
       <span class="section-title">Key Campus Facilities</span>
     </div>
@@ -639,16 +1578,6 @@ function renderCampusScreen() {
     <div class="card tilt-card">
       <h4 style="font-family: var(--font-display); font-size: 14px; font-weight: 700;">Dr. G. Ramachandran Central Library</h4>
       <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">Over 1,75,000 volumes, rare Gandhian archives, RFID self-checkout kiosks.</p>
-      <div style="display: flex; gap: 8px; margin-top: 8px;">
-        <span class="role-pill-chip" style="background: var(--color-surface-elevated); padding: 4px 8px; border-radius: 4px;">Open 08:00 AM - 08:00 PM</span>
-        <span class="role-pill-chip" style="background: var(--color-success-bg); color: var(--color-success); padding: 4px 8px; border-radius: 4px;">RFID: Online</span>
-      </div>
-    </div>
-
-    <div class="card tilt-card">
-      <h4 style="font-family: var(--font-display); font-size: 14px; font-weight: 700;">University Hostels & Dining</h4>
-      <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">Thamarai Illam (Men) • Malligai Illam (Women) • Kasturba Scholars Hostel.</p>
-      <div style="font-size: 11px; color: var(--color-tertiary); font-weight: 600; margin-top: 6px;">Today's Lunch: Traditional South Indian Meal & Sambar (12:30 PM - 02:00 PM)</div>
     </div>
   `;
 
@@ -656,9 +1585,7 @@ function renderCampusScreen() {
     btn.addEventListener('click', (e) => {
       const id = e.currentTarget.getAttribute('data-id');
       const pin = document.getElementById('busRadarPin');
-      if (pin) {
-        pin.style.left = (Math.random() * 60 + 20).toFixed(0) + '%';
-      }
+      if (pin) pin.style.left = (Math.random() * 60 + 20).toFixed(0) + '%';
       showToast(`Tracking live telemetry for ${id.toUpperCase()}`);
     });
   });
@@ -668,76 +1595,76 @@ function renderCampusScreen() {
 
 // Screen 4: Student Services & GRI-Care
 function renderServicesScreen() {
-  const u = state.users[state.currentRole] || state.users.STUDENT;
+  const u = state.currentUser;
+  const hasDigitalId = checkPermission(PERMISSIONS.VIEW_DIGITAL_ID);
 
   el.screenServices.innerHTML = `
-    <!-- 1. Interactive 3D Flip Student ID Card -->
-    <div class="section-header-row">
-      <span class="section-title">Digital Identity Credentials</span>
-      <span class="id-flip-hint">
-        <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
-        Tap to 3D Flip
-      </span>
-    </div>
+    ${hasDigitalId ? `
+      <!-- 3D Flip Student ID Card -->
+      <div class="section-header-row">
+        <span class="section-title">Digital Identity Credentials</span>
+        <span class="id-flip-hint">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+          Tap to 3D Flip
+        </span>
+      </div>
 
-    <div class="id-card-perspective-container" id="idCardFlipperContainer">
-      <div class="id-card-3d-flipper">
-        <!-- Front Face -->
-        <div class="id-card-face id-card-front">
-          <div class="id-card-top-row">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <img src="/assets/gri_official_logo.png" alt="GRI Logo" style="width: 28px; height: 28px; object-fit: contain; background: #fff; border-radius: 4px; padding: 2px;">
+      <div class="id-card-perspective-container" id="idCardFlipperContainer">
+        <div class="id-card-3d-flipper">
+          <!-- Front Face -->
+          <div class="id-card-face id-card-front">
+            <div class="id-card-top-row">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <img src="/assets/gri_official_logo.png" alt="GRI Logo" style="width: 28px; height: 28px; object-fit: contain; background: #fff; border-radius: 4px; padding: 2px;">
+                <div>
+                  <div class="id-univ-header">THE GANDHIGRAM RURAL INSTITUTE</div>
+                  <div style="font-size: 9px; opacity: 0.85;">(Deemed to be University) • NAAC 'A+' Grade</div>
+                </div>
+              </div>
+              <div class="id-chip-icon"></div>
+            </div>
+
+            <div class="id-center-info">
+              <img src="/assets/student_avatar.jpg" alt="${u.name}" class="id-student-photo">
               <div>
-                <div class="id-univ-header">THE GANDHIGRAM RURAL INSTITUTE</div>
-                <div style="font-size: 9px; opacity: 0.85;">(Deemed to be University) • NAAC 'A+' Grade</div>
+                <div class="id-student-name">${u.name}</div>
+                <div class="id-student-roll">${u.institutionalId || u.id}</div>
+                <div style="font-size: 10px; opacity: 0.9; margin-top: 2px;">${u.program || u.activeRole}</div>
               </div>
             </div>
-            <div class="id-chip-icon"></div>
-          </div>
 
-          <div class="id-center-info">
-            <img src="/assets/student_avatar.jpg" alt="${u.name}" class="id-student-photo">
-            <div>
-              <div class="id-student-name">${u.name}</div>
-              <div class="id-student-roll">${u.rollNo}</div>
-              <div style="font-size: 10px; opacity: 0.9; margin-top: 2px;">${u.program}</div>
+            <div class="id-footer-row">
+              <span>Valid Thru: ${u.validThru || '2026-12-31'}</span>
+              <span style="font-family: var(--font-mono); font-weight: 700;">RFID • NFC ENABLED</span>
             </div>
           </div>
 
-          <div class="id-footer-row">
-            <span>Valid Thru: ${u.validThru}</span>
-            <span style="font-family: var(--font-mono); font-weight: 700;">RFID • NFC ENABLED</span>
-          </div>
-        </div>
+          <!-- Back Face -->
+          <div class="id-card-face id-card-back">
+            <div class="id-card-top-row">
+              <span style="font-family: var(--font-display); font-size: 11px; font-weight: 700; color: #99D3B2;">EMERGENCY & LIBRARY BARCODE</span>
+              <span style="font-size: 10px;">Blood: O+ve</span>
+            </div>
 
-        <!-- Back Face -->
-        <div class="id-card-face id-card-back">
-          <div class="id-card-top-row">
-            <span style="font-family: var(--font-display); font-size: 11px; font-weight: 700; color: #99D3B2;">EMERGENCY & LIBRARY BARCODE</span>
-            <span style="font-size: 10px;">Blood: O+ve</span>
-          </div>
+            <div style="font-size: 11px; line-height: 1.4; color: #A3B8AD;">
+              <div>Hostel: ${u.hostelName || 'Day Scholar'}</div>
+              <div>Transit: ${u.busPass || 'Standard Route'}</div>
+              <div>Emergency: GRI Health Centre (+91 451 2452371)</div>
+            </div>
 
-          <div style="font-size: 11px; line-height: 1.4; color: #A3B8AD;">
-            <div>Hostel: ${u.hostelName}</div>
-            <div>Transit: ${u.busPass}</div>
-            <div>Emergency Contact: GRI Health Centre (+91 451 2452371)</div>
-          </div>
-
-          <!-- Barcode Mock -->
-          <div style="background: #fff; padding: 6px; border-radius: 4px; display: flex; flex-direction: column; align-items: center;">
-            <div style="width: 100%; height: 26px; background: repeating-linear-gradient(90deg, #000 0, #000 2px, #fff 2px, #fff 5px);"></div>
-            <span style="font-family: var(--font-mono); font-size: 9px; color: #000; margin-top: 2px;">*GRI-23MCA042-ID*</span>
+            <!-- Barcode -->
+            <div style="background: #fff; padding: 6px; border-radius: 4px; display: flex; flex-direction: column; align-items: center;">
+              <div style="width: 100%; height: 26px; background: repeating-linear-gradient(90deg, #000 0, #000 2px, #fff 2px, #fff 5px);"></div>
+              <span style="font-family: var(--font-mono); font-size: 9px; color: #000; margin-top: 2px;">*GRI-${u.institutionalId || 'ID'}-VERIFIED*</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    ` : ''}
 
-    <!-- 2. Zero Ragging & GRI-Care Form -->
+    <!-- Zero Ragging & GRI-Care Form -->
     <div class="section-header-row" style="margin-top: var(--space-md);">
-      <span class="section-title">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
-        GRI-Care Grievance Redressal
-      </span>
+      <span class="section-title">GRI-Care Grievance Redressal</span>
       <span class="role-pill-chip" style="background: var(--color-error-bg); color: var(--color-error);">Zero Ragging</span>
     </div>
 
@@ -757,46 +1684,39 @@ function renderServicesScreen() {
 
         <div class="form-group">
           <label class="form-label">Subject / Issue Summary</label>
-          <input type="text" class="form-input" id="grievanceSubject" placeholder="Brief subject of the grievance" required>
+          <input type="text" class="form-input" id="grievanceSubject" placeholder="Brief subject of grievance" required>
         </div>
 
         <div class="form-group">
           <label class="form-label">Detailed Description</label>
-          <textarea class="form-textarea" id="grievanceDesc" placeholder="Provide full details, locations, and dates..." required></textarea>
+          <textarea class="form-textarea" id="grievanceDesc" placeholder="Provide full details, room number, or block location..." required></textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-full">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-          Register Statutory Grievance
-        </button>
+        <button type="submit" class="btn btn-primary btn-full">Register Statutory Grievance</button>
       </form>
     </div>
 
-    <!-- Active Tickets List -->
+    <!-- Active Tickets -->
     <div class="section-header-row">
       <span class="section-title">My Registered Grievance Tickets</span>
     </div>
 
-    <div id="grievanceListContainer">
-      ${state.grievances.map(g => `
-        <div class="card tilt-card" style="border-left: 4px solid var(--color-${g.status === 'RESOLVED' ? 'success' : 'warning'});">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-            <div>
-              <span class="course-code-badge">${g.id} • ${g.category}</span>
-              <h4 style="font-family: var(--font-display); font-size: 13px; font-weight: 700; margin-top: 4px;">${g.subject}</h4>
-            </div>
-            <span class="role-pill-chip" style="background: var(--color-${g.status === 'RESOLVED' ? 'success-bg' : 'warning-bg'}); color: var(--color-${g.status === 'RESOLVED' ? 'success' : 'warning'});">${g.status}</span>
+    ${state.grievances.map(g => `
+      <div class="card tilt-card" style="border-left: 4px solid var(--color-${g.status === 'RESOLVED' ? 'success' : 'warning'});">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div>
+            <span class="course-code-badge">${g.id} • ${g.category}</span>
+            <h4 style="font-family: var(--font-display); font-size: 13px; font-weight: 700; margin-top: 4px;">${g.subject}</h4>
           </div>
-          <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: 6px;">
-            ${g.remarks}
-          </div>
-          <div style="font-size: 10px; color: var(--color-text-muted); margin-top: 4px;">Registered on ${g.date}</div>
+          <span class="role-pill-chip" style="background: var(--color-${g.status === 'RESOLVED' ? 'success-bg' : 'warning-bg'}); color: var(--color-${g.status === 'RESOLVED' ? 'success' : 'warning'});">${g.status}</span>
         </div>
-      `).join('')}
-    </div>
+        <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: 6px;">${g.remarks}</div>
+        <div style="font-size: 10px; color: var(--color-text-muted); margin-top: 4px;">Logged on ${g.date}</div>
+      </div>
+    `).join('')}
   `;
 
-  // 3D Flip Card Handler
+  // 3D Flip
   const flipContainer = document.getElementById('idCardFlipperContainer');
   if (flipContainer) {
     flipContainer.addEventListener('click', () => {
@@ -805,7 +1725,7 @@ function renderServicesScreen() {
     });
   }
 
-  // Grievance submission handler
+  // Grievance Submit
   const form = document.getElementById('grievanceForm');
   if (form) {
     form.addEventListener('submit', (e) => {
@@ -820,13 +1740,12 @@ function renderServicesScreen() {
         subject: sub,
         date: 'Just now',
         status: 'SUBMITTED',
-        progress: 25,
-        remarks: 'Acknowledged by Central Care Cell. Assigned to competent officer.'
+        remarks: 'Acknowledged by Care Cell. Assigned to section officer.'
       };
 
       state.grievances.unshift(newTicket);
       HapticFeedback.success();
-      showToast(`Grievance filed successfully! Ticket #${newTicket.id}`);
+      showToast(`Grievance registered successfully! Ticket #${newTicket.id}`);
       form.reset();
       renderServicesScreen();
     });
@@ -835,32 +1754,33 @@ function renderServicesScreen() {
   attach3DTiltHandlers();
 }
 
-// Screen 5: Admin & Governance Hub
+// Screen 5: Admin Hub (Notice Studio & Audit Trail)
 function renderAdminScreen() {
+  if (!checkPermission(PERMISSIONS.VIEW_ADMIN_DASHBOARD) && !checkPermission(PERMISSIONS.PUBLISH_STATUTORY_CIRCULARS)) {
+    showToast('Administrator privileges required.', 'error');
+    switchTab('home');
+    return;
+  }
+
   el.screenAdmin.innerHTML = `
-    <!-- Multi-Role Switching Control -->
-    <div class="card tilt-card">
-      <h3 style="font-family: var(--font-display); font-size: 15px; font-weight: 700; margin-bottom: 6px;">Multi-Role Institutional Simulation</h3>
-      <p style="font-size: 12px; color: var(--color-text-secondary); margin-bottom: var(--space-sm);">Switch role to dynamically transform navigation, permissions, and available administrative faculties.</p>
-      
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-xs);">
-        <button class="btn btn-sm ${state.currentRole === 'STUDENT' ? 'btn-primary' : 'btn-outline'} btn-role-pick" data-role="STUDENT">Student</button>
-        <button class="btn btn-sm ${state.currentRole === 'FACULTY' ? 'btn-primary' : 'btn-outline'} btn-role-pick" data-role="FACULTY">Faculty</button>
-        <button class="btn btn-sm ${state.currentRole === 'ADMIN' ? 'btn-primary' : 'btn-outline'} btn-role-pick" data-role="ADMIN">Admin / CoE</button>
-        <button class="btn btn-sm ${state.currentRole === 'STAFF' ? 'btn-primary' : 'btn-outline'} btn-role-pick" data-role="STAFF">Staff</button>
-        <button class="btn btn-sm ${state.currentRole === 'SCHOLAR' ? 'btn-primary' : 'btn-outline'} btn-role-pick" data-role="SCHOLAR">Scholar</button>
-        <button class="btn btn-sm ${state.currentRole === 'GUEST' ? 'btn-primary' : 'btn-outline'} btn-role-pick" data-role="GUEST">Guest / Public</button>
+    <!-- Approval Center Banner Link -->
+    <div class="card tilt-card" style="border: 2px solid var(--color-primary); background: var(--color-surface-elevated);">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <h3 style="font-family: var(--font-display); font-size: 14px; font-weight: 700;">Registration & Role Approvals Center</h3>
+          <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">
+            ${state.accounts.filter(a => a.status === 'PENDING').length} Pending Review • ${state.accounts.filter(a => a.status === 'UNDER_REVIEW').length} In Progress
+          </p>
+        </div>
+        <button class="btn btn-sm btn-primary" id="btnAdminOpenApprovals">Open Center →</button>
       </div>
     </div>
 
-    <!-- Official Notice Publishing Studio (For Admin) -->
+    <!-- Official Notice Publishing Studio -->
     <div class="card tilt-card">
       <div class="section-header-row" style="margin-top: 0;">
-        <span class="section-title">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-          Publish Statutory Circular
-        </span>
-        <span class="role-pill-chip" style="background: var(--color-primary-container); color: var(--color-primary);">CoE Authorized</span>
+        <span class="section-title">Publish Gazetted Circular / Order</span>
+        <span class="role-pill-chip" style="background: var(--color-primary-container); color: var(--color-primary);">Statutory Authority</span>
       </div>
 
       <form id="publishNoticeForm">
@@ -889,36 +1809,32 @@ function renderAdminScreen() {
           <label for="pubUrgent" style="font-size: 12px; font-weight: 600;">Flag as High-Priority Urgent Gazetted Circular</label>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-full">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-          Publish Notice to Institutional Ledger
-        </button>
+        <button type="submit" class="btn btn-primary btn-full">Publish Notice to Institutional Ledger</button>
       </form>
     </div>
 
-    <!-- Server & Offline Synchronization Engine -->
-    <div class="card tilt-card">
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <div>
-          <h4 style="font-family: var(--font-display); font-size: 14px; font-weight: 700;">Embedded Ktor & Cloud Sync</h4>
-          <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">Local Port: 8080 • State: Live & Synced</p>
+    <!-- Immutable Audit Trail Ledger -->
+    <div class="section-header-row">
+      <span class="section-title">Institutional Audit Trail</span>
+      <span style="font-size: 10px; font-weight: 700; color: var(--color-text-muted);">Immutable Records</span>
+    </div>
+
+    <div style="max-height: 250px; overflow-y: auto;">
+      ${state.auditTrail.map(aud => `
+        <div class="card" style="margin-bottom: var(--space-xs); padding: 10px; font-size: 11px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong style="color: var(--color-primary);">${aud.action}</strong>
+            <span style="color: var(--color-text-muted); font-size: 10px;">${aud.timestamp}</span>
+          </div>
+          <div style="margin-top: 3px;"><strong>Actor:</strong> ${aud.actor}</div>
+          <div><strong>Target:</strong> ${aud.targetUser}</div>
+          <div style="color: var(--color-text-secondary); margin-top: 2px;">${aud.remarks}</div>
         </div>
-        <button class="btn btn-sm btn-outline" id="btnSyncFromAdmin">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8z"/></svg>
-          Sync Cloud
-        </button>
-      </div>
+      `).join('')}
     </div>
   `;
 
-  document.querySelectorAll('.btn-role-pick').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const r = e.currentTarget.getAttribute('data-role');
-      switchRole(r);
-    });
-  });
-
-  document.getElementById('btnSyncFromAdmin')?.addEventListener('click', triggerSync);
+  document.getElementById('btnAdminOpenApprovals')?.addEventListener('click', () => switchTab('approvals'));
 
   const pubForm = document.getElementById('publishNoticeForm');
   if (pubForm) {
@@ -934,12 +1850,24 @@ function renderAdminScreen() {
         title,
         category: cat,
         date: 'Just now',
-        issuedBy: 'Controller of Examinations',
+        issuedBy: state.currentUser.designation || 'Controller of Examinations',
         urgent: urg,
         summary: sum
       };
 
       state.circulars.unshift(newNotice);
+
+      state.auditTrail.unshift({
+        id: `aud_${Date.now()}`,
+        timestamp: 'Just now',
+        actor: `${state.currentUser.name} (${state.currentUser.activeRole})`,
+        targetUser: 'CAMPUS-WIDE BROADCAST',
+        action: 'CIRCULAR_PUBLISHED',
+        previousStatus: 'DRAFT',
+        newStatus: 'PUBLISHED',
+        remarks: `Published statutory gazette "${title}"`
+      });
+
       HapticFeedback.success();
       showToast(`Circular "${title}" published and broadcasted to campus!`);
       pubForm.reset();
@@ -951,45 +1879,90 @@ function renderAdminScreen() {
   attach3DTiltHandlers();
 }
 
-// --- 8. Navigation & Tab Switching ---
-function switchTab(tabId) {
-  HapticFeedback.click();
-  state.currentTab = tabId;
+// Screen 8: CoE Staff Examination Hub
+function renderCoeScreen() {
+  el.screenCoe.innerHTML = `
+    <div class="card tilt-card" style="border-left: 4px solid var(--color-secondary);">
+      <h3 style="font-family: var(--font-display); font-size: 15px; font-weight: 700;">Examination Branch Operations</h3>
+      <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">Controller of Examinations Tabulation & Hall Ticket Registry Hub.</p>
+    </div>
 
-  // Update Bottom Nav active state
-  document.querySelectorAll('.nav-item').forEach(btn => {
-    btn.classList.toggle('active', btn.getAttribute('data-tab') === tabId);
+    <div class="section-header-row">
+      <span class="section-title">e-SANAD Hall Ticket Generation Queue</span>
+      <button class="btn btn-sm btn-primary" id="btnIssueAllTickets">Issue Approved Cohort (420 Tickets)</button>
+    </div>
+
+    <div class="card tilt-card">
+      <div style="font-size: 12px; line-height: 1.5;">
+        <div><strong>Session:</strong> Nov / Dec 2026 End Semester Examinations (ESE)</div>
+        <div><strong>Status:</strong> Tabulation Active • 4 Exam Halls Allocated</div>
+        <div><strong>Security Protocol:</strong> Cryptographic SHA-256 Token QR Embedded</div>
+      </div>
+      <button class="btn btn-sm btn-outline" style="margin-top: 10px;" id="btnInspectCoETicket">Inspect Master e-SANAD Ticket</button>
+    </div>
+  `;
+
+  document.getElementById('btnIssueAllTickets')?.addEventListener('click', () => {
+    HapticFeedback.success();
+    showToast('Batch e-SANAD Hall Tickets issued and synced with DigiLocker!');
   });
 
-  // Update Screen Views
-  document.querySelectorAll('.screen-view').forEach(view => {
-    view.classList.toggle('active', view.getAttribute('data-screen') === tabId);
+  document.getElementById('btnInspectCoETicket')?.addEventListener('click', openHallTicketModal);
+
+  attach3DTiltHandlers();
+}
+
+// Screen 9: Research Scholar Hub
+function renderScholarScreen() {
+  el.screenScholar.innerHTML = `
+    <div class="card tilt-card" style="border-left: 4px solid var(--color-tertiary);">
+      <h3 style="font-family: var(--font-display); font-size: 15px; font-weight: 700;">Doctoral Research & Fellowship Suite</h3>
+      <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">Research Scholar: ${state.currentUser.name} (${state.currentUser.institutionalId})</p>
+    </div>
+
+    <div class="card tilt-card">
+      <h4 style="font-family: var(--font-display); font-size: 13px; font-weight: 700;">National Research Consortia Access</h4>
+      <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">Direct remote access to e-ShodhSindhu, IEEE Xplore, DELNET, and JSTOR.</p>
+      <div style="display: flex; gap: 6px; margin-top: 8px;">
+        <span class="role-pill-chip" style="background: var(--color-success-bg); color: var(--color-success);">e-ShodhSindhu: Active</span>
+        <span class="role-pill-chip" style="background: var(--color-primary-container); color: var(--color-primary);">JRF Fellowship: Credited</span>
+      </div>
+    </div>
+  `;
+
+  attach3DTiltHandlers();
+}
+
+// Screen 10: Faculty Hub
+function renderFacultyScreen() {
+  el.screenFaculty.innerHTML = `
+    <div class="card tilt-card" style="border-left: 4px solid var(--color-primary);">
+      <h3 style="font-family: var(--font-display); font-size: 15px; font-weight: 700;">Faculty Academic Management</h3>
+      <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">Course lectures, CIA mark tabulation, and staff duty compensation.</p>
+    </div>
+
+    <div class="card tilt-card">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <h4 style="font-family: var(--font-display); font-size: 13px; font-weight: 700;">CS501: Advanced Cloud Computing</h4>
+          <div style="font-size: 11px; color: var(--color-text-secondary);">MCA Semester IV • 38 Students Enrolled</div>
+        </div>
+        <button class="btn btn-sm btn-primary" id="btnTakeClassAtt">Take Biometrics</button>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('btnTakeClassAtt')?.addEventListener('click', () => {
+    HapticFeedback.success();
+    showToast('Lecture attendance marked for CS501 (36 present, 2 absent).');
   });
 
-  // Render content
-  if (tabId === 'home') renderHomeScreen();
-  if (tabId === 'academics') renderAcademicsScreen();
-  if (tabId === 'campus') renderCampusScreen();
-  if (tabId === 'services') renderServicesScreen();
-  if (tabId === 'admin') renderAdminScreen();
+  attach3DTiltHandlers();
 }
 
-// --- 9. Role Management ---
-function switchRole(roleKey) {
-  HapticFeedback.success();
-  state.currentRole = roleKey;
-  el.currentRoleChip.textContent = roleKey;
-  el.globalRoleSelect.value = roleKey;
+// --- 14. Modals Management ---
 
-  showToast(`Switched active profile to ${state.users[roleKey].name} (${roleKey})`);
-
-  // Re-render active screen
-  switchTab(state.currentTab);
-}
-
-// --- 10. Modals Management ---
-
-// Modal 1: GRI-Sahayak AI
+// Modal: GRI-Sahayak AI
 function openSahayakModal() {
   HapticFeedback.click();
   el.sahayakModal.classList.add('active');
@@ -1049,10 +2022,10 @@ function handleSahayakSubmit(promptText) {
   }, 400);
 }
 
-// Modal 2: Examination Hall Ticket
+// Modal: Examination Hall Ticket
 function openHallTicketModal() {
   HapticFeedback.click();
-  const u = state.users[state.currentRole] || state.users.STUDENT;
+  const u = state.currentUser || state.accounts[1];
   const ht = state.hallTicket;
 
   el.hallTicketView.innerHTML = `
@@ -1066,12 +2039,12 @@ function openHallTicketModal() {
       </div>
 
       <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 12px; background: #F8FAFD; padding: 10px; border-radius: 8px;">
-        <img src="/assets/student_avatar.jpg" alt="${u.name}" style="width: 64px; height: 64px; border-radius: 6px; object-fit: cover; border: 1.5px solid #CBD5E1; flex-shrink: 0;">
+        <img src="/assets/${u.activeRole === 'STUDENT' ? 'student_avatar.jpg' : 'gri_official_logo.png'}" alt="${u.name}" style="width: 64px; height: 64px; border-radius: 6px; object-fit: cover; border: 1.5px solid #CBD5E1; flex-shrink: 0;">
         <div class="ht-student-grid" style="flex: 1; margin-bottom: 0; background: transparent; padding: 0;">
           <div><strong>Student Name:</strong> ${u.name}</div>
-          <div><strong>Register / Roll No:</strong> ${u.rollNo}</div>
-          <div><strong>Degree / Programme:</strong> ${u.program}</div>
-          <div><strong>Semester:</strong> ${u.semester}</div>
+          <div><strong>Register / Roll No:</strong> ${u.institutionalId || '23MCA042'}</div>
+          <div><strong>Degree / Programme:</strong> ${u.program || 'MCA'}</div>
+          <div><strong>Semester:</strong> ${u.semester || 'Semester IV'}</div>
           <div><strong>Department:</strong> ${u.department}</div>
           <div><strong>Hall Ticket No:</strong> ${ht.ticketNo}</div>
         </div>
@@ -1122,7 +2095,7 @@ function closeHallTicketModal() {
   el.hallTicketModal.classList.remove('active');
 }
 
-// Modal 3: Document Center
+// Modal: Official Document Center
 function openDocCenterModal() {
   HapticFeedback.click();
   renderDocList();
@@ -1151,10 +2124,7 @@ function renderDocList(category = 'all') {
         <h4 style="font-family: var(--font-display); font-size: 13px; font-weight: 700; margin-top: 4px;">${d.title}</h4>
         <div style="font-size: 10px; color: var(--color-text-muted); margin-top: 2px;">${d.size} • Published ${d.date}</div>
       </div>
-      <button class="btn btn-sm btn-outline btn-download-doc" data-id="${d.id}">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
-        Download
-      </button>
+      <button class="btn btn-sm btn-outline btn-download-doc" data-id="${d.id}">Download</button>
     </div>
   `).join('');
 
@@ -1166,7 +2136,71 @@ function renderDocList(category = 'all') {
   });
 }
 
-// Modal 4: Notifications Drawer
+// Modal: Authorized Multi-Role Switcher Sheet
+function openRoleSwitcherModal() {
+  const u = state.currentUser;
+  if (!u || u.status !== 'APPROVED') {
+    showToast('Role switching is only available for approved institutional accounts.', 'info');
+    return;
+  }
+
+  // Per rule: NO fake role switching! Only show already-approved roles!
+  if (u.approvedRoles.length <= 1) {
+    showToast(`Your account has 1 authorized institutional role (${u.approvedRoles[0]}).`, 'info');
+    return;
+  }
+
+  el.authorizedRolesList.innerHTML = `
+    <div style="font-size: 12px; color: var(--color-text-secondary); margin-bottom: 12px;">
+      User: <strong>${u.name}</strong> • Select an already-approved institutional identity:
+    </div>
+
+    ${u.approvedRoles.map(role => `
+      <div class="auth-role-option-row ${u.activeRole === role ? 'active' : ''}" data-role="${role}">
+        <div>
+          <div style="font-family: var(--font-display); font-weight: 700; font-size: 14px;">${role}</div>
+          <div style="font-size: 11px; color: var(--color-text-secondary);">
+            ${role === 'FACULTY' ? 'Teaching & Class Roster' : 'Doctoral Research & Publications'}
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 6px;">
+          ${u.activeRole === role ? '<span style="color: var(--color-primary); font-weight: 800;">✓ Active</span>' : '<span style="font-size: 11px; color: var(--color-text-muted);">Switch →</span>'}
+        </div>
+      </div>
+    `).join('')}
+  `;
+
+  document.querySelectorAll('.auth-role-option-row').forEach(row => {
+    row.addEventListener('click', (e) => {
+      const r = e.currentTarget.getAttribute('data-role');
+      if (r !== u.activeRole) {
+        const prev = u.activeRole;
+        u.activeRole = r;
+
+        state.auditTrail.unshift({
+          id: `aud_${Date.now()}`,
+          timestamp: 'Just now',
+          actor: `${u.name} (${prev})`,
+          targetUser: u.name,
+          action: 'ROLE_SWITCHED',
+          previousStatus: prev,
+          newStatus: r,
+          remarks: `User switched between authorized approved roles`
+        });
+
+        HapticFeedback.success();
+        showToast(`Switched active context to ${r}`);
+        el.roleSwitcherModal.classList.remove('active');
+        updateDynamicNavigation();
+        switchTab('home');
+      }
+    });
+  });
+
+  el.roleSwitcherModal.classList.add('active');
+}
+
+// Modal: Notifications Drawer
 function openNotifModal() {
   HapticFeedback.click();
   renderNotifList();
@@ -1180,9 +2214,8 @@ function closeNotifModal() {
 function renderNotifList() {
   const notifs = [
     { title: 'End Semester Hall Ticket Released', text: 'Nov/Dec 2026 Examination hall tickets are live on e-SANAD.', time: '10m ago', unread: true },
-    { title: 'Campus Transit Route 1 Update', text: 'Bus TN-57-N-2418 is running on schedule via Chinnalapatti.', time: '25m ago', unread: true },
-    { title: 'Library Book Due Reminder', text: 'Distributed Mobile Systems book due on 28 Sep 2026.', time: '2h ago', unread: true },
-    { title: 'GRI-Care Ticket Updated', text: 'Ticket #GRI-2026-TKT-8912 marked as RESOLVED by Estate Office.', time: '1d ago', unread: false }
+    { title: 'Registration Status Notification', text: 'Institutional registry processed 14 applications today.', time: '20m ago', unread: true },
+    { title: 'Campus Transit Route 1 Update', text: 'Bus TN-57-N-2418 is running on schedule via Chinnalapatti.', time: '25m ago', unread: true }
   ];
 
   el.notifList.innerHTML = notifs.map(n => `
@@ -1196,21 +2229,21 @@ function renderNotifList() {
   `).join('');
 }
 
-// Cloud Sync Trigger
+// Sync trigger
 function triggerSync() {
   if (state.isSyncing) return;
   state.isSyncing = true;
   HapticFeedback.click();
-  showToast('Connecting to GRI Cloud & Ktor sync ledger...');
+  showToast('Connecting to Central Registry & Ktor ledger...');
 
   setTimeout(() => {
     state.isSyncing = false;
     HapticFeedback.success();
-    showToast('Synchronization complete! All records up to date.');
+    showToast('Registry synchronized. All institutional records up to date.');
   }, 1200);
 }
 
-// --- 11. Event Listeners Initialization ---
+// --- 15. Event Listeners Initialization ---
 function initEvents() {
   // Bezel toggle
   el.toggleDeviceFrameBtn?.addEventListener('click', () => {
@@ -1231,33 +2264,146 @@ function initEvents() {
   // Quick sync button
   el.quickSyncBtn?.addEventListener('click', triggerSync);
 
-  // Global role select dropdown
-  el.globalRoleSelect?.addEventListener('change', (e) => {
-    switchRole(e.target.value);
+  // Global Account selector (for instantaneous institutional testing)
+  el.globalAccountSelect?.addEventListener('change', (e) => {
+    const val = e.target.value;
+    if (val === 'usr_public') {
+      state.currentUser = null;
+      updateDynamicNavigation();
+      switchTab('home');
+      showToast('Viewing portal as unauthenticated Public Visitor');
+    } else {
+      authenticateUser(val);
+    }
   });
 
-  // Top bar role chip click -> open admin tab
+  // Top Bar Role Badge Click
   el.roleBadgeBtn?.addEventListener('click', () => {
-    switchTab('admin');
+    if (!state.currentUser || state.currentUser.status === 'PUBLIC') {
+      openAuthModal();
+    } else if (state.currentUser.status !== 'APPROVED') {
+      switchTab('status');
+    } else if (state.currentUser.approvedRoles.length > 1) {
+      openRoleSwitcherModal();
+    } else {
+      showToast(`Account: ${state.currentUser.name} • Status: Approved ${state.currentUser.activeRole}`);
+    }
   });
 
-  // Bottom Nav items
-  document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', () => {
-      const tab = item.getAttribute('data-tab');
-      switchTab(tab);
+  // Open Register Trigger
+  el.openRegisterBtn?.addEventListener('click', openRegisterModal);
+  el.linkOpenRegister?.addEventListener('click', (e) => {
+    e.preventDefault();
+    closeAuthModal();
+    openRegisterModal();
+  });
+  el.linkPublicVisitor?.addEventListener('click', (e) => {
+    e.preventDefault();
+    closeAuthModal();
+    state.currentUser = null;
+    updateDynamicNavigation();
+    switchTab('home');
+    showToast('Browsing as Public Visitor');
+  });
+
+  // Register Modal Steps
+  el.btnNextToStep2?.addEventListener('click', () => {
+    const name = document.getElementById('regName').value;
+    const email = document.getElementById('regEmail').value;
+    const pass = document.getElementById('regPassword').value;
+    if (!name || !email || !pass) {
+      showToast('Please fill all identity credentials.', 'error');
+      return;
+    }
+    showRegisterStep(2);
+  });
+
+  el.btnBackToStep1?.addEventListener('click', () => showRegisterStep(1));
+
+  document.querySelectorAll('input[name="requestedRole"]').forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      renderDynamicRoleFields(e.target.value);
     });
   });
 
-  // Sahayak Modal triggers
+  el.btnNextToStep3?.addEventListener('click', () => {
+    const selectedRadio = document.querySelector('input[name="requestedRole"]:checked');
+    const role = selectedRadio ? selectedRadio.value : 'STUDENT';
+    renderDynamicRoleFields(role);
+    showRegisterStep(3);
+  });
+
+  el.btnBackToStep2?.addEventListener('click', () => showRegisterStep(2));
+
+  // Registration Form Submission
+  el.registrationWizardForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('regName').value;
+    const email = document.getElementById('regEmail').value;
+    const mobile = document.getElementById('regMobile').value;
+    const selectedRadio = document.querySelector('input[name="requestedRole"]:checked');
+    const role = selectedRadio ? selectedRadio.value : 'STUDENT';
+    const instId = document.getElementById('dynInstId')?.value || 'Pending';
+    const dept = document.getElementById('dynDept')?.value || 'The Gandhigram Rural Institute';
+    const prog = document.getElementById('dynProgram')?.value || 'Academic Programme';
+
+    const appId = `GRI-2026-APP-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    const newAccount = {
+      id: `usr_${Date.now()}`,
+      name,
+      email,
+      mobile,
+      institutionalId: instId,
+      status: 'PENDING',
+      requestedRole: role,
+      approvedRoles: [],
+      activeRole: 'GUEST',
+      applicationId: appId,
+      department: dept,
+      program: prog,
+      submittedAt: 'Just now',
+      reviewedAt: null,
+      reviewedBy: null,
+      rejectionReason: null,
+      infoRequested: null,
+      infoProvided: null
+    };
+
+    state.accounts.push(newAccount);
+
+    state.auditTrail.unshift({
+      id: `aud_${Date.now()}`,
+      timestamp: 'Just now',
+      actor: `${name} (Applicant)`,
+      targetUser: `${name} (${instId})`,
+      action: 'REGISTRATION_SUBMITTED',
+      previousStatus: 'NONE',
+      newStatus: 'PENDING',
+      remarks: `Submitted application for ${role}. App ID: ${appId}`
+    });
+
+    HapticFeedback.success();
+    closeRegisterModal();
+    showToast(`Application ${appId} submitted for Dean verification!`);
+
+    // Log in as pending applicant immediately to display status
+    authenticateUser(newAccount.id);
+  });
+
+  // Modal Closers
+  el.closeAuthBtn?.addEventListener('click', closeAuthModal);
+  el.closeRegisterBtn?.addEventListener('click', closeRegisterModal);
+  el.closeAdminReviewBtn?.addEventListener('click', () => el.adminReviewModal.classList.remove('active'));
+  el.closeRoleSwitcherBtn?.addEventListener('click', () => el.roleSwitcherModal.classList.remove('active'));
+
+  // Sahayak Modal
   el.openSahayakBtn?.addEventListener('click', openSahayakModal);
   el.closeSahayakBtn?.addEventListener('click', closeSahayakModal);
   el.sahayakForm?.addEventListener('submit', (e) => {
     e.preventDefault();
     handleSahayakSubmit(el.sahayakInput.value);
   });
-
-  // Sahayak Prompt chips
   document.querySelectorAll('#sahayakChips .chip-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const q = btn.getAttribute('data-query');
@@ -1265,14 +2411,12 @@ function initEvents() {
     });
   });
 
-  // Hall Ticket Modal triggers
+  // Hall Ticket Modal
   el.closeHallTicketBtn?.addEventListener('click', closeHallTicketModal);
   el.doneTicketBtn?.addEventListener('click', closeHallTicketModal);
-  el.printTicketBtn?.addEventListener('click', () => {
-    window.print();
-  });
+  el.printTicketBtn?.addEventListener('click', () => window.print());
 
-  // Document Center triggers
+  // Document Center
   el.openDocCenterBtn?.addEventListener('click', openDocCenterModal);
   el.closeDocCenterBtn?.addEventListener('click', closeDocCenterModal);
   el.btnVerifyHash?.addEventListener('click', () => {
@@ -1288,7 +2432,7 @@ function initEvents() {
     }
   });
 
-  // Notifications Modal triggers
+  // Notifications
   el.openNotificationsBtn?.addEventListener('click', openNotifModal);
   el.closeNotifBtn?.addEventListener('click', closeNotifModal);
   el.markAllReadBtn?.addEventListener('click', () => {
@@ -1301,21 +2445,20 @@ function initEvents() {
   // Close modals on overlay backdrop click
   document.querySelectorAll('.modal-overlay').forEach(modal => {
     modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.classList.remove('active');
-      }
+      if (e.target === modal) modal.classList.remove('active');
     });
   });
 
-  // Dynamic Island click -> open transit screen or notification
+  // Dynamic Island
   document.getElementById('dynamicIsland')?.addEventListener('click', () => {
     switchTab('campus');
     showToast('Navigating to Live Transit Radar');
   });
 
-  // Initial render
-  renderHomeScreen();
+  // Initial Boot
+  updateDynamicNavigation();
+  switchTab('home');
 }
 
-// Run on load
+// Run on DOM Ready
 document.addEventListener('DOMContentLoaded', initEvents);

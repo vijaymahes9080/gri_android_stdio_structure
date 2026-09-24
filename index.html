@@ -35,17 +35,23 @@
           <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
           <span class="btn-text">Sync</span>
         </button>
-        <div class="role-selector-pill" id="quickRoleSwitch">
-          <span class="role-label">Role:</span>
-          <select id="globalRoleSelect" aria-label="Select active user role">
-            <option value="STUDENT" selected>Student (Srimari V.)</option>
-            <option value="FACULTY">Faculty (Dr. Subramanian)</option>
-            <option value="ADMIN">Admin (CoE Directorate)</option>
-            <option value="STAFF">Staff (Establishment)</option>
-            <option value="SCHOLAR">Scholar (Research JRF)</option>
-            <option value="GUEST">Guest / Visitor</option>
+        <div class="account-selector-pill" id="quickAccountSwitch">
+          <span class="account-label">User:</span>
+          <select id="globalAccountSelect" aria-label="Select active authenticated user account">
+            <option value="usr_admin" selected>Admin (CoE Directorate)</option>
+            <option value="usr_student">Student (Srimari Vijay - Approved)</option>
+            <option value="usr_faculty">Faculty (Dr. Subramanian - Multi-Role)</option>
+            <option value="usr_coe">CoE Staff (M. Sadasivam - Approved)</option>
+            <option value="usr_scholar">Scholar (Ananya Murugan - Approved)</option>
+            <option value="usr_pending">Applicant (Kavitha Mohan - Pending)</option>
+            <option value="usr_review">Applicant (Arun Kumar - Under Review)</option>
+            <option value="usr_public">Public Visitor (Unauthenticated)</option>
           </select>
         </div>
+        <button class="tool-btn highlight" id="openRegisterBtn" title="Register New Institutional Account">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          <span class="btn-text">Register</span>
+        </button>
       </div>
     </header>
 
@@ -137,6 +143,31 @@
 
             <!-- Screen 5: Admin & Governance Hub -->
             <section class="screen-view" id="screenAdmin" data-screen="admin">
+              <!-- Dynamically populated by main.js -->
+            </section>
+
+            <!-- Screen 6: Application Status Dashboard (Pending, Under Review, Rejected, Suspended) -->
+            <section class="screen-view" id="screenStatus" data-screen="status">
+              <!-- Dynamically populated by main.js -->
+            </section>
+
+            <!-- Screen 7: Registration & Role Approval Center -->
+            <section class="screen-view" id="screenApprovals" data-screen="approvals">
+              <!-- Dynamically populated by main.js -->
+            </section>
+
+            <!-- Screen 8: CoE Staff Examination Hub -->
+            <section class="screen-view" id="screenCoe" data-screen="coe">
+              <!-- Dynamically populated by main.js -->
+            </section>
+
+            <!-- Screen 9: Research Scholar Hub -->
+            <section class="screen-view" id="screenScholar" data-screen="scholar">
+              <!-- Dynamically populated by main.js -->
+            </section>
+
+            <!-- Screen 10: Faculty Academic Hub -->
+            <section class="screen-view" id="screenFaculty" data-screen="faculty">
               <!-- Dynamically populated by main.js -->
             </section>
           </div>
@@ -344,6 +375,227 @@
         </button>
       </header>
       <div class="faculty-modal-body" id="facultyModalBody">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 6: Institutional Sign In Dialog -->
+  <div class="modal-overlay" id="authModal" aria-hidden="true" role="dialog" aria-labelledby="authTitle">
+    <div class="modal-content modal-large auth-sheet">
+      <header class="modal-header">
+        <div class="modal-brand">
+          <img src="/assets/gri_official_logo.png" alt="GRI Official Logo" style="width: 32px; height: 32px; object-fit: contain;">
+          <div>
+            <h2 class="modal-title" id="authTitle">GRI Institutional Sign In</h2>
+            <p class="modal-subtitle">Statutory Identity & Role Access System</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeAuthBtn" aria-label="Close Authentication">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </header>
+
+      <div style="padding: var(--space-md); overflow-y: auto;">
+        <!-- Quick Switch for Testing Institutional Identities -->
+        <div style="background: var(--color-surface-elevated); padding: 10px; border-radius: var(--radius-md); margin-bottom: var(--space-md); border: 1px solid var(--color-surface-border);">
+          <div style="font-size: 11px; font-weight: 700; color: var(--color-primary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Quick Institutional Accounts (One-Click)</div>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px;" id="quickAuthButtonsGrid">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label class="form-label" for="loginEmail">Institutional Email / Roll No</label>
+            <input type="text" class="form-input" id="loginEmail" placeholder="e.g. srimari@ruraluniv.ac.in" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="loginPassword">Password</label>
+            <input type="password" class="form-input" id="loginPassword" placeholder="••••••••" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full" style="margin-top: var(--space-sm);">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.89-2-2-2z"/></svg>
+            Authenticate & Open Portal
+          </button>
+        </form>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: var(--space-md); font-size: 12px; border-top: 1px solid var(--color-surface-border-subtle); padding-top: var(--space-sm);">
+          <a href="#" id="linkOpenRegister" style="color: var(--color-primary); font-weight: 600;">Create Institutional Account</a>
+          <a href="#" id="linkPublicVisitor" style="color: var(--color-text-secondary);">Browse as Public Visitor</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 7: Multi-Step Institutional Registration -->
+  <div class="modal-overlay" id="registerModal" aria-hidden="true" role="dialog" aria-labelledby="registerTitle">
+    <div class="modal-content modal-fullscreen register-sheet">
+      <header class="modal-header">
+        <div class="modal-brand">
+          <img src="/assets/gri_official_logo.png" alt="GRI Official Logo" style="width: 32px; height: 32px; object-fit: contain;">
+          <div>
+            <h2 class="modal-title" id="registerTitle">Institutional Account Registration</h2>
+            <p class="modal-subtitle">Dean & Registrar Official Approval Workflow</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeRegisterBtn" aria-label="Close Registration">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </header>
+
+      <!-- Multi-step Indicator -->
+      <div style="display: flex; justify-content: space-between; padding: 10px var(--space-md); background: var(--color-surface-elevated); border-bottom: 1px solid var(--color-surface-border);">
+        <div class="step-indicator active" id="stepIndicator1">
+          <span class="step-num">1</span>
+          <span class="step-name">Identity</span>
+        </div>
+        <div class="step-indicator" id="stepIndicator2">
+          <span class="step-num">2</span>
+          <span class="step-name">Role Type</span>
+        </div>
+        <div class="step-indicator" id="stepIndicator3">
+          <span class="step-num">3</span>
+          <span class="step-name">Academic Details</span>
+        </div>
+      </div>
+
+      <div style="flex: 1; overflow-y: auto; padding: var(--space-md);">
+        <form id="registrationWizardForm">
+          <!-- Step 1: Personal Credentials -->
+          <div class="reg-step-pane active" id="regStep1">
+            <h3 style="font-family: var(--font-display); font-size: 14px; font-weight: 700; margin-bottom: var(--space-xs);">Step 1: Personal Credentials</h3>
+            <p style="font-size: 11px; color: var(--color-text-secondary); margin-bottom: var(--space-sm);">Enter your official name and communication details for registry verification.</p>
+
+            <div class="form-group">
+              <label class="form-label">Full Legal Name</label>
+              <input type="text" class="form-input" id="regName" placeholder="e.g. Kavitha Mohan" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" class="form-input" id="regEmail" placeholder="e.g. kavitha.m@gmail.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Mobile Number</label>
+              <input type="tel" class="form-input" id="regMobile" placeholder="e.g. +91 98421 78420" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Password</label>
+              <input type="password" class="form-input" id="regPassword" placeholder="Minimum 8 characters" required>
+            </div>
+            <button type="button" class="btn btn-primary btn-full" id="btnNextToStep2" style="margin-top: var(--space-sm);">Continue to Role Selection →</button>
+          </div>
+
+          <!-- Step 2: Role Selection -->
+          <div class="reg-step-pane" id="regStep2" style="display: none;">
+            <h3 style="font-family: var(--font-display); font-size: 14px; font-weight: 700; margin-bottom: var(--space-xs);">Step 2: Requested Institutional Role</h3>
+            <p style="font-size: 11px; color: var(--color-text-secondary); margin-bottom: var(--space-sm);">Administrative roles (Admin/Super Admin) require administrator assignment.</p>
+
+            <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: var(--space-md);">
+              <label class="role-radio-card" style="display: flex; align-items: center; gap: 10px; padding: 12px; background: var(--color-surface-elevated); border: 1.5px solid var(--color-surface-border); border-radius: var(--radius-md); cursor: pointer;">
+                <input type="radio" name="requestedRole" value="STUDENT" checked style="accent-color: var(--color-primary); width: 18px; height: 18px;">
+                <div>
+                  <div style="font-weight: 700; font-size: 13px;">Student</div>
+                  <div style="font-size: 11px; color: var(--color-text-secondary);">Enrolled undergraduate, postgraduate, or diploma student</div>
+                </div>
+              </label>
+
+              <label class="role-radio-card" style="display: flex; align-items: center; gap: 10px; padding: 12px; background: var(--color-surface-elevated); border: 1.5px solid var(--color-surface-border); border-radius: var(--radius-md); cursor: pointer;">
+                <input type="radio" name="requestedRole" value="FACULTY" style="accent-color: var(--color-primary); width: 18px; height: 18px;">
+                <div>
+                  <div style="font-weight: 700; font-size: 13px;">Faculty Member</div>
+                  <div style="font-size: 11px; color: var(--color-text-secondary);">Professor, Associate Professor, Assistant Professor, Guest Lecturer</div>
+                </div>
+              </label>
+
+              <label class="role-radio-card" style="display: flex; align-items: center; gap: 10px; padding: 12px; background: var(--color-surface-elevated); border: 1.5px solid var(--color-surface-border); border-radius: var(--radius-md); cursor: pointer;">
+                <input type="radio" name="requestedRole" value="COE_STAFF" style="accent-color: var(--color-primary); width: 18px; height: 18px;">
+                <div>
+                  <div style="font-weight: 700; font-size: 13px;">Controller of Examinations (CoE) Staff</div>
+                  <div style="font-size: 11px; color: var(--color-text-secondary);">Examination branch superintendent, tabulation & hall ticket staff</div>
+                </div>
+              </label>
+
+              <label class="role-radio-card" style="display: flex; align-items: center; gap: 10px; padding: 12px; background: var(--color-surface-elevated); border: 1.5px solid var(--color-surface-border); border-radius: var(--radius-md); cursor: pointer;">
+                <input type="radio" name="requestedRole" value="SCHOLAR" style="accent-color: var(--color-primary); width: 18px; height: 18px;">
+                <div>
+                  <div style="font-weight: 700; font-size: 13px;">Research Scholar (Ph.D.)</div>
+                  <div style="font-size: 11px; color: var(--color-text-secondary);">Doctoral candidate or Postdoctoral research fellow (JRF/SRF)</div>
+                </div>
+              </label>
+
+              <label class="role-radio-card" style="display: flex; align-items: center; gap: 10px; padding: 12px; background: var(--color-surface-elevated); border: 1.5px solid var(--color-surface-border); border-radius: var(--radius-md); cursor: pointer;">
+                <input type="radio" name="requestedRole" value="GUEST" style="accent-color: var(--color-primary); width: 18px; height: 18px;">
+                <div>
+                  <div style="font-weight: 700; font-size: 13px;">Campus Guest / Visitor</div>
+                  <div style="font-size: 11px; color: var(--color-text-secondary);">Prospective applicant, visiting researcher, or parent</div>
+                </div>
+              </label>
+            </div>
+
+            <div style="display: flex; gap: 8px;">
+              <button type="button" class="btn btn-outline" id="btnBackToStep1">← Back</button>
+              <button type="button" class="btn btn-primary" id="btnNextToStep3" style="flex: 1;">Academic Details →</button>
+            </div>
+          </div>
+
+          <!-- Step 3: Dynamic Institutional Information -->
+          <div class="reg-step-pane" id="regStep3" style="display: none;">
+            <h3 style="font-family: var(--font-display); font-size: 14px; font-weight: 700; margin-bottom: var(--space-xs);">Step 3: Institutional Verification Details</h3>
+            <p style="font-size: 11px; color: var(--color-text-secondary); margin-bottom: var(--space-sm);" id="step3Hint">Fields dynamically configured for requested role.</p>
+
+            <div id="dynamicRoleFieldsContainer">
+              <!-- Dynamically populated by JS according to selected role -->
+            </div>
+
+            <div style="display: flex; gap: 8px; margin-top: var(--space-md);">
+              <button type="button" class="btn btn-outline" id="btnBackToStep2">← Back</button>
+              <button type="submit" class="btn btn-primary" id="btnSubmitRegistration" style="flex: 1;">Submit Application for Approval</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 8: Admin Application Review & Decision Dialog -->
+  <div class="modal-overlay" id="adminReviewModal" aria-hidden="true" role="dialog" aria-labelledby="adminReviewTitle">
+    <div class="modal-content modal-large review-sheet">
+      <header class="modal-header">
+        <div class="modal-brand">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="#003622"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          <div>
+            <h2 class="modal-title" id="adminReviewTitle">Registration Application Review</h2>
+            <p class="modal-subtitle" id="reviewSubtitle">Application ID: APP-2026-REG-XXXX</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeAdminReviewBtn" aria-label="Close Review">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </header>
+
+      <div style="padding: var(--space-md); overflow-y: auto; max-height: 70vh;" id="adminReviewDetails">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 9: Authorized Role Switcher Sheet (For users with multiple approved roles) -->
+  <div class="modal-overlay" id="roleSwitcherModal" aria-hidden="true" role="dialog" aria-labelledby="roleSwitcherTitle">
+    <div class="modal-content modal-sheet-bottom">
+      <header class="modal-header">
+        <div class="modal-brand">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="#003622"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+          <div>
+            <h2 class="modal-title" id="roleSwitcherTitle">Authorized Roles</h2>
+            <p class="modal-subtitle">Switch between verified approved identities</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeRoleSwitcherBtn" aria-label="Close Switcher">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </header>
+      <div style="padding: var(--space-md);" id="authorizedRolesList">
         <!-- Rendered by JS -->
       </div>
     </div>
