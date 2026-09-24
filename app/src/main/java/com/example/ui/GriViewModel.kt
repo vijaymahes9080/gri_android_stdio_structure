@@ -184,7 +184,7 @@ class GriViewModel(application: Application) : AndroidViewModel(application) {
           adminQuery = "Please upload or provide your PG Degree Provisional Certificate register number and specify your specialization.",
           history = listOf(
             ApplicationHistoryEntry("23 Sep 2026, 03:40 PM", "APPLICATION_SUBMITTED", "Arun Kumar", "Registration submitted"),
-            ApplicationHistoryEntry("24 Sep 2026, 09:40 AM", "CLARIFICATION_REQUESTED", "Dr. M. Sangeetha (Registrar)", "Requested PG Degree Certificate registration details")
+            ApplicationHistoryEntry("24 Sep 2026, 09:40 AM", "CLARIFICATION_REQUESTED", "Dr. M. Sundaramari (Registrar)", "Requested PG Degree Certificate registration details")
           )
         ),
         RegistrationApplication(
@@ -202,7 +202,7 @@ class GriViewModel(application: Application) : AndroidViewModel(application) {
           rejectionReason = "Candidate does not possess required UGC-NET / SLET qualification or Ph.D. in Computer Science as per 2026 faculty norms.",
           history = listOf(
             ApplicationHistoryEntry("22 Sep 2026, 02:10 PM", "APPLICATION_SUBMITTED", "Suresh Balan", "Faculty application submitted"),
-            ApplicationHistoryEntry("23 Sep 2026, 04:15 PM", "APPLICATION_REJECTED", "Dr. M. Sangeetha (Registrar)", "Rejected due to UGC minimum qualification criteria")
+            ApplicationHistoryEntry("23 Sep 2026, 04:15 PM", "APPLICATION_REJECTED", "Dr. M. Sundaramari (Registrar)", "Rejected due to UGC minimum qualification criteria")
           )
         ),
         RegistrationApplication(
@@ -220,15 +220,15 @@ class GriViewModel(application: Application) : AndroidViewModel(application) {
           submittedDate = "15 Jun 2024, 10:00 AM",
           history = listOf(
             ApplicationHistoryEntry("15 Jun 2024, 10:00 AM", "APPLICATION_SUBMITTED", "Vijay Pradhap", "Application submitted"),
-            ApplicationHistoryEntry("16 Jun 2024, 11:30 AM", "APPLICATION_APPROVED", "Dr. M. Sangeetha (Registrar)", "Account verified and STUDENT role activated")
+            ApplicationHistoryEntry("16 Jun 2024, 11:30 AM", "APPLICATION_APPROVED", "Dr. M. Sundaramari (Registrar)", "Account verified and STUDENT role activated")
           )
         )
       ),
       institutionalAuditTrail = listOf(
         InstitutionalAuditLog("AUD-101", "24 Sep 2026, 09:15 AM", "System Registry", "SYSTEM", "REGISTRATION_SUBMITTED", "Kavitha Mohan", "STUDENT", "NONE", "PENDING_APPROVAL", "Applicant registered via Institutional Portal"),
-        InstitutionalAuditLog("AUD-102", "24 Sep 2026, 09:40 AM", "Dr. M. Sangeetha", "ADMIN", "CLARIFICATION_REQUESTED", "Arun Kumar", "SCHOLAR", "PENDING_APPROVAL", "UNDER_REVIEW", "Requested PG Degree Certificate registration details"),
-        InstitutionalAuditLog("AUD-103", "23 Sep 2026, 04:15 PM", "Dr. M. Sangeetha", "ADMIN", "APPLICATION_REJECTED", "Suresh Balan", "FACULTY", "PENDING_APPROVAL", "REJECTED", "UGC-NET qualification missing"),
-        InstitutionalAuditLog("AUD-104", "22 Sep 2026, 11:30 AM", "Dr. M. Sangeetha", "ADMIN", "APPLICATION_APPROVED", "Vijay Pradhap", "STUDENT", "PENDING_APPROVAL", "APPROVED", "Approved student registration and activated portal access")
+        InstitutionalAuditLog("AUD-102", "24 Sep 2026, 09:40 AM", "Dr. M. Sundaramari", "ADMIN", "CLARIFICATION_REQUESTED", "Arun Kumar", "SCHOLAR", "PENDING_APPROVAL", "UNDER_REVIEW", "Requested PG Degree Certificate registration details"),
+        InstitutionalAuditLog("AUD-103", "23 Sep 2026, 04:15 PM", "Dr. M. Sundaramari", "ADMIN", "APPLICATION_REJECTED", "Suresh Balan", "FACULTY", "PENDING_APPROVAL", "REJECTED", "UGC-NET qualification missing"),
+        InstitutionalAuditLog("AUD-104", "22 Sep 2026, 11:30 AM", "Dr. M. Sundaramari", "ADMIN", "APPLICATION_APPROVED", "Vijay Pradhap", "STUDENT", "PENDING_APPROVAL", "APPROVED", "Approved student registration and activated portal access")
       )
     )
   )
@@ -627,7 +627,7 @@ class GriViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     addAuditLog(
-      adminName = currentAdmin?.name ?: "Dr. M. Sangeetha",
+      adminName = currentAdmin?.name ?: "Dr. M. Sundaramari",
       adminRole = "ADMIN",
       action = "APPLICATION_APPROVED",
       targetUser = targetApp.fullName,
@@ -679,7 +679,7 @@ class GriViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     addAuditLog(
-      adminName = currentAdmin?.name ?: "Dr. M. Sangeetha",
+      adminName = currentAdmin?.name ?: "Dr. M. Sundaramari",
       adminRole = "ADMIN",
       action = "APPLICATION_REJECTED",
       targetUser = targetApp.fullName,
@@ -731,7 +731,7 @@ class GriViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     addAuditLog(
-      adminName = currentAdmin?.name ?: "Dr. M. Sangeetha",
+      adminName = currentAdmin?.name ?: "Dr. M. Sundaramari",
       adminRole = "ADMIN",
       action = "CLARIFICATION_REQUESTED",
       targetUser = targetApp.fullName,
@@ -756,7 +756,7 @@ class GriViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     addAuditLog(
-      adminName = currentAdmin?.name ?: "Dr. M. Sangeetha",
+      adminName = currentAdmin?.name ?: "Dr. M. Sundaramari",
       adminRole = "ADMIN",
       action = "ACCOUNT_SUSPENDED",
       targetUser = userId,

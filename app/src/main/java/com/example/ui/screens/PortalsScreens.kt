@@ -2097,11 +2097,11 @@ fun PublicExploreScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             listOf(
-              Triple("Chancellor", "Shri K.M. Annamalai", "Presiding Head of the University"),
-              Triple("Vice-Chancellor", "Prof. Dr. Panch. Ramalingam", "Chief Academic & Executive Officer"),
-              Triple("Registrar", "Dr. C. Sivapragasam", "Custodian of University Records & Administration"),
-              Triple("Controller of Examinations", "Dr. R. Subramanian", "Evaluation, Convocation & Degree Sanctions"),
-              Triple("Finance Officer", "Smt. M. Saraswathi", "University Treasury & Grants Management"),
+              Triple("Chancellor", "Dr. K.M. Annamalai", "Presiding Head of the University"),
+              Triple("Vice-Chancellor", "Prof. Dr. N. Panchanatham", "Chief Academic & Executive Officer"),
+              Triple("Registrar (i/c)", "Dr. M. Sundaramari", "Custodian of University Records & Administration"),
+              Triple("Controller of Examinations", "Dr. V. Sivakumar", "Evaluation, Convocation & Degree Sanctions"),
+              Triple("Finance Officer (i/c)", "Dr. P. Shanmugavadivu", "University Treasury & Grants Management"),
               Triple("Dean, Academic Affairs", "Prof. M.G. Sethuraman", "Curriculum, CBCS & Quality Assurance")
             ).forEach { (role, name, designation) ->
               Row(

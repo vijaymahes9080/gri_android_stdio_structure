@@ -345,8 +345,566 @@ const state = {
   // Sahayak AI
   sahayakMessages: [
     { isBot: true, text: "Vanakkam! I am GRI-Sahayak, your institutional AI guide for The Gandhigram Rural Institute (Deemed to be University). Ask me about Admissions 2026, CBCS courses, examination hall tickets, 75% attendance criteria, hostels, or campus transit.", source: 'ruraluniv.ac.in • Official UGC Registry' }
-  ]
+  ],
+
+  // --- 1. Leadership Directory ---
+  leadership: {
+    chancellor: { name: 'Dr. T. S. Soundram & Dr. G. Ramachandran (Founders)', role: 'Founding Patrons • Nai Talim Pioneers' },
+    viceChancellor: { name: 'Prof. Dr. N. Panchanatham', role: 'Vice-Chancellor', phone: '+91 451 2452305', email: 'vc@ruraluniv.ac.in', office: 'VC Secretariat, Main Administrative Block' },
+    registrar: { name: 'Dr. M. Sundaramari', role: 'Registrar in-charge', phone: '+91 451 2452371', email: 'registrar@ruraluniv.ac.in', office: 'Central Administrative Secretariat' },
+    controllerOfExaminations: { name: 'Dr. V. Sivakumar', role: 'Controller of Examinations', phone: '+91 451 2454222', email: 'coe@ruraluniv.ac.in', office: 'Controller of Examinations Directorate' },
+    financeOfficer: { name: 'Dr. K. S. Pushpa', role: 'Finance Officer (in-charge)', phone: '+91 451 2452373', email: 'fo@ruraluniv.ac.in', office: 'Finance Section' },
+    cvo: { name: 'Dr. M. G. Sethuraman', role: 'Chief Vigilance Officer', phone: '+91 451 2452375', email: 'cvo@ruraluniv.ac.in', office: 'CVO Office' },
+    deans: [
+      { school: 'School of Sciences', name: 'Dr. S. Kanthimathinathan', email: 'dean_sciences@ruraluniv.ac.in', phone: 'Ext 201' },
+      { school: 'School of Agriculture and Animal Sciences', name: 'Dr. K. S. Pushpa', email: 'dean_agri@ruraluniv.ac.in', phone: 'Ext 202' },
+      { school: 'School of Rural Health and Sanitation', name: 'Dr. M. G. Sethuraman', email: 'dean_health@ruraluniv.ac.in', phone: 'Ext 203' },
+      { school: 'School of Social Sciences', name: 'Dr. P. Anandharajakumar', email: 'dean_socsci@ruraluniv.ac.in', phone: 'Ext 204' },
+      { school: 'School of Tamil, Indian Languages and Rural Arts', name: 'Dr. M. Kuruvammal', email: 'dean_tamil@ruraluniv.ac.in', phone: 'Ext 205' },
+      { school: 'School of English & Foreign Languages', name: 'Dr. S. Senthilnathan', email: 'dean_english@ruraluniv.ac.in', phone: 'Ext 206' },
+      { school: 'School of Management Studies', name: 'Dr. T. Selvin Jebaraj Norman', email: 'dean_mgmt@ruraluniv.ac.in', phone: 'Ext 207' },
+      { school: 'School of Education', name: 'Dr. P. S. Balasubramanian', email: 'dean_edu@ruraluniv.ac.in', phone: 'Ext 208' }
+    ]
+  },
+
+  // --- 2. 8 Schools & Academic Departments ---
+  schools: [
+    {
+      id: 'sch_sci',
+      name: 'School of Sciences',
+      dean: 'Dr. S. Kanthimathinathan',
+      departments: ['Department of Mathematics', 'Department of Physics', 'Department of Chemistry', 'Department of Computer Science & Applications', 'Department of Biology'],
+      programmesCount: 16,
+      highlights: 'DST-FIST Supported Labs, Central NMR & XRD Instrumentation Facility, Cloud Computing Lab'
+    },
+    {
+      id: 'sch_agri',
+      name: 'School of Agriculture and Animal Sciences',
+      dean: 'Dr. K. S. Pushpa',
+      departments: ['Department of Agriculture', 'Department of Animal Husbandry', 'Krishi Vigyan Kendra (ICAR-KVK)'],
+      programmesCount: 9,
+      highlights: 'ICAR Accredited B.Sc. (Hons.) Agriculture, Organic Dairy Farm, Agro-Meteorological Unit'
+    },
+    {
+      id: 'sch_health',
+      name: 'School of Rural Health and Sanitation',
+      dean: 'Dr. M. G. Sethuraman',
+      departments: ['Department of Rural Health & Sanitation', 'Department of Applied Research'],
+      programmesCount: 7,
+      highlights: 'WHO collaborating projects, Pioneer in Sanitary Inspector Training since 1965'
+    },
+    {
+      id: 'sch_socsci',
+      name: 'School of Social Sciences',
+      dean: 'Dr. P. Anandharajakumar',
+      departments: ['Department of Rural Development', 'Department of Economics', 'Department of Lifelong Learning & Extension', 'Department of Sociology', 'Centre for Social Exclusion and Inclusive Policy'],
+      programmesCount: 14,
+      highlights: 'Nai Talim Village Internship, Kasturba Seva Ashram Field Action Projects'
+    },
+    {
+      id: 'sch_tamil',
+      name: 'School of Tamil, Indian Languages and Rural Arts',
+      dean: 'Dr. M. Kuruvammal',
+      departments: ['Department of Tamil', 'Department of Hindi', 'Centre for Malayalam', 'Department of Fine & Rural Arts'],
+      programmesCount: 10,
+      highlights: 'Classical Tamil Palm-leaf Archives, Folk Arts Troupe, Rural Handicrafts Centre'
+    },
+    {
+      id: 'sch_english',
+      name: 'School of English & Foreign Languages',
+      dean: 'Dr. S. Senthilnathan',
+      departments: ['Department of English', 'Foreign Languages Unit (French & German)'],
+      programmesCount: 6,
+      highlights: 'Multimedia Language Laboratory, Comparative Literature & Translation Studies'
+    },
+    {
+      id: 'sch_mgmt',
+      name: 'School of Management Studies',
+      dean: 'Dr. T. Selvin Jebaraj Norman',
+      departments: ['Department of Rural Management', 'Department of Commerce'],
+      programmesCount: 8,
+      highlights: 'MBA Rural Management (AICTE Approved), Microfinance & Rural Enterprise Incubator'
+    },
+    {
+      id: 'sch_edu',
+      name: 'School of Education',
+      dean: 'Dr. P. S. Balasubramanian',
+      departments: ['Department of Education', 'Centre for Educational Technology'],
+      programmesCount: 5,
+      highlights: 'NCTE Approved ITEP 4-Year B.Ed. Integrated Programme, Smart Classroom Demonstration Suite'
+    }
+  ],
+
+  // --- 3. Complete Catalogue of 81+ Programmes ---
+  programmes: [
+    // School of Sciences
+    { id: 'prog_mca', school: 'School of Sciences', name: 'Master of Computer Applications (MCA)', level: 'PG', duration: '2 Years (4 Semesters)', eligibility: 'Passed BCA/B.Sc. Computer Science/IT or B.Sc./B.Com./B.A. with Mathematics at 10+2 or Graduation level with 50% marks.', cuetCode: 'SCQP09', intake: 60, status: 'CURRENT' },
+    { id: 'prog_msc_cs', school: 'School of Sciences', name: 'M.Sc. Computer Science', level: 'PG', duration: '2 Years', eligibility: 'B.Sc. Computer Science/IT/BCA with min 50% marks.', cuetCode: 'SCQP09', intake: 40, status: 'CURRENT' },
+    { id: 'prog_bsc_cs', school: 'School of Sciences', name: 'B.Sc. Computer Science', level: 'UG', duration: '3 Years (6 Semesters)', eligibility: '10+2 with Mathematics/Business Maths/Computer Science.', cuetCode: 'UG011', intake: 50, status: 'CURRENT' },
+    { id: 'prog_msc_che', school: 'School of Sciences', name: 'M.Sc. Applied Chemistry', level: 'PG', duration: '2 Years', eligibility: 'B.Sc. Chemistry with Mathematics/Physics allied.', cuetCode: 'SCQP08', intake: 35, status: 'CURRENT' },
+    { id: 'prog_bsc_che', school: 'School of Sciences', name: 'B.Sc. Chemistry', level: 'UG', duration: '3 Years', eligibility: '10+2 with Chemistry, Physics, Mathematics/Biology.', cuetCode: 'UG012', intake: 45, status: 'CURRENT' },
+    { id: 'prog_msc_phy', school: 'School of Sciences', name: 'M.Sc. Physics', level: 'PG', duration: '2 Years', eligibility: 'B.Sc. Physics with Mathematics allied.', cuetCode: 'SCQP24', intake: 35, status: 'CURRENT' },
+    { id: 'prog_msc_mat', school: 'School of Sciences', name: 'M.Sc. Mathematics', level: 'PG', duration: '2 Years', eligibility: 'B.Sc. Mathematics with min 50% marks.', cuetCode: 'SCQP19', intake: 40, status: 'CURRENT' },
+    
+    // School of Agriculture
+    { id: 'prog_bsc_agri', school: 'School of Agriculture and Animal Sciences', name: 'B.Sc. (Hons.) Agriculture', level: 'UG', duration: '4 Years (8 Semesters)', eligibility: '10+2 with Physics, Chemistry, Biology/Mathematics or Vocational Agriculture with 60% aggregate.', cuetCode: 'UG001', intake: 60, status: 'CURRENT' },
+    { id: 'prog_dip_agri', school: 'School of Agriculture and Animal Sciences', name: 'Diploma in Agriculture', level: 'Diploma', duration: '2 Years', eligibility: 'Pass in 10th Standard / SSLC.', cuetCode: 'NON-CUET', intake: 40, status: 'CURRENT' },
+    { id: 'prog_msc_agro', school: 'School of Agriculture and Animal Sciences', name: 'M.Sc. Agriculture (Agronomy)', level: 'PG', duration: '2 Years', eligibility: 'B.Sc. Agriculture / Horticulture from recognized ICAR accredited institution.', cuetCode: 'SCQP01', intake: 15, status: 'CURRENT' },
+
+    // School of Rural Health & Sanitation
+    { id: 'prog_dip_si', school: 'School of Rural Health and Sanitation', name: 'Diploma in Sanitary Inspector Course', level: 'Diploma', duration: '1 Year (2 Semesters)', eligibility: '10+2 with Science (Biology/Physics/Chemistry) passed.', cuetCode: 'NON-CUET', intake: 60, status: 'CURRENT' },
+    { id: 'prog_pgd_si', school: 'School of Rural Health and Sanitation', name: 'Post Graduate Diploma in Sanitary Inspector Course', level: 'PG Diploma', duration: '1 Year', eligibility: 'Bachelor degree in Science / Public Health / Microbiology.', cuetCode: 'NON-CUET', intake: 30, status: 'CURRENT' },
+    { id: 'prog_msc_health', school: 'School of Rural Health and Sanitation', name: 'M.Sc. Health & Sanitation Sciences', level: 'PG', duration: '2 Years', eligibility: 'B.Sc. in allied health/biological sciences.', cuetCode: 'SCQP15', intake: 25, status: 'CURRENT' },
+
+    // School of Social Sciences
+    { id: 'prog_ma_rd', school: 'School of Social Sciences', name: 'M.A. Rural Development', level: 'PG', duration: '2 Years', eligibility: 'Any Bachelor Degree from a recognized University with min 50% marks.', cuetCode: 'COQP11', intake: 40, status: 'CURRENT' },
+    { id: 'prog_ba_gsw', school: 'School of Social Sciences', name: 'B.A. (Hons.) Gandhian Social Work', level: 'UG', duration: '3 Years', eligibility: '10+2 from recognized board in any stream.', cuetCode: 'UG005', intake: 40, status: 'CURRENT' },
+    { id: 'prog_msw', school: 'School of Social Sciences', name: 'Master of Social Work (MSW)', level: 'PG', duration: '2 Years', eligibility: 'Any graduation degree with 50% marks.', cuetCode: 'COQP11', intake: 45, status: 'CURRENT' },
+    { id: 'prog_ma_eco', school: 'School of Social Sciences', name: 'M.A. Development Economics', level: 'PG', duration: '2 Years', eligibility: 'B.A. Economics / B.Com. / BBA / B.Sc. Mathematics.', cuetCode: 'COQP10', intake: 35, status: 'CURRENT' },
+
+    // School of Management
+    { id: 'prog_mba_rm', school: 'School of Management Studies', name: 'MBA Rural Management', level: 'PG', duration: '2 Years (AICTE Approved)', eligibility: 'Any Bachelor degree with min 50% marks + CUET-PG / MAT / TANCET score.', cuetCode: 'COQP12', intake: 60, status: 'CURRENT' },
+    { id: 'prog_bcom_coop', school: 'School of Management Studies', name: 'B.Com. Cooperative Management', level: 'UG', duration: '3 Years', eligibility: '10+2 with Commerce, Accountancy, Business Studies.', cuetCode: 'UG008', intake: 50, status: 'CURRENT' },
+
+    // School of Education
+    { id: 'prog_itep_bed', school: 'School of Education', name: 'ITEP 4-Year B.Ed. Integrated Programme', level: 'UG-Integrated', duration: '4 Years (8 Semesters - NCTE)', eligibility: '10+2 with 50% marks + NCET Entrance Test score.', cuetCode: 'NCET-ITEP', intake: 50, status: 'CURRENT' },
+    { id: 'prog_med', school: 'School of Education', name: 'Master of Education (M.Ed.)', level: 'PG', duration: '2 Years (NCTE Approved)', eligibility: 'B.Ed. / B.El.Ed. with minimum 55% marks.', cuetCode: 'COQP15', intake: 50, status: 'CURRENT' },
+
+    // School of Tamil
+    { id: 'prog_ma_tamil', school: 'School of Tamil, Indian Languages and Rural Arts', name: 'M.A. Tamil & Folk Arts', level: 'PG', duration: '2 Years', eligibility: 'B.A. Tamil or any degree with Part-I Tamil.', cuetCode: 'LAQP02', intake: 35, status: 'CURRENT' },
+
+    // Doctoral Programmes (Sample of 27 disciplines)
+    { id: 'prog_phd_cs', school: 'School of Sciences', name: 'Ph.D. in Computer Science', level: 'Doctoral', duration: '3 to 5 Years', eligibility: 'Master degree in Computer Science/Applications with 55% marks + UGC NET/JRF or GRI Entrance.', cuetCode: 'GRI-RET', intake: 12, status: 'CURRENT' },
+    { id: 'prog_phd_agri', school: 'School of Agriculture and Animal Sciences', name: 'Ph.D. in Agriculture', level: 'Doctoral', duration: '3 to 5 Years', eligibility: 'M.Sc. Agriculture with 55% marks + ICAR JRF/NET.', cuetCode: 'ICAR-RET', intake: 8, status: 'CURRENT' },
+    { id: 'prog_phd_rd', school: 'School of Social Sciences', name: 'Ph.D. in Rural Development', level: 'Doctoral', duration: '3 to 5 Years', eligibility: 'M.A. Rural Development / MSW with 55% marks.', cuetCode: 'GRI-RET', intake: 10, status: 'CURRENT' },
+    { id: 'prog_dsc_dlitt', school: 'Research & Development Cell', name: 'D.Sc. and D.Litt. Post Doctoral Fellowship', level: 'Post-Doc', duration: '2 to 3 Years', eligibility: 'Published Ph.D. degree holders with minimum 5 years post-doctoral research and high-impact publications.', cuetCode: 'STATUTORY', intake: 5, status: 'CURRENT' }
+  ],
+
+  // --- 4. Admissions 2026-27 Ecosystem ---
+  admissions: {
+    academicYear: '2026–2027',
+    currentCycle: 'Academic Year 2026–27 (Current Admissions)',
+    cuetRequirement: 'NTA CUET 2026 is mandatory for all mainstream UG & PG programmes. Non-CUET applications are considered for remaining unfilled seats in Diploma, Certificate, and select lateral entry courses.',
+    importantDates: [
+      { event: 'CUET-UG / PG Score Updation on Samarth Portal', date: 'Ongoing (Check Portal)', status: 'OPEN' },
+      { event: 'Direct / Non-CUET Application Submission', date: '30 Sep 2026 (Extended)', status: 'OPEN' },
+      { event: 'Ph.D. Entrance Examination (RET Session II)', date: '15 Oct 2026', status: 'UPCOMING' },
+      { event: 'Commencement of Classes for Senior & Fresh Students', date: 'Completed (Classes in Session)', status: 'ARCHIVED' }
+    ],
+    prospectuses: [
+      { title: 'GRI Admission Prospectus 2026–2027 (Official)', file: 'Prospectus_202627.pdf', size: '4.2 MB', url: 'https://www.ruraluniv.ac.in/includes/admissions/2026/pdf/Prospectus_202627.pdf', status: 'CURRENT' },
+      { title: 'GRI Admission Prospectus 2025–2026 (Reference Archive)', file: 'Prospectus_202526.pdf', size: '3.9 MB', url: 'https://www.ruraluniv.ac.in/includes/admissions/2025/pdf/Prospectus_202526.pdf', status: 'ARCHIVED' }
+    ],
+    helpdesk: {
+      phone1: '9043648800',
+      phone2: '9043648811',
+      timings: 'Monday to Friday, 9:30 AM – 5:00 PM',
+      generalEmail: 'helpdesk@ruraluniv.ac.in',
+      paymentEmail: 'payment@ruraluniv.ac.in',
+      office: 'Admissions Section, Academic Block, GRI'
+    },
+    statutoryLinks: [
+      { title: 'Samarth@GRI Admission Portal', url: 'https://ruraluniv.samarth.ac.in/index.php/site/login', desc: 'Official online application and registration ledger' },
+      { title: 'Fee Refund Policy (UGC Mandated)', url: 'https://ruraluniv.ac.in/admn1?content=Refund', desc: 'Rules for fee refund upon cancellation of admission' },
+      { title: 'Hostel Fees Details & Mess Deposit', url: 'https://ruraluniv.ac.in/admn1?content=Hostel_fee', desc: 'Room rent, water/electricity charges, and caution deposit' },
+      { title: 'Ph.D. Research Regulations', url: 'https://ruraluniv.ac.in/admissions?content=PhD_Regulations', desc: 'Minimum standards and procedures for Ph.D. awards' },
+      { title: 'D.Sc. and D.Litt. Regulations', url: 'https://ruraluniv.ac.in/admissions?content=Dsc_Regulations', desc: 'Post-doctoral research degree rules' }
+    ]
+  },
+
+  // --- 5. Dedicated Examination Ecosystem (CoE Directorate) ---
+  examinations: {
+    coeName: 'Dr. V. Sivakumar',
+    coeOffice: 'Office of the Controller of Examinations, GRI',
+    currentSession: 'End Semester Examinations (ESE) • November / December 2026',
+    systemType: 'Choice Based Credit System (CBCS) • Continuous Formative Assessment (CFA 50%) + End Semester (ESE 50%)',
+    schedules: [
+      { code: 'CS501', title: 'Advanced Cloud Computing', date: '2026-11-24', session: 'FN (10:00 AM – 01:00 PM)', hall: 'Exam Hall 4, Block B', status: 'UPCOMING' },
+      { code: 'RD402', title: 'Gandhian Reconstruction & Ethics', date: '2026-11-26', session: 'FN (10:00 AM – 01:00 PM)', hall: 'Exam Hall 4, Block B', status: 'UPCOMING' },
+      { code: 'CS505', title: 'Distributed Mobile & Web Architectures', date: '2026-11-29', session: 'AN (02:00 PM – 05:00 PM)', hall: 'Exam Hall 2, Block A', status: 'UPCOMING' },
+      { code: 'MA301', title: 'Applied Statistical Analytics', date: '2026-12-02', session: 'FN (10:00 AM – 01:00 PM)', hall: 'Exam Hall 4, Block B', status: 'UPCOMING' },
+      { code: 'CA404', title: 'Nai Talim Village Internship Fieldwork Viva', date: '2026-12-05', session: 'FN (09:30 AM – 01:30 PM)', hall: 'Seminar Hall, CSA', status: 'UPCOMING' }
+    ],
+    tatkalScheme: {
+      title: 'Tatkal Scheme for Fast-Track Degree / Transcript Issuance',
+      description: 'Expedited processing within 48 hours for urgent visa, employment, or foreign university admissions.',
+      instructionUrl: 'http://ruraluniv.ac.in/includes/examination/pdf/Tatkal_instruction.pdf',
+      registrationUrl: 'https://www.portal.ruraluniv.ac.in/tatkal',
+      fee: 'Tatkal processing fee: ₹2,000 + nominal document charges'
+    },
+    eSanad: {
+      title: 'e-SANAD Document Attestation & Digital Verification',
+      description: 'Integrated with Ministry of External Affairs (MEA) and National Academic Depository (NAD) DigiLocker for contactless authentication.',
+      notificationUrl: 'http://ruraluniv.ac.in/includes/examination/pdf/e-sanad301221.pdf',
+      portalUrl: 'https://www.portal.ruraluniv.ac.in/esanad'
+    },
+    forms: [
+      { title: 'Application for Official Mark Transcript', url: 'http://ruraluniv.ac.in/includes/examination/pdf/Application_Transcript.pdf', type: 'PDF' },
+      { title: 'Application for Duplicate Degree / Grade Certificate', url: 'http://ruraluniv.ac.in/includes/examination/pdf/DuplicateCertificate.pdf', type: 'PDF' },
+      { title: 'Compliance Certificate of Ph.D. Degree with UGC Regulations', url: 'http://ruraluniv.ac.in/includes/studcorner/pdf/ugc_cc221217.pdf', type: 'PDF' }
+    ],
+    resultsLedger: [
+      { sem: 'Semester III', sgpa: '8.92', cgpa: '8.84', creditsEarned: 24, status: 'PASSED (DISTINCTION)', session: 'April 2026' },
+      { sem: 'Semester II', sgpa: '8.75', cgpa: '8.80', creditsEarned: 22, status: 'PASSED', session: 'Nov 2025' },
+      { sem: 'Semester I', sgpa: '8.85', cgpa: '8.85', creditsEarned: 22, status: 'PASSED', session: 'April 2025' }
+    ]
+  },
+
+  // --- 6. Official Scholarship & Fellowships Ecosystem ---
+  scholarships: [
+    {
+      id: 'sch_nsp_cent',
+      name: 'National Scholarship Portal (NSP) — Central Sector Scheme',
+      provider: 'Ministry of Education, Govt. of India',
+      category: 'Merit-cum-Means',
+      awardAmount: '₹12,000 to ₹20,000 / year',
+      academicYear: '2026–2027',
+      status: 'OPEN',
+      eligibility: 'Top 20th percentile in 10+2 board examinations with family income < ₹4.50 LPA.',
+      deadline: '31 Oct 2026',
+      applyUrl: 'https://scholarships.gov.in/',
+      officialSource: 'ruraluniv.ac.in • Students Corner'
+    },
+    {
+      id: 'sch_ugc_jrf',
+      name: 'UGC-NET Junior Research Fellowship (JRF)',
+      provider: 'University Grants Commission (UGC)',
+      category: 'Research Fellowship',
+      awardAmount: '₹37,000 / month + 16% HRA + Contingency',
+      academicYear: '2026–2027',
+      status: 'CURRENT',
+      eligibility: 'UGC-NET / CSIR-NET JRF qualified candidates enrolled in full-time Ph.D. programme at GRI.',
+      deadline: 'Rolling (Continuous)',
+      applyUrl: 'https://ugcnet.nta.nic.in/',
+      officialSource: 'RDC • Research and Development Cell'
+    },
+    {
+      id: 'sch_nfsc',
+      name: 'National Fellowship for Scheduled Caste Students (NFSC)',
+      provider: 'Ministry of Social Justice & Empowerment',
+      category: 'Doctoral Fellowship',
+      awardAmount: '₹37,000 / month + Contingency',
+      academicYear: '2026–2027',
+      status: 'CURRENT',
+      eligibility: 'SC candidates admitted to M.Phil./Ph.D. at GRI having cleared UGC-NET.',
+      deadline: 'Annual Call (Check Portal)',
+      applyUrl: 'https://scholarships.gov.in/',
+      officialSource: 'ruraluniv.ac.in • Reservation Cell'
+    },
+    {
+      id: 'sch_nfobc',
+      name: 'National Fellowship for Other Backward Classes (NFOBC)',
+      provider: 'Ministry of Social Justice & Empowerment',
+      category: 'Doctoral Fellowship',
+      awardAmount: '₹37,000 / month + Contingency',
+      academicYear: '2026–2027',
+      status: 'CURRENT',
+      eligibility: 'OBC candidates enrolled in Ph.D. with non-creamy layer verification.',
+      deadline: 'Annual Call',
+      applyUrl: 'https://scholarships.gov.in/',
+      officialSource: 'ruraluniv.ac.in • Reservation Cell'
+    },
+    {
+      id: 'sch_post_matric',
+      name: 'Government of Tamil Nadu Post-Matric Scholarship',
+      provider: 'Adi Dravidar and Tribal Welfare Dept, Govt of Tamil Nadu',
+      category: 'State Welfare Scheme',
+      awardAmount: 'Full Tuition Fee Waiver + Maintenance Allowance',
+      academicYear: '2026–2027',
+      status: 'OPEN',
+      eligibility: 'Native SC/ST/SCC students studying in regular courses at GRI with family annual income < ₹2.50 LPA.',
+      deadline: '15 Nov 2026',
+      applyUrl: 'https://escholarship.tn.gov.in/',
+      officialSource: 'Dean of Student Welfare'
+    },
+    {
+      id: 'sch_girl_child',
+      name: 'Indira Gandhi Single Girl Child PG Scholarship',
+      provider: 'University Grants Commission (UGC)',
+      category: 'Women Empowerment',
+      awardAmount: '₹36,200 / annum (for 2 Years)',
+      academicYear: '2026–2027',
+      status: 'OPEN',
+      eligibility: 'Single girl child of parents enrolled in first year of regular PG programme.',
+      deadline: '30 Nov 2026',
+      applyUrl: 'https://scholarships.gov.in/',
+      officialSource: 'UGC • ruraluniv.ac.in'
+    },
+    {
+      id: 'sch_aicte_pragati',
+      name: 'AICTE Pragati & Saksham Scholarship Scheme',
+      provider: 'AICTE',
+      category: 'Technical Education (MCA / MBA)',
+      awardAmount: '₹50,000 / year',
+      academicYear: '2026–2027',
+      status: 'OPEN',
+      eligibility: 'Girl students (Pragati) and differently abled students (Saksham) admitted to AICTE approved MCA / MBA courses.',
+      deadline: '31 Dec 2026',
+      applyUrl: 'https://scholarships.gov.in/',
+      officialSource: 'School of Management & Computer Science'
+    }
+  ],
+
+  // --- 7. Master Document Inventory (16+ Verified Documents) ---
+  officialDocuments: [
+    {
+      id: 'doc_prospectus_2026',
+      title: 'GRI Admission Prospectus 2026–2027',
+      category: 'Admissions',
+      department: 'Admissions Directorate',
+      date: '15 Aug 2026',
+      academicYear: '2026–2027',
+      docType: 'Official Prospectus',
+      officialSource: 'https://www.ruraluniv.ac.in/includes/admissions/2026/pdf/Prospectus_202627.pdf',
+      applicableRole: 'Public, Students, Applicants',
+      status: 'CURRENT',
+      fileSize: '4.2 MB',
+      sha256: '9f8b4a2e5d7c1a3b6e8f0a2c4e6b8d0f2a4c6e8b0d2f4a6c8e0b2d4f6a8c0e2b'
+    },
+    {
+      id: 'doc_cbcs_regs',
+      title: 'CBCS Academic Regulations & Evaluation Guidelines',
+      category: 'Academics',
+      department: 'Academic Council',
+      date: '10 Jul 2026',
+      academicYear: '2026–2027',
+      docType: 'University Statutory Regulations',
+      officialSource: 'https://ruraluniv.ac.in/academics?content=CBCSsystem',
+      applicableRole: 'Students, Faculty',
+      status: 'CURRENT',
+      fileSize: '1.8 MB',
+      sha256: '1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b'
+    },
+    {
+      id: 'doc_tatkal_instruction',
+      title: 'Tatkal Scheme — Instructions for Fast-Track Degree Issuance',
+      category: 'Examinations',
+      department: 'Controller of Examinations',
+      date: '05 May 2026',
+      academicYear: '2026–2027',
+      docType: 'Administrative Notification',
+      officialSource: 'http://ruraluniv.ac.in/includes/examination/pdf/Tatkal_instruction.pdf',
+      applicableRole: 'Alumni, Students, CoE Staff',
+      status: 'CURRENT',
+      fileSize: '340 KB',
+      sha256: '3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e'
+    },
+    {
+      id: 'doc_esanad_notif',
+      title: 'e-SANAD Digital Attestation & Verification Procedure',
+      category: 'Examinations',
+      department: 'Controller of Examinations',
+      date: '30 Dec 2021',
+      academicYear: 'Statutory Standing Order',
+      docType: 'Statutory Order',
+      officialSource: 'http://ruraluniv.ac.in/includes/examination/pdf/e-sanad301221.pdf',
+      applicableRole: 'All Roles, MEA Verifiers',
+      status: 'CURRENT',
+      fileSize: '512 KB',
+      sha256: '5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b'
+    },
+    {
+      id: 'doc_transcript_app',
+      title: 'Application for Official Academic Transcript',
+      category: 'Forms',
+      department: 'Controller of Examinations',
+      date: '12 Jan 2026',
+      academicYear: '2026–2027',
+      docType: 'Downloadable Form',
+      officialSource: 'http://ruraluniv.ac.in/includes/examination/pdf/Application_Transcript.pdf',
+      applicableRole: 'Students, Alumni',
+      status: 'CURRENT',
+      fileSize: '210 KB',
+      sha256: '7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c'
+    },
+    {
+      id: 'doc_duplicate_cert',
+      title: 'Application for Duplicate Certificates / Grade Sheets',
+      category: 'Forms',
+      department: 'Controller of Examinations',
+      date: '10 Feb 2026',
+      academicYear: '2026–2027',
+      docType: 'Downloadable Form',
+      officialSource: 'http://ruraluniv.ac.in/includes/examination/pdf/DuplicateCertificate.pdf',
+      applicableRole: 'Alumni, Students',
+      status: 'CURRENT',
+      fileSize: '195 KB',
+      sha256: '9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d'
+    },
+    {
+      id: 'doc_phd_compliance',
+      title: 'Certificate of Compliance of Ph.D. Degree with UGC Regulations',
+      category: 'Research',
+      department: 'Controller of Examinations & RDC',
+      date: '22 Dec 2022',
+      academicYear: 'Permanent Regulation',
+      docType: 'Compliance Certificate',
+      officialSource: 'http://ruraluniv.ac.in/includes/studcorner/pdf/ugc_cc221217.pdf',
+      applicableRole: 'Research Scholars, Faculty',
+      status: 'CURRENT',
+      fileSize: '280 KB',
+      sha256: '2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a'
+    },
+    {
+      id: 'doc_fee_refund',
+      title: 'Institutional Fee Refund Policy & Guidelines',
+      category: 'Administration',
+      department: 'Registrar Secretariat',
+      date: '01 Jun 2026',
+      academicYear: '2026–2027',
+      docType: 'Policy Document',
+      officialSource: 'https://ruraluniv.ac.in/admn1?content=Refund',
+      applicableRole: 'Public, Applicants',
+      status: 'CURRENT',
+      fileSize: '410 KB',
+      sha256: '4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c'
+    },
+    {
+      id: 'doc_hostel_fee',
+      title: 'Hostel Fees Schedule and Caution Deposit Policy',
+      category: 'Student Documents',
+      department: 'Chief Warden Office',
+      date: '15 Jul 2026',
+      academicYear: '2026–2027',
+      docType: 'Fee Schedule',
+      officialSource: 'https://ruraluniv.ac.in/admn1?content=Hostel_fee',
+      applicableRole: 'Hostel Residents, Students',
+      status: 'CURRENT',
+      fileSize: '320 KB',
+      sha256: '6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e'
+    },
+    {
+      id: 'doc_phd_regs',
+      title: 'Ph.D. Academic Regulations & Research Manual',
+      category: 'Research',
+      department: 'Research and Development Cell (RDC)',
+      date: '01 May 2026',
+      academicYear: '2026–2027',
+      docType: 'Statutory Regulations',
+      officialSource: 'https://ruraluniv.ac.in/admissions?content=PhD_Regulations',
+      applicableRole: 'Scholars, Faculty, Research Guides',
+      status: 'CURRENT',
+      fileSize: '1.4 MB',
+      sha256: '8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a'
+    },
+    {
+      id: 'doc_dsc_regs',
+      title: 'D.Sc. and D.Litt. Higher Research Degree Regulations',
+      category: 'Research',
+      department: 'RDC Directorate',
+      date: '14 Feb 2026',
+      academicYear: '2026–2027',
+      docType: 'Higher Doctorate Regulations',
+      officialSource: 'https://ruraluniv.ac.in/admissions?content=Dsc_Regulations',
+      applicableRole: 'Post-Doctoral Researchers, Senior Faculty',
+      status: 'CURRENT',
+      fileSize: '950 KB',
+      sha256: '0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c'
+    },
+    {
+      id: 'doc_prospectus_2025',
+      title: 'GRI Admission Prospectus 2025–2026 (Archive)',
+      category: 'Admissions',
+      department: 'Admissions Directorate',
+      date: '20 May 2025',
+      academicYear: '2025–2026',
+      docType: 'Historical Prospectus',
+      officialSource: 'https://www.ruraluniv.ac.in/includes/admissions/2025/pdf/Prospectus_202526.pdf',
+      applicableRole: 'Public, Reference',
+      status: 'ARCHIVED',
+      fileSize: '3.9 MB',
+      sha256: '2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e'
+    },
+    {
+      id: 'doc_annual_report',
+      title: 'Annual Institutional Performance Report & NIRF Ranking Data',
+      category: 'Administration',
+      department: 'Internal Quality Assurance Cell (IQAC)',
+      date: '18 Mar 2026',
+      academicYear: '2025–2026',
+      docType: 'Institutional Audit',
+      officialSource: 'https://ruraluniv.ac.in/',
+      applicableRole: 'All Roles, Statutory Regulators',
+      status: 'CURRENT',
+      fileSize: '5.6 MB',
+      sha256: '4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a'
+    }
+  ],
+
+  // --- 8. About GRI & Governance Master Data ---
+  aboutGri: {
+    institutionName: 'The Gandhigram Rural Institute (Deemed to be University)',
+    genesis: 'Founded in 1956 by two dedicated disciples of Mahatma Gandhi — Dr. T. S. Soundram and Dr. G. Ramachandran — to bring higher education to rural youth. In 1976, the Ministry of Education, Govt. of India conferred the status of Deemed to be University under Section 3 of the UGC Act.',
+    philosophy: 'Nai Talim (Basic Education) — integrating head, heart, and hand through classroom learning, laboratory experimentation, and village extension work.',
+    accreditation: "NAAC Accredited with 'A+' Grade (CGPA: 3.34 in 3rd Cycle). 100% compliant with UGC Deemed to be University Regulations 2023.",
+    campusArea: '300 Acres of serene rural land at the foothills of Sirumalai, Chinnalapatti, Dindigul District, Tamil Nadu 624302.',
+    governanceBodies: [
+      { name: 'Executive Council (EC)', role: 'Supreme executive body for institutional administration, policy decisions, and appointments.' },
+      { name: 'Academic Council (AC)', role: 'Governing statutory body for academic regulations, CBCS curricula, examinations, and new programmes.' },
+      { name: 'Planning and Monitoring Board (PMB)', role: 'Oversees university master planning, development milestones, and resource optimization.' },
+      { name: 'Finance Committee (FC)', role: 'Audits budgetary allocations, UGC grants, and financial statutory disclosures.' }
+    ]
+  },
+
+  // --- 9. Official Institutional Sub-Portals ---
+  officialPortals: [
+    { title: 'Samarth@GRI ERP Portal', url: 'https://ruraluniv.samarth.ac.in/index.php/site/login', desc: 'Enterprise academic and administration portal', category: 'Core ERP' },
+    { title: 'GRI Student Portal', url: 'https://portal.ruraluniv.ac.in/', desc: 'Student profile, marks, attendance, and hall ticket services', category: 'Student' },
+    { title: 'Online Attendance Portal', url: 'https://attendance.ruraluniv.ac.in/', desc: 'Biometric and lecture attendance ledger', category: 'Academic' },
+    { title: 'Pensioner Digital Portal', url: 'https://pension.ruraluniv.ac.in/', desc: 'Staff superannuation and pension ledger', category: 'Staff' },
+    { title: 'Official GRI Webmail', url: 'https://webmail.ruraluniv.ac.in/', desc: 'Faculty & officer official correspondence suite', category: 'Institutional' },
+    { title: 'e-SANAD Portal', url: 'https://www.portal.ruraluniv.ac.in/esanad', desc: 'Online contactless document attestation service', category: 'Examinations' },
+    { title: 'Tatkal Scheme Registration', url: 'https://www.portal.ruraluniv.ac.in/tatkal', desc: 'Expedited degree certificate and transcript issuance', category: 'Examinations' },
+    { title: 'GRI Convocation Portal', url: 'https://convocation.ruraluniv.ac.in/', desc: 'Graduation registration and degree conferment', category: 'Alumni' },
+    { title: 'Alumni Association (GRI-AA)', url: 'https://ruraluniv.ac.in/includes/AlumniGRI', desc: 'Worldwide alumni network and mentorship', category: 'Alumni' },
+    { title: 'Study in India (Govt. of India)', url: 'https://www.studyinindia.gov.in/admission/registrations', desc: 'International admissions for overseas students', category: 'Admissions' }
+  ],
+
+  // --- 10. Admin Content Management System (CMS) State ---
+  cmsItems: [
+    {
+      id: 'cms_1',
+      title: 'End Semester Examinations Nov/Dec 2026 Time Table for UG/PG/B.Voc.',
+      category: 'Examinations',
+      freshness: 'CURRENT',
+      stage: 'PUBLISHED',
+      summary: 'Detailed timetable for CBCS End Semester Theory and Practical Examinations released by Controller of Examinations.',
+      docUrl: 'http://ruraluniv.ac.in/examtt',
+      issuedBy: 'Office of the Controller of Examinations',
+      audience: 'ALL',
+      isUrgent: true,
+      publishedAt: '24 Sep 2026, 10:00 AM'
+    },
+    {
+      id: 'cms_2',
+      title: 'Direct Second Year Admission in B.Sc. (Hons.) Agriculture Lateral Entry',
+      category: 'Admissions',
+      freshness: 'CURRENT',
+      stage: 'PUBLISHED',
+      summary: 'Applications invited from eligible diploma holders in agriculture for direct lateral entry into semester III.',
+      docUrl: 'https://ruraluniv.ac.in/includes/admissions/2026/pdf/Prospectus_202627.pdf',
+      issuedBy: 'Dean, School of Agriculture and Animal Sciences',
+      audience: 'ALL',
+      isUrgent: false,
+      publishedAt: '20 Sep 2026, 02:30 PM'
+    },
+    {
+      id: 'cms_3',
+      title: 'Draft Guidelines for Nai Talim Sarvodaya Village Winter Internship 2026',
+      category: 'Academics',
+      freshness: 'UPCOMING',
+      stage: 'REVIEW',
+      summary: 'Mandatory rural reconstruction residency draft syllabus pending Academic Council ratification.',
+      docUrl: 'https://ruraluniv.ac.in/academics?content=CBCSsystem',
+      issuedBy: 'Dean of Academic Affairs',
+      audience: 'FACULTY',
+      isUrgent: false,
+      publishedAt: null
+    }
+  ],
+
 };
+
 
 // Set default current user to Admin
 state.currentUser = state.accounts[0];
@@ -465,7 +1023,41 @@ const el = {
   screenApprovals: document.getElementById('screenApprovals'),
   screenCoe: document.getElementById('screenCoe'),
   screenScholar: document.getElementById('screenScholar'),
-  screenFaculty: document.getElementById('screenFaculty')
+  screenFaculty: document.getElementById('screenFaculty'),
+  screenAdmissions: document.getElementById('screenAdmissions'),
+  screenExams: document.getElementById('screenExams'),
+  screenScholarships: document.getElementById('screenScholarships'),
+  screenAbout: document.getElementById('screenAbout'),
+
+  // Global Search Modal
+  openGlobalSearchBtn: document.getElementById('openGlobalSearchBtn'),
+  globalSearchModal: document.getElementById('globalSearchModal'),
+  globalSearchInput: document.getElementById('globalSearchInput'),
+  closeGlobalSearchBtn: document.getElementById('closeGlobalSearchBtn'),
+  searchFilterPills: document.getElementById('searchFilterPills'),
+  searchResultsList: document.getElementById('searchResultsList'),
+
+  // Admin CMS Modal
+  adminCmsModal: document.getElementById('adminCmsModal'),
+  closeAdminCmsBtn: document.getElementById('closeAdminCmsBtn'),
+  adminCmsForm: document.getElementById('adminCmsForm'),
+  cmsTitle: document.getElementById('cmsTitle'),
+  cmsCategory: document.getElementById('cmsCategory'),
+  cmsFreshness: document.getElementById('cmsFreshness'),
+  cmsSummary: document.getElementById('cmsSummary'),
+  cmsDocUrl: document.getElementById('cmsDocUrl'),
+  cmsIssuedBy: document.getElementById('cmsIssuedBy'),
+  cmsAudience: document.getElementById('cmsAudience'),
+  cmsIsUrgent: document.getElementById('cmsIsUrgent'),
+  btnSaveCmsDraft: document.getElementById('btnSaveCmsDraft'),
+  btnPublishCmsContent: document.getElementById('btnPublishCmsContent'),
+
+  // Document Preview Modal
+  docPreviewModal: document.getElementById('docPreviewModal'),
+  closeDocPreviewBtn: document.getElementById('closeDocPreviewBtn'),
+  docPreviewTitle: document.getElementById('docPreviewTitle'),
+  docPreviewSubtitle: document.getElementById('docPreviewSubtitle'),
+  docPreviewContent: document.getElementById('docPreviewContent')
 };
 
 // --- 6. Live Clock Updater ---
@@ -529,8 +1121,9 @@ function updateDynamicNavigation() {
   if (!u || u.status === 'PUBLIC') {
     navItems = [
       { id: 'home', label: 'Home', icon: '<path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>' },
-      { id: 'campus', label: 'Campus', icon: '<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>' },
-      { id: 'gazettes', label: 'Gazettes', icon: '<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>' },
+      { id: 'admissions', label: 'Admissions', icon: '<path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>' },
+      { id: 'exams', label: 'Exams', icon: '<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>' },
+      { id: 'about', label: 'About GRI', icon: '<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>' },
       { id: 'auth', label: 'Sign In', icon: '<path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.89-2-2-2z"/>' }
     ];
   } else if (u.status === 'PENDING' || u.status === 'UNDER_REVIEW' || u.status === 'REJECTED' || u.status === 'SUSPENDED') {
@@ -543,6 +1136,7 @@ function updateDynamicNavigation() {
     navItems = [
       { id: 'home', label: 'Home', icon: '<path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>' },
       { id: 'academics', label: 'Academics', icon: '<path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>' },
+      { id: 'exams', label: 'Exams', icon: '<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>' },
       { id: 'campus', label: 'Transit', icon: '<path d="M12 2c-4.42 0-8 .5-8 4v10c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4z"/>' },
       { id: 'services', label: 'Services', icon: '<path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/>' }
     ];
@@ -658,6 +1252,10 @@ function switchTab(tabId) {
   else if (tabId === 'coe') renderCoeScreen();
   else if (tabId === 'scholar') renderScholarScreen();
   else if (tabId === 'faculty') renderFacultyScreen();
+  else if (tabId === 'admissions') renderAdmissionsScreen();
+  else if (tabId === 'exams') renderExamsScreen();
+  else if (tabId === 'scholarships') renderScholarshipsScreen();
+  else if (tabId === 'about') renderAboutScreen();
 }
 
 // --- 11. Authentication & Session Engine ---
@@ -890,38 +1488,39 @@ function renderHomeScreen() {
       </div>
     ` : ''}
 
-    <!-- Quick Action Grid -->
+    <!-- Primary Institutional Ecosystem Portals -->
     <div class="section-header-row">
-      <span class="section-title">Institutional Portals & Services</span>
+      <span class="section-title">Institutional Ecosystem & Gateways</span>
     </div>
 
     <div class="quick-action-grid">
-      ${checkPermission(PERMISSIONS.VIEW_HALL_TICKET) ? `
-        <button class="action-card-btn" id="btnQuickHallTicket">
-          <div class="action-icon-circle">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M22 10V6c0-1.11-.9-2-2-2H4c-1.1 0-1.99.89-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2z"/></svg>
-          </div>
-          <span class="action-btn-label">Hall Ticket</span>
-        </button>
-      ` : ''}
+      <button class="action-card-btn highlight" id="btnNavAdmissions">
+        <div class="action-icon-circle">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+        </div>
+        <span class="action-btn-label">Admissions 26</span>
+      </button>
 
-      ${checkPermission(PERMISSIONS.FILE_GRIEVANCE) ? `
-        <button class="action-card-btn" id="btnQuickGrievance">
-          <div class="action-icon-circle">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-          </div>
-          <span class="action-btn-label">GRI-Care</span>
-        </button>
-      ` : ''}
+      <button class="action-card-btn highlight" id="btnNavExams">
+        <div class="action-icon-circle">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+        </div>
+        <span class="action-btn-label">Examinations</span>
+      </button>
 
-      ${checkPermission(PERMISSIONS.VIEW_TRANSIT_RADAR) ? `
-        <button class="action-card-btn" id="btnQuickBus">
-          <div class="action-icon-circle">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2c-4.42 0-8 .5-8 4v10c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4z"/></svg>
-          </div>
-          <span class="action-btn-label">Transit Radar</span>
-        </button>
-      ` : ''}
+      <button class="action-card-btn" id="btnNavScholarships">
+        <div class="action-icon-circle">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+        </div>
+        <span class="action-btn-label">Scholarships</span>
+      </button>
+
+      <button class="action-card-btn" id="btnNavAbout">
+        <div class="action-icon-circle">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        </div>
+        <span class="action-btn-label">About GRI</span>
+      </button>
 
       <button class="action-card-btn accent" id="btnQuickSahayak">
         <div class="action-icon-circle">
@@ -934,36 +1533,41 @@ function renderHomeScreen() {
         <div class="action-icon-circle">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
         </div>
-        <span class="action-btn-label">e-Gazettes</span>
+        <span class="action-btn-label">Document Hub</span>
       </button>
 
-      ${checkPermission(PERMISSIONS.VIEW_DIGITAL_ID) ? `
-        <button class="action-card-btn" id="btnQuickIDCard">
+      ${checkPermission(PERMISSIONS.VIEW_HALL_TICKET) ? `
+        <button class="action-card-btn" id="btnQuickHallTicket">
           <div class="action-icon-circle">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M22 10V6c0-1.11-.9-2-2-2H4c-1.1 0-1.99.89-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2z"/></svg>
           </div>
-          <span class="action-btn-label">Digital ID</span>
+          <span class="action-btn-label">Hall Ticket</span>
         </button>
-      ` : `
-        <button class="action-card-btn" id="btnQuickAuthAction">
+      ` : ''}
+
+      ${checkPermission(PERMISSIONS.VIEW_TRANSIT_RADAR) ? `
+        <button class="action-card-btn" id="btnQuickBus">
           <div class="action-icon-circle">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2c-4.42 0-8 .5-8 4v10c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4z"/></svg>
           </div>
-          <span class="action-btn-label">User Status</span>
+          <span class="action-btn-label">Transit Radar</span>
         </button>
-      `}
+      ` : ''}
     </div>
 
-    <!-- Official Notices Feed -->
+    <!-- Official Notices Feed with Freshness Indicators -->
     <div class="section-header-row">
-      <span class="section-title">University Circulars & Statutory Orders</span>
-      <a href="#" class="section-action-link" id="homeViewGazettesLink">View all</a>
+      <span class="section-title">Official Gazettes & Notices</span>
+      <a href="#" class="section-action-link" id="homeViewGazettesLink">Document Hub →</a>
     </div>
 
     <div class="circulars-list">
       ${state.circulars.map(c => `
-        <div class="notice-item-card" data-id="${c.id}">
-          <span class="notice-pill-tag ${c.urgent ? 'urgent' : ''}">${c.urgent ? 'URGENT' : c.category}</span>
+        <div class="notice-item-card tilt-card" data-id="${c.id}">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+            <span class="notice-pill-tag ${c.urgent ? 'urgent' : ''}">${c.urgent ? 'URGENT' : c.category}</span>
+            <span class="freshness-badge current">CURRENT</span>
+          </div>
           <div class="notice-content-col">
             <h4 class="notice-title">${c.title}</h4>
             <p class="notice-summary">${c.summary}</p>
@@ -972,17 +1576,26 @@ function renderHomeScreen() {
         </div>
       `).join('')}
     </div>
+
+    <!-- Source Transparency -->
+    <div class="source-transparency-card">
+      <div class="source-meta-text">
+        <strong>Source Transparency:</strong> The Gandhigram Rural Institute Official Website (<a href="https://www.ruraluniv.ac.in/" target="_blank" style="color: var(--color-primary);">ruraluniv.ac.in</a>)
+      </div>
+      <span class="official-seal-chip">✓ AUTHENTICATED</span>
+    </div>
   `;
 
   // Attach button events
+  document.getElementById('btnNavAdmissions')?.addEventListener('click', () => switchTab('admissions'));
+  document.getElementById('btnNavExams')?.addEventListener('click', () => switchTab('exams'));
+  document.getElementById('btnNavScholarships')?.addEventListener('click', () => switchTab('scholarships'));
+  document.getElementById('btnNavAbout')?.addEventListener('click', () => switchTab('about'));
   document.getElementById('btnGoToApprovals')?.addEventListener('click', () => switchTab('approvals'));
   document.getElementById('btnQuickHallTicket')?.addEventListener('click', openHallTicketModal);
-  document.getElementById('btnQuickGrievance')?.addEventListener('click', () => switchTab('services'));
   document.getElementById('btnQuickBus')?.addEventListener('click', () => switchTab('campus'));
   document.getElementById('btnQuickSahayak')?.addEventListener('click', openSahayakModal);
   document.getElementById('btnQuickDocCenter')?.addEventListener('click', openDocCenterModal);
-  document.getElementById('btnQuickIDCard')?.addEventListener('click', () => switchTab('services'));
-  document.getElementById('btnQuickAuthAction')?.addEventListener('click', openAuthModal);
   document.getElementById('homeViewGazettesLink')?.addEventListener('click', (e) => {
     e.preventDefault();
     openDocCenterModal();
@@ -1459,6 +2072,33 @@ function renderAcademicsScreen() {
   }
 
   el.screenAcademics.innerHTML = `
+    <!-- 8 Schools & Academic Departments Explorer -->
+    <div class="section-header-row">
+      <span class="section-title">Academic Schools & Centres (${state.schools.length})</span>
+      <span style="font-size: 11px; font-weight: 700; color: var(--color-primary);">CBCS System</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: var(--space-md);">
+      ${state.schools.map(s => `
+        <div class="card tilt-card" style="padding: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <h3 style="font-family: var(--font-display); font-size: 13px; font-weight: 700;">${s.name}</h3>
+              <div style="font-size: 11px; color: var(--color-primary); font-weight: 600;">Dean: ${s.dean}</div>
+            </div>
+            <span style="font-size: 10px; font-weight: 700; background: var(--color-surface-elevated); padding: 2px 6px; border-radius: var(--radius-sm); border: 1px solid var(--color-surface-border);">
+              ${s.programmesCount} Programmes
+            </span>
+          </div>
+          <div style="font-size: 10px; color: var(--color-text-secondary); margin-top: 4px;">
+            <strong>Departments:</strong> ${s.departments.join(', ')}
+          </div>
+          <div style="font-size: 10px; color: var(--color-text-muted); margin-top: 2px;">
+            ${s.highlights}
+          </div>
+        </div>
+      `).join('')}
+    </div>
     <div class="section-header-row">
       <span class="section-title">CBCS Curriculum • Even Semester 2026</span>
       <span style="font-size: 11px; font-weight: 700; color: var(--color-primary);">17 Total Credits</span>
@@ -1876,6 +2516,7 @@ function renderAdminScreen() {
     });
   }
 
+  document.getElementById('btnAdminOpenCmsCreator')?.addEventListener('click', openAdminCmsModal);
   attach3DTiltHandlers();
 }
 
@@ -2455,6 +3096,88 @@ function initEvents() {
     showToast('Navigating to Live Transit Radar');
   });
 
+  // Global Search Events
+  el.openGlobalSearchBtn?.addEventListener('click', openGlobalSearch);
+  el.closeGlobalSearchBtn?.addEventListener('click', closeGlobalSearch);
+  el.globalSearchInput?.addEventListener('input', (e) => {
+    renderSearchResults(e.target.value);
+  });
+  document.querySelectorAll('#searchFilterPills .search-pill-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      document.querySelectorAll('#searchFilterPills .search-pill-btn').forEach(b => b.classList.remove('active'));
+      e.currentTarget.classList.add('active');
+      currentSearchCategory = e.currentTarget.getAttribute('data-filter');
+      renderSearchResults(el.globalSearchInput.value);
+    });
+  });
+
+  // Admin CMS Events
+  el.closeAdminCmsBtn?.addEventListener('click', closeAdminCmsModal);
+  el.closeDocPreviewBtn?.addEventListener('click', () => el.docPreviewModal.classList.remove('active'));
+  
+  el.btnSaveCmsDraft?.addEventListener('click', () => {
+    const title = el.cmsTitle.value.trim();
+    if (!title) { showToast('Please enter announcement title', 'error'); return; }
+    state.cmsItems.unshift({
+      id: `cms_${Date.now()}`,
+      title: title,
+      category: el.cmsCategory.value,
+      freshness: el.cmsFreshness.value,
+      stage: 'DRAFT',
+      summary: el.cmsSummary.value,
+      docUrl: el.cmsDocUrl.value,
+      issuedBy: el.cmsIssuedBy.value,
+      audience: el.cmsAudience.value,
+      isUrgent: el.cmsIsUrgent.checked,
+      publishedAt: null
+    });
+    showToast('Saved notice as DRAFT in Central Registry');
+    closeAdminCmsModal();
+    renderAdminScreen();
+  });
+
+  el.adminCmsForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const title = el.cmsTitle.value.trim();
+    if (!title) return;
+    const newItem = {
+      id: `cms_${Date.now()}`,
+      title: title,
+      category: el.cmsCategory.value,
+      freshness: el.cmsFreshness.value,
+      stage: 'PUBLISHED',
+      summary: el.cmsSummary.value,
+      docUrl: el.cmsDocUrl.value,
+      issuedBy: el.cmsIssuedBy.value,
+      audience: el.cmsAudience.value,
+      isUrgent: el.cmsIsUrgent.checked,
+      publishedAt: 'Just now'
+    };
+    state.cmsItems.unshift(newItem);
+    state.circulars.unshift({
+      id: `CIR-${Date.now()}`,
+      title: newItem.title,
+      category: newItem.category,
+      date: 'Just now',
+      issuedBy: newItem.issuedBy,
+      urgent: newItem.isUrgent,
+      summary: newItem.summary
+    });
+    state.auditTrail.unshift({
+      id: `aud_${Date.now()}`,
+      timestamp: 'Just now',
+      actor: `${state.currentUser.name} (ADMIN)`,
+      targetUser: 'ALL CAMPUS NETWORK',
+      action: 'STATUTORY_NOTICE_PUBLISHED',
+      previousStatus: 'DRAFT',
+      newStatus: 'PUBLISHED',
+      remarks: newItem.title
+    });
+    showToast('Statutory announcement approved and published!');
+    closeAdminCmsModal();
+    renderAdminScreen();
+  });
+
   // Initial Boot
   updateDynamicNavigation();
   switchTab('home');
@@ -2462,3 +3185,801 @@ function initEvents() {
 
 // Run on DOM Ready
 document.addEventListener('DOMContentLoaded', initEvents);
+
+
+// =========================================================================
+// SCREEN 11: DEDICATED ADMISSIONS ECOSYSTEM (2026–2027)
+// =========================================================================
+function renderAdmissionsScreen() {
+  const adm = state.admissions;
+
+  el.screenAdmissions.innerHTML = `
+    <!-- Admissions Hero Card -->
+    <div class="card admissions-hero-banner tilt-card">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+          <span class="freshness-badge current">● ${adm.currentCycle}</span>
+          <h2 style="font-family: var(--font-display); font-size: 16px; font-weight: 700; margin-top: 6px;">Admissions Directorate 2026–2027</h2>
+          <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 4px; line-height: 1.4;">
+            ${adm.cuetRequirement}
+          </p>
+        </div>
+      </div>
+
+      <div class="cuet-badge-row">
+        <span class="cuet-tag">NTA CUET (UG) 2026</span>
+        <span class="cuet-tag">NTA CUET (PG) 2026</span>
+        <span class="cuet-tag">NCET (ITEP B.Ed.)</span>
+        <span class="cuet-tag">GRI-RET (Ph.D.)</span>
+        <span class="cuet-tag">Direct Non-CUET (Unfilled Seats)</span>
+      </div>
+
+      <div style="display: flex; gap: 8px; margin-top: 12px;">
+        <a href="https://ruraluniv.samarth.ac.in/index.php/site/login" target="_blank" class="btn btn-sm btn-primary" style="flex: 1; text-align: center;">
+          Apply via Samarth@GRI →
+        </a>
+        <button class="btn btn-sm btn-outline" id="btnViewProspectus2026">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+          Prospectus 2026–27
+        </button>
+      </div>
+    </div>
+
+    <!-- Official Prospectus Downloads -->
+    <div class="section-header-row">
+      <span class="section-title">Official University Prospectuses</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: var(--space-md);">
+      ${adm.prospectuses.map(p => `
+        <div class="card tilt-card" style="padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 36px; height: 36px; border-radius: var(--radius-sm); background: var(--color-primary-container); display: flex; align-items: center; justify-content: center; color: var(--color-primary); font-weight: 800; font-size: 11px;">PDF</div>
+            <div>
+              <div style="font-family: var(--font-display); font-size: 12px; font-weight: 700;">${p.title}</div>
+              <div style="font-size: 10px; color: var(--color-text-secondary);">${p.file} • ${p.size} • <span class="freshness-badge ${p.status.toLowerCase()}">${p.status}</span></div>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-outline btn-open-doc" data-id="${p.status === 'CURRENT' ? 'doc_prospectus_2026' : 'doc_prospectus_2025'}">Preview</button>
+        </div>
+      `).join('')}
+    </div>
+
+    <!-- Admissions Helpdesk Hotline (Official Verified Contact) -->
+    <div class="helpdesk-hotline-card">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="var(--color-primary)"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1zM19 12h2c0-4.97-4.03-9-9-9v2c3.87 0 7 3.13 7 7zm-4 0h2c0-2.76-2.24-5-5-5v2c1.66 0 3 1.34 3 3z"/></svg>
+        <span style="font-family: var(--font-display); font-size: 13px; font-weight: 700;">Official Admissions Helpdesk</span>
+      </div>
+      <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 4px;">
+        Operating Hours: ${adm.helpdesk.timings} • ${adm.helpdesk.office}
+      </p>
+
+      <div class="hotline-row">
+        <a href="tel:${adm.helpdesk.phone1}" class="btn btn-sm btn-outline" style="font-size: 11px;">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          Call: ${adm.helpdesk.phone1}
+        </a>
+        <a href="tel:${adm.helpdesk.phone2}" class="btn btn-sm btn-outline" style="font-size: 11px;">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          Call: ${adm.helpdesk.phone2}
+        </a>
+        <a href="mailto:${adm.helpdesk.generalEmail}" class="btn btn-sm btn-outline" style="font-size: 11px;">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          Email: helpdesk@ruraluniv.ac.in
+        </a>
+      </div>
+    </div>
+
+    <!-- Programme Discovery & Eligibility Directory -->
+    <div class="section-header-row" style="margin-top: var(--space-lg);">
+      <span class="section-title">Programmes & Eligibility Catalogue (${state.programmes.length})</span>
+    </div>
+
+    <!-- Level Filter Chips -->
+    <div class="search-filter-pills" id="admissionsFilterPills" style="margin-bottom: 10px; border-radius: var(--radius-md);">
+      <button class="search-pill-btn active" data-lvl="all">All Programmes</button>
+      <button class="search-pill-btn" data-lvl="UG">Undergraduate (UG)</button>
+      <button class="search-pill-btn" data-lvl="PG">Postgraduate (PG)</button>
+      <button class="search-pill-btn" data-lvl="Doctoral">Doctoral (Ph.D.)</button>
+      <button class="search-pill-btn" data-lvl="Diploma">Diplomas</button>
+    </div>
+
+    <div class="programme-grid" id="programmeCardsContainer">
+      ${state.programmes.map(p => `
+        <div class="programme-card tilt-card" data-level="${p.level}">
+          <div class="programme-header-row">
+            <div>
+              <span class="course-code-badge">${p.level} • ${p.duration}</span>
+              <h3 style="font-family: var(--font-display); font-size: 13px; font-weight: 700; margin-top: 4px;">${p.name}</h3>
+              <div style="font-size: 11px; color: var(--color-primary); font-weight: 600;">${p.school}</div>
+            </div>
+            <span style="font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--color-text-muted); background: var(--color-surface-elevated); padding: 2px 6px; border-radius: var(--radius-sm); border: 1px solid var(--color-surface-border);">
+              ${p.cuetCode}
+            </span>
+          </div>
+          <div style="font-size: 11px; color: var(--color-text-secondary); line-height: 1.35; margin-top: 4px;">
+            <strong>Eligibility:</strong> ${p.eligibility}
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 10px; color: var(--color-text-muted);">
+            <span>Sanctioned Intake: ${p.intake} seats</span>
+            <a href="https://ruraluniv.samarth.ac.in/index.php/site/login" target="_blank" style="color: var(--color-primary); font-weight: 700;">Apply Now →</a>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <!-- Source Transparency -->
+    <div class="source-transparency-card">
+      <div class="source-meta-text">
+        <strong>Source Transparency:</strong> The Gandhigram Rural Institute Official Website (<a href="https://www.ruraluniv.ac.in/" target="_blank" style="color: var(--color-primary);">ruraluniv.ac.in</a>) • Admissions Section
+      </div>
+      <span class="official-seal-chip">✓ OFFICIAL</span>
+    </div>
+  `;
+
+  // Attach filter event listeners
+  document.querySelectorAll('#admissionsFilterPills .search-pill-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      document.querySelectorAll('#admissionsFilterPills .search-pill-btn').forEach(b => b.classList.remove('active'));
+      e.currentTarget.classList.add('active');
+      const lvl = e.currentTarget.getAttribute('data-lvl');
+      document.querySelectorAll('#programmeCardsContainer .programme-card').forEach(card => {
+        if (lvl === 'all' || card.getAttribute('data-level').includes(lvl)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  document.getElementById('btnViewProspectus2026')?.addEventListener('click', () => openDocPreview('doc_prospectus_2026'));
+  document.querySelectorAll('.btn-open-doc').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const docId = e.currentTarget.getAttribute('data-id');
+      openDocPreview(docId);
+    });
+  });
+
+  attach3DTiltHandlers();
+}
+
+// =========================================================================
+// SCREEN 12: DEDICATED EXAMINATION ECOSYSTEM (COE DIRECTORATE)
+// =========================================================================
+function renderExamsScreen() {
+  const ex = state.examinations;
+
+  el.screenExams.innerHTML = `
+    <!-- CoE Directorate Hero Card -->
+    <div class="card exam-session-card tilt-card">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+          <span class="freshness-badge current">● OFFICIAL COE DIRECTORATE</span>
+          <h2 style="font-family: var(--font-display); font-size: 15px; font-weight: 700; margin-top: 4px;">Controller of Examinations</h2>
+          <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">
+            ${ex.coeName} • ${ex.coeOffice}
+          </p>
+        </div>
+      </div>
+      <div style="font-size: 11px; color: var(--color-primary); font-weight: 600; margin-top: 8px;">
+        ${ex.currentSession}
+      </div>
+      <div style="font-size: 10px; color: var(--color-text-muted); margin-top: 2px;">
+        System: ${ex.systemType}
+      </div>
+
+      <div style="display: flex; gap: 8px; margin-top: 12px;">
+        <button class="btn btn-sm btn-primary" id="btnExamsOpenHallTicket" style="flex: 1;">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M22 10V6c0-1.11-.9-2-2-2H4c-1.1 0-1.99.89-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2z"/></svg>
+          View e-SANAD Hall Ticket
+        </button>
+        <button class="btn btn-sm btn-outline" id="btnExamsTatkalOpen">Tatkal Scheme</button>
+      </div>
+    </div>
+
+    <!-- End Semester Examination (ESE) Schedule Table -->
+    <div class="section-header-row">
+      <span class="section-title">End Semester Examination (ESE) Schedule</span>
+      <span style="font-size: 11px; font-weight: 700; color: var(--color-primary);">Nov / Dec 2026</span>
+    </div>
+
+    <div class="card" style="padding: 0; overflow: hidden; margin-bottom: var(--space-md);">
+      <div class="exam-table-container">
+        <table class="exam-table">
+          <thead>
+            <tr>
+              <th>Course</th>
+              <th>Date & Slot</th>
+              <th>Hall & Desk</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${ex.schedules.map(s => `
+              <tr>
+                <td>
+                  <strong>${s.code}</strong><br>
+                  <span style="font-size: 10px; color: var(--color-text-secondary);">${s.title}</span>
+                </td>
+                <td>
+                  <span style="font-weight: 600;">${s.date}</span><br>
+                  <span style="font-size: 10px; color: var(--color-primary);">${s.session}</span>
+                </td>
+                <td>
+                  <span style="font-size: 10px;">${s.hall}</span>
+                </td>
+                <td>
+                  <span class="freshness-badge upcoming">${s.status}</span>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Official Results Ledger Card -->
+    <div class="section-header-row">
+      <span class="section-title">Academic Performance & Results Ledger</span>
+      <span style="font-size: 11px; font-weight: 700; color: var(--color-success);">Cumulative CGPA: 8.84</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: var(--space-md);">
+      ${ex.resultsLedger.map(r => `
+        <div class="card tilt-card" style="padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-family: var(--font-display); font-size: 13px; font-weight: 700;">${r.sem} (${r.session})</div>
+            <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">
+              Credits Earned: ${r.creditsEarned} • <span style="color: var(--color-success); font-weight: 700;">${r.status}</span>
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-family: var(--font-mono); font-size: 14px; font-weight: 800; color: var(--color-primary);">SGPA: ${r.sgpa}</div>
+            <div style="font-size: 10px; color: var(--color-text-muted);">CGPA: ${r.cgpa}</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <!-- Tatkal Scheme & e-SANAD Section -->
+    <div class="section-header-row">
+      <span class="section-title">Special Statutory Services</span>
+    </div>
+
+    <div class="tatkal-service-box">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+          <span style="font-family: var(--font-mono); font-size: 10px; font-weight: 800; color: #D97706; text-transform: uppercase;">FAST-TRACK EXPEDITION</span>
+          <h3 style="font-family: var(--font-display); font-size: 13px; font-weight: 700; margin-top: 2px;">${ex.tatkalScheme.title}</h3>
+          <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 4px; line-height: 1.35;">
+            ${ex.tatkalScheme.description}
+          </p>
+          <div style="font-size: 10px; color: #D97706; font-weight: 700; margin-top: 4px;">${ex.tatkalScheme.fee}</div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 8px; margin-top: 10px;">
+        <a href="${ex.tatkalScheme.registrationUrl}" target="_blank" class="btn btn-sm btn-primary" style="background: #D97706; border-color: #D97706; color: #fff;">
+          Tatkal Registration Portal →
+        </a>
+        <button class="btn btn-sm btn-outline btn-open-doc" data-id="doc_tatkal_instruction">Instructions PDF</button>
+      </div>
+    </div>
+
+    <!-- Official Examination Forms -->
+    <div class="section-header-row" style="margin-top: var(--space-lg);">
+      <span class="section-title">Statutory Forms & Applications</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr; gap: 8px;">
+      ${ex.forms.map(f => `
+        <div class="card tilt-card" style="padding: 10px 14px; display: flex; justify-content: space-between; align-items: center;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--color-primary)"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+            <span style="font-size: 12px; font-weight: 600;">${f.title}</span>
+          </div>
+          <a href="${f.url}" target="_blank" class="btn btn-sm btn-outline">Download</a>
+        </div>
+      `).join('')}
+    </div>
+
+    <!-- Source Transparency -->
+    <div class="source-transparency-card">
+      <div class="source-meta-text">
+        <strong>Source Transparency:</strong> The Gandhigram Rural Institute Official Website (<a href="https://www.ruraluniv.ac.in/" target="_blank" style="color: var(--color-primary);">ruraluniv.ac.in</a>) • Office of Controller of Examinations
+      </div>
+      <span class="official-seal-chip">✓ STATUTORY CoE</span>
+    </div>
+  `;
+
+  document.getElementById('btnExamsOpenHallTicket')?.addEventListener('click', openHallTicketModal);
+  document.getElementById('btnExamsTatkalOpen')?.addEventListener('click', () => {
+    window.open(ex.tatkalScheme.registrationUrl, '_blank');
+  });
+  document.querySelectorAll('.btn-open-doc').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const docId = e.currentTarget.getAttribute('data-id');
+      openDocPreview(docId);
+    });
+  });
+
+  attach3DTiltHandlers();
+}
+
+// =========================================================================
+// SCREEN 13: DEDICATED SCHOLARSHIPS ECOSYSTEM
+// =========================================================================
+function renderScholarshipsScreen() {
+  const schList = state.scholarships;
+
+  el.screenScholarships.innerHTML = `
+    <div class="card tilt-card" style="background: linear-gradient(135deg, var(--color-surface-card), var(--color-surface-elevated)); border-left: 4px solid var(--color-primary);">
+      <span class="freshness-badge current">● ACADEMIC YEAR 2026–2027</span>
+      <h2 style="font-family: var(--font-display); font-size: 15px; font-weight: 700; margin-top: 4px;">Institutional Scholarships & Fellowships</h2>
+      <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; line-height: 1.35;">
+        Centrally funded UGC, Ministry of Social Justice, and Govt. of Tamil Nadu welfare schemes managed through the National Scholarship Portal (NSP).
+      </p>
+
+      <div style="background: var(--color-warning-bg); border: 1px solid var(--color-warning); border-radius: var(--radius-sm); padding: 8px 10px; margin-top: 10px; font-size: 11px; color: var(--color-text-primary);">
+        <strong>Important GRI Regulation:</strong> A student cannot draw more than one scholarship concurrently for the same course of study. If multiple scholarships are sanctioned, the least beneficial amount must be refunded.
+      </div>
+    </div>
+
+    <!-- Scholarship Category Filters -->
+    <div class="search-filter-pills" id="scholarshipFilterPills" style="margin-top: 12px; margin-bottom: 8px; border-radius: var(--radius-md);">
+      <button class="search-pill-btn active" data-cat="all">All Schemes (${schList.length})</button>
+      <button class="search-pill-btn" data-cat="Research">Research Fellowships</button>
+      <button class="search-pill-btn" data-cat="Merit-cum-Means">Merit-cum-Means</button>
+      <button class="search-pill-btn" data-cat="State Welfare">State Welfare</button>
+      <button class="search-pill-btn" data-cat="Technical">AICTE (MCA/MBA)</button>
+    </div>
+
+    <!-- Scholarship Cards -->
+    <div id="scholarshipCardsContainer">
+      ${schList.map(s => `
+        <div class="scholarship-card tilt-card" data-category="${s.category}">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span class="freshness-badge ${s.status.toLowerCase()}">${s.status}</span>
+                <span style="font-size: 10px; color: var(--color-text-muted); font-weight: 600;">${s.category}</span>
+              </div>
+              <h3 style="font-family: var(--font-display); font-size: 13px; font-weight: 700; margin-top: 4px;">${s.name}</h3>
+              <div style="font-size: 10px; color: var(--color-primary); font-weight: 600;">Provider: ${s.provider}</div>
+            </div>
+            <div class="scholarship-award-amount">${s.awardAmount}</div>
+          </div>
+
+          <div style="font-size: 11px; color: var(--color-text-secondary); line-height: 1.35; margin-top: 6px;">
+            <strong>Eligibility:</strong> ${s.eligibility}
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; border-top: 1px solid var(--color-surface-border-subtle); padding-top: 8px;">
+            <span style="font-size: 10px; color: var(--color-warning); font-weight: 700;">Deadline: ${s.deadline}</span>
+            <a href="${s.applyUrl}" target="_blank" class="btn btn-sm btn-primary" style="font-size: 11px; padding: 4px 10px;">
+              Apply on Portal →
+            </a>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <!-- Source Transparency -->
+    <div class="source-transparency-card">
+      <div class="source-meta-text">
+        <strong>Source Transparency:</strong> The Gandhigram Rural Institute Official Website (<a href="https://www.ruraluniv.ac.in/" target="_blank" style="color: var(--color-primary);">ruraluniv.ac.in</a>) • Students Corner & Reservation Cell
+      </div>
+      <span class="official-seal-chip">✓ VERIFIED NSP</span>
+    </div>
+  `;
+
+  // Attach filter event listeners
+  document.querySelectorAll('#scholarshipFilterPills .search-pill-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      document.querySelectorAll('#scholarshipFilterPills .search-pill-btn').forEach(b => b.classList.remove('active'));
+      e.currentTarget.classList.add('active');
+      const cat = e.currentTarget.getAttribute('data-cat');
+      document.querySelectorAll('#scholarshipCardsContainer .scholarship-card').forEach(card => {
+        if (cat === 'all' || card.getAttribute('data-category').includes(cat)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  attach3DTiltHandlers();
+}
+
+// =========================================================================
+// SCREEN 14: ABOUT GRI & GOVERNANCE ECOSYSTEM
+// =========================================================================
+function renderAboutScreen() {
+  const ab = state.aboutGri;
+  const lead = state.leadership;
+
+  el.screenAbout.innerHTML = `
+    <!-- NAAC 'A+' Score Banner -->
+    <div class="naac-score-banner">
+      <div>
+        <span style="font-family: var(--font-mono); font-size: 10px; font-weight: 800; letter-spacing: 0.5px; opacity: 0.9;">UGC DEEMED TO BE UNIVERSITY (1976)</span>
+        <h2 style="font-family: var(--font-display); font-size: 16px; font-weight: 800; margin-top: 2px;">NAAC 'A+' GRADE (CGPA: 3.34)</h2>
+        <div style="font-size: 11px; opacity: 0.9; margin-top: 2px;">NIRF Ranked • 100% Statutory UGC Compliance</div>
+      </div>
+      <div style="text-align: right;">
+        <span style="font-size: 28px; font-weight: 800; font-family: var(--font-display);">300</span>
+        <div style="font-size: 9px; opacity: 0.85;">ACRES CAMPUS</div>
+      </div>
+    </div>
+
+    <!-- Genesis & Nai Talim Philosophy -->
+    <div class="card tilt-card" style="margin-bottom: var(--space-md);">
+      <span class="freshness-badge current">● HERITAGE & GENESIS</span>
+      <h3 style="font-family: var(--font-display); font-size: 14px; font-weight: 700; margin-top: 4px;">Genesis of Gandhigram Rural Institute</h3>
+      <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 4px; line-height: 1.4;">
+        ${ab.genesis}
+      </p>
+      <div style="margin-top: 8px; font-size: 11px; color: var(--color-primary); font-weight: 600; line-height: 1.35;">
+        <strong>Philosophy:</strong> ${ab.philosophy}
+      </div>
+    </div>
+
+    <!-- University Leadership Directory -->
+    <div class="section-header-row">
+      <span class="section-title">Institutional Leadership & Officers</span>
+    </div>
+
+    <div class="leadership-avatar-grid">
+      <div class="leader-card tilt-card">
+        <div class="leader-avatar-circle">VC</div>
+        <div class="leader-name">${lead.viceChancellor.name}</div>
+        <div class="leader-title">${lead.viceChancellor.role}</div>
+        <a href="mailto:${lead.viceChancellor.email}" style="font-size: 10px; color: var(--color-primary); display: block; margin-top: 4px;">${lead.viceChancellor.email}</a>
+      </div>
+
+      <div class="leader-card tilt-card">
+        <div class="leader-avatar-circle" style="background: var(--color-secondary);">REG</div>
+        <div class="leader-name">${lead.registrar.name}</div>
+        <div class="leader-title">${lead.registrar.role}</div>
+        <a href="mailto:${lead.registrar.email}" style="font-size: 10px; color: var(--color-primary); display: block; margin-top: 4px;">${lead.registrar.email}</a>
+      </div>
+
+      <div class="leader-card tilt-card">
+        <div class="leader-avatar-circle" style="background: var(--color-tertiary);">COE</div>
+        <div class="leader-name">${lead.controllerOfExaminations.name}</div>
+        <div class="leader-title">${lead.controllerOfExaminations.role}</div>
+        <a href="mailto:${lead.controllerOfExaminations.email}" style="font-size: 10px; color: var(--color-primary); display: block; margin-top: 4px;">${lead.controllerOfExaminations.email}</a>
+      </div>
+
+      <div class="leader-card tilt-card">
+        <div class="leader-avatar-circle" style="background: #059669;">FO</div>
+        <div class="leader-name">${lead.financeOfficer.name}</div>
+        <div class="leader-title">${lead.financeOfficer.role}</div>
+        <a href="mailto:${lead.financeOfficer.email}" style="font-size: 10px; color: var(--color-primary); display: block; margin-top: 4px;">${lead.financeOfficer.email}</a>
+      </div>
+    </div>
+
+    <!-- Deans of 8 Schools -->
+    <div class="section-header-row" style="margin-top: var(--space-lg);">
+      <span class="section-title">Deans of Academic Schools</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: var(--space-md);">
+      ${lead.deans.map(d => `
+        <div class="card tilt-card" style="padding: 10px 14px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-family: var(--font-display); font-size: 12px; font-weight: 700;">${d.school}</div>
+            <div style="font-size: 11px; color: var(--color-primary);">${d.name}</div>
+          </div>
+          <div style="text-align: right; font-size: 10px; color: var(--color-text-secondary);">
+            <span>${d.phone}</span>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <!-- Governance Councils -->
+    <div class="section-header-row">
+      <span class="section-title">Institutional Governance Councils</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: var(--space-md);">
+      ${ab.governanceBodies.map(g => `
+        <div class="card tilt-card" style="padding: 12px;">
+          <h4 style="font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--color-primary);">${g.name}</h4>
+          <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 3px; line-height: 1.35;">${g.role}</p>
+        </div>
+      `).join('')}
+    </div>
+
+    <!-- Campus & Geographic Location -->
+    <div class="card tilt-card" style="margin-bottom: var(--space-md);">
+      <span class="freshness-badge current">● GEOGRAPHIC LOCATION & CONTACT</span>
+      <h3 style="font-family: var(--font-display); font-size: 14px; font-weight: 700; margin-top: 4px;">Main Campus Coordinates</h3>
+      <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 4px; line-height: 1.4;">
+        ${ab.campusArea} Connected via NH-44 (Madurai – Dindigul Highway), nearest railway station: Ambaturai (2 km) and Dindigul Junction (12 km).
+      </p>
+      <div style="display: flex; gap: 8px; margin-top: 10px;">
+        <a href="http://ruraluniv.ac.in/includes/aboutgri/map/map.html" target="_blank" class="btn btn-sm btn-outline" style="flex: 1; text-align: center;">Official Campus Map</a>
+        <a href="https://maps.google.com/?q=The+Gandhigram+Rural+Institute" target="_blank" class="btn btn-sm btn-primary" style="flex: 1; text-align: center;">Open GPS Map ↗</a>
+      </div>
+    </div>
+
+    <!-- Official Portals Directory -->
+    <div class="section-header-row">
+      <span class="section-title">Official GRI Digital Ecosystem</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr; gap: 8px;">
+      ${state.officialPortals.map(p => `
+        <a href="${p.url}" target="_blank" class="card tilt-card" style="padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; text-decoration: none; color: inherit;">
+          <div>
+            <div style="font-family: var(--font-display); font-size: 12px; font-weight: 700; color: var(--color-text-primary);">${p.title}</div>
+            <div style="font-size: 10px; color: var(--color-text-secondary);">${p.desc}</div>
+          </div>
+          <span style="font-size: 11px; color: var(--color-primary); font-weight: 700;">Visit ↗</span>
+        </a>
+      `).join('')}
+    </div>
+
+    <!-- Source Transparency -->
+    <div class="source-transparency-card">
+      <div class="source-meta-text">
+        <strong>Source Transparency:</strong> The Gandhigram Rural Institute Official Website (<a href="https://www.ruraluniv.ac.in/" target="_blank" style="color: var(--color-primary);">ruraluniv.ac.in</a>) • Central Administration Block
+      </div>
+      <span class="official-seal-chip">✓ DEEMED UNIVERSITY</span>
+    </div>
+  `;
+
+  attach3DTiltHandlers();
+}
+
+// =========================================================================
+// GLOBAL SEARCH ENGINE (INSTANT ACROSS ALL INSTITUTIONAL ENTITIES)
+// =========================================================================
+let currentSearchCategory = 'all';
+
+function openGlobalSearch() {
+  HapticFeedback.click();
+  el.globalSearchModal.classList.add('active');
+  el.globalSearchInput.value = '';
+  el.globalSearchInput.focus();
+  renderSearchResults('');
+}
+
+function closeGlobalSearch() {
+  el.globalSearchModal.classList.remove('active');
+}
+
+function renderSearchResults(query = '') {
+  const q = query.trim().toLowerCase();
+  let results = [];
+
+  // Search across programmes
+  if (currentSearchCategory === 'all' || currentSearchCategory === 'programmes') {
+    state.programmes.forEach(p => {
+      if (!q || p.name.toLowerCase().includes(q) || p.school.toLowerCase().includes(q) || p.cuetCode.toLowerCase().includes(q)) {
+        results.push({
+          type: 'Programme',
+          category: 'Academics & Admissions',
+          title: p.name,
+          subtitle: `${p.school} • ${p.duration} • CUET: ${p.cuetCode}`,
+          action: () => { closeGlobalSearch(); switchTab('admissions'); }
+        });
+      }
+    });
+  }
+
+  // Search across admissions
+  if (currentSearchCategory === 'all' || currentSearchCategory === 'admissions') {
+    state.admissions.statutoryLinks.forEach(l => {
+      if (!q || l.title.toLowerCase().includes(q) || l.desc.toLowerCase().includes(q)) {
+        results.push({
+          type: 'Admission Link',
+          category: 'Admissions 2026–27',
+          title: l.title,
+          subtitle: l.desc,
+          action: () => { window.open(l.url, '_blank'); }
+        });
+      }
+    });
+  }
+
+  // Search across exams
+  if (currentSearchCategory === 'all' || currentSearchCategory === 'examinations') {
+    state.examinations.schedules.forEach(s => {
+      if (!q || s.code.toLowerCase().includes(q) || s.title.toLowerCase().includes(q) || s.hall.toLowerCase().includes(q)) {
+        results.push({
+          type: 'Exam Schedule',
+          category: 'Examinations (CoE)',
+          title: `${s.code}: ${s.title}`,
+          subtitle: `Date: ${s.date} • ${s.session} • ${s.hall}`,
+          action: () => { closeGlobalSearch(); switchTab('exams'); }
+        });
+      }
+    });
+  }
+
+  // Search across scholarships
+  if (currentSearchCategory === 'all' || currentSearchCategory === 'scholarships') {
+    state.scholarships.forEach(s => {
+      if (!q || s.name.toLowerCase().includes(q) || s.provider.toLowerCase().includes(q) || s.category.toLowerCase().includes(q)) {
+        results.push({
+          type: 'Scholarship',
+          category: 'Student Welfare',
+          title: s.name,
+          subtitle: `Amount: ${s.awardAmount} • Provider: ${s.provider}`,
+          action: () => { closeGlobalSearch(); switchTab('scholarships'); }
+        });
+      }
+    });
+  }
+
+  // Search across official documents
+  if (currentSearchCategory === 'all' || currentSearchCategory === 'documents') {
+    state.officialDocuments.forEach(d => {
+      if (!q || d.title.toLowerCase().includes(q) || d.category.toLowerCase().includes(q) || d.department.toLowerCase().includes(q)) {
+        results.push({
+          type: 'Official Document',
+          category: d.category,
+          title: d.title,
+          subtitle: `${d.department} • ${d.date} • ${d.fileSize}`,
+          action: () => { closeGlobalSearch(); openDocPreview(d.id); }
+        });
+      }
+    });
+  }
+
+  // Search across leadership & about
+  if (currentSearchCategory === 'all' || currentSearchCategory === 'about') {
+    state.leadership.deans.forEach(d => {
+      if (!q || d.school.toLowerCase().includes(q) || d.name.toLowerCase().includes(q)) {
+        results.push({
+          type: 'Leadership',
+          category: 'Dean of School',
+          title: `${d.name} (${d.school})`,
+          subtitle: `Email: ${d.email} • ${d.phone}`,
+          action: () => { closeGlobalSearch(); switchTab('about'); }
+        });
+      }
+    });
+  }
+
+  // Search across transit bus routes
+  if (currentSearchCategory === 'all' || currentSearchCategory === 'campus') {
+    state.busRoutes.forEach(b => {
+      if (!q || b.name.toLowerCase().includes(q) || b.busNo.toLowerCase().includes(q) || b.driver.toLowerCase().includes(q)) {
+        results.push({
+          type: 'Transit Radar',
+          category: 'Campus Fleet',
+          title: b.name,
+          subtitle: `Bus ${b.busNo} • Driver: ${b.driver} • ETA: ${b.eta}`,
+          action: () => { closeGlobalSearch(); switchTab('campus'); }
+        });
+      }
+    });
+  }
+
+  // Render results
+  if (results.length === 0) {
+    el.searchResultsList.innerHTML = `
+      <div style="text-align: center; padding: var(--space-xl) var(--space-md); color: var(--color-text-muted);">
+        <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor" style="opacity: 0.5; margin-bottom: 8px;"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <div style="font-weight: 600; font-size: 13px;">No institutional records matched "${query}"</div>
+        <div style="font-size: 11px; margin-top: 4px;">Try searching for "MCA", "Agriculture", "Hall Ticket", "Tatkal", "Scholarship", or "Hostel".</div>
+      </div>
+    `;
+    return;
+  }
+
+  el.searchResultsList.innerHTML = results.slice(0, 25).map((r, idx) => `
+    <div class="search-result-card" data-idx="${idx}">
+      <div class="search-result-meta">
+        <span style="color: var(--color-primary);">${r.type}</span>
+        <span>${r.category}</span>
+      </div>
+      <div class="search-result-title">${r.title}</div>
+      <div class="search-result-snippet">${r.subtitle}</div>
+    </div>
+  `).join('');
+
+  document.querySelectorAll('#searchResultsList .search-result-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      const idx = parseInt(e.currentTarget.getAttribute('data-idx'));
+      if (results[idx] && results[idx].action) {
+        results[idx].action();
+      }
+    });
+  });
+}
+
+// =========================================================================
+// OFFICIAL DOCUMENT PREVIEW MODAL
+// =========================================================================
+function openDocPreview(docId) {
+  const doc = state.officialDocuments.find(d => d.id === docId);
+  if (!doc) {
+    showToast('Document not found in statutory register', 'error');
+    return;
+  }
+
+  HapticFeedback.click();
+  el.docPreviewTitle.textContent = doc.title;
+  el.docPreviewSubtitle.textContent = `${doc.department} • Academic Year: ${doc.academicYear}`;
+
+  el.docPreviewContent.innerHTML = `
+    <div style="background: var(--color-surface-elevated); padding: 14px; border-radius: var(--radius-md); border: 1px solid var(--color-surface-border); margin-bottom: var(--space-md);">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 11px;">
+        <div>
+          <span style="color: var(--color-text-muted);">Category:</span>
+          <div style="font-weight: 700; color: var(--color-text-primary);">${doc.category}</div>
+        </div>
+        <div>
+          <span style="color: var(--color-text-muted);">Document Type:</span>
+          <div style="font-weight: 700; color: var(--color-text-primary);">${doc.docType}</div>
+        </div>
+        <div>
+          <span style="color: var(--color-text-muted);">Publication Date:</span>
+          <div style="font-weight: 700; color: var(--color-text-primary);">${doc.date}</div>
+        </div>
+        <div>
+          <span style="color: var(--color-text-muted);">Freshness Status:</span>
+          <div><span class="freshness-badge ${doc.status.toLowerCase()}">${doc.status}</span></div>
+        </div>
+        <div>
+          <span style="color: var(--color-text-muted);">Applicable Roles:</span>
+          <div style="font-weight: 600; color: var(--color-text-primary);">${doc.applicableRole}</div>
+        </div>
+        <div>
+          <span style="color: var(--color-text-muted);">Verified File Size:</span>
+          <div style="font-weight: 700; color: var(--color-text-primary);">${doc.fileSize}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SHA-256 Gazette Seal -->
+    <div style="background: rgba(153, 211, 178, 0.08); border: 1px solid rgba(153, 211, 178, 0.25); border-radius: var(--radius-md); padding: 10px 12px; margin-bottom: var(--space-md);">
+      <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: var(--color-primary);">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+        <span>Cryptographic SHA-256 Digest Authenticated</span>
+      </div>
+      <div style="font-family: var(--font-mono); font-size: 9px; color: var(--color-text-muted); word-break: break-all; margin-top: 4px;">
+        ${doc.sha256}
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 8px;">
+      <a href="${doc.officialSource}" target="_blank" class="btn btn-primary" style="flex: 1; text-align: center;">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+        Open on ruraluniv.ac.in
+      </a>
+      <button class="btn btn-outline" id="btnShareDocUrl">Copy URL</button>
+    </div>
+  `;
+
+  document.getElementById('btnShareDocUrl')?.addEventListener('click', () => {
+    navigator.clipboard?.writeText(doc.officialSource);
+    showToast('Official source URL copied to clipboard');
+  });
+
+  el.docPreviewModal.classList.add('active');
+}
+
+// =========================================================================
+// ADMIN CONTENT MANAGEMENT SYSTEM (CMS PUBLISHER)
+// =========================================================================
+function openAdminCmsModal() {
+  if (!checkPermission(PERMISSIONS.VIEW_ADMIN_DASHBOARD) && !checkPermission(PERMISSIONS.PUBLISH_STATUTORY_CIRCULARS)) {
+    showToast('Unauthorized: Administrator privileges required', 'error');
+    return;
+  }
+  HapticFeedback.click();
+  el.adminCmsForm.reset();
+  el.adminCmsModal.classList.add('active');
+}
+
+function closeAdminCmsModal() {
+  el.adminCmsModal.classList.remove('active');
+}

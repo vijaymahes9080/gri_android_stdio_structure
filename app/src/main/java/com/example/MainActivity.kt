@@ -347,13 +347,13 @@ fun GriApp(
               onSwitchAccount(
                 UserEntity(
                   id = "usr_admin",
-                  name = "Dr. M. Sangeetha",
+                  name = "Dr. M. Sundaramari",
                   email = "registrar@ruraluniv.ac.in",
                   role = UserRole.ADMIN.name,
                   rollNo = "ADMIN-GRI-01",
                   department = "Central Administration",
                   semester = "Registrar's Directorate",
-                  cgpa = "Chief Institutional Officer",
+                  cgpa = "Registrar in-charge",
                   accountStatus = AccountStatus.APPROVED.name,
                   approvedRolesCsv = "ADMIN"
                 )

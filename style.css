@@ -2184,3 +2184,451 @@ a {
   background: var(--color-primary-container);
 }
 
+/* ==========================================================================
+   GLOBAL SEARCH & ENTITY INDEXING
+   ========================================================================== */
+.global-search-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--space-xl) var(--space-md);
+}
+
+.global-search-overlay.active {
+  display: flex;
+}
+
+.global-search-box {
+  width: 100%;
+  max-width: 520px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-surface-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg), 0 0 32px rgba(153, 211, 178, 0.2);
+  display: flex;
+  flex-direction: column;
+  max-height: 85vh;
+  overflow: hidden;
+  animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.search-input-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  border-bottom: 1px solid var(--color-surface-border);
+  background: var(--color-surface-elevated);
+}
+
+.search-input-field {
+  flex: 1;
+  background: transparent;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--color-text-primary);
+  outline: none;
+}
+
+.search-input-field::placeholder {
+  color: var(--color-text-muted);
+}
+
+.search-filter-pills {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 8px var(--space-md);
+  border-bottom: 1px solid var(--color-surface-border-subtle);
+  background: var(--color-surface);
+}
+
+.search-pill-btn {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-surface-border);
+  background: var(--color-surface-elevated);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--trans-fast);
+}
+
+.search-pill-btn.active, .search-pill-btn:hover {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-color: var(--color-primary);
+}
+
+.search-results-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.search-result-card {
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-surface-border);
+  background: var(--color-surface-card);
+  cursor: pointer;
+  transition: all var(--trans-fast);
+}
+
+.search-result-card:hover {
+  border-color: var(--color-primary);
+  transform: translateX(3px);
+  background: var(--color-surface-card-hover);
+}
+
+.search-result-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.search-result-title {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1.3;
+}
+
+.search-result-snippet {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  margin-top: 3px;
+  line-height: 1.35;
+}
+
+/* ==========================================================================
+   DATA FRESHNESS & SOURCE TRANSPARENCY
+   ========================================================================== */
+.freshness-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.freshness-badge.current {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  border: 1px solid rgba(52, 211, 153, 0.4);
+}
+
+.freshness-badge.upcoming {
+  background: var(--color-info-bg);
+  color: var(--color-info);
+  border: 1px solid rgba(96, 165, 250, 0.4);
+}
+
+.freshness-badge.archived {
+  background: rgba(100, 116, 139, 0.2);
+  color: #94A3B8;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.freshness-badge.expired {
+  background: var(--color-error-bg);
+  color: var(--color-error);
+  border: 1px solid rgba(248, 113, 113, 0.4);
+}
+
+.source-transparency-card {
+  margin-top: var(--space-md);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-elevated);
+  border-left: 3px solid var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+}
+
+.source-meta-text {
+  color: var(--color-text-secondary);
+  line-height: 1.3;
+}
+
+.source-meta-text strong {
+  color: var(--color-text-primary);
+}
+
+.official-seal-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(153, 211, 178, 0.15);
+  color: var(--color-primary);
+  border-radius: var(--radius-pill);
+  padding: 3px 8px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   ADMISSIONS ECOSYSTEM & PROGRAMME DIRECTORY
+   ========================================================================== */
+.admissions-hero-banner {
+  background: linear-gradient(135deg, var(--color-surface-card), var(--color-surface-elevated));
+  border: 1px solid var(--color-surface-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.cuet-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.cuet-tag {
+  background: var(--color-tertiary-container);
+  color: var(--color-on-tertiary-container);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.programme-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.programme-card {
+  padding: 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-surface-border);
+  background: var(--color-surface-card);
+  transition: all var(--trans-fast);
+}
+
+.programme-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.programme-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 6px;
+}
+
+.helpdesk-hotline-card {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(153, 211, 178, 0.1));
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.hotline-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ==========================================================================
+   EXAMINATION ECOSYSTEM (ESE, TATKAL, E-SANAD)
+   ========================================================================== */
+.exam-session-card {
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-surface-border);
+  background: var(--color-surface-card);
+  margin-bottom: var(--space-md);
+}
+
+.exam-table-container {
+  overflow-x: auto;
+  margin-top: 10px;
+}
+
+.exam-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.exam-table th {
+  background: var(--color-surface-elevated);
+  color: var(--color-text-secondary);
+  text-align: left;
+  padding: 8px 10px;
+  font-weight: 700;
+  border-bottom: 1px solid var(--color-surface-border);
+}
+
+.exam-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--color-surface-border-subtle);
+  color: var(--color-text-primary);
+}
+
+.tatkal-service-box {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.12), rgba(217, 119, 6, 0.08));
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+/* ==========================================================================
+   SCHOLARSHIP & FELLOWSHIP ECOSYSTEM
+   ========================================================================== */
+.scholarship-card {
+  padding: 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-surface-border);
+  background: var(--color-surface-card);
+  margin-bottom: var(--space-sm);
+  transition: all var(--trans-fast);
+}
+
+.scholarship-card:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+.scholarship-award-amount {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--color-success);
+}
+
+/* ==========================================================================
+   ABOUT GRI & GOVERNANCE ECOSYSTEM
+   ========================================================================== */
+.leadership-avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.leader-card {
+  padding: 12px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-surface-border);
+  text-align: center;
+}
+
+.leader-avatar-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin: 0 auto 8px;
+  background: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-on-primary);
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.leader-name {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.leader-title {
+  font-size: 10px;
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+}
+
+.naac-score-banner {
+  background: linear-gradient(135deg, #134E35, #003622);
+  color: #fff;
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+/* ==========================================================================
+   ADMIN CMS PUBLISHING LIFECYCLE
+   ========================================================================== */
+.cms-stage-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background: var(--color-surface-elevated);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-md);
+  border: 1px solid var(--color-surface-border);
+}
+
+.cms-stage-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.cms-stage-step.active {
+  color: var(--color-primary);
+}
+
+.cms-stage-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-surface-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+}
+
+.cms-stage-step.active .cms-stage-dot {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+
