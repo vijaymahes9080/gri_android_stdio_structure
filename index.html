@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>GRI Mobile Portal 2026 — Gandhigram Rural Institute</title>
+  <meta name="description" content="Next-Generation 2026 Mobile Campus Experience for The Gandhigram Rural Institute (Deemed to be University). Academic management, digital hall tickets, biometric attendance, live transit tracking, and GRI-Sahayak AI.">
+  <meta name="theme-color" content="#003622">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body class="theme-dark">
+  <!-- Desktop Simulator Chrome -->
+  <div class="simulator-wrapper" id="simulatorWrapper">
+    
+    <!-- Top Global Simulator Toolbar (for desktop testing) -->
+    <header class="simulator-toolbar" id="simulatorToolbar">
+      <div class="toolbar-brand">
+        <span class="status-indicator online"></span>
+        <span class="toolbar-title">GRI Mobile OS 2026</span>
+        <span class="toolbar-pill">PROD v2.6.4</span>
+      </div>
+      <div class="toolbar-controls">
+        <button class="tool-btn" id="toggleDeviceFrameBtn" title="Toggle Smartphone Bezel Frame">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+          <span class="btn-text">Phone Frame</span>
+        </button>
+        <button class="tool-btn" id="toggleGlobalThemeBtn" title="Toggle Light / Dark Mode">
+          <svg id="themeIconSun" class="icon-sun" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0z"/></svg>
+          <span class="btn-text" id="themeBtnText">Dark</span>
+        </button>
+        <button class="tool-btn" id="quickSyncBtn" title="Sync Offline Queue with Cloud">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+          <span class="btn-text">Sync</span>
+        </button>
+        <div class="role-selector-pill" id="quickRoleSwitch">
+          <span class="role-label">Role:</span>
+          <select id="globalRoleSelect" aria-label="Select active user role">
+            <option value="STUDENT" selected>Student (Srimari V.)</option>
+            <option value="FACULTY">Faculty (Dr. Subramanian)</option>
+            <option value="ADMIN">Admin (CoE Directorate)</option>
+            <option value="STAFF">Staff (Establishment)</option>
+            <option value="SCHOLAR">Scholar (Research JRF)</option>
+            <option value="GUEST">Guest / Visitor</option>
+          </select>
+        </div>
+      </div>
+    </header>
+
+    <!-- Smartphone Bezel Container -->
+    <main class="mobile-frame-container" id="mobileFrameContainer">
+      <div class="smartphone-bezel" id="smartphoneBezel">
+        <!-- Titanium Hardware buttons & speaker -->
+        <div class="hardware-speaker"></div>
+        <div class="hardware-buttons">
+          <div class="volume-up"></div>
+          <div class="volume-down"></div>
+          <div class="power-button"></div>
+        </div>
+
+        <!-- Mobile Screen Viewport -->
+        <div class="mobile-screen" id="mobileScreen" role="application">
+          
+          <!-- Dynamic Island / Status Bar -->
+          <div class="mobile-status-bar" id="mobileStatusBar">
+            <div class="status-left">
+              <span class="status-time" id="statusClock">12:45</span>
+              <span class="status-location-dot"></span>
+            </div>
+            <div class="dynamic-island" id="dynamicIsland" title="GRI Live Activity Hub">
+              <div class="island-content island-collapsed">
+                <span class="island-icon-pulse"></span>
+                <span class="island-label" id="islandText">GRI Campus Live</span>
+              </div>
+            </div>
+            <div class="status-right">
+              <span class="status-signal">5G</span>
+              <svg class="status-wifi" viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 4C7.31 4 3.07 5.9 0 8.98L12 21 24 8.98C20.93 5.9 16.69 4 12 4zm0 3.86c3.48 0 6.64 1.34 9 3.53L12 19.34 3 11.39c2.36-2.19 5.52-3.53 9-3.53z"/></svg>
+              <div class="status-battery"><div class="battery-level"></div></div>
+            </div>
+          </div>
+
+          <!-- App Top Header Bar -->
+          <header class="app-top-bar" id="appTopBar">
+            <div class="top-bar-left">
+              <div class="app-brand-lockup" id="brandLockup">
+                <div class="brand-emblem-wrap">
+                  <img src="/assets/gri_emblem_3d.jpg" alt="GRI 3D Emblem" class="brand-emblem-img" id="appLogoImg">
+                </div>
+                <div class="brand-text-col">
+                  <div class="brand-title">GRI PORTAL</div>
+                  <div class="brand-sub">Gandhigram Rural Institute</div>
+                </div>
+              </div>
+            </div>
+            <div class="top-bar-actions">
+              <button class="top-action-btn pulse-border" id="openSahayakBtn" aria-label="Open GRI-Sahayak AI Assistant" title="GRI-Sahayak AI">
+                <img src="/assets/gri_sahayak_3d.jpg" alt="Sahayak AI" class="avatar-sm">
+                <span class="ai-sparkle">✦</span>
+              </button>
+              <button class="top-action-btn" id="openDocCenterBtn" aria-label="Open Official Document Center" title="Official Gazettes">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+              </button>
+              <button class="top-action-btn" id="openNotificationsBtn" aria-label="Open Notifications" title="Notifications">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+                <span class="badge-dot" id="notifBadge"></span>
+              </button>
+              <button class="top-action-btn role-badge-btn" id="roleBadgeBtn" title="Current Role">
+                <span class="role-pill-chip" id="currentRoleChip">STUDENT</span>
+              </button>
+            </div>
+          </header>
+
+          <!-- Main Scrollable Content Area -->
+          <div class="screens-container" id="screensContainer">
+            <!-- Screen 1: Home Dashboard -->
+            <section class="screen-view active" id="screenHome" data-screen="home">
+              <!-- Dynamically populated by main.js -->
+            </section>
+
+            <!-- Screen 2: Academics Hub -->
+            <section class="screen-view" id="screenAcademics" data-screen="academics">
+              <!-- Dynamically populated by main.js -->
+            </section>
+
+            <!-- Screen 3: Campus & Facilities -->
+            <section class="screen-view" id="screenCampus" data-screen="campus">
+              <!-- Dynamically populated by main.js -->
+            </section>
+
+            <!-- Screen 4: Student Services & GRI-Care -->
+            <section class="screen-view" id="screenServices" data-screen="services">
+              <!-- Dynamically populated by main.js -->
+            </section>
+
+            <!-- Screen 5: Admin & Governance Hub -->
+            <section class="screen-view" id="screenAdmin" data-screen="admin">
+              <!-- Dynamically populated by main.js -->
+            </section>
+          </div>
+
+          <!-- Bottom Navigation Bar -->
+          <nav class="app-bottom-nav" id="bottomNav" aria-label="Primary Navigation">
+            <button class="nav-item active" data-tab="home" id="navHome">
+              <div class="nav-icon-wrap">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+              </div>
+              <span class="nav-label">Home</span>
+            </button>
+            <button class="nav-item" data-tab="academics" id="navAcademics">
+              <div class="nav-icon-wrap">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+              </div>
+              <span class="nav-label">Academics</span>
+            </button>
+            <button class="nav-item" data-tab="campus" id="navCampus">
+              <div class="nav-icon-wrap">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              </div>
+              <span class="nav-label">Campus</span>
+            </button>
+            <button class="nav-item" data-tab="services" id="navServices">
+              <div class="nav-icon-wrap">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/></svg>
+              </div>
+              <span class="nav-label">Services</span>
+            </button>
+            <button class="nav-item" data-tab="admin" id="navAdmin">
+              <div class="nav-icon-wrap">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
+              </div>
+              <span class="nav-label" id="navAdminLabel">Admin</span>
+            </button>
+          </nav>
+
+          <!-- Toast / Snackbar Host -->
+          <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+          <!-- Bottom Home Indicator Bar (iOS style) -->
+          <div class="home-indicator"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Interactive Modals / Bottom Sheets -->
+
+  <!-- Modal 1: GRI-Sahayak AI Assistant -->
+  <div class="modal-overlay" id="sahayakModal" aria-hidden="true" role="dialog" aria-labelledby="sahayakTitle">
+    <div class="modal-content modal-fullscreen sahayak-sheet">
+      <header class="modal-header">
+        <div class="modal-brand">
+          <div class="ai-avatar-pulse">
+            <img src="/assets/gri_sahayak_3d.jpg" alt="GRI-Sahayak" class="modal-ai-avatar">
+          </div>
+          <div>
+            <h2 class="modal-title" id="sahayakTitle">GRI-Sahayak AI</h2>
+            <p class="modal-subtitle">Grounded Institutional Guide • bilingual</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeSahayakBtn" aria-label="Close Assistant">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </header>
+      
+      <div class="sahayak-chat-body" id="sahayakChatBody">
+        <!-- Messages rendered by JS -->
+      </div>
+
+      <!-- Quick Prompt Chips -->
+      <div class="prompt-chips-row" id="sahayakChips">
+        <button class="chip-btn" data-query="Admissions 2026 guidelines and CUET requirements">Admissions 2026</button>
+        <button class="chip-btn" data-query="What is the 75% attendance rule and condonation?">75% Attendance Rule</button>
+        <button class="chip-btn" data-query="End semester examination timetable and hall ticket info">ESE Hall Tickets</button>
+        <button class="chip-btn" data-query="Hostel mess timings and warden details">Hostels & Mess</button>
+        <button class="chip-btn" data-query="University campus bus routes and timings">Bus Routes</button>
+        <button class="chip-btn" data-query="காந்திகிராம பல்கலைக்கழக வரலாறு மற்றும் நை தாலீம்">தமிழ் விளக்கம்</button>
+      </div>
+
+      <form class="sahayak-input-bar" id="sahayakForm">
+        <input type="text" id="sahayakInput" placeholder="Ask about courses, exams, fees, library, hostels..." autocomplete="off">
+        <button type="submit" class="send-btn" id="sahayakSendBtn" aria-label="Send Message">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 2: Examination Hall Ticket Dialog -->
+  <div class="modal-overlay" id="hallTicketModal" aria-hidden="true" role="dialog" aria-labelledby="hallTicketTitle">
+    <div class="modal-content modal-large ticket-sheet">
+      <header class="modal-header">
+        <div class="modal-brand">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="#003622"><path d="M22 10V6c0-1.11-.9-2-2-2H4c-1.1 0-1.99.89-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2zm-2-1.53c-1.29.83-2.16 2.27-2.16 3.53 0 1.26.87 2.7 2.16 3.53V18H4v-2.47c1.29-.83 2.16-2.27 2.16-3.53 0-1.26-.87-2.7-2.16-3.53V6h16v2.47z"/></svg>
+          <div>
+            <h2 class="modal-title" id="hallTicketTitle">Examination Hall Ticket</h2>
+            <p class="modal-subtitle">e-SANAD Cryptographically Verified</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeHallTicketBtn" aria-label="Close Hall Ticket">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </header>
+
+      <div class="ticket-card-view" id="hallTicketView">
+        <!-- Rendered by JS -->
+      </div>
+
+      <div class="modal-actions-row">
+        <button class="btn btn-outline" id="printTicketBtn">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+          Print / Export PDF
+        </button>
+        <button class="btn btn-primary" id="doneTicketBtn">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Official Document Center & Cryptographic Verifier -->
+  <div class="modal-overlay" id="docCenterModal" aria-hidden="true" role="dialog" aria-labelledby="docCenterTitle">
+    <div class="modal-content modal-large doc-center-sheet">
+      <header class="modal-header">
+        <div class="modal-brand">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="#003622"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+          <div>
+            <h2 class="modal-title" id="docCenterTitle">Official Document Center</h2>
+            <p class="modal-subtitle">Statutory UGC e-Office Gazettes & Circulars</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeDocCenterBtn" aria-label="Close Document Center">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </header>
+
+      <div class="doc-center-body">
+        <!-- Cryptographic Seal Verification Bar -->
+        <div class="crypto-seal-card">
+          <div class="crypto-header">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="#059669"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+            <span>Cryptographic SHA-256 Gazette Seal Verifier</span>
+          </div>
+          <div class="crypto-input-group">
+            <input type="text" id="verifyHashInput" placeholder="Paste e-Office Token (e.g. GRI-COE-2026-98124)" value="GRI-COE-2026-98124">
+            <button class="btn btn-sm btn-primary" id="btnVerifyHash">Verify Seal</button>
+          </div>
+          <div class="verification-status-banner" id="verifyResultBanner">
+            <span class="status-verified-dot"></span>
+            <span id="verifyResultText">Cryptographic SHA-256 Seal Authenticated by GRI Central Registry & CoE</span>
+          </div>
+        </div>
+
+        <!-- Filter tabs for gazettes -->
+        <div class="doc-filter-chips">
+          <button class="filter-chip active" data-cat="all">All Documents</button>
+          <button class="filter-chip" data-cat="examinations">Examinations</button>
+          <button class="filter-chip" data-cat="academics">Academics</button>
+          <button class="filter-chip" data-cat="admissions">Admissions</button>
+          <button class="filter-chip" data-cat="finance">Scholarships</button>
+        </div>
+
+        <div class="doc-list" id="docListContainer">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 4: Notifications Drawer -->
+  <div class="modal-overlay" id="notifModal" aria-hidden="true" role="dialog" aria-labelledby="notifTitle">
+    <div class="modal-content modal-sheet-bottom notif-sheet">
+      <header class="modal-header">
+        <div class="modal-brand">
+          <h2 class="modal-title" id="notifTitle">Notifications</h2>
+          <span class="badge-pill" id="unreadNotifCount">3 New</span>
+        </div>
+        <div class="header-actions">
+          <button class="btn-text-sm" id="markAllReadBtn">Mark all as read</button>
+          <button class="modal-close-btn" id="closeNotifBtn" aria-label="Close Notifications">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+          </button>
+        </div>
+      </header>
+      <div class="notif-list" id="notifList">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 5: Faculty & Staff Portal Modal -->
+  <div class="modal-overlay" id="facultyModal" aria-hidden="true" role="dialog" aria-labelledby="facultyTitle">
+    <div class="modal-content modal-large faculty-sheet">
+      <header class="modal-header">
+        <div class="modal-brand">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="#003622"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          <div>
+            <h2 class="modal-title" id="facultyTitle">Faculty & Staff Academic Suite</h2>
+            <p class="modal-subtitle">Lecture Biometrics, Internal Assessment & Leave Management</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeFacultyBtn" aria-label="Close Faculty Suite">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </header>
+      <div class="faculty-modal-body" id="facultyModalBody">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
