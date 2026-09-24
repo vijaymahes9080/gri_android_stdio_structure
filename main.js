@@ -860,6 +860,258 @@ const state = {
     { title: 'Study in India (Govt. of India)', url: 'https://www.studyinindia.gov.in/admission/registrations', desc: 'International admissions for overseas students', category: 'Admissions' }
   ],
 
+  // --- 11. Official Facilities, Infrastructure & Hostels Master Data ---
+  facilities: [
+    {
+      id: 'fac_library',
+      name: 'Dr. G. Ramachandran Central Library',
+      category: 'Academic Learning Centre',
+      image: '/assets/library_front.jpg',
+      badge: 'RFID & KOHA AUTOMATED',
+      description: 'Central knowledge repository with 1,83,587 volumes, rare Gandhian collections, 149 periodicals, 1,452 doctoral theses, and National Digital Library (NDL) node.',
+      stats: [
+        { num: '1,83,587', label: 'Books' },
+        { num: '1,452', label: 'Ph.D. Theses' },
+        { num: '23', label: 'Databases' }
+      ],
+      features: ['KOHA Open Source OPAC', 'RFID Kiosks & Smart Gate', 'Braille Corner for Divyangjan', 'E-ShodhSindhu Consortium'],
+      contact: 'librarian@ruraluniv.ac.in • Ext: 2381',
+      officialUrl: 'https://ruraluniv.ac.in/facilities?content=library'
+    },
+    {
+      id: 'fac_health',
+      name: 'GRI Campus Health Centre',
+      category: 'Healthcare & Wellness',
+      image: '/assets/health_centre.jpg',
+      badge: '24/7 EMERGENCY CARE',
+      description: 'Dedicated healthcare facility providing outpatient medical treatment, 24/7 ambulance support, clinical diagnostics, and wellness consultations for all students and residents.',
+      stats: [
+        { num: '24/7', label: 'Ambulance' },
+        { num: 'Free', label: 'Basic Meds' },
+        { num: 'Daily', label: 'Doctor OPD' }
+      ],
+      features: ['Resident Medical Officers', 'Clinical Laboratory Diagnostics', 'Emergency Oxygen Support', 'Pharmacy & Observation Beds'],
+      contact: 'Health Centre Hotline: 0451-2452371',
+      officialUrl: 'https://ruraluniv.ac.in/infrastructure?content=AboutHealthCentre'
+    },
+    {
+      id: 'fac_computer_centre',
+      name: 'GRI Central Computer Centre',
+      category: 'Digital ICT Hub',
+      image: '/assets/gri_emblem_3d.jpg',
+      badge: 'NKN 1 GBPS GIGABIT',
+      description: 'Established in 1989, powers high-speed fiber campus networking via National Knowledge Network (NKN), student computer labs (60+ terminals), and cloud portal servers.',
+      stats: [
+        { num: '1 Gbps', label: 'NKN Fiber' },
+        { num: '60+', label: 'Lab Systems' },
+        { num: '100%', label: 'Campus Wi-Fi' }
+      ],
+      features: ['High-Performance Computing Lab', 'Campus LAN & Wi-Fi Management', 'LMS & E-Content Servers', 'Cybersecurity IT Policy'],
+      contact: 'cc@ruraluniv.ac.in • Ext: 2360',
+      officialUrl: 'https://ruraluniv.ac.in/gri?CC=about'
+    },
+    {
+      id: 'fac_cic',
+      name: 'Central Instrumentation Centre (CIC)',
+      category: 'Advanced Science Research',
+      image: '/assets/grilogotya.jpg',
+      badge: 'DST-FIST & PURSE',
+      description: 'State-of-the-art analytical instrumentation facility supporting researchers and industry in spectroscopy, crystal analysis, and materials characterization.',
+      stats: [
+        { num: '400 MHz', label: 'NMR Spectrometer' },
+        { num: 'XRD', label: 'Diffractometer' },
+        { num: 'HPLC', label: 'Chromatography' }
+      ],
+      features: ['FT-IR & UV-Vis Spectrophotometers', 'Single Crystal X-ray Diffractometer', 'Atomic Absorption Spectrophotometer', 'External Sample Testing on Charge'],
+      contact: 'cic@ruraluniv.ac.in',
+      officialUrl: 'https://ruraluniv.ac.in/facilities?content=Central_Instrumentation_Centre'
+    },
+    {
+      id: 'fac_seaweed',
+      name: 'UBA GRI Seaweed Startup & Cultivation Facility',
+      category: 'Rural Entrepreneurship & Incubation',
+      image: '/assets/gri_sahayak_3d.jpg',
+      badge: 'UNNAT BHARAT ABHIYAN',
+      description: 'Flagship rural biotechnology venture training coastal self-help groups in Kappaphycus alvarezii cultivation, seaweed sap extraction, and organic bio-fertilizer production.',
+      stats: [
+        { num: 'UBA', label: 'Govt. Sponsored' },
+        { num: '30+', label: 'SHGs Trained' },
+        { num: 'Patented', label: 'Bio-stimulants' }
+      ],
+      features: ['Tissue Culture Nursery', 'Liquid Bio-Fertilizer Unit', 'Farmer Training Workshop', 'Patent Commercialization'],
+      contact: 'seaweed@ruraluniv.ac.in',
+      officialUrl: 'https://ruraluniv.ac.in/facilities?content=SEAWEED_1'
+    },
+    {
+      id: 'fac_nano',
+      name: 'Centre for Nanoscience & Nanotechnology',
+      category: 'Nanomaterials & Cleanroom',
+      image: '/assets/gridu_favicon.png',
+      badge: 'ADVANCED NANOTECH',
+      description: 'Dedicated cleanroom and synthesis lab developing solar cell thin films, antimicrobial nanoparticles, and smart rural water filtration membranes.',
+      stats: [
+        { num: 'Cleanroom', label: 'Class 10,000' },
+        { num: 'Solar', label: 'Cell Research' },
+        { num: 'Water', label: 'Purification' }
+      ],
+      features: ['Chemical Vapor Deposition', 'Sputtering Unit', 'Photovoltaic Characterization', 'Ph.D. Research Bench'],
+      contact: 'nano@ruraluniv.ac.in',
+      officialUrl: 'https://ruraluniv.ac.in/facilities?content=About_NANO_Facility'
+    },
+    {
+      id: 'fac_museum',
+      name: 'Museum of Constructive Programme & Khadi Looms',
+      category: 'Heritage & Nai Talim',
+      image: '/assets/grilogotya.jpg',
+      badge: 'GANDHIAN HERITAGE',
+      description: 'Living heritage pavilion showcasing Mahatma Gandhi’s 18-point Constructive Programme, vintage spinning charkhas, rural art forms, and Nai Talim pedagogy records.',
+      stats: [
+        { num: '1956', label: 'Historic Relics' },
+        { num: '18', label: 'Constructive Areas' },
+        { num: 'Khadi', label: 'Active Looms' }
+      ],
+      features: ['Original Gandhi Letters', 'Vintage Charka Collection', 'Village Artisan Exhibits', 'Student Study Gallery'],
+      contact: 'museum@ruraluniv.ac.in',
+      officialUrl: 'https://ruraluniv.ac.in/facilities?content=museum'
+    }
+  ],
+
+  // --- 12. Hostels Master Directory ---
+  hostelsDirectory: {
+    totalCapacity: 1573,
+    chiefWarden: 'Dean, Students Welfare (0451-2452371)',
+    boysHostels: [
+      { name: 'Dr. S. Radhakrishnan Hostel (4 Blocks)', description: 'Main Boys Complex: Dr. S. Radhakrishnan Block, Dr. Zakir Hussain Block, Research Scholars Block, Sri R. Venkatraman Block', type: 'Boys / Scholars' },
+      { name: 'Faculty of Rural Health & Sanitation Hostel', description: 'Dedicated residential block for Diploma and B.Sc. Sanitary Inspector trainees', type: 'Boys' }
+    ],
+    ladiesHostels: [
+      { name: 'Dr. Soundaram Illam', description: 'Senior postgraduate and research scholars residential wing', type: 'Ladies' },
+      { name: 'Kannagi Illam & Andal Illam', description: 'Undergraduate and integrated masters residential wings', type: 'Ladies' },
+      { name: 'Ladies Hostel New Block', description: 'Modern multi-storey wing with enhanced dining and solar water heating', type: 'Ladies' }
+    ],
+    workingWomensHostel: {
+      name: "Working Women's Hostel & Day Care Centre",
+      capacity: 85,
+      rooms: 28,
+      description: 'Two-storied facility with Day Care Centre for working mothers, researchers, and project fellows funded by Ministry of WCD and UGC.'
+    },
+    amenities: ['Pure RO Drinking Water', 'Community Mess & Dining Halls', 'Indoor Recreation & Badminton', 'Wi-Fi & Reading Rooms', 'Cooperative Store & Medical Care']
+  },
+
+  // --- 13. Academic Centres & Extension Master Data ---
+  academicCentres: [
+    {
+      id: 'ctr_kvk',
+      name: 'Krishi Vigyan Kendra (KVK - Farm Science Centre)',
+      mandate: 'Agricultural Technology Assessment, Farmer Demonstrations & Skill Training',
+      sponsor: 'Indian Council of Agricultural Research (ICAR)',
+      lead: 'Senior Scientist & Head, KVK',
+      activities: 'On-farm testing of bio-fertilizers, organic farming demonstrations, vocational trainings for rural youth, seed distribution.',
+      contact: 'kvk@ruraluniv.ac.in',
+      officialUrl: 'http://ruraluniv.ac.in/includes/academics/pdf/KVK.pdf'
+    },
+    {
+      id: 'ctr_women',
+      name: "Centre for Women's Studies (CWS)",
+      mandate: 'Gender Sensitization, Women Empowerment & Rural Livelihood Research',
+      sponsor: 'University Grants Commission (UGC)',
+      lead: 'Director, Centre for Women Studies',
+      activities: 'Women entrepreneurship training, legal literacy workshops, self-help group capacity building, rural gender surveys.',
+      contact: 'cws@ruraluniv.ac.in',
+      officialUrl: 'https://ruraluniv.ac.in/academics?content=womensstudies'
+    },
+    {
+      id: 'ctr_geoinfo',
+      name: 'Centre for Geoinformatics',
+      mandate: 'GIS, Remote Sensing & Spatial Modeling for Watershed & Rural Governance',
+      sponsor: 'DST / UGC',
+      lead: 'Director, Geoinformatics',
+      activities: 'Satellite imagery analysis, village cadastral mapping, drought vulnerability assessment, water body rejuvenation mapping.',
+      contact: 'geoinfo@ruraluniv.ac.in',
+      officialUrl: 'https://ruraluniv.ac.in/academics?content=geoinformatics'
+    },
+    {
+      id: 'ctr_energy',
+      name: 'Rural Energy Centre (REC)',
+      mandate: 'Decentralized Renewable Energy, Solar Photovoltaics & Biomass Gasification',
+      sponsor: 'MNRE / UGC',
+      lead: 'Director, Rural Energy Centre',
+      activities: 'Solar microgrid installations, smokeless chulhas, community biogas plants, energy audit of village clusters.',
+      contact: 'energy@ruraluniv.ac.in',
+      officialUrl: 'http://ruraluniv.ac.in/includes/academics/programmes/brochure/15330.pdf'
+    },
+    {
+      id: 'ctr_cseip',
+      name: 'Centre for Social Exclusion & Inclusive Policy (CSEIP)',
+      mandate: 'Policy Research on Scheduled Castes, Tribal Communities & Marginalized Groups',
+      sponsor: 'UGC',
+      lead: 'Director, CSEIP',
+      activities: 'Socio-economic studies, affirmative action impact evaluations, inclusive education seminars, policy advocacy.',
+      contact: 'cseip@ruraluniv.ac.in',
+      officialUrl: 'https://ruraluniv.ac.in/academics?content=cseip'
+    }
+  ],
+
+  // --- 14. Live 2026 Careers & Tenders Feed ---
+  careersAndTenders: [
+    {
+      id: 'car_legal_officer',
+      title: 'Walk-in-Interview: Temporary Post of Legal Officer',
+      type: 'CAREERS',
+      date: '06 Oct 2026',
+      time: '02:00 PM',
+      venue: 'Faculty Guest House, GRI Main Campus',
+      status: 'UPCOMING',
+      summary: 'Engagement of qualified Legal Officer on temporary contract. Candidates must bring original degree certificates and practice credentials.',
+      downloadUrl: 'https://www.ruraluniv.ac.in/'
+    },
+    {
+      id: 'ten_health_insurance',
+      title: 'Tender: Group Personal Accident & Health Insurance for Students',
+      type: 'TENDERS',
+      date: '05 Oct 2026',
+      time: '04:00 PM (Submission Deadline)',
+      venue: 'Office of the Registrar, GRI',
+      status: 'ACTIVE',
+      summary: 'Sealed competitive quotations invited from IRDA-approved insurance companies for tailor-made group student and research scholar medical policy.',
+      downloadUrl: 'https://www.ruraluniv.ac.in/'
+    },
+    {
+      id: 'car_guest_faculty',
+      title: 'Walk-in-Interview: Guest/Part-Time Faculty (English & Foreign Languages)',
+      type: 'CAREERS',
+      date: '16 Sep 2026',
+      time: '10:00 AM',
+      venue: 'School of English & Foreign Languages',
+      status: 'ARCHIVED',
+      summary: 'Engagement of Guest Teachers for Odd Semester 2026 with UGC-NET / Ph.D. qualification in English.',
+      downloadUrl: 'https://www.ruraluniv.ac.in/'
+    },
+    {
+      id: 'ten_civil_maintenance',
+      title: 'Notice Inviting Tender (NIT): Campus Maintenance & Civil Works',
+      type: 'TENDERS',
+      date: '28 Sep 2026',
+      time: '03:00 PM',
+      venue: 'Estate & Engineering Division, GRI',
+      status: 'ACTIVE',
+      summary: 'Quotations invited from registered CPWD/PWD contractors for compound wall repairs and facility upgradation in Centre for Rural Technology.',
+      downloadUrl: 'https://www.ruraluniv.ac.in/'
+    }
+  ],
+
+  // --- 15. The 7 Sacred Symbols of the Official GRI Emblem ---
+  emblemSymbols: [
+    { num: 1, name: 'Book on Open Lotus', meaning: 'Symbolizes enlightenment, spiritual awakening, and the purity of knowledge flourishing in rural soil.' },
+    { num: 2, name: 'Traditional Lamp (Ahal)', meaning: 'Represents dispelling darkness and ignorance through knowledge, reflecting the university motto of selfless service.' },
+    { num: 3, name: 'Traditional Kolam (Floor Art)', meaning: 'Celebrates rural Indian cultural aesthetics, geometry, domestic craftsmanship, and feminine auspiciousness.' },
+    { num: 4, name: 'Concentric Squares', meaning: 'Depicts structured integration of learning, community life, self-governance, and disciplined constructive action.' },
+    { num: 5, name: 'The Plough (Er)', meaning: 'Stands for agriculture, agrarian sustenance, the dignity of manual labor, and the empowerment of village farmers.' },
+    { num: 6, name: 'The Spinning Wheel (Charka)', meaning: 'Mahatma Gandhi’s supreme emblem of Swadeshi (self-reliance), khadi heritage, and decentralized rural economy.' },
+    { num: 7, name: 'Asclepius Rod & Bowl of Hygieia', meaning: 'Embodies rural community healthcare, sanitation, public hygiene, and compassion for all living beings.' }
+  ]
+
+
   // --- 10. Admin Content Management System (CMS) State ---
   cmsItems: [
     {
@@ -2159,67 +2411,241 @@ function renderAcademicsScreen() {
 }
 
 // Screen 3: Campus & Facilities Hub
+let currentCampusSubtab = 'facilities';
+
 function renderCampusScreen() {
+  const facs = state.facilities || [];
+  const hst = state.hostelsDirectory || {};
+  const ctrs = state.academicCentres || [];
+  const tndrs = state.careersAndTenders || [];
+
   el.screenCampus.innerHTML = `
-    <!-- Live Transit GPS Tracker Simulator -->
-    <div class="section-header-row">
-      <span class="section-title">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2c-4.42 0-8 .5-8 4v10c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4z"/></svg>
-        Live Transit GPS Radar
-      </span>
-      <span style="font-size: 11px; font-weight: 700; color: var(--color-success);">LIVE SATELLITE FEED</span>
+    <!-- Campus Hub Header with Sub-tabs Navigation -->
+    <div class="campus-subtab-bar">
+      <button class="campus-subtab-btn ${currentCampusSubtab === 'facilities' ? 'active' : ''}" data-subtab="facilities">🏛️ Facilities & Labs</button>
+      <button class="campus-subtab-btn ${currentCampusSubtab === 'hostels' ? 'active' : ''}" data-subtab="hostels">🏠 Hostels & Life</button>
+      <button class="campus-subtab-btn ${currentCampusSubtab === 'centres' ? 'active' : ''}" data-subtab="centres">🔬 Extension & KVK</button>
+      <button class="campus-subtab-btn ${currentCampusSubtab === 'careers' ? 'active' : ''}" data-subtab="careers">💼 Careers & Tenders</button>
+      <button class="campus-subtab-btn ${currentCampusSubtab === 'transit' ? 'active' : ''}" data-subtab="transit">🚌 Transit Radar</button>
     </div>
 
-    <div class="transit-map-simulation" id="transitMapSim">
-      <div class="map-grid-overlay"></div>
-      <div class="map-route-line"></div>
-      <div class="map-station-stop stop-start"></div>
-      <div class="map-station-stop stop-mid"></div>
-      <div class="map-station-stop stop-end"></div>
-      <div class="map-bus-pin" id="busRadarPin" style="left: 68%;">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M4 16c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10z"/></svg>
+    ${currentCampusSubtab === 'facilities' ? `
+      <!-- Facilities List with Authentic Photographs -->
+      <div class="section-header-row" style="margin-top: 0;">
+        <span class="section-title">Key Campus Facilities & Instrumentation</span>
+        <span class="role-pill-chip" style="background: var(--color-primary-container); color: var(--color-primary);">Verified Infrastructure</span>
       </div>
-      <div class="map-hud-overlay">
-        <span>Bus TN-57-N-2418 (Route 1)</span>
-        <span style="color: #34D399;">Speed: 42 km/h • ETA: 8 min</span>
-      </div>
-    </div>
 
-    <!-- Bus Routes List -->
-    ${state.busRoutes.map(route => `
-      <div class="card bus-route-card tilt-card" data-bus="${route.id}">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-          <div>
-            <h4 style="font-family: var(--font-display); font-size: 13px; font-weight: 700;">${route.name}</h4>
-            <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">
-              Bus ${route.busNo} • Driver: ${route.driver}
+      ${facs.map(fac => `
+        <div class="facility-card tilt-card">
+          <div class="facility-img-wrap">
+            <img src="${fac.image}" alt="${fac.name}" class="facility-img" onerror="this.src='/assets/gri_official_logo.png'">
+            <span class="facility-badge-float">${fac.badge}</span>
+          </div>
+          <div class="facility-body">
+            <span class="freshness-badge current" style="margin-bottom: 4px;">● ${fac.category.toUpperCase()}</span>
+            <h3 class="facility-title">${fac.name}</h3>
+            <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 4px; line-height: 1.4;">${fac.description}</p>
+            
+            <div class="facility-stats-grid">
+              ${fac.stats.map(s => `
+                <div class="facility-stat-pill">
+                  <div class="facility-stat-num">${s.num}</div>
+                  <div class="facility-stat-desc">${s.label}</div>
+                </div>
+              `).join('')}
             </div>
-            <div style="font-size: 11px; color: var(--color-primary); font-weight: 600; margin-top: 4px;">
-              ${route.status}
+
+            <div style="margin: 8px 0; font-size: 10px; color: var(--color-text-muted);">
+              <strong>Highlights:</strong> ${fac.features.join(' • ')}
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 11px;">
+              <span style="color: var(--color-text-secondary); font-size: 10px;">${fac.contact}</span>
+              <a href="${fac.officialUrl}" target="_blank" class="btn btn-sm btn-primary">Open Portal ↗</a>
             </div>
           </div>
-          <span style="font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--color-success);">${route.eta}</span>
         </div>
-        <div class="bus-action-row">
-          <a href="tel:${route.phone}" class="btn btn-sm btn-outline">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-            Call Driver
-          </a>
-          <button class="btn btn-sm btn-primary btn-track-bus" data-id="${route.id}">Track GPS</button>
+      `).join('')}
+    ` : ''}
+
+    ${currentCampusSubtab === 'hostels' ? `
+      <!-- Hostels & Residential Directory -->
+      <div class="card tilt-card" style="background: linear-gradient(135deg, rgba(0, 54, 34, 0.08) 0%, rgba(212, 160, 23, 0.08) 100%); margin-bottom: var(--space-md);">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <span class="freshness-badge current">● RESIDENTIAL LIFE</span>
+            <h3 style="font-family: var(--font-display); font-size: 15px; font-weight: 700; margin-top: 4px;">GRI Residential Community</h3>
+            <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">
+              Total Inmate Capacity: <strong>${hst.totalCapacity || '1,573'}</strong> • Gandhian Community Living
+            </p>
+          </div>
+          <div style="text-align: right;">
+            <span style="font-family: var(--font-display); font-size: 20px; font-weight: 800; color: var(--color-primary);">${hst.totalCapacity || '1,573'}</span>
+            <div style="font-size: 9px; color: var(--color-text-muted);">RESIDENTS</div>
+          </div>
+        </div>
+        <div style="margin-top: 8px; font-size: 10px; color: var(--color-text-secondary);">
+          <strong>Chief Warden:</strong> ${hst.chiefWarden}
         </div>
       </div>
-    `).join('')}
 
-    <!-- Landmarks -->
-    <div class="section-header-row" style="margin-top: var(--space-lg);">
-      <span class="section-title">Key Campus Facilities</span>
-    </div>
+      <!-- Boys Hostels -->
+      <div class="section-header-row">
+        <span class="section-title">Boys Hostels & Research Blocks</span>
+      </div>
+      ${(hst.boysHostels || []).map(b => `
+        <div class="card tilt-card" style="padding: 12px; margin-bottom: 8px;">
+          <div style="display: flex; justify-content: space-between;">
+            <h4 style="font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--color-primary);">${b.name}</h4>
+            <span class="role-pill-chip">${b.type}</span>
+          </div>
+          <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 4px; line-height: 1.35;">${b.description}</p>
+        </div>
+      `).join('')}
 
-    <div class="card tilt-card">
-      <h4 style="font-family: var(--font-display); font-size: 14px; font-weight: 700;">Dr. G. Ramachandran Central Library</h4>
-      <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">Over 1,75,000 volumes, rare Gandhian archives, RFID self-checkout kiosks.</p>
-    </div>
+      <!-- Ladies Hostels -->
+      <div class="section-header-row" style="margin-top: var(--space-md);">
+        <span class="section-title">Ladies Hostels Complex</span>
+      </div>
+      ${(hst.ladiesHostels || []).map(l => `
+        <div class="card tilt-card" style="padding: 12px; margin-bottom: 8px;">
+          <div style="display: flex; justify-content: space-between;">
+            <h4 style="font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--color-secondary);">${l.name}</h4>
+            <span class="role-pill-chip" style="background: rgba(212, 160, 23, 0.15); color: #B45309;">${l.type}</span>
+          </div>
+          <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 4px; line-height: 1.35;">${l.description}</p>
+        </div>
+      `).join('')}
+
+      <!-- Working Women's Hostel -->
+      ${hst.workingWomensHostel ? `
+        <div class="card tilt-card" style="border: 2px solid var(--color-primary); margin-top: var(--space-md); padding: 12px;">
+          <span class="freshness-badge current">● DAY CARE INTEGRATED</span>
+          <h4 style="font-family: var(--font-display); font-size: 13px; font-weight: 700; margin-top: 4px;">${hst.workingWomensHostel.name}</h4>
+          <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 4px; line-height: 1.35;">${hst.workingWomensHostel.description}</p>
+          <div style="display: flex; gap: 8px; margin-top: 6px; font-size: 11px; font-weight: 600; color: var(--color-primary);">
+            <span>Capacity: ${hst.workingWomensHostel.capacity} Inmates</span> • <span>Rooms: ${hst.workingWomensHostel.rooms}</span>
+          </div>
+        </div>
+      ` : ''}
+
+      <!-- Amenities -->
+      <div style="margin-top: var(--space-md); font-size: 10px; color: var(--color-text-muted); text-align: center;">
+        <strong>Common Amenities:</strong> ${(hst.amenities || []).join(' • ')}
+      </div>
+    ` : ''}
+
+    ${currentCampusSubtab === 'centres' ? `
+      <!-- Academic & Extension Centres -->
+      <div class="section-header-row" style="margin-top: 0;">
+        <span class="section-title">Specialized Research & Extension Centres</span>
+      </div>
+
+      ${ctrs.map(c => `
+        <div class="card tilt-card" style="padding: 12px; margin-bottom: var(--space-sm);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <h4 style="font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--color-primary);">${c.name}</h4>
+            <span class="role-pill-chip" style="font-size: 9px;">${c.sponsor}</span>
+          </div>
+          <div style="font-size: 11px; font-weight: 600; color: var(--color-text-primary); margin-top: 4px;">${c.mandate}</div>
+          <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 4px; line-height: 1.35;">${c.activities}</p>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 10px;">
+            <span style="color: var(--color-text-muted);">${c.lead} • ${c.contact}</span>
+            <a href="${c.officialUrl}" target="_blank" class="btn btn-sm btn-outline">Official Brochure ↗</a>
+          </div>
+        </div>
+      `).join('')}
+    ` : ''}
+
+    ${currentCampusSubtab === 'careers' ? `
+      <!-- Careers & Tenders Feed -->
+      <div class="section-header-row" style="margin-top: 0;">
+        <span class="section-title">Institutional Careers & Tenders 2026</span>
+        <span class="role-pill-chip" style="background: var(--color-error-bg); color: var(--color-error);">Statutory Notifications</span>
+      </div>
+
+      ${tndrs.map(t => `
+        <div class="tender-card tilt-card">
+          <div class="tender-header">
+            <div>
+              <span class="tender-badge">${t.type}</span>
+              <span class="freshness-badge ${t.status.toLowerCase()}" style="margin-left: 4px;">${t.status}</span>
+              <h4 style="font-family: var(--font-display); font-size: 13px; font-weight: 700; margin-top: 6px;">${t.title}</h4>
+            </div>
+          </div>
+          <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 6px; line-height: 1.4;">${t.summary}</p>
+          <div class="tender-deadline-box">
+            <div><strong>Date / Deadline:</strong> ${t.date} (${t.time})</div>
+            <div><strong>Venue:</strong> ${t.venue}</div>
+          </div>
+          <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
+            <a href="${t.downloadUrl}" target="_blank" class="btn btn-sm btn-primary">Download Official Order ↗</a>
+          </div>
+        </div>
+      `).join('')}
+    ` : ''}
+
+    ${currentCampusSubtab === 'transit' ? `
+      <!-- Live Transit GPS Tracker Simulator -->
+      <div class="section-header-row" style="margin-top: 0;">
+        <span class="section-title">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2c-4.42 0-8 .5-8 4v10c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4z"/></svg>
+          Live Transit GPS Radar
+        </span>
+        <span style="font-size: 11px; font-weight: 700; color: var(--color-success);">LIVE SATELLITE FEED</span>
+      </div>
+
+      <div class="transit-map-simulation" id="transitMapSim">
+        <div class="map-grid-overlay"></div>
+        <div class="map-route-line"></div>
+        <div class="map-station-stop stop-start"></div>
+        <div class="map-station-stop stop-mid"></div>
+        <div class="map-station-stop stop-end"></div>
+        <div class="map-bus-pin" id="busRadarPin" style="left: 68%;">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M4 16c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10z"/></svg>
+        </div>
+        <div class="map-hud-overlay">
+          <span>Bus TN-57-N-2418 (Route 1)</span>
+          <span style="color: #34D399;">Speed: 42 km/h • ETA: 8 min</span>
+        </div>
+      </div>
+
+      <!-- Bus Routes List -->
+      ${state.busRoutes.map(route => `
+        <div class="card bus-route-card tilt-card" data-bus="${route.id}">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <h4 style="font-family: var(--font-display); font-size: 13px; font-weight: 700;">${route.name}</h4>
+              <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">
+                Bus ${route.busNo} • Driver: ${route.driver}
+              </div>
+              <div style="font-size: 11px; color: var(--color-primary); font-weight: 600; margin-top: 4px;">
+                ${route.status}
+              </div>
+            </div>
+            <span style="font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--color-success);">${route.eta}</span>
+          </div>
+          <div class="bus-action-row">
+            <a href="tel:${route.phone}" class="btn btn-sm btn-outline">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+              Call Driver
+            </a>
+            <button class="btn btn-sm btn-primary btn-track-bus" data-id="${route.id}">Track GPS</button>
+          </div>
+        </div>
+      `).join('')}
+    ` : ''}
   `;
+
+  // Attach subtab click events
+  document.querySelectorAll('.campus-subtab-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      currentCampusSubtab = e.currentTarget.getAttribute('data-subtab');
+      HapticFeedback.click();
+      renderCampusScreen();
+    });
+  });
 
   document.querySelectorAll('.btn-track-bus').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -2416,6 +2842,20 @@ function renderAdminScreen() {
       </div>
     </div>
 
+    <!-- Institutional Content Management System (CMS) Banner -->
+    <div class="card tilt-card" style="background: linear-gradient(135deg, rgba(0, 54, 34, 0.08) 0%, rgba(212, 160, 23, 0.08) 100%); border: 1px solid var(--color-primary-container);">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <span class="freshness-badge current" style="margin-bottom: 4px;">● INSTITUTIONAL CMS ENGINE</span>
+          <h3 style="font-family: var(--font-display); font-size: 14px; font-weight: 700;">Central Publishing & Freshness Hub</h3>
+          <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">
+            ${state.cmsItems.length} announcements managed • Lifecycle State Machine
+          </p>
+        </div>
+        <button class="btn btn-sm btn-primary" id="btnAdminLaunchCms">CMS Studio →</button>
+      </div>
+    </div>
+
     <!-- Official Notice Publishing Studio -->
     <div class="card tilt-card">
       <div class="section-header-row" style="margin-top: 0;">
@@ -2475,6 +2915,7 @@ function renderAdminScreen() {
   `;
 
   document.getElementById('btnAdminOpenApprovals')?.addEventListener('click', () => switchTab('approvals'));
+  document.getElementById('btnAdminLaunchCms')?.addEventListener('click', openAdminCmsModal);
 
   const pubForm = document.getElementById('publishNoticeForm');
   if (pubForm) {
