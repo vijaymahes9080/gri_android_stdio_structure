@@ -8,11 +8,17 @@ import com.example.backend.GriKtorClient
 import com.example.backend.GriKtorServer
 import com.example.backend.HallTicketResponse
 import com.example.backend.ServerHealthResponse
+import com.example.data.local.AccountStatus
+import com.example.data.local.ApplicationHistoryEntry
 import com.example.data.local.CircularEntity
 import com.example.data.local.CourseEntity
 import com.example.data.local.GriDatabase
 import com.example.data.local.GrievanceEntity
+import com.example.data.local.InstitutionalAuditLog
+import com.example.data.local.InstitutionalPermission
 import com.example.data.local.PublishingAuditEntry
+import com.example.data.local.RegistrationApplication
+import com.example.data.local.RolePermissions
 import com.example.data.local.StaffLeaveRecord
 import com.example.data.local.TransportRouteEntity
 import com.example.data.local.UserEntity
@@ -35,6 +41,12 @@ enum class NavigationTab {
   CAMPUS,
   SERVICES,
   MORE,
+  // Role-specific dynamic institutional tabs
+  APPROVALS,
+  EXAMS,
+  RESEARCH,
+  STATUS,
+  AUDIT,
   // Backwards compatibility aliases
   EXPLORE,
   NEWS,
@@ -65,6 +77,17 @@ data class GriUiState(
   val isAuthenticated: Boolean = true,
   val currentTab: NavigationTab = NavigationTab.HOME,
   val currentUser: UserEntity? = null,
+  val activeAccountStatus: AccountStatus = AccountStatus.APPROVED,
+  val userPermissions: Set<InstitutionalPermission> = RolePermissions.getPermissionsForRole(UserRole.STUDENT),
+  val applicationsList: List<RegistrationApplication> = emptyList(),
+  val institutionalAuditTrail: List<InstitutionalAuditLog> = emptyList(),
+  val isRegistrationWizardOpen: Boolean = false,
+  val isRoleSwitcherOpen: Boolean = false,
+  val isAdminReviewOpen: Boolean = false,
+  val selectedApplication: RegistrationApplication? = null,
+  val applicationFilter: String = "ALL",
+  val applicationSearchQuery: String = "",
+  val allAvailableUsers: List<UserEntity> = emptyList(),
   val courses: List<CourseEntity> = emptyList(),
   val grievances: List<GrievanceEntity> = emptyList(),
   val transportRoutes: List<TransportRouteEntity> = emptyList(),
@@ -94,7 +117,7 @@ data class GriUiState(
   val isAskAiOpen: Boolean = false,
   val isGovernanceTerminalExpanded: Boolean = true,
   val activeAcademicTab: Int = 0, // 0: Courses, 1: Exams, 2: Grade Cards, 3: Calendar
-  val activeServicesCategory: String = "services", // "services", "admissions", "campus-life", "career-aid"
+  val activeServicesCategory: String = "services",
   val activeCampusFilter: String = "all",
   val verifiedDocumentStatus: String? = null,
   val simulatedRole: UserRole? = null
@@ -125,6 +148,87 @@ class GriViewModel(application: Application) : AndroidViewModel(application) {
         PublishingAuditEntry("aud_1", "CIR-2026-NOV-01", "Samarth@GRI Semester Examination Hall Tickets", "Controller of Examinations", "ADMIN", "Dr. M. Sadasivam (CoE)", "10 Nov 2026, 09:30 AM", "PUBLISHED"),
         PublishingAuditEntry("aud_2", "CIR-2026-NOV-02", "Nai Talim Village Internship Field Orientation", "Dean of Academic Affairs", "ADMIN", "Prof. R. Mani", "08 Nov 2026, 02:15 PM", "PUBLISHED"),
         PublishingAuditEntry("aud_3", "CIR-2026-NOV-03", "e-SANAD Digital Transcripts Verification Service Live", "Registrar's Secretariat", "ADMIN", "Dr. V.P.R. Sivakumar (Registrar)", "05 Nov 2026, 11:00 AM", "PUBLISHED")
+      ),
+      applicationsList = listOf(
+        RegistrationApplication(
+          id = "APP-2026-9042",
+          userId = "usr_pending",
+          fullName = "Kavitha Mohan",
+          email = "kavitha.m26@ruraluniv.ac.in",
+          mobile = "9840123456",
+          institutionalId = "2026-MA-8821",
+          requestedRole = UserRole.STUDENT,
+          department = "Department of Rural Development",
+          programme = "M.A. Rural Development",
+          yearSemester = "1st Year / Semester I",
+          status = AccountStatus.PENDING_APPROVAL,
+          submittedDate = "24 Sep 2026, 09:15 AM",
+          history = listOf(
+            ApplicationHistoryEntry("24 Sep 2026, 09:15 AM", "APPLICATION_SUBMITTED", "Kavitha Mohan", "Institutional registration submitted for Registry verification")
+          )
+        ),
+        RegistrationApplication(
+          id = "APP-2026-8819",
+          userId = "usr_review",
+          fullName = "Arun Kumar",
+          email = "arun.agri26@ruraluniv.ac.in",
+          mobile = "9710987654",
+          institutionalId = "2026-PHD-AGR-05",
+          requestedRole = UserRole.SCHOLAR,
+          department = "School of Agriculture & Rural Innovation",
+          programme = "Ph.D. Agronomy",
+          yearSemester = "Research Scholar",
+          researchTopic = "Sustainable Micro-Irrigation in Semiarid Rural Tamil Nadu",
+          status = AccountStatus.UNDER_REVIEW,
+          submittedDate = "23 Sep 2026, 03:40 PM",
+          adminQuery = "Please upload or provide your PG Degree Provisional Certificate register number and specify your specialization.",
+          history = listOf(
+            ApplicationHistoryEntry("23 Sep 2026, 03:40 PM", "APPLICATION_SUBMITTED", "Arun Kumar", "Registration submitted"),
+            ApplicationHistoryEntry("24 Sep 2026, 09:40 AM", "CLARIFICATION_REQUESTED", "Dr. M. Sangeetha (Registrar)", "Requested PG Degree Certificate registration details")
+          )
+        ),
+        RegistrationApplication(
+          id = "APP-2026-7201",
+          userId = "usr_rejected",
+          fullName = "Suresh Balan",
+          email = "suresh.b@gmail.com",
+          mobile = "9841122334",
+          institutionalId = "FAC-APPL-7201",
+          requestedRole = UserRole.FACULTY,
+          department = "Department of Computer Applications",
+          designation = "Assistant Professor (Contract)",
+          status = AccountStatus.REJECTED,
+          submittedDate = "22 Sep 2026, 02:10 PM",
+          rejectionReason = "Candidate does not possess required UGC-NET / SLET qualification or Ph.D. in Computer Science as per 2026 faculty norms.",
+          history = listOf(
+            ApplicationHistoryEntry("22 Sep 2026, 02:10 PM", "APPLICATION_SUBMITTED", "Suresh Balan", "Faculty application submitted"),
+            ApplicationHistoryEntry("23 Sep 2026, 04:15 PM", "APPLICATION_REJECTED", "Dr. M. Sangeetha (Registrar)", "Rejected due to UGC minimum qualification criteria")
+          )
+        ),
+        RegistrationApplication(
+          id = "APP-2024-1102",
+          userId = "usr_student",
+          fullName = "Vijay Pradhap",
+          email = "vijay.p24@ruraluniv.ac.in",
+          mobile = "9876543210",
+          institutionalId = "2024-MS-4011",
+          requestedRole = UserRole.STUDENT,
+          department = "Computer Science & Applications",
+          programme = "M.Sc. Computer Science",
+          yearSemester = "2nd Year / Semester IV",
+          status = AccountStatus.APPROVED,
+          submittedDate = "15 Jun 2024, 10:00 AM",
+          history = listOf(
+            ApplicationHistoryEntry("15 Jun 2024, 10:00 AM", "APPLICATION_SUBMITTED", "Vijay Pradhap", "Application submitted"),
+            ApplicationHistoryEntry("16 Jun 2024, 11:30 AM", "APPLICATION_APPROVED", "Dr. M. Sangeetha (Registrar)", "Account verified and STUDENT role activated")
+          )
+        )
+      ),
+      institutionalAuditTrail = listOf(
+        InstitutionalAuditLog("AUD-101", "24 Sep 2026, 09:15 AM", "System Registry", "SYSTEM", "REGISTRATION_SUBMITTED", "Kavitha Mohan", "STUDENT", "NONE", "PENDING_APPROVAL", "Applicant registered via Institutional Portal"),
+        InstitutionalAuditLog("AUD-102", "24 Sep 2026, 09:40 AM", "Dr. M. Sangeetha", "ADMIN", "CLARIFICATION_REQUESTED", "Arun Kumar", "SCHOLAR", "PENDING_APPROVAL", "UNDER_REVIEW", "Requested PG Degree Certificate registration details"),
+        InstitutionalAuditLog("AUD-103", "23 Sep 2026, 04:15 PM", "Dr. M. Sangeetha", "ADMIN", "APPLICATION_REJECTED", "Suresh Balan", "FACULTY", "PENDING_APPROVAL", "REJECTED", "UGC-NET qualification missing"),
+        InstitutionalAuditLog("AUD-104", "22 Sep 2026, 11:30 AM", "Dr. M. Sangeetha", "ADMIN", "APPLICATION_APPROVED", "Vijay Pradhap", "STUDENT", "PENDING_APPROVAL", "APPROVED", "Approved student registration and activated portal access")
       )
     )
   )
@@ -219,6 +323,470 @@ class GriViewModel(application: Application) : AndroidViewModel(application) {
     }
   }
 
+  // --- Institutional Audit Trail Logger ---
+  fun addAuditLog(
+    adminName: String,
+    adminRole: String,
+    action: String,
+    targetUser: String,
+    targetRole: String,
+    prev: String,
+    newSt: String,
+    notes: String
+  ) {
+    val dateStr = SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault()).format(Date())
+    val log = InstitutionalAuditLog(
+      id = "AUD-${System.currentTimeMillis() % 100000}",
+      timestamp = dateStr,
+      adminName = adminName,
+      adminRole = adminRole,
+      action = action,
+      targetUser = targetUser,
+      targetRole = targetRole,
+      previousState = prev,
+      newState = newSt,
+      reasonOrNotes = notes
+    )
+    _uiState.update {
+      it.copy(institutionalAuditTrail = listOf(log) + it.institutionalAuditTrail)
+    }
+  }
+
+  // --- Multi-Account & Role Switching (No Fake Elevation) ---
+  fun switchUserAccount(user: UserEntity) {
+    val role = try { UserRole.valueOf(user.role) } catch (e: Exception) { UserRole.GUEST }
+    val status = user.getAccountStatusEnum()
+    val permissions = RolePermissions.getPermissionsForRole(role)
+
+    _uiState.update {
+      it.copy(
+        currentUser = user,
+        currentRole = role,
+        activeAccountStatus = status,
+        userPermissions = permissions,
+        isAuthenticated = role != UserRole.GUEST && role != UserRole.PUBLIC && status == AccountStatus.APPROVED,
+        currentTab = when {
+          status != AccountStatus.APPROVED -> NavigationTab.STATUS
+          role == UserRole.ADMIN || role == UserRole.SUPER_ADMIN -> NavigationTab.HOME
+          role == UserRole.COE_STAFF -> NavigationTab.EXAMS
+          role == UserRole.SCHOLAR -> NavigationTab.RESEARCH
+          else -> NavigationTab.HOME
+        },
+        notificationMessage = "Account active: ${user.name} (${user.role} • ${user.accountStatus})"
+      )
+    }
+  }
+
+  fun switchAuthorizedRole(role: UserRole) {
+    val current = _uiState.value.currentUser ?: return
+    val approvedRoles = current.getApprovedRolesList()
+    if (!approvedRoles.contains(role)) {
+      _uiState.update {
+        it.copy(notificationMessage = "Access Denied: Role ${role.name} has not been approved by Registrar for this account.")
+      }
+      return
+    }
+
+    val updatedUser = current.copy(role = role.name)
+    val permissions = RolePermissions.getPermissionsForRole(role)
+
+    viewModelScope.launch {
+      repository.saveUser(updatedUser)
+    }
+
+    addAuditLog(
+      adminName = current.name,
+      adminRole = current.role,
+      action = "ROLE_ACTIVATED",
+      targetUser = current.name,
+      targetRole = role.name,
+      prev = current.role,
+      newSt = role.name,
+      notes = "User switched active session to authorized role ${role.name}"
+    )
+
+    _uiState.update {
+      it.copy(
+        currentUser = updatedUser,
+        currentRole = role,
+        userPermissions = permissions,
+        isRoleSwitcherOpen = false,
+        notificationMessage = "Active institutional role: ${role.name}",
+        currentTab = when (role) {
+          UserRole.ADMIN, UserRole.SUPER_ADMIN -> NavigationTab.HOME
+          UserRole.COE_STAFF -> NavigationTab.EXAMS
+          UserRole.SCHOLAR -> NavigationTab.RESEARCH
+          else -> NavigationTab.HOME
+        }
+      )
+    }
+  }
+
+  // --- Registration Wizard ---
+  fun openRegistrationWizard() {
+    _uiState.update { it.copy(isRegistrationWizardOpen = true) }
+  }
+
+  fun closeRegistrationWizard() {
+    _uiState.update { it.copy(isRegistrationWizardOpen = false) }
+  }
+
+  fun submitRegistrationApplication(
+    fullName: String,
+    email: String,
+    mobile: String,
+    institutionalId: String,
+    requestedRole: UserRole,
+    department: String,
+    programme: String = "",
+    yearSemester: String = "",
+    designation: String = "",
+    researchTopic: String = ""
+  ) {
+    val dateStr = SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault()).format(Date())
+    val appId = "APP-2026-${(1000..9999).random()}"
+    val userId = "usr_app_${System.currentTimeMillis() % 10000}"
+
+    val newApplicant = UserEntity(
+      id = userId,
+      name = fullName,
+      email = email,
+      role = UserRole.GUEST.name,
+      rollNo = institutionalId,
+      department = department,
+      semester = programme.ifEmpty { designation.ifEmpty { "Applicant" } },
+      cgpa = "Pending",
+      isHostelite = false,
+      busPassActive = false,
+      validThru = "Pending",
+      accountStatus = AccountStatus.PENDING_APPROVAL.name,
+      approvedRolesCsv = "GUEST",
+      requestedRole = requestedRole.name,
+      applicationId = appId,
+      applicationDate = dateStr,
+      mobileNumber = mobile,
+      designation = designation
+    )
+
+    val newApp = RegistrationApplication(
+      id = appId,
+      userId = userId,
+      fullName = fullName,
+      email = email,
+      mobile = mobile,
+      institutionalId = institutionalId,
+      requestedRole = requestedRole,
+      department = department,
+      programme = programme,
+      yearSemester = yearSemester,
+      designation = designation,
+      researchTopic = researchTopic,
+      status = AccountStatus.PENDING_APPROVAL,
+      submittedDate = dateStr,
+      history = listOf(
+        ApplicationHistoryEntry(dateStr, "APPLICATION_SUBMITTED", fullName, "Applicant registered institutional account request for $requestedRole")
+      )
+    )
+
+    viewModelScope.launch {
+      repository.saveUser(newApplicant)
+    }
+
+    addAuditLog(
+      adminName = "System Registry",
+      adminRole = "PORTAL",
+      action = "REGISTRATION_SUBMITTED",
+      targetUser = fullName,
+      targetRole = requestedRole.name,
+      prev = "NONE",
+      newSt = "PENDING_APPROVAL",
+      notes = "New application submitted with ID $appId"
+    )
+
+    _uiState.update {
+      it.copy(
+        applicationsList = listOf(newApp) + it.applicationsList,
+        currentUser = newApplicant,
+        currentRole = UserRole.GUEST,
+        activeAccountStatus = AccountStatus.PENDING_APPROVAL,
+        userPermissions = RolePermissions.getPermissionsForRole(UserRole.GUEST),
+        isRegistrationWizardOpen = false,
+        currentTab = NavigationTab.STATUS,
+        notificationMessage = "Application submitted! Application ID: $appId (Pending Approval)"
+      )
+    }
+  }
+
+  // --- Applicant Clarification (Under Review Flow) ---
+  fun submitApplicantClarification(appId: String, clarification: String) {
+    val dateStr = SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault()).format(Date())
+    val current = _uiState.value.currentUser
+
+    _uiState.update { state ->
+      val updatedApps = state.applicationsList.map { app ->
+        if (app.id == appId) {
+          app.copy(
+            applicantResponse = clarification,
+            status = AccountStatus.UNDER_REVIEW,
+            history = app.history + ApplicationHistoryEntry(
+              dateStr,
+              "CLARIFICATION_PROVIDED",
+              app.fullName,
+              "Applicant provided requested clarification: $clarification"
+            )
+          )
+        } else app
+      }
+
+      val updatedUser = current?.copy(
+        applicantClarificationResponse = clarification,
+        accountStatus = AccountStatus.UNDER_REVIEW.name
+      )
+
+      if (updatedUser != null) {
+        viewModelScope.launch { repository.saveUser(updatedUser) }
+      }
+
+      state.copy(
+        applicationsList = updatedApps,
+        currentUser = updatedUser ?: state.currentUser,
+        notificationMessage = "Clarification submitted to Admin review queue."
+      )
+    }
+
+    addAuditLog(
+      adminName = current?.name ?: "Applicant",
+      adminRole = "APPLICANT",
+      action = "CLARIFICATION_PROVIDED",
+      targetUser = current?.name ?: appId,
+      targetRole = current?.requestedRole ?: "UNKNOWN",
+      prev = "UNDER_REVIEW",
+      newSt = "UNDER_REVIEW",
+      notes = clarification
+    )
+  }
+
+  // --- Admin Approval Center Workflows ---
+  fun openAdminReviewModal(app: RegistrationApplication) {
+    _uiState.update {
+      it.copy(
+        selectedApplication = app,
+        isAdminReviewOpen = true
+      )
+    }
+  }
+
+  fun closeAdminReviewModal() {
+    _uiState.update {
+      it.copy(
+        isAdminReviewOpen = false,
+        selectedApplication = null
+      )
+    }
+  }
+
+  fun adminApproveApplication(appId: String) {
+    val currentAdmin = _uiState.value.currentUser
+    val dateStr = SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault()).format(Date())
+    val targetApp = _uiState.value.applicationsList.find { it.id == appId } ?: return
+
+    _uiState.update { state ->
+      val updatedApps = state.applicationsList.map { app ->
+        if (app.id == appId) {
+          app.copy(
+            status = AccountStatus.APPROVED,
+            history = app.history + ApplicationHistoryEntry(
+              dateStr,
+              "APPLICATION_APPROVED",
+              currentAdmin?.name ?: "Registrar",
+              "Account approved. Role ${app.requestedRole} activated."
+            )
+          )
+        } else app
+      }
+
+      state.copy(
+        applicationsList = updatedApps,
+        isAdminReviewOpen = false,
+        selectedApplication = null,
+        notificationMessage = "Application approved! Role ${targetApp.requestedRole} activated for ${targetApp.fullName}."
+      )
+    }
+
+    // Persist user role activation
+    viewModelScope.launch {
+      val user = repository.getUserById(targetApp.userId)
+      if (user != null) {
+        val approvedUser = user.copy(
+          accountStatus = AccountStatus.APPROVED.name,
+          role = targetApp.requestedRole.name,
+          approvedRolesCsv = targetApp.requestedRole.name
+        )
+        repository.saveUser(approvedUser)
+      }
+    }
+
+    addAuditLog(
+      adminName = currentAdmin?.name ?: "Dr. M. Sangeetha",
+      adminRole = "ADMIN",
+      action = "APPLICATION_APPROVED",
+      targetUser = targetApp.fullName,
+      targetRole = targetApp.requestedRole.name,
+      prev = targetApp.status.name,
+      newSt = "APPROVED",
+      notes = "Registrar confirmed approval. Permissions activated."
+    )
+  }
+
+  fun adminRejectApplication(appId: String, reason: String) {
+    val currentAdmin = _uiState.value.currentUser
+    val dateStr = SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault()).format(Date())
+    val targetApp = _uiState.value.applicationsList.find { it.id == appId } ?: return
+
+    _uiState.update { state ->
+      val updatedApps = state.applicationsList.map { app ->
+        if (app.id == appId) {
+          app.copy(
+            status = AccountStatus.REJECTED,
+            rejectionReason = reason,
+            history = app.history + ApplicationHistoryEntry(
+              dateStr,
+              "APPLICATION_REJECTED",
+              currentAdmin?.name ?: "Registrar",
+              "Application rejected. Reason: $reason"
+            )
+          )
+        } else app
+      }
+
+      state.copy(
+        applicationsList = updatedApps,
+        isAdminReviewOpen = false,
+        selectedApplication = null,
+        notificationMessage = "Application rejected. Reason logged in institutional audit trail."
+      )
+    }
+
+    viewModelScope.launch {
+      val user = repository.getUserById(targetApp.userId)
+      if (user != null) {
+        val rejectedUser = user.copy(
+          accountStatus = AccountStatus.REJECTED.name,
+          rejectionReason = reason
+        )
+        repository.saveUser(rejectedUser)
+      }
+    }
+
+    addAuditLog(
+      adminName = currentAdmin?.name ?: "Dr. M. Sangeetha",
+      adminRole = "ADMIN",
+      action = "APPLICATION_REJECTED",
+      targetUser = targetApp.fullName,
+      targetRole = targetApp.requestedRole.name,
+      prev = targetApp.status.name,
+      newSt = "REJECTED",
+      notes = reason
+    )
+  }
+
+  fun adminRequestMoreInformation(appId: String, query: String) {
+    val currentAdmin = _uiState.value.currentUser
+    val dateStr = SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault()).format(Date())
+    val targetApp = _uiState.value.applicationsList.find { it.id == appId } ?: return
+
+    _uiState.update { state ->
+      val updatedApps = state.applicationsList.map { app ->
+        if (app.id == appId) {
+          app.copy(
+            status = AccountStatus.UNDER_REVIEW,
+            adminQuery = query,
+            history = app.history + ApplicationHistoryEntry(
+              dateStr,
+              "CLARIFICATION_REQUESTED",
+              currentAdmin?.name ?: "Registrar",
+              "Admin requested clarification: $query"
+            )
+          )
+        } else app
+      }
+
+      state.copy(
+        applicationsList = updatedApps,
+        isAdminReviewOpen = false,
+        selectedApplication = null,
+        notificationMessage = "Clarification request sent to applicant."
+      )
+    }
+
+    viewModelScope.launch {
+      val user = repository.getUserById(targetApp.userId)
+      if (user != null) {
+        val userUnderReview = user.copy(
+          accountStatus = AccountStatus.UNDER_REVIEW.name,
+          adminClarificationQuery = query
+        )
+        repository.saveUser(userUnderReview)
+      }
+    }
+
+    addAuditLog(
+      adminName = currentAdmin?.name ?: "Dr. M. Sangeetha",
+      adminRole = "ADMIN",
+      action = "CLARIFICATION_REQUESTED",
+      targetUser = targetApp.fullName,
+      targetRole = targetApp.requestedRole.name,
+      prev = targetApp.status.name,
+      newSt = "UNDER_REVIEW",
+      notes = query
+    )
+  }
+
+  fun adminSuspendAccount(userId: String, reason: String) {
+    val currentAdmin = _uiState.value.currentUser
+    viewModelScope.launch {
+      val user = repository.getUserById(userId)
+      if (user != null) {
+        val suspended = user.copy(
+          accountStatus = AccountStatus.SUSPENDED.name,
+          rejectionReason = reason
+        )
+        repository.saveUser(suspended)
+      }
+    }
+
+    addAuditLog(
+      adminName = currentAdmin?.name ?: "Dr. M. Sangeetha",
+      adminRole = "ADMIN",
+      action = "ACCOUNT_SUSPENDED",
+      targetUser = userId,
+      targetRole = "USER",
+      prev = "ACTIVE",
+      newSt = "SUSPENDED",
+      notes = reason
+    )
+
+    _uiState.update {
+      it.copy(notificationMessage = "Account $userId has been suspended.")
+    }
+  }
+
+  fun setApplicationFilter(filter: String) {
+    _uiState.update { it.copy(applicationFilter = filter) }
+  }
+
+  fun setApplicationSearchQuery(query: String) {
+    _uiState.update { it.copy(applicationSearchQuery = query) }
+  }
+
+  fun toggleRoleSwitcher(open: Boolean) {
+    _uiState.update { it.copy(isRoleSwitcherOpen = open) }
+  }
+
+  fun hasPermission(permission: InstitutionalPermission): Boolean {
+    return _uiState.value.userPermissions.contains(permission)
+  }
+
   // --- Authentication & Role-Based Access Control ---
   fun openLoginDialog() {
     _uiState.update { it.copy(isLoginDialogOpen = true) }
@@ -233,6 +801,7 @@ class GriViewModel(application: Application) : AndroidViewModel(application) {
       _uiState.update {
         it.copy(
           currentRole = role,
+          userPermissions = RolePermissions.getPermissionsForRole(role),
           isAuthenticated = role != UserRole.GUEST && role != UserRole.PUBLIC,
           isLoginDialogOpen = false
         )
@@ -256,6 +825,7 @@ class GriViewModel(application: Application) : AndroidViewModel(application) {
       _uiState.update {
         it.copy(
           currentRole = UserRole.GUEST,
+          activeAccountStatus = AccountStatus.APPROVED,
           isAuthenticated = false,
           currentTab = NavigationTab.HOME,
           hallTicketData = null,
@@ -317,13 +887,13 @@ class GriViewModel(application: Application) : AndroidViewModel(application) {
     }
   }
 
+  // Backward compatibility methods
   fun simulateRole(role: UserRole) {
-    _uiState.update { it.copy(simulatedRole = role) }
-    loginAsRole(role)
+    switchAuthorizedRole(role)
   }
 
   fun switchRole(role: UserRole) {
-    loginAsRole(role)
+    switchAuthorizedRole(role)
   }
 
   fun markAttendance(courseId: String) {

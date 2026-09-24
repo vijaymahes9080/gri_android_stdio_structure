@@ -2,6 +2,7 @@ package com.example.data.repository
 
 import com.example.backend.GriKtorClient
 import com.example.backend.GriKtorServer
+import com.example.data.local.AccountStatus
 import com.example.data.local.CircularEntity
 import com.example.data.local.CourseEntity
 import com.example.data.local.GriDatabase
@@ -31,23 +32,40 @@ class GriRepository(
     return database.userDao().getUserByRole(role.name)
   }
 
+  suspend fun getUserById(id: String): UserEntity? {
+    return database.userDao().getUserById(id)
+  }
+
+  suspend fun saveUser(user: UserEntity) {
+    database.userDao().insertUser(user)
+  }
+
+  fun getAllUsers(): Flow<List<UserEntity>> {
+    return database.userDao().getAllUsers()
+  }
+
   suspend fun initializeAndSeedIfEmpty() = withContext(Dispatchers.IO) {
     val existingUsers = database.userDao().getAllUsers().first()
     if (existingUsers.isEmpty()) {
-      // Seed initial users
+      // Seed initial institutional users
       val defaultUsers = listOf(
         UserEntity(
           id = "usr_student",
-          name = "Srimari Vijay",
-          email = "srimarivijay@gmail.com",
+          name = "Vijay Pradhap",
+          email = "vijay.p24@ruraluniv.ac.in",
           role = UserRole.STUDENT.name,
-          rollNo = "23MCA042",
+          rollNo = "2024-MS-4011",
           department = "Computer Science & Applications",
           semester = "Semester IV (Final Year)",
           cgpa = "8.92",
           isHostelite = true,
           busPassActive = true,
-          validThru = "2026-12-31"
+          validThru = "2026-12-31",
+          accountStatus = AccountStatus.APPROVED.name,
+          approvedRolesCsv = "STUDENT",
+          requestedRole = "STUDENT",
+          applicationId = "APP-2024-1102",
+          mobileNumber = "9876543210"
         ),
         UserEntity(
           id = "usr_faculty",
@@ -60,7 +78,51 @@ class GriRepository(
           cgpa = "Ph.D. IIT Madras",
           isHostelite = false,
           busPassActive = true,
-          validThru = "2030-05-31"
+          validThru = "2030-05-31",
+          accountStatus = AccountStatus.APPROVED.name,
+          approvedRolesCsv = "FACULTY,SCHOLAR",
+          requestedRole = "FACULTY",
+          applicationId = "APP-2018-0512",
+          designation = "Associate Professor & Research Guide",
+          mobileNumber = "9442158900"
+        ),
+        UserEntity(
+          id = "usr_admin",
+          name = "Dr. M. Sangeetha",
+          email = "registrar@ruraluniv.ac.in",
+          role = UserRole.ADMIN.name,
+          rollNo = "ADMIN-GRI-01",
+          department = "Central Administration & Samarth ERP Hub",
+          semester = "Registrar's Directorate",
+          cgpa = "Chief Institutional Officer",
+          isHostelite = false,
+          busPassActive = true,
+          validThru = "Permanent",
+          accountStatus = AccountStatus.APPROVED.name,
+          approvedRolesCsv = "ADMIN",
+          requestedRole = "ADMIN",
+          applicationId = "APP-2015-001",
+          designation = "Registrar & Chief Governance Officer",
+          mobileNumber = "9443322110"
+        ),
+        UserEntity(
+          id = "usr_coe",
+          name = "Dr. K. Ramanathan",
+          email = "coe@ruraluniv.ac.in",
+          role = UserRole.COE_STAFF.name,
+          rollNo = "COE-OFF-09",
+          department = "Office of the Controller of Examinations",
+          semester = "CoE Secretariat",
+          cgpa = "Examination Directorate",
+          isHostelite = false,
+          busPassActive = true,
+          validThru = "2029-12-31",
+          accountStatus = AccountStatus.APPROVED.name,
+          approvedRolesCsv = "COE_STAFF",
+          requestedRole = "COE_STAFF",
+          applicationId = "APP-2019-0941",
+          designation = "Deputy Controller of Examinations",
+          mobileNumber = "9488112233"
         ),
         UserEntity(
           id = "usr_scholar",
@@ -73,46 +135,52 @@ class GriRepository(
           cgpa = "UGC JRF Fellow",
           isHostelite = true,
           busPassActive = false,
-          validThru = "2028-06-30"
+          validThru = "2028-06-30",
+          accountStatus = AccountStatus.APPROVED.name,
+          approvedRolesCsv = "SCHOLAR",
+          requestedRole = "SCHOLAR",
+          applicationId = "APP-2024-3401",
+          designation = "Doctoral Research Fellow",
+          mobileNumber = "9790012345"
         ),
         UserEntity(
-          id = "usr_alumni",
-          name = "K. Rajesh Kumar",
-          email = "k.rajesh@alumni.ruraluniv.ac.in",
-          role = UserRole.ALUMNI.name,
-          rollNo = "18MCA015",
-          department = "Computer Science & Applications",
-          semester = "Batch of 2020 Alumnus",
-          cgpa = "Distinction (9.1)",
+          id = "usr_pending",
+          name = "Kavitha Mohan",
+          email = "kavitha.m26@ruraluniv.ac.in",
+          role = UserRole.GUEST.name,
+          rollNo = "2026-MA-8821",
+          department = "Department of Rural Development",
+          semester = "Applicant (Pending Verification)",
+          cgpa = "Under Review",
           isHostelite = false,
           busPassActive = false,
-          validThru = "Lifetime"
+          validThru = "Pending",
+          accountStatus = AccountStatus.PENDING_APPROVAL.name,
+          approvedRolesCsv = "GUEST",
+          requestedRole = "STUDENT",
+          applicationId = "APP-2026-9042",
+          applicationDate = "24 Sep 2026, 09:15 AM",
+          mobileNumber = "9840123456"
         ),
         UserEntity(
-          id = "usr_admin",
-          name = "GRI Controller of Examinations",
-          email = "coe@ruraluniv.ac.in",
-          role = UserRole.ADMIN.name,
-          rollNo = "ADMIN-GRI-01",
-          department = "Central Administration & Samarth ERP Hub",
-          semester = "Administrative Directorate",
-          cgpa = "Authorized Officer",
+          id = "usr_review",
+          name = "Arun Kumar",
+          email = "arun.agri26@ruraluniv.ac.in",
+          role = UserRole.GUEST.name,
+          rollNo = "2026-PHD-AGR-05",
+          department = "School of Agriculture & Rural Innovation",
+          semester = "Applicant (Clarification Required)",
+          cgpa = "Under Review",
           isHostelite = false,
-          busPassActive = true,
-          validThru = "Permanent"
-        ),
-        UserEntity(
-          id = "usr_staff",
-          name = "K. Shanmugasundaram",
-          email = "k.shanmugam@ruraluniv.ac.in",
-          role = UserRole.STAFF.name,
-          rollNo = "STF-ADM-042",
-          department = "Finance & Establishment Section",
-          semester = "Section Officer / Superintendent",
-          cgpa = "Cadre: Group B Non-Teaching",
-          isHostelite = false,
-          busPassActive = true,
-          validThru = "2032-03-31"
+          busPassActive = false,
+          validThru = "Under Review",
+          accountStatus = AccountStatus.UNDER_REVIEW.name,
+          approvedRolesCsv = "GUEST",
+          requestedRole = "SCHOLAR",
+          applicationId = "APP-2026-8819",
+          applicationDate = "23 Sep 2026, 03:40 PM",
+          mobileNumber = "9710987654",
+          adminClarificationQuery = "Please upload or provide your PG Degree Provisional Certificate register number and specify your specialization."
         ),
         UserEntity(
           id = "usr_guest",
@@ -125,20 +193,11 @@ class GriRepository(
           cgpa = "N/A",
           isHostelite = false,
           busPassActive = false,
-          validThru = "2026-12-31"
-        ),
-        UserEntity(
-          id = "usr_public",
-          name = "Gandhigram Visitor",
-          email = "guest@ruraluniv.ac.in",
-          role = UserRole.PUBLIC.name,
-          rollNo = "GUEST",
-          department = "Gandhigram Rural Institute",
-          semester = "Guest / Prospective Student",
-          cgpa = "N/A",
-          isHostelite = false,
-          busPassActive = false,
-          validThru = "2026"
+          validThru = "2026-12-31",
+          accountStatus = AccountStatus.APPROVED.name,
+          approvedRolesCsv = "GUEST",
+          requestedRole = "GUEST",
+          applicationId = "GST-SESSION"
         )
       )
       database.userDao().insertUsers(defaultUsers)
