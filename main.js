@@ -364,7 +364,7 @@ function renderHomeScreen() {
           <div class="student-dept">${u.department}</div>
         </div>
         <div class="student-avatar-wrap">
-          <img src="/assets/gri_emblem_3d.jpg" alt="${u.name}" class="student-avatar-img">
+          <img src="/assets/student_avatar.jpg" alt="${u.name}" class="student-avatar-img">
           <span class="hero-badge-live">LIVE</span>
         </div>
       </div>
@@ -685,15 +685,18 @@ function renderServicesScreen() {
         <!-- Front Face -->
         <div class="id-card-face id-card-front">
           <div class="id-card-top-row">
-            <div>
-              <div class="id-univ-header">THE GANDHIGRAM RURAL INSTITUTE</div>
-              <div style="font-size: 9px; opacity: 0.85;">(Deemed to be University) • NAAC 'A+' Grade</div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <img src="/assets/gri_official_logo.png" alt="GRI Logo" style="width: 28px; height: 28px; object-fit: contain; background: #fff; border-radius: 4px; padding: 2px;">
+              <div>
+                <div class="id-univ-header">THE GANDHIGRAM RURAL INSTITUTE</div>
+                <div style="font-size: 9px; opacity: 0.85;">(Deemed to be University) • NAAC 'A+' Grade</div>
+              </div>
             </div>
             <div class="id-chip-icon"></div>
           </div>
 
           <div class="id-center-info">
-            <img src="/assets/gri_emblem_3d.jpg" alt="${u.name}" class="id-student-photo">
+            <img src="/assets/student_avatar.jpg" alt="${u.name}" class="id-student-photo">
             <div>
               <div class="id-student-name">${u.name}</div>
               <div class="id-student-roll">${u.rollNo}</div>
@@ -1054,20 +1057,24 @@ function openHallTicketModal() {
 
   el.hallTicketView.innerHTML = `
     <div class="hall-ticket-paper" id="printableTicket">
-      <div class="ht-header">
+      <div class="ht-header" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+        <img src="/assets/gri_official_logo.png" alt="GRI Official Logo" style="width: 50px; height: 50px; object-fit: contain; margin-bottom: 6px;">
         <h2 class="ht-univ-title">THE GANDHIGRAM RURAL INSTITUTE</h2>
         <div class="ht-sub-title">(Deemed to be University) • Gandhigram, Dindigul District, Tamil Nadu</div>
         <div style="font-weight: 800; font-size: 13px; margin-top: 4px; color: #003622;">END SEMESTER EXAMINATIONS • NOV / DEC 2026</div>
         <div style="font-size: 11px; color: #64748B;">OFFICIAL EXAMINATION HALL TICKET • REGISTRAR COPY</div>
       </div>
 
-      <div class="ht-student-grid">
-        <div><strong>Student Name:</strong> ${u.name}</div>
-        <div><strong>Register / Roll No:</strong> ${u.rollNo}</div>
-        <div><strong>Degree / Programme:</strong> ${u.program}</div>
-        <div><strong>Semester:</strong> ${u.semester}</div>
-        <div><strong>Department:</strong> ${u.department}</div>
-        <div><strong>Hall Ticket No:</strong> ${ht.ticketNo}</div>
+      <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 12px; background: #F8FAFD; padding: 10px; border-radius: 8px;">
+        <img src="/assets/student_avatar.jpg" alt="${u.name}" style="width: 64px; height: 64px; border-radius: 6px; object-fit: cover; border: 1.5px solid #CBD5E1; flex-shrink: 0;">
+        <div class="ht-student-grid" style="flex: 1; margin-bottom: 0; background: transparent; padding: 0;">
+          <div><strong>Student Name:</strong> ${u.name}</div>
+          <div><strong>Register / Roll No:</strong> ${u.rollNo}</div>
+          <div><strong>Degree / Programme:</strong> ${u.program}</div>
+          <div><strong>Semester:</strong> ${u.semester}</div>
+          <div><strong>Department:</strong> ${u.department}</div>
+          <div><strong>Hall Ticket No:</strong> ${ht.ticketNo}</div>
+        </div>
       </div>
 
       <div style="font-size: 11px; margin-bottom: 8px;"><strong>Examination Center:</strong> ${ht.center}</div>
