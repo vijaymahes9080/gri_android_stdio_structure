@@ -2271,8 +2271,50 @@ fun PublicExploreScreen(
       }
       item {
         com.example.ui.components.GriOfficialLinkCard(
-          title = "Samarth eGov Central University Portal",
-          url = "https://gri.samarth.edu.in/"
+          title = "Samarth@GRI ERP Portal",
+          url = "https://ruraluniv.samarth.ac.in/index.php/site/login"
+        )
+      }
+      item {
+        com.example.ui.components.GriOfficialLinkCard(
+          title = "Student Examination Portal",
+          url = "https://portal.ruraluniv.ac.in/"
+        )
+      }
+      item {
+        com.example.ui.components.GriOfficialLinkCard(
+          title = "Online Attendance Portal",
+          url = "https://attendance.ruraluniv.ac.in/"
+        )
+      }
+      item {
+        com.example.ui.components.GriOfficialLinkCard(
+          title = "Tatkal Scheme (48-Hr Degree)",
+          url = "https://www.portal.ruraluniv.ac.in/tatkal"
+        )
+      }
+      item {
+        com.example.ui.components.GriOfficialLinkCard(
+          title = "e-SANAD Attestation Portal",
+          url = "https://www.portal.ruraluniv.ac.in/esanad"
+        )
+      }
+      item {
+        com.example.ui.components.GriOfficialLinkCard(
+          title = "Convocation XXXIX Portal",
+          url = "https://convocation.ruraluniv.ac.in/"
+        )
+      }
+      item {
+        com.example.ui.components.GriOfficialLinkCard(
+          title = "Pensioner Digital Portal",
+          url = "https://pension.ruraluniv.ac.in/"
+        )
+      }
+      item {
+        com.example.ui.components.GriOfficialLinkCard(
+          title = "Alumni Association (GRI-AA)",
+          url = "https://ruraluniv.ac.in/includes/AlumniGRI"
         )
       }
       item {

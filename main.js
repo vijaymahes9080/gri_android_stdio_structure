@@ -1109,7 +1109,7 @@ const state = {
     { num: 5, name: 'The Plough (Er)', meaning: 'Stands for agriculture, agrarian sustenance, the dignity of manual labor, and the empowerment of village farmers.' },
     { num: 6, name: 'The Spinning Wheel (Charka)', meaning: 'Mahatma Gandhi’s supreme emblem of Swadeshi (self-reliance), khadi heritage, and decentralized rural economy.' },
     { num: 7, name: 'Asclepius Rod & Bowl of Hygieia', meaning: 'Embodies rural community healthcare, sanitation, public hygiene, and compassion for all living beings.' }
-  ]
+  ],
 
 
   // --- 10. Admin Content Management System (CMS) State ---
@@ -1672,6 +1672,19 @@ function renderHomeScreen() {
   const isCoE = u.activeRole === 'COE_STAFF';
 
   el.screenHome.innerHTML = `
+    <!-- Official Institutional Banner Header -->
+    <div style="background: #fff; border-radius: var(--radius-md); padding: 6px; margin-bottom: var(--space-sm); border: 1px solid var(--color-surface-border); text-align: center; box-shadow: var(--shadow-sm);">
+      <img src="/assets/official_banner.png" alt="Gandhigram Rural Institute" style="width: 100%; max-height: 48px; object-fit: contain;">
+    </div>
+
+    <!-- Live Campus Announcement Ticker -->
+    <div style="background: rgba(0, 54, 34, 0.06); border: 1px solid rgba(0, 54, 34, 0.2); border-radius: var(--radius-sm); padding: 6px 10px; margin-bottom: var(--space-sm); display: flex; align-items: center; gap: 8px;">
+      <span class="freshness-badge current" style="flex-shrink: 0; font-size: 9px; padding: 2px 6px;">● LIVE NOTICE</span>
+      <div style="font-size: 11px; font-weight: 600; color: var(--color-primary); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; flex: 1;">
+        Convocation XXXIX Registration Open • Legal Officer Walk-in Oct 6 • Student Health Insurance Tender (Due: Oct 5) • ESE Nov/Dec 2026 Timetable Released
+      </div>
+    </div>
+
     <!-- Hero Identity Card -->
     <div class="card hero-student-card tilt-card" id="heroStudentCard">
       <div class="hero-profile-row">
@@ -2727,6 +2740,28 @@ function renderServicesScreen() {
         </div>
       </div>
     ` : ''}
+
+    <!-- Official Institutional Sub-Portals Direct Access Dock -->
+    <div class="section-header-row" style="margin-top: var(--space-md);">
+      <span class="section-title">Official Institutional Web Portals</span>
+      <span class="role-pill-chip" style="background: var(--color-primary-container); color: var(--color-primary);">Direct Access Dock</span>
+    </div>
+
+    <div class="portal-dock-grid">
+      ${state.officialPortals.map(p => `
+        <a href="${p.url}" target="_blank" class="portal-dock-item tilt-card">
+          <div>
+            <div class="portal-item-top">
+              <span class="portal-category-tag">${p.category}</span>
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor" style="color: var(--color-primary);"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+            </div>
+            <div class="portal-title-text">${p.title}</div>
+            <div class="portal-desc-text">${p.desc}</div>
+          </div>
+          <div class="portal-link-arrow">Launch ↗</div>
+        </a>
+      `).join('')}
+    </div>
 
     <!-- Zero Ragging & GRI-Care Form -->
     <div class="section-header-row" style="margin-top: var(--space-md);">
@@ -4067,6 +4102,30 @@ function renderAboutScreen() {
       </div>
     </div>
 
+    <!-- 7 Sacred Symbols of the GRI Emblem -->
+    <div class="card tilt-card" style="margin-bottom: var(--space-md);">
+      <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 12px;">
+        <img src="/assets/grilogotya.jpg" alt="Official GRI Emblem" style="width: 64px; height: 64px; object-fit: contain; background: #fff; border-radius: 8px; border: 1.5px solid var(--color-primary-container); padding: 2px;">
+        <div>
+          <span class="freshness-badge current">● EMBLEM ICONOGRAPHY</span>
+          <h3 style="font-family: var(--font-display); font-size: 14px; font-weight: 700; margin-top: 2px;">7 Sacred Symbols of the GRI Seal</h3>
+          <p style="font-size: 10px; color: var(--color-text-secondary); margin-top: 2px;">Synthesizing spiritual wisdom, rural labor, science, and Gandhian philosophy.</p>
+        </div>
+      </div>
+
+      <div class="emblem-symbol-grid">
+        ${(state.emblemSymbols || []).map(sym => `
+          <div class="emblem-symbol-card">
+            <div class="symbol-num-badge">${sym.num}</div>
+            <div style="flex: 1;">
+              <div style="font-family: var(--font-display); font-size: 12px; font-weight: 700; color: var(--color-primary);">${sym.name}</div>
+              <div style="font-size: 10px; color: var(--color-text-secondary); margin-top: 2px; line-height: 1.35;">${sym.meaning}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
     <!-- University Leadership Directory -->
     <div class="section-header-row">
       <span class="section-title">Institutional Leadership & Officers</span>
@@ -4298,6 +4357,66 @@ function renderSearchResults(query = '') {
           title: b.name,
           subtitle: `Bus ${b.busNo} • Driver: ${b.driver} • ETA: ${b.eta}`,
           action: () => { closeGlobalSearch(); switchTab('campus'); }
+        });
+      }
+    });
+  }
+
+  // Search across facilities & laboratories
+  if (currentSearchCategory === 'all' || currentSearchCategory === 'campus') {
+    (state.facilities || []).forEach(f => {
+      if (!q || f.name.toLowerCase().includes(q) || f.category.toLowerCase().includes(q) || f.description.toLowerCase().includes(q)) {
+        results.push({
+          type: 'Facility & Lab',
+          category: f.category,
+          title: f.name,
+          subtitle: `${f.badge} • ${f.contact}`,
+          action: () => { closeGlobalSearch(); switchTab('campus'); }
+        });
+      }
+    });
+  }
+
+  // Search across academic centres & KVK
+  if (currentSearchCategory === 'all' || currentSearchCategory === 'campus') {
+    (state.academicCentres || []).forEach(c => {
+      if (!q || c.name.toLowerCase().includes(q) || c.mandate.toLowerCase().includes(q)) {
+        results.push({
+          type: 'Research & Extension Centre',
+          category: c.sponsor,
+          title: c.name,
+          subtitle: `${c.mandate} • ${c.lead}`,
+          action: () => { closeGlobalSearch(); switchTab('campus'); }
+        });
+      }
+    });
+  }
+
+  // Search across careers & tenders
+  if (currentSearchCategory === 'all' || currentSearchCategory === 'campus') {
+    (state.careersAndTenders || []).forEach(t => {
+      if (!q || t.title.toLowerCase().includes(q) || t.type.toLowerCase().includes(q) || t.summary.toLowerCase().includes(q)) {
+        results.push({
+          type: t.type,
+          category: t.status,
+          title: t.title,
+          subtitle: `${t.date} (${t.time}) • ${t.venue}`,
+          action: () => { closeGlobalSearch(); switchTab('campus'); }
+        });
+      }
+    });
+  }
+
+  // Search across official web portals
+  if (currentSearchCategory === 'all') {
+    (state.officialPortals || []).forEach(p => {
+      if (!q || p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)) {
+        results.push({
+          type: 'Official Web Portal',
+          category: p.category,
+          title: p.title,
+          subtitle: `${p.desc} • ${p.url}`,
+          action: () => { window.open(p.url, '_blank'); }
         });
       }
     });
