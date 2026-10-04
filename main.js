@@ -5,6 +5,31 @@
  * ============================================================================
  */
 
+import {
+  isSupabaseConfigured,
+  supabase,
+  signUpUser,
+  signInUser,
+  signOutUser,
+  getCurrentSession,
+  onAuthStateChange,
+  fetchUserProfile,
+  fetchPendingApplications,
+  updateApplicationDecision,
+  submitApplicantClarification,
+  logAuditEntry,
+  fetchAuditLogs,
+  fetchPublishedCirculars,
+  createCircularNotice,
+  fetchUserGrievances,
+  submitGrievanceTicket,
+  fetchFacultyLeaves,
+  submitFacultyLeaveApplication,
+  fetchNotifications,
+  markAllNotificationsAsRead,
+  subscribeToTableChanges
+} from './supabaseClient.js';
+
 // --- 1. Institutional Permissions Definition ---
 const PERMISSIONS = {
   // Public
@@ -1222,6 +1247,9 @@ const el = {
   themeBtnText: document.getElementById('themeBtnText'),
   quickSyncBtn: document.getElementById('quickSyncBtn'),
   globalAccountSelect: document.getElementById('globalAccountSelect'),
+  desktopUserLabel: document.getElementById('desktopUserLabel'),
+  btnAuthActionDesktop: document.getElementById('btnAuthActionDesktop'),
+  authStatusIndicator: document.getElementById('authStatusIndicator'),
   openRegisterBtn: document.getElementById('openRegisterBtn'),
   currentRoleChip: document.getElementById('currentRoleChip'),
   roleBadgeBtn: document.getElementById('roleBadgeBtn'),
