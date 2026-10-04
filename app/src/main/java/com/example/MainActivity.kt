@@ -2,6 +2,7 @@ package com.example
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -218,6 +219,28 @@ fun GriApp(
     uiState.notificationMessage?.let { msg ->
       snackbarHostState.showSnackbar(msg)
       onClearNotification()
+    }
+  }
+
+  BackHandler(
+    enabled = showLoginDialog ||
+      uiState.isRegistrationWizardOpen ||
+      uiState.isRoleSwitcherOpen ||
+      uiState.isAdminReviewOpen ||
+      uiState.isAskAiOpen ||
+      uiState.isDocumentCenterOpen ||
+      uiState.isFacultyPortalOpen ||
+      uiState.currentTab != NavigationTab.HOME
+  ) {
+    when {
+      showLoginDialog -> showLoginDialog = false
+      uiState.isRegistrationWizardOpen -> onCloseRegister()
+      uiState.isAdminReviewOpen -> onCloseAdminReview()
+      uiState.isRoleSwitcherOpen -> onToggleRoleSwitcher(false)
+      uiState.isAskAiOpen -> onToggleAskAi(false)
+      uiState.isDocumentCenterOpen -> onToggleDocumentCenter(false)
+      uiState.isFacultyPortalOpen -> onToggleFacultyPortal(false)
+      uiState.currentTab != NavigationTab.HOME -> onTabSelected(NavigationTab.HOME)
     }
   }
 
@@ -566,6 +589,28 @@ fun GriApp(
             OfficialDocumentCenterScreen(
               uiState = uiState,
               onVerifyAuthenticity = onVerifyDocument
+            )
+          }
+          NavigationTab.AUDIT -> {
+            AdminDirectoryScreen(
+              uiState = uiState,
+              onRoleSelected = onRoleSelected,
+              onTriggerSync = onTriggerSync,
+              onToggleServer = onToggleServer,
+              onPublishCircular = onPublishCircular
+            )
+          }
+          else -> {
+            HomeDashboardScreen(
+              uiState = uiState,
+              onNavigateToAcademics = { onTabSelected(NavigationTab.ACADEMICS) },
+              onNavigateToServices = { onTabSelected(NavigationTab.SERVICES) },
+              onNavigateToCampus = { onTabSelected(NavigationTab.CAMPUS) },
+              onNavigateToAdmin = { onTabSelected(NavigationTab.APPROVALS) },
+              onNavigateToDocuments = { onToggleDocumentCenter(true) },
+              onNavigateToFaculty = { onToggleFacultyPortal(true) },
+              onFetchHallTicket = onFetchHallTicket,
+              onOpenAiSearch = { onToggleAskAi(true) }
             )
           }
         }

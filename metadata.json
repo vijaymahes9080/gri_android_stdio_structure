@@ -1,8 +1,0 @@
-{
-  "name": "GRI Portal",
-  "description": "Comprehensive Gandhigram Rural Institute digital campus portal featuring academic management, hall ticket generation, digital ID cards, grievance management, campus bus transport tracking, and announcements.",
-  "requestFramePermissions": [],
-  "majorCapabilities": [
-    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
-  ]
-}
