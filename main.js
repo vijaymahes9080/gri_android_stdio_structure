@@ -262,6 +262,24 @@ const state = {
       rejectionReason: null,
       infoRequested: 'Please provide your UG Consolidated Marksheet Reference Number and official community quota verification document.',
       infoProvided: null
+    },
+    {
+      id: 'usr_public',
+      name: 'Public Visitor',
+      email: 'visitor@ruraluniv.ac.in',
+      mobile: 'Not Provided',
+      institutionalId: 'GRI-PUBLIC-VISITOR',
+      status: 'PUBLIC',
+      approvedRoles: ['PUBLIC'],
+      activeRole: 'PUBLIC',
+      department: 'General Public & Prospective Applicant',
+      program: 'Institutional Public Portal',
+      submittedAt: 'Active Session',
+      reviewedAt: null,
+      reviewedBy: null,
+      rejectionReason: null,
+      infoRequested: null,
+      infoProvided: null
     }
   ],
 
@@ -346,6 +364,21 @@ const state = {
   sahayakMessages: [
     { isBot: true, text: "Vanakkam! I am GRI-Sahayak, your institutional AI guide for The Gandhigram Rural Institute (Deemed to be University). Ask me about Admissions 2026, CBCS courses, examination hall tickets, 75% attendance criteria, hostels, or campus transit.", source: 'ruraluniv.ac.in • Official UGC Registry' }
   ],
+
+  // Universal Notifications
+  notifications: [
+    { id: 'notif_1', title: 'End Semester Hall Ticket Released', text: 'Nov/Dec 2026 Examination hall tickets are live on e-SANAD with cryptographic QR seal.', time: '10m ago', unread: true, targetModal: 'hallTicket' },
+    { id: 'notif_2', title: 'Registration Status Notification', text: 'Central Administrative Registry processed 14 applicant verification dossiers today.', time: '20m ago', unread: true, targetTab: 'approvals' },
+    { id: 'notif_3', title: 'Campus Transit Route 1 Live', text: 'Bus TN-57-N-2418 is running on schedule approaching Chinnalapatti.', time: '25m ago', unread: true, targetTab: 'campus' }
+  ],
+
+  // Faculty Leave Applications Ledger
+  facultyLeaves: [
+    { id: 'LV-2026-08', type: 'On-Duty (Academic)', startDate: '2026-10-12', endDate: '2026-10-14', reason: 'UGC National Seminar on Rural Informatics', status: 'APPROVED' }
+  ],
+
+  // CoE Examination Batch State
+  hallTicketsCohortIssued: false,
 
   // --- 1. Leadership Directory ---
   leadership: {
@@ -1199,9 +1232,13 @@ const el = {
   // Modals
   authModal: document.getElementById('authModal'),
   closeAuthBtn: document.getElementById('closeAuthBtn'),
+  brandLockup: document.getElementById('brandLockup'),
   loginForm: document.getElementById('loginForm'),
   loginEmail: document.getElementById('loginEmail'),
   loginPassword: document.getElementById('loginPassword'),
+  loginSubmitBtn: document.getElementById('loginSubmitBtn'),
+  loginSubmitText: document.getElementById('loginSubmitText'),
+  loginFeedback: document.getElementById('loginFeedback'),
   quickAuthButtonsGrid: document.getElementById('quickAuthButtonsGrid'),
   linkOpenRegister: document.getElementById('linkOpenRegister'),
   linkPublicVisitor: document.getElementById('linkPublicVisitor'),
@@ -1463,21 +1500,35 @@ function updateDynamicNavigation() {
 function switchTab(tabId) {
   HapticFeedback.click();
 
-  // If user is unapproved and tries to access protected tab -> redirect to status screen
+  const publicTabs = ['home', 'status', 'admissions', 'exams', 'scholarships', 'about', 'campus'];
+
+  // If user is unapproved and tries to access restricted institutional module -> redirect to status screen
   if (state.currentUser && state.currentUser.status !== 'APPROVED') {
-    if (tabId !== 'status' && tabId !== 'home') {
+    if (!publicTabs.includes(tabId)) {
       tabId = 'status';
-      showToast('Account is pending approval. Showing registration status.', 'info');
+      showToast('Account is pending approval. Restricted institutional modules require verification.', 'info');
     }
   }
 
-  // Permission Gate
+  // Permission Gate for Protected Role Screens
   if (tabId === 'approvals' && !checkPermission(PERMISSIONS.APPROVE_REJECT_APPLICATIONS)) {
     showToast('Unauthorized: Administrator approval permission required.', 'error');
     return;
   }
   if (tabId === 'admin' && !checkPermission(PERMISSIONS.VIEW_ADMIN_DASHBOARD) && !checkPermission(PERMISSIONS.PUBLISH_STATUTORY_CIRCULARS)) {
     showToast('Unauthorized: Institutional admin access required.', 'error');
+    return;
+  }
+  if (tabId === 'coe' && (!state.currentUser || (state.currentUser.activeRole !== 'COE_STAFF' && state.currentUser.activeRole !== 'ADMIN'))) {
+    showToast('Unauthorized: CoE Directorate credentials required.', 'error');
+    return;
+  }
+  if (tabId === 'faculty' && (!state.currentUser || (state.currentUser.activeRole !== 'FACULTY' && state.currentUser.activeRole !== 'ADMIN'))) {
+    showToast('Unauthorized: Faculty academic credentials required.', 'error');
+    return;
+  }
+  if (tabId === 'scholar' && (!state.currentUser || (state.currentUser.activeRole !== 'SCHOLAR' && state.currentUser.activeRole !== 'ADMIN' && state.currentUser.activeRole !== 'FACULTY'))) {
+    showToast('Unauthorized: Research Scholar credentials required.', 'error');
     return;
   }
 
@@ -1512,11 +1563,21 @@ function switchTab(tabId) {
 
 // --- 11. Authentication & Session Engine ---
 function authenticateUser(userAccountId) {
+  if (userAccountId === 'usr_public') {
+    state.currentUser = null;
+    if (el.globalAccountSelect) el.globalAccountSelect.value = 'usr_public';
+    showToast('Viewing portal as unauthenticated Public Visitor');
+    state.currentTab = 'home';
+    updateDynamicNavigation();
+    switchTab('home');
+    return;
+  }
+
   const account = state.accounts.find(a => a.id === userAccountId);
   if (!account) return;
 
   state.currentUser = account;
-  el.globalAccountSelect.value = userAccountId;
+  if (el.globalAccountSelect) el.globalAccountSelect.value = userAccountId;
   HapticFeedback.success();
 
   if (account.status === 'APPROVED') {
@@ -1534,6 +1595,7 @@ function authenticateUser(userAccountId) {
 function openAuthModal() {
   HapticFeedback.click();
   renderQuickAuthButtons();
+  if (el.loginFeedback) el.loginFeedback.style.display = 'none';
   el.authModal.classList.add('active');
 }
 
@@ -1542,8 +1604,9 @@ function closeAuthModal() {
 }
 
 function renderQuickAuthButtons() {
-  el.quickAuthButtonsGrid.innerHTML = state.accounts.map(acc => `
-    <button class="btn btn-sm ${acc.id === state.currentUser?.id ? 'btn-primary' : 'btn-outline'} btn-quick-auth" data-id="${acc.id}" style="text-align: left; padding: 6px 8px; font-size: 10px;">
+  const quickList = state.accounts.filter(a => a.id !== 'usr_public');
+  el.quickAuthButtonsGrid.innerHTML = quickList.map(acc => `
+    <button type="button" class="btn btn-sm ${acc.id === state.currentUser?.id ? 'btn-primary' : 'btn-outline'} btn-quick-auth" data-id="${acc.id}" style="text-align: left; padding: 6px 8px; font-size: 10px;">
       <div style="font-weight: 700; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${acc.name.split(' ')[0]} (${acc.activeRole || acc.status})</div>
       <div style="font-size: 9px; opacity: 0.8;">Status: ${acc.status}</div>
     </button>
@@ -1665,11 +1728,14 @@ function renderDynamicRoleFields(role) {
 
 // Screen 1: Home Dashboard (Intelligent Role-Aware Dashboard)
 function renderHomeScreen() {
-  const u = state.currentUser || state.accounts[1];
-  const isStudent = u.activeRole === 'STUDENT';
-  const isAdmin = u.activeRole === 'ADMIN';
-  const isFaculty = u.activeRole === 'FACULTY';
-  const isCoE = u.activeRole === 'COE_STAFF';
+  const u = state.currentUser;
+  const isPublic = !u || u.status === 'PUBLIC';
+  const isStudent = u && u.activeRole === 'STUDENT';
+  const isAdmin = u && u.activeRole === 'ADMIN';
+  const isFaculty = u && u.activeRole === 'FACULTY';
+  const isCoE = u && u.activeRole === 'COE_STAFF';
+  const isScholar = u && u.activeRole === 'SCHOLAR';
+  const isPending = u && (u.status === 'PENDING' || u.status === 'UNDER_REVIEW');
 
   el.screenHome.innerHTML = `
     <!-- Official Institutional Banner Header -->
@@ -1685,34 +1751,62 @@ function renderHomeScreen() {
       </div>
     </div>
 
-    <!-- Hero Identity Card -->
-    <div class="card hero-student-card tilt-card" id="heroStudentCard">
-      <div class="hero-profile-row">
-        <div class="student-meta-info">
-          <h1>${u.name}</h1>
-          <div class="student-sub">${u.institutionalId || 'GRI-MEMBER'} • ${u.program || u.activeRole}</div>
-          <div class="student-dept">${u.department || 'The Gandhigram Rural Institute'}</div>
+    ${isPublic ? `
+      <!-- Public Visitor Welcome Banner -->
+      <div class="card hero-student-card tilt-card" id="heroPublicCard" style="background: linear-gradient(135deg, #003622 0%, #004d32 100%);">
+        <div class="hero-profile-row">
+          <div class="student-meta-info">
+            <span class="freshness-badge current" style="background: rgba(255,255,255,0.2); color: #fff; margin-bottom: 6px;">● PUBLIC VISITOR ACCESS</span>
+            <h1 style="color: #fff; font-size: 18px;">Welcome to GRI Campus</h1>
+            <div class="student-sub" style="color: rgba(255,255,255,0.85);">The Gandhigram Rural Institute • Deemed to be University</div>
+            <div class="student-dept" style="color: rgba(255,255,255,0.75);">NAAC 'A+' Grade (CGPA: 3.34) • Gandhigram, Tamil Nadu</div>
+          </div>
+          <div class="student-avatar-wrap">
+            <img src="/assets/gri_official_logo.png" alt="GRI Official Emblem" class="student-avatar-img" style="background: #fff; padding: 4px;">
+            <span class="hero-badge-live" style="background: #D4A017;">VISITOR</span>
+          </div>
         </div>
-        <div class="student-avatar-wrap">
-          <img src="/assets/${isStudent ? 'student_avatar.jpg' : 'gri_official_logo.png'}" alt="${u.name}" class="student-avatar-img">
-          <span class="hero-badge-live">VERIFIED</span>
+        <div style="display: flex; gap: 8px; margin-top: var(--space-md); padding-top: var(--space-sm); border-top: 1px solid rgba(255,255,255,0.15);">
+          <button class="btn btn-sm btn-primary" id="btnHomeSignIn" style="flex: 1; background: #fff; color: #003622; font-weight: 700;">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.89-2-2-2z"/></svg>
+            Institutional Sign In
+          </button>
+          <button class="btn btn-sm btn-outline" id="btnHomeRegister" style="flex: 1; border-color: rgba(255,255,255,0.4); color: #fff;">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            Register Account
+          </button>
         </div>
       </div>
-      <div class="hero-stats-row">
-        <div class="mini-stat-col">
-          <span class="mini-stat-label">Active Role</span>
-          <span class="mini-stat-val highlight">${u.activeRole}</span>
+    ` : `
+      <!-- Authenticated Hero Identity Card -->
+      <div class="card hero-student-card tilt-card" id="heroStudentCard">
+        <div class="hero-profile-row">
+          <div class="student-meta-info">
+            <h1>${u.name}</h1>
+            <div class="student-sub">${u.institutionalId || 'GRI-MEMBER'} • ${u.program || u.activeRole}</div>
+            <div class="student-dept">${u.department || 'The Gandhigram Rural Institute'}</div>
+          </div>
+          <div class="student-avatar-wrap">
+            <img src="/assets/${isStudent ? 'student_avatar.jpg' : 'gri_official_logo.png'}" alt="${u.name}" class="student-avatar-img">
+            <span class="hero-badge-live">VERIFIED</span>
+          </div>
         </div>
-        <div class="mini-stat-col">
-          <span class="mini-stat-label">Approval Status</span>
-          <span class="mini-stat-val" style="color: var(--color-success);">✓ ${u.status}</span>
-        </div>
-        <div class="mini-stat-col">
-          <span class="mini-stat-label">Authorized Roles</span>
-          <span class="mini-stat-val" style="font-size: 11px;">${u.approvedRoles.join(', ')}</span>
+        <div class="hero-stats-row">
+          <div class="mini-stat-col">
+            <span class="mini-stat-label">Active Role</span>
+            <span class="mini-stat-val highlight">${u.activeRole}</span>
+          </div>
+          <div class="mini-stat-col">
+            <span class="mini-stat-label">Approval Status</span>
+            <span class="mini-stat-val" style="color: var(--color-success);">✓ ${u.status}</span>
+          </div>
+          <div class="mini-stat-col">
+            <span class="mini-stat-label">Authorized Roles</span>
+            <span class="mini-stat-val" style="font-size: 11px;">${u.approvedRoles && u.approvedRoles.length ? u.approvedRoles.join(', ') : u.activeRole}</span>
+          </div>
         </div>
       </div>
-    </div>
+    `}
 
     ${isAdmin ? `
       <!-- Admin Governance Quick Launch Bar -->
@@ -1725,6 +1819,71 @@ function renderHomeScreen() {
             </p>
           </div>
           <button class="btn btn-sm btn-primary" id="btnGoToApprovals">Open Approval Center →</button>
+        </div>
+      </div>
+    ` : ''}
+
+    ${isFaculty ? `
+      <!-- Faculty Suite Quick Bar -->
+      <div class="card tilt-card" style="border-left: 4px solid var(--color-primary); background: linear-gradient(135deg, var(--color-surface-card), var(--color-surface-elevated));">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h3 style="font-family: var(--font-display); font-size: 14px; font-weight: 700;">Faculty & Staff Academic Suite</h3>
+            <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">
+              CS501 Class Roster • Lecture Biometrics • Staff Duty Leave
+            </p>
+          </div>
+          <div style="display: flex; gap: 6px;">
+            <button class="btn btn-sm btn-outline" id="btnHomeTeachingRoster">Teaching</button>
+            <button class="btn btn-sm btn-primary" id="btnHomeOpenFacultySuite">Suite →</button>
+          </div>
+        </div>
+      </div>
+    ` : ''}
+
+    ${isCoE ? `
+      <!-- CoE Quick Bar -->
+      <div class="card tilt-card" style="border-left: 4px solid var(--color-secondary); background: linear-gradient(135deg, var(--color-surface-card), var(--color-surface-elevated));">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h3 style="font-family: var(--font-display); font-size: 14px; font-weight: 700;">CoE Examination Directorate</h3>
+            <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">
+              Tabulation Branch • e-SANAD Cryptographic Registry
+            </p>
+          </div>
+          <div style="display: flex; gap: 6px;">
+            <button class="btn btn-sm btn-outline" id="btnHomeMasterTickets">Master Ticket</button>
+            <button class="btn btn-sm btn-primary" id="btnHomeExamOps">Exam Ops →</button>
+          </div>
+        </div>
+      </div>
+    ` : ''}
+
+    ${isScholar ? `
+      <!-- Research Scholar Quick Bar -->
+      <div class="card tilt-card" style="border-left: 4px solid var(--color-tertiary); background: linear-gradient(135deg, var(--color-surface-card), var(--color-surface-elevated));">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h3 style="font-family: var(--font-display); font-size: 14px; font-weight: 700;">Doctoral Research & Consortia</h3>
+            <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">
+              e-ShodhSindhu • DELNET • JRF Monthly Fellowship
+            </p>
+          </div>
+          <button class="btn btn-sm btn-primary" id="btnHomeScholarSuite">Research Suite →</button>
+        </div>
+      </div>
+    ` : ''}
+
+    ${isPending ? `
+      <!-- Pending Verification Alert -->
+      <div class="card tilt-card" style="border-left: 4px solid var(--color-warning); background: var(--color-surface-elevated);">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <span class="status-badge-pill pending" style="margin-bottom: 4px;">APPLICATION ${u.status}</span>
+            <h3 style="font-family: var(--font-display); font-size: 13px; font-weight: 700; margin-top: 2px;">Application: ${u.applicationId || 'GRI-2026-APP'}</h3>
+            <p style="font-size: 11px; color: var(--color-text-secondary);">Awaiting statutory verification by Dean & Registrar.</p>
+          </div>
+          <button class="btn btn-sm btn-primary" id="btnHomeViewStatus">View Status →</button>
         </div>
       </div>
     ` : ''}
@@ -1801,23 +1960,19 @@ function renderHomeScreen() {
         <span class="action-btn-label">Document Hub</span>
       </button>
 
-      ${checkPermission(PERMISSIONS.VIEW_HALL_TICKET) ? `
-        <button class="action-card-btn" id="btnQuickHallTicket">
-          <div class="action-icon-circle">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M22 10V6c0-1.11-.9-2-2-2H4c-1.1 0-1.99.89-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2z"/></svg>
-          </div>
-          <span class="action-btn-label">Hall Ticket</span>
-        </button>
-      ` : ''}
+      <button class="action-card-btn" id="btnQuickHallTicket">
+        <div class="action-icon-circle">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M22 10V6c0-1.11-.9-2-2-2H4c-1.1 0-1.99.89-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2z"/></svg>
+        </div>
+        <span class="action-btn-label">Hall Ticket</span>
+      </button>
 
-      ${checkPermission(PERMISSIONS.VIEW_TRANSIT_RADAR) ? `
-        <button class="action-card-btn" id="btnQuickBus">
-          <div class="action-icon-circle">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2c-4.42 0-8 .5-8 4v10c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4z"/></svg>
-          </div>
-          <span class="action-btn-label">Transit Radar</span>
-        </button>
-      ` : ''}
+      <button class="action-card-btn" id="btnQuickBus">
+        <div class="action-icon-circle">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2c-4.42 0-8 .5-8 4v10c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4z"/></svg>
+        </div>
+        <span class="action-btn-label">Transit Radar</span>
+      </button>
     </div>
 
     <!-- Official Notices Feed with Freshness Indicators -->
@@ -1828,7 +1983,7 @@ function renderHomeScreen() {
 
     <div class="circulars-list">
       ${state.circulars.map(c => `
-        <div class="notice-item-card tilt-card" data-id="${c.id}">
+        <div class="notice-item-card tilt-card" data-id="${c.id}" style="cursor: pointer;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
             <span class="notice-pill-tag ${c.urgent ? 'urgent' : ''}">${c.urgent ? 'URGENT' : c.category}</span>
             <span class="freshness-badge current">CURRENT</span>
@@ -1864,6 +2019,29 @@ function renderHomeScreen() {
   document.getElementById('homeViewGazettesLink')?.addEventListener('click', (e) => {
     e.preventDefault();
     openDocCenterModal();
+  });
+
+  // Persona Specific Buttons
+  document.getElementById('btnHomeSignIn')?.addEventListener('click', openAuthModal);
+  document.getElementById('btnHomeRegister')?.addEventListener('click', openRegisterModal);
+  document.getElementById('btnHomeOpenFacultySuite')?.addEventListener('click', openFacultyModal);
+  document.getElementById('btnHomeTeachingRoster')?.addEventListener('click', () => switchTab('faculty'));
+  document.getElementById('btnHomeExamOps')?.addEventListener('click', () => switchTab('coe'));
+  document.getElementById('btnHomeMasterTickets')?.addEventListener('click', openHallTicketModal);
+  document.getElementById('btnHomeScholarSuite')?.addEventListener('click', () => switchTab('scholar'));
+  document.getElementById('btnHomeViewStatus')?.addEventListener('click', () => switchTab('status'));
+
+  // Notice items click -> open document preview
+  document.querySelectorAll('.notice-item-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      const id = e.currentTarget.getAttribute('data-id');
+      const doc = state.officialDocuments.find(d => d.id === id);
+      if (doc) {
+        openDocPreview(doc.id);
+      } else {
+        openDocCenterModal();
+      }
+    });
   });
 
   attach3DTiltHandlers();
@@ -2416,7 +2594,33 @@ function renderAcademicsScreen() {
   document.querySelectorAll('.btn-mark-att').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const code = e.currentTarget.getAttribute('data-code');
-      showToast(`Biometric lecture check-in recorded for course ${code}.`);
+      const course = state.courses.find(c => c.code === code);
+      if (course) {
+        course.attended += 1;
+        course.total += 1;
+        course.attendance = Math.min(100, Math.round((course.attended / course.total) * 100));
+        
+        const u = state.currentUser;
+        if (u && u.studentProfile) {
+          const avg = Math.round(state.courses.reduce((acc, curr) => acc + curr.attendance, 0) / state.courses.length);
+          u.studentProfile.attendance = avg;
+        }
+
+        state.auditTrail.unshift({
+          id: `aud_${Date.now()}`,
+          timestamp: 'Just now',
+          actor: `${u?.name || 'Student'} (${u?.institutionalId || '23MCA042'})`,
+          targetUser: code,
+          action: 'STUDENT_BIOMETRIC_ATTENDANCE',
+          previousStatus: `${course.attended - 1}/${course.total - 1}`,
+          newStatus: `${course.attended}/${course.total}`,
+          remarks: `Biometric attendance validated for ${code}. Cumulative: ${course.attendance}%`
+        });
+
+        HapticFeedback.success();
+        showToast(`Biometric check-in recorded for ${code}! Attendance updated to ${course.attendance}%.`, 'success');
+        renderAcademicsScreen();
+      }
     });
   });
 
@@ -2998,6 +3202,7 @@ function renderAdminScreen() {
 
 // Screen 8: CoE Staff Examination Hub
 function renderCoeScreen() {
+  const isIssued = state.hallTicketsCohortIssued;
   el.screenCoe.innerHTML = `
     <div class="card tilt-card" style="border-left: 4px solid var(--color-secondary);">
       <h3 style="font-family: var(--font-display); font-size: 15px; font-weight: 700;">Examination Branch Operations</h3>
@@ -3006,7 +3211,11 @@ function renderCoeScreen() {
 
     <div class="section-header-row">
       <span class="section-title">e-SANAD Hall Ticket Generation Queue</span>
-      <button class="btn btn-sm btn-primary" id="btnIssueAllTickets">Issue Approved Cohort (420 Tickets)</button>
+      ${isIssued ? `
+        <button class="btn btn-sm btn-outline" id="btnIssueAllTickets" style="border-color: var(--color-success); color: var(--color-success);">✓ 420 e-SANAD Tickets Active</button>
+      ` : `
+        <button class="btn btn-sm btn-primary" id="btnIssueAllTickets">Issue Approved Cohort (420 Tickets)</button>
+      `}
     </div>
 
     <div class="card tilt-card">
@@ -3014,14 +3223,31 @@ function renderCoeScreen() {
         <div><strong>Session:</strong> Nov / Dec 2026 End Semester Examinations (ESE)</div>
         <div><strong>Status:</strong> Tabulation Active • 4 Exam Halls Allocated</div>
         <div><strong>Security Protocol:</strong> Cryptographic SHA-256 Token QR Embedded</div>
+        <div><strong>Cohort State:</strong> ${isIssued ? 'Active on e-SANAD & DigiLocker' : 'Awaiting Central Signing'}</div>
       </div>
       <button class="btn btn-sm btn-outline" style="margin-top: 10px;" id="btnInspectCoETicket">Inspect Master e-SANAD Ticket</button>
     </div>
   `;
 
   document.getElementById('btnIssueAllTickets')?.addEventListener('click', () => {
+    if (state.hallTicketsCohortIssued) {
+      showToast('Cohort already generated and synced with DigiLocker.', 'info');
+      return;
+    }
+    state.hallTicketsCohortIssued = true;
+    state.auditTrail.unshift({
+      id: `aud_${Date.now()}`,
+      timestamp: 'Just now',
+      actor: `${state.currentUser?.name || 'CoE Superintendent'} (COE)`,
+      targetUser: 'NOV/DEC 2026 COHORT',
+      action: 'COE_BATCH_TICKETS_ISSUED',
+      previousStatus: 'TABULATION',
+      newStatus: 'SANAD_ACTIVE',
+      remarks: '420 Cryptographic SHA-256 e-SANAD Hall Tickets generated and synced.'
+    });
     HapticFeedback.success();
-    showToast('Batch e-SANAD Hall Tickets issued and synced with DigiLocker!');
+    showToast('Batch e-SANAD Hall Tickets issued and synced with DigiLocker!', 'success');
+    renderCoeScreen();
   });
 
   document.getElementById('btnInspectCoETicket')?.addEventListener('click', openHallTicketModal);
@@ -3031,31 +3257,73 @@ function renderCoeScreen() {
 
 // Screen 9: Research Scholar Hub
 function renderScholarScreen() {
+  const u = state.currentUser || state.accounts.find(a => a.id === 'usr_scholar') || state.accounts[3];
   el.screenScholar.innerHTML = `
     <div class="card tilt-card" style="border-left: 4px solid var(--color-tertiary);">
       <h3 style="font-family: var(--font-display); font-size: 15px; font-weight: 700;">Doctoral Research & Fellowship Suite</h3>
-      <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">Research Scholar: ${state.currentUser.name} (${state.currentUser.institutionalId})</p>
+      <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">Research Scholar: ${u.name} (${u.institutionalId || '23PHD-ENG-03'}) • ${u.department || 'Department of English'}</p>
     </div>
 
     <div class="card tilt-card">
       <h4 style="font-family: var(--font-display); font-size: 13px; font-weight: 700;">National Research Consortia Access</h4>
-      <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">Direct remote access to e-ShodhSindhu, IEEE Xplore, DELNET, and JSTOR.</p>
-      <div style="display: flex; gap: 6px; margin-top: 8px;">
-        <span class="role-pill-chip" style="background: var(--color-success-bg); color: var(--color-success);">e-ShodhSindhu: Active</span>
-        <span class="role-pill-chip" style="background: var(--color-primary-container); color: var(--color-primary);">JRF Fellowship: Credited</span>
+      <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">Direct authenticated institutional remote access to e-ShodhSindhu, IEEE Xplore, DELNET, and Shodhganga.</p>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px;">
+        <a href="https://ess.inflibnet.ac.in/" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline" style="text-align: center; font-size: 11px;">
+          e-ShodhSindhu ↗
+        </a>
+        <a href="https://shodhganga.inflibnet.ac.in/" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline" style="text-align: center; font-size: 11px;">
+          Shodhganga ↗
+        </a>
+        <a href="https://delnet.in/" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline" style="text-align: center; font-size: 11px;">
+          DELNET Consortium ↗
+        </a>
+        <a href="https://ieeexplore.ieee.org/" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline" style="text-align: center; font-size: 11px;">
+          IEEE Xplore ↗
+        </a>
       </div>
     </div>
+
+    <div class="card tilt-card">
+      <div class="section-header-row" style="margin-top: 0;">
+        <span class="section-title">Monthly Fellowship Status</span>
+        <span class="role-pill-chip" style="background: var(--color-success-bg); color: var(--color-success);">JRF Sanctioned</span>
+      </div>
+      <div style="font-size: 11px; color: var(--color-text-secondary); line-height: 1.4;">
+        <div><strong>Disbursement:</strong> ₹37,000 / month + HRA via Canara Bank DBT</div>
+        <div><strong>Progress Appraisal:</strong> Next doctoral committee review Nov 2026</div>
+      </div>
+      <button class="btn btn-sm btn-primary" id="btnSubmitFellowshipReport" style="margin-top: 10px; width: 100%;">
+        Submit Monthly Fellowship Attendance Report
+      </button>
+    </div>
   `;
+
+  document.getElementById('btnSubmitFellowshipReport')?.addEventListener('click', () => {
+    state.auditTrail.unshift({
+      id: `aud_${Date.now()}`,
+      timestamp: 'Just now',
+      actor: `${u.name} (Doctoral Scholar)`,
+      targetUser: 'DEAN OF RESEARCH / UGC CANARA DBT',
+      action: 'FELLOWSHIP_REPORT_SUBMITTED',
+      previousStatus: 'PENDING_MONTHLY_REPORT',
+      newStatus: 'VERIFIED_BY_GUIDE',
+      remarks: 'Monthly biometric doctoral fellowship progress report certified.'
+    });
+    HapticFeedback.success();
+    showToast('Monthly Fellowship Report certified and submitted to Dean of Research!', 'success');
+  });
 
   attach3DTiltHandlers();
 }
 
 // Screen 10: Faculty Hub
 function renderFacultyScreen() {
+  const u = state.currentUser || state.accounts.find(a => a.id === 'usr_faculty') || state.accounts[2];
   el.screenFaculty.innerHTML = `
     <div class="card tilt-card" style="border-left: 4px solid var(--color-primary);">
       <h3 style="font-family: var(--font-display); font-size: 15px; font-weight: 700;">Faculty Academic Management</h3>
-      <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">Course lectures, CIA mark tabulation, and staff duty compensation.</p>
+      <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">Faculty: ${u.name} • ${u.designation || 'Associate Professor'} • ${u.department || 'Computer Science'}</p>
     </div>
 
     <div class="card tilt-card">
@@ -3067,14 +3335,172 @@ function renderFacultyScreen() {
         <button class="btn btn-sm btn-primary" id="btnTakeClassAtt">Take Biometrics</button>
       </div>
     </div>
+
+    <div class="card tilt-card">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <h4 style="font-family: var(--font-display); font-size: 13px; font-weight: 700;">Faculty & Staff Suite</h4>
+          <div style="font-size: 11px; color: var(--color-text-secondary);">Leave applications, CIA mark compilation & staff duty</div>
+        </div>
+        <button class="btn btn-sm btn-outline" id="btnOpenFacultyModalScreen">Open Suite →</button>
+      </div>
+    </div>
   `;
 
-  document.getElementById('btnTakeClassAtt')?.addEventListener('click', () => {
+  document.getElementById('btnTakeClassAtt')?.addEventListener('click', (e) => {
     HapticFeedback.success();
-    showToast('Lecture attendance marked for CS501 (36 present, 2 absent).');
+    state.auditTrail.unshift({
+      id: `aud_${Date.now()}`,
+      timestamp: 'Just now',
+      actor: `${u.name} (FACULTY)`,
+      targetUser: 'CS501 MCA IV',
+      action: 'FACULTY_LECTURE_ATTENDANCE',
+      previousStatus: 'UNRECORDED',
+      newStatus: 'BIOMETRIC_RECORDED',
+      remarks: 'Lecture hour attendance recorded: 36 present, 2 absent.'
+    });
+    e.currentTarget.textContent = 'Recorded ✓';
+    e.currentTarget.classList.remove('btn-primary');
+    e.currentTarget.classList.add('btn-outline');
+    showToast('Lecture attendance marked for CS501 (36 present, 2 absent).', 'success');
   });
 
+  document.getElementById('btnOpenFacultyModalScreen')?.addEventListener('click', openFacultyModal);
+
   attach3DTiltHandlers();
+}
+
+// Modal: Faculty & Staff Portal Modal
+function openFacultyModal() {
+  HapticFeedback.click();
+  el.facultyModal?.classList.add('active');
+  renderFacultyModalBody();
+}
+
+function closeFacultyModal() {
+  el.facultyModal?.classList.remove('active');
+}
+
+function renderFacultyModalBody() {
+  const leaves = state.facultyLeaves || [];
+  el.facultyModalBody.innerHTML = `
+    <div class="card" style="margin-bottom: var(--space-md); border-left: 3px solid var(--color-primary);">
+      <h4 style="font-family: var(--font-display); font-size: 13px; font-weight: 700;">Apply for Academic / Casual Leave</h4>
+      <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">Subject to HOD and Dean of School statutory endorsement.</p>
+      
+      <form id="facultyLeaveForm" style="margin-top: 10px;">
+        <div class="form-group">
+          <label class="form-label">Leave Type</label>
+          <select class="form-select" id="facLeaveType">
+            <option value="Casual Leave (CL)">Casual Leave (CL)</option>
+            <option value="Duty Leave / Conference (DL)">Duty Leave / Conference (DL)</option>
+            <option value="Earned Leave (EL)">Earned Leave (EL)</option>
+            <option value="Medical Leave (ML)">Medical Leave (ML)</option>
+          </select>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <div class="form-group">
+            <label class="form-label">From Date</label>
+            <input type="date" class="form-input" id="facLeaveFrom" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">To Date</label>
+            <input type="date" class="form-input" id="facLeaveTo" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Reason & Alternate Arrangement</label>
+          <input type="text" class="form-input" id="facLeaveReason" placeholder="e.g. Attending DST-SERB meeting. Dr. R. replaces CS501" required>
+        </div>
+        <button type="submit" class="btn btn-sm btn-primary" style="width: 100%;">Submit Leave Application</button>
+      </form>
+    </div>
+
+    <div class="section-header-row" style="margin-top: 0;">
+      <span class="section-title">Leave History & Sanction Status</span>
+      <span style="font-size: 10px; color: var(--color-text-muted);">${leaves.length} records</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: var(--space-md);">
+      ${leaves.map(l => `
+        <div class="card" style="padding: 10px; font-size: 11px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong style="color: var(--color-primary);">${l.type}</strong>
+            <span class="role-pill-chip" style="background: ${l.status === 'APPROVED' ? 'var(--color-success-bg)' : 'var(--color-warning-bg)'}; color: ${l.status === 'APPROVED' ? 'var(--color-success)' : 'var(--color-warning)'};">${l.status}</span>
+          </div>
+          <div style="margin-top: 4px; color: var(--color-text-secondary);">${l.dates} • ${l.days} Day(s)</div>
+          <div style="font-size: 10px; color: var(--color-text-muted); margin-top: 2px;">${l.reason}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="card" style="border-top: 2px solid var(--color-secondary);">
+      <h4 style="font-family: var(--font-display); font-size: 13px; font-weight: 700;">CIA Marks Synchronization</h4>
+      <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">Push Continuous Internal Assessment marks to Controller of Examinations Tabulation ledger.</p>
+      <button class="btn btn-sm btn-outline" id="btnSyncCiaMarks" style="margin-top: 8px; width: 100%;">
+        Push CS501 CIA Marks to CoE →
+      </button>
+    </div>
+  `;
+
+  const form = document.getElementById('facultyLeaveForm');
+  if (form) {
+    const today = new Date().toISOString().split('T')[0];
+    const fromEl = document.getElementById('facLeaveFrom');
+    const toEl = document.getElementById('facLeaveTo');
+    if (fromEl) fromEl.value = today;
+    if (toEl) toEl.value = today;
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const type = document.getElementById('facLeaveType').value;
+      const from = document.getElementById('facLeaveFrom').value;
+      const to = document.getElementById('facLeaveTo').value;
+      const reason = document.getElementById('facLeaveReason').value;
+
+      const newLeave = {
+        id: `leave_${Date.now()}`,
+        type,
+        dates: `${from} to ${to}`,
+        days: 1,
+        reason,
+        status: 'PENDING_HOD'
+      };
+
+      state.facultyLeaves.unshift(newLeave);
+
+      state.auditTrail.unshift({
+        id: `aud_${Date.now()}`,
+        timestamp: 'Just now',
+        actor: `${state.currentUser?.name || 'Faculty Member'} (FACULTY)`,
+        targetUser: 'HOD / DEAN REGISTRY',
+        action: 'FACULTY_LEAVE_APPLIED',
+        previousStatus: 'NONE',
+        newStatus: 'PENDING_HOD',
+        remarks: `${type} for ${from} to ${to}`
+      });
+
+      HapticFeedback.success();
+      showToast('Leave application submitted for HOD statutory approval!', 'success');
+      renderFacultyModalBody();
+    });
+  }
+
+  document.getElementById('btnSyncCiaMarks')?.addEventListener('click', (e) => {
+    state.auditTrail.unshift({
+      id: `aud_${Date.now()}`,
+      timestamp: 'Just now',
+      actor: `${state.currentUser?.name || 'Faculty Member'} (FACULTY)`,
+      targetUser: 'COE TABULATION LEDGER',
+      action: 'FACULTY_CIA_MARKS_PUSHED',
+      previousStatus: 'DRAFT',
+      newStatus: 'VERIFIED_COE',
+      remarks: 'CS501 CIA Assessment (40 Marks Component) committed to registry.'
+    });
+    HapticFeedback.success();
+    e.currentTarget.textContent = 'CIA Marks Synced with CoE ✓';
+    showToast('CS501 Continuous Internal Assessment marks successfully synced with CoE!', 'success');
+  });
 }
 
 // --- 14. Modals Management ---
@@ -3225,30 +3651,41 @@ function closeDocCenterModal() {
 
 function renderDocList(category = 'all') {
   const docs = [
-    { id: 'DOC-2026-01', title: 'GRI Admission Prospectus 2026-2027', cat: 'admissions', size: '4.2 MB', date: 'Aug 2026' },
-    { id: 'DOC-2026-02', title: 'End Semester Exam Schedule Nov-Dec 2026', cat: 'examinations', size: '1.8 MB', date: 'Sep 2026' },
-    { id: 'DOC-2026-03', title: 'CBCS Curriculum Regulations & Syllabi 2026', cat: 'academics', size: '8.5 MB', date: 'Jul 2026' },
-    { id: 'DOC-2026-04', title: 'Post-Matric & Merit Scholarship Guidelines', cat: 'finance', size: '2.1 MB', date: 'Sep 2026' },
-    { id: 'DOC-2026-05', title: 'Nai Talim Village Internship Manual', cat: 'academics', size: '3.6 MB', date: 'Aug 2026' }
+    { id: 'DOC-2026-01', title: 'GRI Admission Prospectus 2026-2027', cat: 'admissions', size: '4.2 MB', date: 'Aug 2026', previewId: 'doc_prospectus_2026' },
+    { id: 'DOC-2026-02', title: 'End Semester Exam Schedule Nov-Dec 2026', cat: 'examinations', size: '1.8 MB', date: 'Sep 2026', previewId: 'doc_ese_schedule' },
+    { id: 'DOC-2026-03', title: 'CBCS Curriculum Regulations & Syllabi 2026', cat: 'academics', size: '8.5 MB', date: 'Jul 2026', previewId: 'doc_cbcs_curriculum' },
+    { id: 'DOC-2026-04', title: 'Post-Matric & Merit Scholarship Guidelines', cat: 'finance', size: '2.1 MB', date: 'Sep 2026', previewId: 'doc_scholarship_guidelines' },
+    { id: 'DOC-2026-05', title: 'Nai Talim Village Internship Manual', cat: 'academics', size: '3.6 MB', date: 'Aug 2026', previewId: 'doc_nss_manual' }
   ];
 
   const filtered = category === 'all' ? docs : docs.filter(d => d.cat === category);
 
   el.docListContainer.innerHTML = filtered.map(d => `
     <div class="card" style="margin-bottom: var(--space-xs); padding: var(--space-sm); display: flex; justify-content: space-between; align-items: center;">
-      <div>
+      <div style="flex: 1; padding-right: 8px;">
         <span class="course-code-badge">${d.id} • ${d.cat.toUpperCase()}</span>
         <h4 style="font-family: var(--font-display); font-size: 13px; font-weight: 700; margin-top: 4px;">${d.title}</h4>
         <div style="font-size: 10px; color: var(--color-text-muted); margin-top: 2px;">${d.size} • Published ${d.date}</div>
       </div>
-      <button class="btn btn-sm btn-outline btn-download-doc" data-id="${d.id}">Download</button>
+      <div style="display: flex; gap: 6px;">
+        <button class="btn btn-sm btn-outline btn-preview-doc" data-prev="${d.previewId}">Preview</button>
+        <button class="btn btn-sm btn-primary btn-download-doc" data-id="${d.id}">Download</button>
+      </div>
     </div>
   `).join('');
+
+  document.querySelectorAll('.btn-preview-doc').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const prevId = e.currentTarget.getAttribute('data-prev');
+      openDocPreview(prevId);
+    });
+  });
 
   document.querySelectorAll('.btn-download-doc').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const id = e.currentTarget.getAttribute('data-id');
-      showToast(`Downloaded verified document ${id}`);
+      HapticFeedback.success();
+      showToast(`Downloaded verified document ${id}`, 'success');
     });
   });
 }
@@ -3329,14 +3766,13 @@ function closeNotifModal() {
 }
 
 function renderNotifList() {
-  const notifs = [
-    { title: 'End Semester Hall Ticket Released', text: 'Nov/Dec 2026 Examination hall tickets are live on e-SANAD.', time: '10m ago', unread: true },
-    { title: 'Registration Status Notification', text: 'Institutional registry processed 14 applications today.', time: '20m ago', unread: true },
-    { title: 'Campus Transit Route 1 Update', text: 'Bus TN-57-N-2418 is running on schedule via Chinnalapatti.', time: '25m ago', unread: true }
-  ];
+  const notifs = state.notifications || [];
+  const unreadCount = notifs.filter(n => n.unread).length;
+  if (el.unreadNotifCount) el.unreadNotifCount.textContent = `${unreadCount} New`;
+  if (el.notifBadge) el.notifBadge.style.display = unreadCount > 0 ? 'inline-flex' : 'none';
 
   el.notifList.innerHTML = notifs.map(n => `
-    <div class="card" style="margin-bottom: var(--space-xs); padding: var(--space-sm); background: ${n.unread ? 'var(--color-surface-elevated)' : 'var(--color-surface)'}; border-left: 3px solid ${n.unread ? 'var(--color-primary)' : 'transparent'};">
+    <div class="card notif-item-card" data-id="${n.id}" style="margin-bottom: var(--space-xs); padding: var(--space-sm); cursor: pointer; background: ${n.unread ? 'var(--color-surface-elevated)' : 'var(--color-surface)'}; border-left: 3px solid ${n.unread ? 'var(--color-primary)' : 'transparent'};">
       <div style="display: flex; justify-content: space-between; align-items: center;">
         <h4 style="font-family: var(--font-display); font-size: 13px; font-weight: 700;">${n.title}</h4>
         <span style="font-size: 10px; color: var(--color-text-muted);">${n.time}</span>
@@ -3344,6 +3780,20 @@ function renderNotifList() {
       <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 3px;">${n.text}</p>
     </div>
   `).join('');
+
+  document.querySelectorAll('.notif-item-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      const notifId = e.currentTarget.getAttribute('data-id');
+      const n = state.notifications.find(item => item.id === notifId);
+      if (n) {
+        n.unread = false;
+        closeNotifModal();
+        if (n.targetTab) switchTab(n.targetTab);
+        if (n.targetAction === 'hallticket') openHallTicketModal();
+        renderNotifList();
+      }
+    });
+  });
 }
 
 // Sync trigger
@@ -3508,11 +3958,100 @@ function initEvents() {
     authenticateUser(newAccount.id);
   });
 
+  // Physical Frame Hardware & Brand Header
+  el.brandLockup?.addEventListener('click', () => {
+    switchTab('home');
+  });
+
+  document.querySelector('.volume-up')?.addEventListener('click', () => {
+    HapticFeedback.click();
+    showToast('Device Volume: 80%');
+  });
+  document.querySelector('.volume-down')?.addEventListener('click', () => {
+    HapticFeedback.click();
+    showToast('Device Volume: 60%');
+  });
+  document.querySelector('.power-button')?.addEventListener('click', () => {
+    HapticFeedback.click();
+    showToast('Display Standby Toggled');
+  });
+
   // Modal Closers
   el.closeAuthBtn?.addEventListener('click', closeAuthModal);
   el.closeRegisterBtn?.addEventListener('click', closeRegisterModal);
+  document.getElementById('closeFacultyBtn')?.addEventListener('click', closeFacultyModal);
   el.closeAdminReviewBtn?.addEventListener('click', () => el.adminReviewModal.classList.remove('active'));
   el.closeRoleSwitcherBtn?.addEventListener('click', () => el.roleSwitcherModal.classList.remove('active'));
+
+  // Institutional Sign In Form Handling
+  el.loginForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const ident = el.loginEmail ? el.loginEmail.value.trim() : '';
+    const pass = el.loginPassword ? el.loginPassword.value.trim() : '';
+
+    if (!ident || !pass) {
+      if (el.loginFeedback) {
+        el.loginFeedback.style.display = 'block';
+        el.loginFeedback.style.background = 'rgba(239, 68, 68, 0.15)';
+        el.loginFeedback.style.color = 'var(--color-error, #dc2626)';
+        el.loginFeedback.textContent = 'Please enter both institutional ID/email and password.';
+      }
+      return;
+    }
+
+    if (el.loginSubmitBtn) el.loginSubmitBtn.disabled = true;
+    if (el.loginSubmitText) el.loginSubmitText.innerHTML = 'Verifying Credentials...';
+    if (el.loginFeedback) el.loginFeedback.style.display = 'none';
+
+    setTimeout(() => {
+      const match = state.accounts.find(a => 
+        (a.email && a.email.toLowerCase() === ident.toLowerCase()) || 
+        (a.institutionalId && a.institutionalId.toLowerCase() === ident.toLowerCase()) || 
+        (a.id && a.id.toLowerCase() === ident.toLowerCase())
+      );
+
+      if (match) {
+        if (el.loginFeedback) {
+          el.loginFeedback.style.display = 'block';
+          el.loginFeedback.style.background = 'rgba(16, 185, 129, 0.15)';
+          el.loginFeedback.style.color = 'var(--color-success, #059669)';
+          el.loginFeedback.textContent = `✓ Identity Verified: Welcome, ${match.name}!`;
+        }
+        HapticFeedback.success();
+
+        setTimeout(() => {
+          if (el.loginSubmitBtn) el.loginSubmitBtn.disabled = false;
+          if (el.loginSubmitText) el.loginSubmitText.textContent = 'Authenticate & Launch';
+          closeAuthModal();
+          authenticateUser(match.id);
+          showToast(`Welcome, ${match.name}! Signed in as ${match.activeRole}.`, 'success');
+        }, 350);
+      } else {
+        if (el.loginSubmitBtn) el.loginSubmitBtn.disabled = false;
+        if (el.loginSubmitText) el.loginSubmitText.textContent = 'Authenticate & Launch';
+        if (el.loginFeedback) {
+          el.loginFeedback.style.display = 'block';
+          el.loginFeedback.style.background = 'rgba(239, 68, 68, 0.15)';
+          el.loginFeedback.style.color = 'var(--color-error, #dc2626)';
+          el.loginFeedback.textContent = 'Account not recognized. Try "registrar@ruraluniv.ac.in", "student@ruraluniv.ac.in", or quick role buttons below.';
+        }
+        HapticFeedback.error();
+      }
+    }, 400);
+  });
+
+  // Registration Step Indicator Clicks
+  document.getElementById('stepIndicator1')?.addEventListener('click', () => showRegisterStep(1));
+  document.getElementById('stepIndicator2')?.addEventListener('click', () => {
+    const name = document.getElementById('regName')?.value;
+    const email = document.getElementById('regEmail')?.value;
+    if (name && email) showRegisterStep(2);
+  });
+  document.getElementById('stepIndicator3')?.addEventListener('click', () => {
+    const name = document.getElementById('regName')?.value;
+    const email = document.getElementById('regEmail')?.value;
+    if (name && email) showRegisterStep(3);
+  });
 
   // Sahayak Modal
   el.openSahayakBtn?.addEventListener('click', openSahayakModal);
@@ -3549,12 +4088,23 @@ function initEvents() {
     }
   });
 
+  // Document Center Filter Chips
+  document.querySelectorAll('.doc-filter-chips .filter-chip').forEach(chip => {
+    chip.addEventListener('click', (e) => {
+      document.querySelectorAll('.doc-filter-chips .filter-chip').forEach(c => c.classList.remove('active'));
+      e.currentTarget.classList.add('active');
+      const cat = e.currentTarget.getAttribute('data-cat');
+      renderDocList(cat);
+    });
+  });
+
   // Notifications
   el.openNotificationsBtn?.addEventListener('click', openNotifModal);
   el.closeNotifBtn?.addEventListener('click', closeNotifModal);
   el.markAllReadBtn?.addEventListener('click', () => {
-    el.notifBadge.style.display = 'none';
-    el.unreadNotifCount.textContent = '0 New';
+    state.notifications.forEach(n => n.unread = false);
+    if (el.notifBadge) el.notifBadge.style.display = 'none';
+    if (el.unreadNotifCount) el.unreadNotifCount.textContent = '0 New';
     showToast('All notifications marked as read');
     renderNotifList();
   });
@@ -3642,7 +4192,7 @@ function initEvents() {
     state.auditTrail.unshift({
       id: `aud_${Date.now()}`,
       timestamp: 'Just now',
-      actor: `${state.currentUser.name} (ADMIN)`,
+      actor: `${state.currentUser?.name || 'Administrator'} (ADMIN)`,
       targetUser: 'ALL CAMPUS NETWORK',
       action: 'STATUTORY_NOTICE_PUBLISHED',
       previousStatus: 'DRAFT',
@@ -3654,9 +4204,9 @@ function initEvents() {
     renderAdminScreen();
   });
 
-  // Initial Boot
-  updateDynamicNavigation();
-  switchTab('home');
+  // Initial Boot: Synchronize user with global select default
+  const initialAccountId = el.globalAccountSelect ? el.globalAccountSelect.value : 'usr_admin';
+  authenticateUser(initialAccountId || 'usr_admin');
 }
 
 // Run on DOM Ready

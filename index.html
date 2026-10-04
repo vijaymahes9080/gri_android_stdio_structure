@@ -437,9 +437,10 @@
             <label class="form-label" for="loginPassword">Password</label>
             <input type="password" class="form-input" id="loginPassword" placeholder="••••••••" required>
           </div>
-          <button type="submit" class="btn btn-primary btn-full" style="margin-top: var(--space-sm);">
+          <div id="loginFeedback" style="display: none; font-size: 11px; padding: 6px 10px; border-radius: var(--radius-sm); margin-bottom: var(--space-sm);"></div>
+          <button type="submit" class="btn btn-primary btn-full" id="loginSubmitBtn" style="margin-top: var(--space-sm);">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.89-2-2-2z"/></svg>
-            Authenticate & Open Portal
+            <span id="loginSubmitText">Authenticate & Open Portal</span>
           </button>
         </form>
 
@@ -625,7 +626,7 @@
   </div>
 
   <!-- Modal 10: Global Universal Search Overlay -->
-  <div class="global-search-overlay" id="globalSearchModal" role="dialog" aria-modal="true" aria-label="Global Search GRI">
+  <div class="global-search-overlay modal-overlay" id="globalSearchModal" role="dialog" aria-modal="true" aria-label="Global Search GRI">
     <div class="global-search-box">
       <div class="search-input-header">
         <svg viewBox="0 0 24 24" width="20" height="20" fill="var(--color-primary)"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
