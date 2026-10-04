@@ -1519,9 +1519,68 @@ function updateDynamicNavigation() {
     el.currentRoleChip.textContent = u.status;
     el.currentRoleChip.style.color = u.status === 'PENDING' ? 'var(--color-warning)' : 'var(--color-info)';
   } else {
-    el.currentRoleChip.textContent = u.activeRole;
+    el.currentRoleChip.textContent = u.activeRole || u.active_role || 'STUDENT';
     el.currentRoleChip.style.color = 'var(--color-primary)';
   }
+
+  updateDesktopSessionUI();
+}
+
+function normalizeProfile(p) {
+  if (!p) return null;
+  return {
+    ...p,
+    id: p.id || p.auth_user_id,
+    auth_user_id: p.auth_user_id || p.id,
+    name: p.name || p.email?.split('@')[0] || 'User',
+    email: p.email || '',
+    mobile: p.mobile || '',
+    activeRole: p.active_role || p.activeRole || 'GUEST',
+    approvedRoles: p.approved_roles || p.approvedRoles || [],
+    requestedRole: p.requested_role || p.requestedRole || 'STUDENT',
+    institutionalId: p.institutional_id || p.institutionalId || '',
+    applicationId: p.application_id || p.applicationId || '',
+    department: p.department || 'The Gandhigram Rural Institute',
+    program: p.programme || p.program || '',
+    semester: p.semester || '',
+    designation: p.designation || '',
+    submittedAt: p.submitted_at || p.submittedAt || (p.created_at ? new Date(p.created_at).toLocaleDateString() : 'Active Session'),
+    reviewedAt: p.approved_at || p.reviewedAt || null,
+    reviewedBy: p.approved_by || p.reviewedBy || null,
+    rejectionReason: p.rejection_reason || p.rejectionReason || null,
+    infoRequested: p.info_requested || p.infoRequested || null,
+    infoProvided: p.info_provided || p.infoProvided || null,
+    attendance: p.attendance !== undefined ? Number(p.attendance) : 88.5,
+    cgpa: p.cgpa || '8.84',
+    status: p.status || 'PENDING'
+  };
+}
+
+function updateDesktopSessionUI() {
+  if (el.desktopUserLabel && el.btnAuthActionDesktop) {
+    if (state.currentUser && state.currentUser.status !== 'PUBLIC') {
+      const role = state.currentUser.activeRole || state.currentUser.active_role || state.currentUser.status;
+      el.desktopUserLabel.textContent = `${state.currentUser.name?.split(' ')[0]} (${role})`;
+      el.btnAuthActionDesktop.textContent = 'Sign Out';
+      el.btnAuthActionDesktop.classList.remove('btn-primary');
+      el.btnAuthActionDesktop.classList.add('btn-outline');
+    } else {
+      el.desktopUserLabel.textContent = 'Public Visitor';
+      el.btnAuthActionDesktop.textContent = 'Sign In';
+      el.btnAuthActionDesktop.classList.remove('btn-outline');
+      el.btnAuthActionDesktop.classList.add('btn-primary');
+    }
+  }
+}
+
+async function handleSignOut() {
+  await signOutUser();
+  state.currentUser = null;
+  state.currentTab = 'home';
+  updateDynamicNavigation();
+  switchTab('home');
+  HapticFeedback.click();
+  showToast('Signed out of GRI institutional session. Viewing as Public Visitor.', 'info');
 }
 
 // --- 10. Switch Tab Engine with Permission Gate ---
@@ -1547,15 +1606,16 @@ function switchTab(tabId) {
     showToast('Unauthorized: Institutional admin access required.', 'error');
     return;
   }
-  if (tabId === 'coe' && (!state.currentUser || (state.currentUser.activeRole !== 'COE_STAFF' && state.currentUser.activeRole !== 'ADMIN'))) {
+  const currentRole = state.currentUser?.activeRole || state.currentUser?.active_role;
+  if (tabId === 'coe' && (!state.currentUser || (currentRole !== 'COE_STAFF' && currentRole !== 'ADMIN'))) {
     showToast('Unauthorized: CoE Directorate credentials required.', 'error');
     return;
   }
-  if (tabId === 'faculty' && (!state.currentUser || (state.currentUser.activeRole !== 'FACULTY' && state.currentUser.activeRole !== 'ADMIN'))) {
+  if (tabId === 'faculty' && (!state.currentUser || (currentRole !== 'FACULTY' && currentRole !== 'ADMIN'))) {
     showToast('Unauthorized: Faculty academic credentials required.', 'error');
     return;
   }
-  if (tabId === 'scholar' && (!state.currentUser || (state.currentUser.activeRole !== 'SCHOLAR' && state.currentUser.activeRole !== 'ADMIN' && state.currentUser.activeRole !== 'FACULTY'))) {
+  if (tabId === 'scholar' && (!state.currentUser || (currentRole !== 'SCHOLAR' && currentRole !== 'ADMIN' && currentRole !== 'FACULTY'))) {
     showToast('Unauthorized: Research Scholar credentials required.', 'error');
     return;
   }
@@ -1593,7 +1653,7 @@ function switchTab(tabId) {
 function authenticateUser(userAccountId) {
   if (userAccountId === 'usr_public') {
     state.currentUser = null;
-    if (el.globalAccountSelect) el.globalAccountSelect.value = 'usr_public';
+    localStorage.removeItem('gri_active_profile');
     showToast('Viewing portal as unauthenticated Public Visitor');
     state.currentTab = 'home';
     updateDynamicNavigation();
@@ -1604,12 +1664,12 @@ function authenticateUser(userAccountId) {
   const account = state.accounts.find(a => a.id === userAccountId);
   if (!account) return;
 
-  state.currentUser = account;
-  if (el.globalAccountSelect) el.globalAccountSelect.value = userAccountId;
+  state.currentUser = normalizeProfile(account);
+  localStorage.setItem('gri_active_profile', JSON.stringify(state.currentUser));
   HapticFeedback.success();
 
   if (account.status === 'APPROVED') {
-    showToast(`Signed in as ${account.name} (${account.activeRole})`);
+    showToast(`Signed in as ${account.name} (${state.currentUser.activeRole})`);
     state.currentTab = 'home';
   } else {
     showToast(`Account status: ${account.status.replace('_', ' ')}`, 'info');
@@ -1632,19 +1692,29 @@ function closeAuthModal() {
 }
 
 function renderQuickAuthButtons() {
-  const quickList = state.accounts.filter(a => a.id !== 'usr_public');
+  const quickList = [
+    { name: 'Admin (CoE Directorate)', email: 'admin@ruraluniv.ac.in', pass: 'AdminPass@2026', role: 'ADMIN' },
+    { name: 'Student (Vijay - MCA)', email: 'student@ruraluniv.ac.in', pass: 'StudentPass@2026', role: 'STUDENT' },
+    { name: 'Faculty (Dr. Subramanian)', email: 'faculty@ruraluniv.ac.in', pass: 'FacultyPass@2026', role: 'FACULTY' },
+    { name: 'CoE Staff (Sadasivam)', email: 'coe@ruraluniv.ac.in', pass: 'CoePass@2026', role: 'COE_STAFF' },
+    { name: 'Scholar (Ananya Murugan)', email: 'scholar@ruraluniv.ac.in', pass: 'ScholarPass@2026', role: 'SCHOLAR' },
+    { name: 'Applicant (Kavitha - Pending)', email: 'pending@ruraluniv.ac.in', pass: 'ApplicantPass@2026', role: 'PENDING' }
+  ];
+
   el.quickAuthButtonsGrid.innerHTML = quickList.map(acc => `
-    <button type="button" class="btn btn-sm ${acc.id === state.currentUser?.id ? 'btn-primary' : 'btn-outline'} btn-quick-auth" data-id="${acc.id}" style="text-align: left; padding: 6px 8px; font-size: 10px;">
-      <div style="font-weight: 700; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${acc.name.split(' ')[0]} (${acc.activeRole || acc.status})</div>
-      <div style="font-size: 9px; opacity: 0.8;">Status: ${acc.status}</div>
+    <button type="button" class="btn btn-sm btn-outline btn-quick-fill" data-email="${acc.email}" data-pass="${acc.pass}" style="text-align: left; padding: 6px 8px; font-size: 10px;">
+      <div style="font-weight: 700; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${acc.name}</div>
+      <div style="font-size: 9px; opacity: 0.8; font-family: var(--font-mono);">${acc.email}</div>
     </button>
   `).join('');
 
-  document.querySelectorAll('.btn-quick-auth').forEach(btn => {
+  document.querySelectorAll('.btn-quick-fill').forEach(btn => {
     btn.addEventListener('click', (e) => {
-      const id = e.currentTarget.getAttribute('data-id');
-      authenticateUser(id);
-      closeAuthModal();
+      const email = e.currentTarget.getAttribute('data-email');
+      const pass = e.currentTarget.getAttribute('data-pass');
+      if (el.loginEmail) el.loginEmail.value = email;
+      if (el.loginPassword) el.loginPassword.value = pass;
+      showToast(`Filled credentials for ${email}`);
     });
   });
 }
@@ -2191,8 +2261,14 @@ function renderStatusScreen() {
     </div>
   `;
 
-  document.getElementById('btnRefreshStatus')?.addEventListener('click', () => {
+  document.getElementById('btnRefreshStatus')?.addEventListener('click', async () => {
     HapticFeedback.click();
+    if (state.currentUser?.id || state.currentUser?.auth_user_id) {
+      const refreshed = await fetchUserProfile(state.currentUser.auth_user_id || state.currentUser.id);
+      if (refreshed) {
+        state.currentUser = normalizeProfile(refreshed);
+      }
+    }
     showToast('Registry synchronized. Account state refreshed.');
     renderStatusScreen();
   });
@@ -2201,17 +2277,33 @@ function renderStatusScreen() {
 
   const infoForm = document.getElementById('provideAdditionalInfoForm');
   if (infoForm) {
-    infoForm.addEventListener('submit', (e) => {
+    infoForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const responseText = document.getElementById('applicantInfoResponse').value;
+      if (!responseText.trim()) {
+        showToast('Please enter your clarification details', 'error');
+        return;
+      }
       u.infoProvided = responseText;
       u.status = 'UNDER_REVIEW';
+
+      await submitApplicantClarification(u.id, responseText);
+
+      await logAuditEntry({
+        actorUserId: u.auth_user_id || u.id,
+        actorName: `${u.name} (Applicant)`,
+        targetUserId: `${u.name} (${u.institutionalId || u.id})`,
+        action: 'INFO_PROVIDED',
+        previousStatus: 'INFO_REQUESTED',
+        newStatus: 'UNDER_REVIEW',
+        remarks: responseText
+      });
 
       state.auditTrail.unshift({
         id: `aud_${Date.now()}`,
         timestamp: 'Just now',
         actor: `${u.name} (Applicant)`,
-        targetUser: `${u.name} (${u.institutionalId})`,
+        targetUser: `${u.name} (${u.institutionalId || u.id})`,
         action: 'INFO_PROVIDED',
         previousStatus: 'INFO_REQUESTED',
         newStatus: 'UNDER_REVIEW',
@@ -2228,11 +2320,28 @@ function renderStatusScreen() {
 }
 
 // Screen 7: Registration & Role Approval Center (Admin Portal)
-function renderApprovalsScreen() {
+async function renderApprovalsScreen() {
   if (!checkPermission(PERMISSIONS.APPROVE_REJECT_APPLICATIONS)) {
     showToast('Access denied: Administrator permissions required.', 'error');
     switchTab('home');
     return;
+  }
+
+  try {
+    const cloudApps = await fetchPendingApplications();
+    if (cloudApps && cloudApps.length > 0) {
+      cloudApps.forEach(ca => {
+        const norm = normalizeProfile(ca);
+        const idx = state.accounts.findIndex(a => a.id === norm.id || (a.email && a.email.toLowerCase() === norm.email.toLowerCase()));
+        if (idx !== -1) {
+          state.accounts[idx] = { ...state.accounts[idx], ...norm };
+        } else {
+          state.accounts.unshift(norm);
+        }
+      });
+    }
+  } catch (err) {
+    console.warn('Could not sync cloud approvals queue:', err);
   }
 
   const pendingList = state.accounts.filter(a => a.status === 'PENDING');
@@ -2406,20 +2515,25 @@ function openAdminReviewModal(accountId) {
       </div>
     `;
 
-    document.getElementById('btnConfirmApprovalAction')?.addEventListener('click', () => {
+    document.getElementById('btnConfirmApprovalAction')?.addEventListener('click', async () => {
       app.status = 'APPROVED';
       if (!app.approvedRoles.includes(roleToActivate)) {
         app.approvedRoles.push(roleToActivate);
       }
       app.activeRole = roleToActivate;
       app.reviewedAt = 'Just now';
-      app.reviewedBy = state.currentUser.name;
+      app.reviewedBy = state.currentUser?.name || 'Controller of Examinations';
 
-      state.auditTrail.unshift({
-        id: `aud_${Date.now()}`,
-        timestamp: 'Just now',
-        actor: `${state.currentUser.name} (ADMIN)`,
-        targetUser: `${app.name} (${app.institutionalId})`,
+      await updateApplicationDecision(app.id, {
+        status: 'APPROVED',
+        approvedRole: roleToActivate,
+        reviewerName: state.currentUser?.name || 'Controller of Examinations'
+      });
+
+      await logAuditEntry({
+        actorUserId: state.currentUser?.id || 'admin',
+        actorName: `${state.currentUser?.name || 'Administrator'} (ADMIN)`,
+        targetUserId: `${app.name} (${app.institutionalId || app.id})`,
         action: 'APPLICATION_APPROVED',
         previousStatus: 'PENDING',
         newStatus: 'APPROVED',
@@ -2427,9 +2541,9 @@ function openAdminReviewModal(accountId) {
       });
 
       HapticFeedback.success();
-      showToast(`Account approved! Role ${roleToActivate} activated for ${app.name}.`);
+      showToast(`Account approved! Role ${roleToActivate} activated for ${app.name}.`, 'success');
       el.adminReviewModal.classList.remove('active');
-      renderApprovalsScreen();
+      await renderApprovalsScreen();
       renderAdminScreen();
     });
 
@@ -2452,20 +2566,25 @@ function openAdminReviewModal(accountId) {
       </div>
     `;
 
-    document.getElementById('btnSendQueryAction')?.addEventListener('click', () => {
+    document.getElementById('btnSendQueryAction')?.addEventListener('click', async () => {
       const q = document.getElementById('adminQueryText').value;
       if (!q.trim()) return;
 
       app.status = 'UNDER_REVIEW';
       app.infoRequested = q;
       app.reviewedAt = 'Just now';
-      app.reviewedBy = state.currentUser.name;
+      app.reviewedBy = state.currentUser?.name || 'Dean Secretariat';
 
-      state.auditTrail.unshift({
-        id: `aud_${Date.now()}`,
-        timestamp: 'Just now',
-        actor: `${state.currentUser.name} (ADMIN)`,
-        targetUser: `${app.name} (${app.institutionalId})`,
+      await updateApplicationDecision(app.id, {
+        status: 'UNDER_REVIEW',
+        infoRequested: q,
+        reviewerName: state.currentUser?.name || 'Dean Secretariat'
+      });
+
+      await logAuditEntry({
+        actorUserId: state.currentUser?.id || 'admin',
+        actorName: `${state.currentUser?.name || 'Administrator'} (ADMIN)`,
+        targetUserId: `${app.name} (${app.institutionalId || app.id})`,
         action: 'INFO_REQUESTED',
         previousStatus: 'PENDING',
         newStatus: 'UNDER_REVIEW',
@@ -2475,7 +2594,7 @@ function openAdminReviewModal(accountId) {
       HapticFeedback.click();
       showToast('Information request dispatched to applicant.');
       el.adminReviewModal.classList.remove('active');
-      renderApprovalsScreen();
+      await renderApprovalsScreen();
     });
 
     document.getElementById('btnCancelAction2')?.addEventListener('click', () => {
@@ -2497,7 +2616,7 @@ function openAdminReviewModal(accountId) {
       </div>
     `;
 
-    document.getElementById('btnConfirmRejectAction')?.addEventListener('click', () => {
+    document.getElementById('btnConfirmRejectAction')?.addEventListener('click', async () => {
       const r = document.getElementById('adminRejectReason').value;
       if (!r.trim()) {
         showToast('Please state a reason for rejection.', 'error');
@@ -2507,13 +2626,18 @@ function openAdminReviewModal(accountId) {
       app.status = 'REJECTED';
       app.rejectionReason = r;
       app.reviewedAt = 'Just now';
-      app.reviewedBy = state.currentUser.name;
+      app.reviewedBy = state.currentUser?.name || 'Dean Secretariat';
 
-      state.auditTrail.unshift({
-        id: `aud_${Date.now()}`,
-        timestamp: 'Just now',
-        actor: `${state.currentUser.name} (ADMIN)`,
-        targetUser: `${app.name} (${app.institutionalId})`,
+      await updateApplicationDecision(app.id, {
+        status: 'REJECTED',
+        rejectionReason: r,
+        reviewerName: state.currentUser?.name || 'Dean Secretariat'
+      });
+
+      await logAuditEntry({
+        actorUserId: state.currentUser?.id || 'admin',
+        actorName: `${state.currentUser?.name || 'Administrator'} (ADMIN)`,
+        targetUserId: `${app.name} (${app.institutionalId || app.id})`,
         action: 'APPLICATION_REJECTED',
         previousStatus: 'PENDING',
         newStatus: 'REJECTED',
@@ -2523,7 +2647,7 @@ function openAdminReviewModal(accountId) {
       HapticFeedback.click();
       showToast('Application marked as REJECTED in Central Registry.');
       el.adminReviewModal.classList.remove('active');
-      renderApprovalsScreen();
+      await renderApprovalsScreen();
     });
 
     document.getElementById('btnCancelAction3')?.addEventListener('click', () => {
@@ -3061,7 +3185,7 @@ function renderServicesScreen() {
   // Grievance Submit
   const form = document.getElementById('grievanceForm');
   if (form) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const cat = document.getElementById('grievanceCategory').value;
       const sub = document.getElementById('grievanceSubject').value;
@@ -3069,13 +3193,17 @@ function renderServicesScreen() {
 
       const newTicket = {
         id: `GRI-2026-TKT-${Math.floor(1000 + Math.random() * 9000)}`,
+        userId: state.currentUser?.id || 'usr_student',
+        userName: state.currentUser?.name || 'Student / Applicant',
         category: cat,
         subject: sub,
+        description: desc,
         date: 'Just now',
         status: 'SUBMITTED',
         remarks: 'Acknowledged by Care Cell. Assigned to section officer.'
       };
 
+      await submitGrievanceTicket(newTicket);
       state.grievances.unshift(newTicket);
       HapticFeedback.success();
       showToast(`Grievance registered successfully! Ticket #${newTicket.id}`);
@@ -3479,7 +3607,7 @@ function renderFacultyModalBody() {
     if (fromEl) fromEl.value = today;
     if (toEl) toEl.value = today;
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const type = document.getElementById('facLeaveType').value;
       const from = document.getElementById('facLeaveFrom').value;
@@ -3488,6 +3616,8 @@ function renderFacultyModalBody() {
 
       const newLeave = {
         id: `leave_${Date.now()}`,
+        userId: state.currentUser?.id || 'usr_faculty',
+        facultyName: state.currentUser?.name || 'Faculty Member',
         type,
         dates: `${from} to ${to}`,
         days: 1,
@@ -3495,7 +3625,18 @@ function renderFacultyModalBody() {
         status: 'PENDING_HOD'
       };
 
+      await submitFacultyLeaveApplication(newLeave);
       state.facultyLeaves.unshift(newLeave);
+
+      await logAuditEntry({
+        actorUserId: state.currentUser?.id || 'faculty',
+        actorName: `${state.currentUser?.name || 'Faculty Member'} (FACULTY)`,
+        targetUserId: 'HOD / DEAN REGISTRY',
+        action: 'FACULTY_LEAVE_APPLIED',
+        previousStatus: 'NONE',
+        newStatus: 'PENDING_HOD',
+        remarks: `${type} for ${from} to ${to}`
+      });
 
       state.auditTrail.unshift({
         id: `aud_${Date.now()}`,
@@ -3859,16 +4000,12 @@ function initEvents() {
   // Quick sync button
   el.quickSyncBtn?.addEventListener('click', triggerSync);
 
-  // Global Account selector (for instantaneous institutional testing)
-  el.globalAccountSelect?.addEventListener('change', (e) => {
-    const val = e.target.value;
-    if (val === 'usr_public') {
-      state.currentUser = null;
-      updateDynamicNavigation();
-      switchTab('home');
-      showToast('Viewing portal as unauthenticated Public Visitor');
+  // Desktop Header Auth Action (Sign In / Sign Out)
+  el.btnAuthActionDesktop?.addEventListener('click', () => {
+    if (state.currentUser && state.currentUser.status !== 'PUBLIC') {
+      handleSignOut();
     } else {
-      authenticateUser(val);
+      openAuthModal();
     }
   });
 
@@ -3931,59 +4068,95 @@ function initEvents() {
   el.btnBackToStep2?.addEventListener('click', () => showRegisterStep(2));
 
   // Registration Form Submission
-  el.registrationWizardForm?.addEventListener('submit', (e) => {
+  el.registrationWizardForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const name = document.getElementById('regName').value;
-    const email = document.getElementById('regEmail').value;
-    const mobile = document.getElementById('regMobile').value;
+    const name = document.getElementById('regName')?.value.trim();
+    const email = document.getElementById('regEmail')?.value.trim();
+    const pass = document.getElementById('regPassword')?.value || 'Gripass@2026';
+    const mobile = document.getElementById('regMobile')?.value.trim();
     const selectedRadio = document.querySelector('input[name="requestedRole"]:checked');
     const role = selectedRadio ? selectedRadio.value : 'STUDENT';
-    const instId = document.getElementById('dynInstId')?.value || 'Pending';
-    const dept = document.getElementById('dynDept')?.value || 'The Gandhigram Rural Institute';
-    const prog = document.getElementById('dynProgram')?.value || 'Academic Programme';
+    const instId = document.getElementById('dynInstId')?.value.trim() || 'Pending';
+    const dept = document.getElementById('dynDept')?.value.trim() || 'The Gandhigram Rural Institute';
+    const prog = document.getElementById('dynProgram')?.value.trim() || 'Academic Programme';
 
     const appId = `GRI-2026-APP-${Math.floor(1000 + Math.random() * 9000)}`;
 
-    const newAccount = {
-      id: `usr_${Date.now()}`,
-      name,
-      email,
-      mobile,
-      institutionalId: instId,
-      status: 'PENDING',
-      requestedRole: role,
-      approvedRoles: [],
-      activeRole: 'GUEST',
-      applicationId: appId,
-      department: dept,
-      program: prog,
-      submittedAt: 'Just now',
-      reviewedAt: null,
-      reviewedBy: null,
-      rejectionReason: null,
-      infoRequested: null,
-      infoProvided: null
-    };
+    const submitBtn = el.registrationWizardForm.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Registering with Cloud Registry...';
+    }
 
-    state.accounts.push(newAccount);
+    try {
+      const { user, profile, error } = await signUpUser({
+        email,
+        password: pass,
+        name,
+        mobile,
+        institutionalId: instId,
+        requestedRole: role,
+        department: dept,
+        programme: prog
+      });
 
-    state.auditTrail.unshift({
-      id: `aud_${Date.now()}`,
-      timestamp: 'Just now',
-      actor: `${name} (Applicant)`,
-      targetUser: `${name} (${instId})`,
-      action: 'REGISTRATION_SUBMITTED',
-      previousStatus: 'NONE',
-      newStatus: 'PENDING',
-      remarks: `Submitted application for ${role}. App ID: ${appId}`
-    });
+      if (error && !profile) {
+        showToast(`Registration error: ${error.message}`, 'error');
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'Complete Registration & Submit Application →';
+        }
+        return;
+      }
 
-    HapticFeedback.success();
-    closeRegisterModal();
-    showToast(`Application ${appId} submitted for Dean verification!`);
+      const activeProfile = normalizeProfile(profile || {
+        id: user?.id || `usr_${Date.now()}`,
+        auth_user_id: user?.id,
+        name,
+        email,
+        mobile,
+        institutionalId: instId,
+        status: 'PENDING',
+        requestedRole: role,
+        approvedRoles: [],
+        activeRole: 'GUEST',
+        applicationId: appId,
+        department: dept,
+        program: prog
+      });
 
-    // Log in as pending applicant immediately to display status
-    authenticateUser(newAccount.id);
+      state.accounts.push(activeProfile);
+      state.currentUser = activeProfile;
+      localStorage.setItem('gri_active_profile', JSON.stringify(activeProfile));
+
+      state.auditTrail.unshift({
+        id: `aud_${Date.now()}`,
+        timestamp: 'Just now',
+        actor: `${name} (Applicant)`,
+        targetUser: `${name} (${instId})`,
+        action: 'REGISTRATION_SUBMITTED',
+        previousStatus: 'NONE',
+        newStatus: 'PENDING',
+        remarks: `Submitted application for ${role}. App ID: ${activeProfile.applicationId || appId}`
+      });
+
+      HapticFeedback.success();
+      closeRegisterModal();
+      updateDesktopSessionUI();
+      updateDynamicNavigation();
+      showToast(`Application ${activeProfile.applicationId || appId} submitted for Dean verification!`);
+
+      // Switch to real-time status tracking view
+      switchTab('status');
+
+    } catch (err) {
+      showToast(`Registration failed: ${err.message}`, 'error');
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Complete Registration & Submit Application →';
+      }
+    }
   });
 
   // Physical Frame Hardware & Brand Header
@@ -4012,7 +4185,7 @@ function initEvents() {
   el.closeRoleSwitcherBtn?.addEventListener('click', () => el.roleSwitcherModal.classList.remove('active'));
 
   // Institutional Sign In Form Handling
-  el.loginForm?.addEventListener('submit', (e) => {
+  el.loginForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const ident = el.loginEmail ? el.loginEmail.value.trim() : '';
     const pass = el.loginPassword ? el.loginPassword.value.trim() : '';
@@ -4022,50 +4195,109 @@ function initEvents() {
         el.loginFeedback.style.display = 'block';
         el.loginFeedback.style.background = 'rgba(239, 68, 68, 0.15)';
         el.loginFeedback.style.color = 'var(--color-error, #dc2626)';
-        el.loginFeedback.textContent = 'Please enter both institutional ID/email and password.';
+        el.loginFeedback.textContent = 'Please enter both institutional email and password.';
       }
       return;
     }
 
     if (el.loginSubmitBtn) el.loginSubmitBtn.disabled = true;
-    if (el.loginSubmitText) el.loginSubmitText.innerHTML = 'Verifying Credentials...';
+    if (el.loginSubmitText) el.loginSubmitText.innerHTML = 'Verifying Cloud Credentials...';
     if (el.loginFeedback) el.loginFeedback.style.display = 'none';
 
-    setTimeout(() => {
-      const match = state.accounts.find(a => 
-        (a.email && a.email.toLowerCase() === ident.toLowerCase()) || 
-        (a.institutionalId && a.institutionalId.toLowerCase() === ident.toLowerCase()) || 
-        (a.id && a.id.toLowerCase() === ident.toLowerCase())
-      );
+    try {
+      const { user, profile, error } = await signInUser(ident, pass);
 
-      if (match) {
-        if (el.loginFeedback) {
-          el.loginFeedback.style.display = 'block';
-          el.loginFeedback.style.background = 'rgba(16, 185, 129, 0.15)';
-          el.loginFeedback.style.color = 'var(--color-success, #059669)';
-          el.loginFeedback.textContent = `✓ Identity Verified: Welcome, ${match.name}!`;
+      if (error || !user) {
+        // Fallback: If not in Supabase yet, check demo accounts in state.accounts to allow local dev demoing seamlessly
+        const demoMatch = state.accounts.find(a => 
+          (a.email && a.email.toLowerCase() === ident.toLowerCase()) || 
+          (a.institutionalId && a.institutionalId.toLowerCase() === ident.toLowerCase()) || 
+          (a.id && a.id.toLowerCase() === ident.toLowerCase())
+        );
+
+        if (demoMatch && !isSupabaseConfigured) {
+          state.currentUser = normalizeProfile(demoMatch);
+          localStorage.setItem('gri_active_profile', JSON.stringify(state.currentUser));
+
+          if (el.loginFeedback) {
+            el.loginFeedback.style.display = 'block';
+            el.loginFeedback.style.background = 'rgba(16, 185, 129, 0.15)';
+            el.loginFeedback.style.color = 'var(--color-success, #059669)';
+            el.loginFeedback.textContent = `✓ Identity Verified: Welcome, ${demoMatch.name}!`;
+          }
+          HapticFeedback.success();
+
+          setTimeout(() => {
+            if (el.loginSubmitBtn) el.loginSubmitBtn.disabled = false;
+            if (el.loginSubmitText) el.loginSubmitText.textContent = 'Authenticate & Launch';
+            closeAuthModal();
+            updateDesktopSessionUI();
+            updateDynamicNavigation();
+            switchTab(demoMatch.status === 'APPROVED' ? 'home' : 'status');
+            showToast(`Welcome, ${demoMatch.name}! Signed in as ${demoMatch.activeRole}.`, 'success');
+          }, 350);
+          return;
         }
-        HapticFeedback.success();
 
-        setTimeout(() => {
-          if (el.loginSubmitBtn) el.loginSubmitBtn.disabled = false;
-          if (el.loginSubmitText) el.loginSubmitText.textContent = 'Authenticate & Launch';
-          closeAuthModal();
-          authenticateUser(match.id);
-          showToast(`Welcome, ${match.name}! Signed in as ${match.activeRole}.`, 'success');
-        }, 350);
-      } else {
         if (el.loginSubmitBtn) el.loginSubmitBtn.disabled = false;
         if (el.loginSubmitText) el.loginSubmitText.textContent = 'Authenticate & Launch';
         if (el.loginFeedback) {
           el.loginFeedback.style.display = 'block';
           el.loginFeedback.style.background = 'rgba(239, 68, 68, 0.15)';
           el.loginFeedback.style.color = 'var(--color-error, #dc2626)';
-          el.loginFeedback.textContent = 'Account not recognized. Try "registrar@ruraluniv.ac.in", "student@ruraluniv.ac.in", or quick role buttons below.';
+          el.loginFeedback.textContent = error?.message || 'Invalid institutional credentials or unrecognized account.';
         }
         HapticFeedback.error();
+        return;
       }
-    }, 400);
+
+      // Supabase Authenticated User:
+      const activeProf = normalizeProfile(profile || {
+        name: user.user_metadata?.name || user.email.split('@')[0],
+        email: user.email,
+        auth_user_id: user.id,
+        status: user.user_metadata?.status || 'APPROVED',
+        active_role: user.user_metadata?.requested_role || 'STUDENT',
+        approved_roles: [user.user_metadata?.requested_role || 'STUDENT']
+      });
+
+      state.currentUser = activeProf;
+      localStorage.setItem('gri_active_profile', JSON.stringify(activeProf));
+
+      if (el.loginFeedback) {
+        el.loginFeedback.style.display = 'block';
+        el.loginFeedback.style.background = 'rgba(16, 185, 129, 0.15)';
+        el.loginFeedback.style.color = 'var(--color-success, #059669)';
+        el.loginFeedback.textContent = `✓ Identity Verified: Welcome, ${activeProf.name}!`;
+      }
+      HapticFeedback.success();
+
+      setTimeout(() => {
+        if (el.loginSubmitBtn) el.loginSubmitBtn.disabled = false;
+        if (el.loginSubmitText) el.loginSubmitText.textContent = 'Authenticate & Launch';
+        closeAuthModal();
+        updateDesktopSessionUI();
+        updateDynamicNavigation();
+        if (activeProf.status === 'APPROVED') {
+          switchTab('home');
+          showToast(`Welcome, ${activeProf.name}! Signed in as ${activeProf.activeRole}.`, 'success');
+        } else {
+          switchTab('status');
+          showToast(`Account status: ${activeProf.status.replace('_', ' ')}`, 'info');
+        }
+      }, 350);
+
+    } catch (err) {
+      if (el.loginSubmitBtn) el.loginSubmitBtn.disabled = false;
+      if (el.loginSubmitText) el.loginSubmitText.textContent = 'Authenticate & Launch';
+      if (el.loginFeedback) {
+        el.loginFeedback.style.display = 'block';
+        el.loginFeedback.style.background = 'rgba(239, 68, 68, 0.15)';
+        el.loginFeedback.style.color = 'var(--color-error, #dc2626)';
+        el.loginFeedback.textContent = err.message || 'Authentication error. Please retry.';
+      }
+      HapticFeedback.error();
+    }
   });
 
   // Registration Step Indicator Clicks
@@ -4129,10 +4361,11 @@ function initEvents() {
   // Notifications
   el.openNotificationsBtn?.addEventListener('click', openNotifModal);
   el.closeNotifBtn?.addEventListener('click', closeNotifModal);
-  el.markAllReadBtn?.addEventListener('click', () => {
+  el.markAllReadBtn?.addEventListener('click', async () => {
     state.notifications.forEach(n => n.unread = false);
     if (el.notifBadge) el.notifBadge.style.display = 'none';
     if (el.unreadNotifCount) el.unreadNotifCount.textContent = '0 New';
+    await markAllNotificationsAsRead();
     showToast('All notifications marked as read');
     renderNotifList();
   });
@@ -4190,12 +4423,12 @@ function initEvents() {
     renderAdminScreen();
   });
 
-  el.adminCmsForm?.addEventListener('submit', (e) => {
+  el.adminCmsForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const title = el.cmsTitle.value.trim();
     if (!title) return;
     const newItem = {
-      id: `cms_${Date.now()}`,
+      id: `CIR-${Date.now()}`,
       title: title,
       category: el.cmsCategory.value,
       freshness: el.cmsFreshness.value,
@@ -4205,18 +4438,25 @@ function initEvents() {
       issuedBy: el.cmsIssuedBy.value,
       audience: el.cmsAudience.value,
       isUrgent: el.cmsIsUrgent.checked,
-      publishedAt: 'Just now'
-    };
-    state.cmsItems.unshift(newItem);
-    state.circulars.unshift({
-      id: `CIR-${Date.now()}`,
-      title: newItem.title,
-      category: newItem.category,
+      publishedAt: 'Just now',
       date: 'Just now',
-      issuedBy: newItem.issuedBy,
-      urgent: newItem.isUrgent,
-      summary: newItem.summary
+      urgent: el.cmsIsUrgent.checked
+    };
+
+    await createCircularNotice(newItem);
+    state.cmsItems.unshift(newItem);
+    state.circulars.unshift(newItem);
+
+    await logAuditEntry({
+      actorUserId: state.currentUser?.id || 'admin',
+      actorName: `${state.currentUser?.name || 'Administrator'} (ADMIN)`,
+      targetUser: 'ALL CAMPUS NETWORK',
+      action: 'STATUTORY_NOTICE_PUBLISHED',
+      previousStatus: 'DRAFT',
+      newStatus: 'PUBLISHED',
+      remarks: newItem.title
     });
+
     state.auditTrail.unshift({
       id: `aud_${Date.now()}`,
       timestamp: 'Just now',
@@ -4227,14 +4467,195 @@ function initEvents() {
       newStatus: 'PUBLISHED',
       remarks: newItem.title
     });
-    showToast('Statutory announcement approved and published!');
+
+    showToast('Statutory announcement approved and published to Cloud Registry!');
     closeAdminCmsModal();
     renderAdminScreen();
   });
 
-  // Initial Boot: Synchronize user with global select default
-  const initialAccountId = el.globalAccountSelect ? el.globalAccountSelect.value : 'usr_admin';
-  authenticateUser(initialAccountId || 'usr_admin');
+  // Initial Cloud-Backed Boot Sequence (No default auto-admin login)
+  initSessionAndBoot();
+}
+
+// Cloud Session Boot Engine
+async function initSessionAndBoot() {
+  // 1. Initial State: Default to Public Visitor
+  state.currentUser = null;
+  updateDesktopSessionUI();
+  updateDynamicNavigation();
+
+  // 2. Check Supabase Session
+  try {
+    const session = await getCurrentSession();
+    if (session && session.user) {
+      let prof = await fetchUserProfile(session.user.id);
+      if (!prof && session.user.email) {
+        prof = await fetchUserProfileByEmail(session.user.email);
+      }
+      if (prof) {
+        state.currentUser = normalizeProfile(prof);
+      } else {
+        state.currentUser = normalizeProfile({
+          id: session.user.id,
+          auth_user_id: session.user.id,
+          name: session.user.user_metadata?.name || session.user.email.split('@')[0],
+          email: session.user.email,
+          status: 'APPROVED',
+          active_role: session.user.user_metadata?.requested_role || 'STUDENT',
+          approved_roles: [session.user.user_metadata?.requested_role || 'STUDENT']
+        });
+      }
+      localStorage.setItem('gri_active_profile', JSON.stringify(state.currentUser));
+      updateDesktopSessionUI();
+      updateDynamicNavigation();
+      if (state.currentUser.status !== 'APPROVED') {
+        switchTab('status');
+      } else {
+        switchTab('home');
+      }
+      showToast(`Restored cloud session: ${state.currentUser.name} (${state.currentUser.activeRole})`);
+    } else {
+      // Check cached profile if any in localStorage
+      const cachedProf = localStorage.getItem('gri_active_profile');
+      if (cachedProf && !isSupabaseConfigured) {
+        state.currentUser = JSON.parse(cachedProf);
+        updateDesktopSessionUI();
+        updateDynamicNavigation();
+        switchTab(state.currentUser.status === 'APPROVED' ? 'home' : 'status');
+      } else {
+        // Public visitor default
+        switchTab('home');
+      }
+    }
+  } catch (err) {
+    console.warn('Session restoration failed:', err);
+    switchTab('home');
+  }
+
+  // 3. Load Cloud Collections (Circulars, Notifications, Audit Logs)
+  try {
+    await loadCloudData();
+  } catch (e) {
+    console.warn('Cloud collections fetch warning:', e);
+  }
+
+  // 4. Real-time Subscription Setup
+  try {
+    setupRealtimeSubscriptions();
+  } catch (e) {
+    console.warn('Realtime subscription warning:', e);
+  }
+}
+
+async function loadCloudData() {
+  // 1. Circulars
+  const circs = await fetchPublishedCirculars();
+  if (circs && circs.length > 0) {
+    state.circulars = circs.map(c => ({
+      id: c.id,
+      title: c.title,
+      category: c.category,
+      date: c.date,
+      issuedBy: c.issued_by || c.issuedBy || 'Controller of Examinations',
+      urgent: Boolean(c.urgent),
+      summary: c.summary,
+      docUrl: c.doc_url || c.docUrl
+    }));
+    if (state.currentTab === 'home') renderHomeScreen();
+  }
+
+  // 2. Notifications
+  const notifs = await fetchNotifications();
+  if (notifs && notifs.length > 0) {
+    state.notifications = notifs.map(n => ({
+      id: n.id,
+      title: n.title,
+      text: n.text,
+      time: n.time,
+      unread: Boolean(n.unread),
+      action: n.target_action || n.action,
+      tab: n.target_tab || n.tab
+    }));
+    const unreadCount = state.notifications.filter(n => n.unread).length;
+    if (el.notifBadge) {
+      el.notifBadge.style.display = unreadCount > 0 ? 'flex' : 'none';
+      el.notifBadge.textContent = unreadCount;
+    }
+    if (el.unreadNotifCount) {
+      el.unreadNotifCount.textContent = `${unreadCount} New`;
+    }
+  }
+
+  // 3. Audit Logs
+  const logs = await fetchAuditLogs(30);
+  if (logs && logs.length > 0) {
+    state.auditTrail = logs.map(a => ({
+      id: a.id,
+      timestamp: a.timestamp || (a.created_at ? new Date(a.created_at).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }) : 'Just now'),
+      actor: a.actor || a.actor_name || 'Central Registry',
+      targetUser: a.targetUser || a.target_user_id || 'CAMPUS NETWORK',
+      action: a.action,
+      previousStatus: a.previousStatus || a.previous_status,
+      newStatus: a.newStatus || a.new_status,
+      remarks: a.remarks
+    }));
+  }
+}
+
+function setupRealtimeSubscriptions() {
+  if (!isSupabaseConfigured) return;
+
+  // Realtime Circulars
+  subscribeToTableChanges('circulars_notices', payload => {
+    if (payload.eventType === 'INSERT') {
+      const c = payload.new;
+      state.circulars.unshift({
+        id: c.id,
+        title: c.title,
+        category: c.category,
+        date: c.date,
+        issuedBy: c.issued_by || 'Controller of Examinations',
+        urgent: Boolean(c.urgent),
+        summary: c.summary
+      });
+      showToast(`New Circular Published: ${c.title}`);
+      if (state.currentTab === 'home') renderHomeScreen();
+      if (state.currentTab === 'admin') renderAdminScreen();
+    }
+  });
+
+  // Realtime Notifications
+  subscribeToTableChanges('notifications', payload => {
+    if (payload.eventType === 'INSERT') {
+      const n = payload.new;
+      state.notifications.unshift({
+        id: n.id,
+        title: n.title,
+        text: n.text,
+        time: n.time,
+        unread: true
+      });
+      const unreadCount = state.notifications.filter(x => x.unread).length;
+      if (el.notifBadge) {
+        el.notifBadge.style.display = 'flex';
+        el.notifBadge.textContent = unreadCount;
+      }
+      showToast(`Notification: ${n.title}`);
+    }
+  });
+
+  // Realtime Profile Updates (e.g. Dean approves pending applicant)
+  subscribeToTableChanges('user_profiles', payload => {
+    if (payload.new && state.currentUser && (payload.new.id === state.currentUser.id || payload.new.auth_user_id === state.currentUser.auth_user_id)) {
+      state.currentUser = normalizeProfile(payload.new);
+      localStorage.setItem('gri_active_profile', JSON.stringify(state.currentUser));
+      updateDesktopSessionUI();
+      updateDynamicNavigation();
+      showToast(`Status updated: ${state.currentUser.status.replace('_', ' ')}`);
+      if (state.currentTab === 'status') renderStatusScreen();
+      else if (state.currentUser.status === 'APPROVED' && state.currentTab === 'status') switchTab('home');
+    }
+  });
 }
 
 // Run on DOM Ready
