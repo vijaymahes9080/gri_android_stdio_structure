@@ -3404,6 +3404,57 @@ function renderAdminScreen() {
       </div>
     </div>
 
+    <!-- Official Website Cloud Sync & Provenance Ledger -->
+    <div class="card tilt-card" style="border: 1px solid var(--color-primary-container); background: var(--color-surface-elevated); margin-bottom: var(--space-md);">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+          <span class="freshness-badge current">● OFFICIAL SOURCE SYNC</span>
+          <h3 style="font-family: var(--font-display); font-size: 14px; font-weight: 700; margin-top: 4px;">ruraluniv.ac.in Cloud Ledger</h3>
+          <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">
+            Authoritative source: <a href="https://www.ruraluniv.ac.in/" target="_blank" style="color: var(--color-primary);">ruraluniv.ac.in</a> • Last verified: ${state.lastSynced || 'Active'}
+          </p>
+        </div>
+        <span class="official-seal-chip">✓ SHA-256 DEDUP</span>
+      </div>
+
+      <!-- Quick Metrics Grid -->
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 10px 0; text-align: center;">
+        <div style="background: var(--color-surface); padding: 6px; border-radius: var(--radius-sm); border: 1px solid var(--color-surface-border);">
+          <div style="font-family: var(--font-mono); font-weight: 700; color: var(--color-primary);">${state.schools.length}</div>
+          <div style="font-size: 9px; color: var(--color-text-muted);">Schools</div>
+        </div>
+        <div style="background: var(--color-surface); padding: 6px; border-radius: var(--radius-sm); border: 1px solid var(--color-surface-border);">
+          <div style="font-family: var(--font-mono); font-weight: 700; color: var(--color-primary);">${state.careers.length}</div>
+          <div style="font-size: 9px; color: var(--color-text-muted);">Careers</div>
+        </div>
+        <div style="background: var(--color-surface); padding: 6px; border-radius: var(--radius-sm); border: 1px solid var(--color-surface-border);">
+          <div style="font-family: var(--font-mono); font-weight: 700; color: var(--color-primary);">${state.tenders.length}</div>
+          <div style="font-size: 9px; color: var(--color-text-muted);">Tenders</div>
+        </div>
+        <div style="background: var(--color-surface); padding: 6px; border-radius: var(--radius-sm); border: 1px solid var(--color-surface-border);">
+          <div style="font-family: var(--font-mono); font-weight: 700; color: var(--color-secondary);">${state.officialDocuments.length}</div>
+          <div style="font-size: 9px; color: var(--color-text-muted);">Documents</div>
+        </div>
+        <div style="background: var(--color-surface); padding: 6px; border-radius: var(--radius-sm); border: 1px solid var(--color-surface-border);">
+          <div style="font-family: var(--font-mono); font-weight: 700; color: var(--color-secondary);">${state.videoGallery.length}</div>
+          <div style="font-size: 9px; color: var(--color-text-muted);">Videos</div>
+        </div>
+        <div style="background: var(--color-surface); padding: 6px; border-radius: var(--radius-sm); border: 1px solid var(--color-surface-border);">
+          <div style="font-family: var(--font-mono); font-weight: 700; color: var(--color-secondary);">${state.contacts.length}</div>
+          <div style="font-size: 9px; color: var(--color-text-muted);">Directory</div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 8px; margin-top: 6px;">
+        <button class="btn btn-sm btn-primary" id="btnAdminSyncNow" style="flex: 1;">
+          ↻ Trigger Cloud Sync
+        </button>
+        <button class="btn btn-sm btn-outline" id="btnAdminViewSyncLogs">
+          View Sync Audit Log
+        </button>
+      </div>
+    </div>
+
     <!-- Official Notice Publishing Studio -->
     <div class="card tilt-card">
       <div class="section-header-row" style="margin-top: 0;">
@@ -3464,6 +3515,8 @@ function renderAdminScreen() {
 
   document.getElementById('btnAdminOpenApprovals')?.addEventListener('click', () => switchTab('approvals'));
   document.getElementById('btnAdminLaunchCms')?.addEventListener('click', openAdminCmsModal);
+  document.getElementById('btnAdminSyncNow')?.addEventListener('click', () => triggerOfficialSync());
+  document.getElementById('btnAdminViewSyncLogs')?.addEventListener('click', () => openSyncAuditModal());
 
   const pubForm = document.getElementById('publishNoticeForm');
   if (pubForm) {
@@ -4554,6 +4607,8 @@ function initEvents() {
   // Admin CMS Events
   el.closeAdminCmsBtn?.addEventListener('click', closeAdminCmsModal);
   el.closeDocPreviewBtn?.addEventListener('click', () => el.docPreviewModal.classList.remove('active'));
+  el.closeVideoBtn?.addEventListener('click', closeVideoModal);
+  el.closeSyncAuditBtn?.addEventListener('click', closeSyncAuditModal);
   
   el.btnSaveCmsDraft?.addEventListener('click', () => {
     const title = el.cmsTitle.value.trim();
@@ -6068,20 +6123,97 @@ function renderSearchResults(query = '') {
     });
   }
 
-  // Search across careers & tenders
-  if (currentSearchCategory === 'all' || currentSearchCategory === 'campus') {
-    (state.careersAndTenders || []).forEach(t => {
-      if (!q || t.title.toLowerCase().includes(q) || t.type.toLowerCase().includes(q) || t.summary.toLowerCase().includes(q)) {
+  // Search across official careers
+  if (currentSearchCategory === 'all' || currentSearchCategory === 'careers') {
+    (state.careers || []).forEach(c => {
+      if (!q || (c.title && c.title.toLowerCase().includes(q)) || (c.department && c.department.toLowerCase().includes(q)) || (c.post_type && c.post_type.toLowerCase().includes(q))) {
         results.push({
-          type: t.type,
-          category: t.status,
-          title: t.title,
-          subtitle: `${t.date} (${t.time}) • ${t.venue}`,
-          action: () => { closeGlobalSearch(); switchTab('campus'); }
+          type: 'Career Notification',
+          category: c.post_type || 'Recruitment',
+          title: c.title,
+          subtitle: `${c.department || 'GRI Directorate'} • Due: ${c.closing_date} • Ref: ${c.notification_no || 'OFFICIAL'}`,
+          action: () => { closeGlobalSearch(); switchTab('careers'); }
         });
       }
     });
   }
+
+  // Search across official tenders
+  if (currentSearchCategory === 'all' || currentSearchCategory === 'tenders') {
+    (state.tenders || []).forEach(t => {
+      if (!q || (t.title && t.title.toLowerCase().includes(q)) || (t.department && t.department.toLowerCase().includes(q)) || (t.tender_ref && t.tender_ref.toLowerCase().includes(q))) {
+        results.push({
+          type: 'Tender & Works',
+          category: t.department || 'Procurement',
+          title: t.title,
+          subtitle: `Ref: ${t.tender_ref} • Due: ${t.closing_date} • Value: ${t.tender_value || 'RFP'}`,
+          action: () => { closeGlobalSearch(); switchTab('tenders'); }
+        });
+      }
+    });
+  }
+
+  // Search across official video gallery
+  if (currentSearchCategory === 'all' || currentSearchCategory === 'gallery' || currentSearchCategory === 'videos') {
+    (state.videoGallery || []).forEach(v => {
+      if (!q || (v.title && v.title.toLowerCase().includes(q)) || (v.category && v.category.toLowerCase().includes(q)) || (v.description && v.description.toLowerCase().includes(q))) {
+        results.push({
+          type: 'Video Presentation',
+          category: v.category || 'Media',
+          title: v.title,
+          subtitle: `${v.duration || 'Video'} • ${v.description || ''}`,
+          action: () => { closeGlobalSearch(); openVideoModal(v.id); }
+        });
+      }
+    });
+  }
+
+  // Search across official campus photo gallery
+  if (currentSearchCategory === 'all' || currentSearchCategory === 'gallery') {
+    (state.mediaGallery || []).forEach(m => {
+      if (!q || (m.title && m.title.toLowerCase().includes(q)) || (m.category && m.category.toLowerCase().includes(q)) || (m.caption && m.caption.toLowerCase().includes(q))) {
+        results.push({
+          type: 'Campus Photography',
+          category: m.category || 'Gallery',
+          title: m.title,
+          subtitle: m.caption || 'GRI Official Campus Archive',
+          action: () => { closeGlobalSearch(); switchTab('gallery'); }
+        });
+      }
+    });
+  }
+
+  // Search across official campus contacts & directory
+  if (currentSearchCategory === 'all' || currentSearchCategory === 'contacts') {
+    (state.contacts || []).forEach(c => {
+      if (!q || (c.office_name && c.office_name.toLowerCase().includes(q)) || (c.officer_name && c.officer_name.toLowerCase().includes(q)) || (c.designation && c.designation.toLowerCase().includes(q)) || (c.category && c.category.toLowerCase().includes(q))) {
+        results.push({
+          type: 'Campus Directory',
+          category: c.category || 'Office',
+          title: `${c.office_name} — ${c.officer_name || c.designation}`,
+          subtitle: `Phone: ${c.phone_direct || 'EPABX'} • Email: ${c.email || 'ruraluniv.ac.in'} • Loc: ${c.location || 'Main Campus'}`,
+          action: () => { closeGlobalSearch(); switchTab('contacts'); }
+        });
+      }
+    });
+  }
+
+  // Search across schools & faculties
+  if (currentSearchCategory === 'all' || currentSearchCategory === 'academics') {
+    (state.schools || []).forEach(s => {
+      if (!q || (s.name && s.name.toLowerCase().includes(q)) || (s.dean_name && s.dean_name.toLowerCase().includes(q))) {
+        results.push({
+          type: 'Statutory School',
+          category: 'Academics',
+          title: s.name,
+          subtitle: `Dean: ${s.dean_name || 'GRI Dean'} • ${s.contact_email || 'ruraluniv.ac.in'}`,
+          action: () => { closeGlobalSearch(); switchTab('academics'); }
+        });
+      }
+    });
+  }
+
+  // Search across legacy campus notices
 
   // Search across official web portals
   if (currentSearchCategory === 'all') {
