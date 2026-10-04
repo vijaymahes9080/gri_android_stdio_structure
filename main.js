@@ -1281,6 +1281,11 @@ const el = {
   openRegisterBtn: document.getElementById('openRegisterBtn'),
   currentRoleChip: document.getElementById('currentRoleChip'),
   roleBadgeBtn: document.getElementById('roleBadgeBtn'),
+  btnMobileLogin: document.getElementById('btnMobileLogin'),
+  btnMobileRegister: document.getElementById('btnMobileRegister'),
+  btnMobileLogout: document.getElementById('btnMobileLogout'),
+  authGuestControls: document.getElementById('authGuestControls'),
+  authUserControls: document.getElementById('authUserControls'),
   statusClock: document.getElementById('statusClock'),
   bottomNav: document.getElementById('bottomNav'),
   toastContainer: document.getElementById('toastContainer'),
@@ -1601,10 +1606,14 @@ function normalizeProfile(p) {
 }
 
 function updateDesktopSessionUI() {
+  const u = state.currentUser;
+  const isAuth = u && u.status !== 'PUBLIC';
+
+  // Desktop Top Toolbar
   if (el.desktopUserLabel && el.btnAuthActionDesktop) {
-    if (state.currentUser && state.currentUser.status !== 'PUBLIC') {
-      const role = state.currentUser.activeRole || state.currentUser.active_role || state.currentUser.status;
-      el.desktopUserLabel.textContent = `${state.currentUser.name?.split(' ')[0]} (${role})`;
+    if (isAuth) {
+      const role = u.activeRole || u.active_role || u.status;
+      el.desktopUserLabel.textContent = `${u.name?.split(' ')[0]} (${role})`;
       el.btnAuthActionDesktop.textContent = 'Sign Out';
       el.btnAuthActionDesktop.classList.remove('btn-primary');
       el.btnAuthActionDesktop.classList.add('btn-outline');
@@ -1613,6 +1622,23 @@ function updateDesktopSessionUI() {
       el.btnAuthActionDesktop.textContent = 'Sign In';
       el.btnAuthActionDesktop.classList.remove('btn-outline');
       el.btnAuthActionDesktop.classList.add('btn-primary');
+    }
+  }
+
+  // Mobile App Top Bar Authentication Cluster
+  if (el.authGuestControls && el.authUserControls) {
+    if (isAuth) {
+      el.authGuestControls.style.display = 'none';
+      el.authUserControls.style.display = 'flex';
+      if (el.currentRoleChip) {
+        el.currentRoleChip.textContent = u.activeRole || u.active_role || u.status || 'STUDENT';
+      }
+    } else {
+      el.authGuestControls.style.display = 'flex';
+      el.authUserControls.style.display = 'none';
+      if (el.currentRoleChip) {
+        el.currentRoleChip.textContent = 'PUBLIC';
+      }
     }
   }
 }
@@ -1962,6 +1988,18 @@ function renderHomeScreen() {
             <span class="mini-stat-val" style="font-size: 11px;">${u.approvedRoles && u.approvedRoles.length ? u.approvedRoles.join(', ') : u.activeRole}</span>
           </div>
         </div>
+
+        <!-- Authenticated Identity & Session Controls -->
+        <div style="display: flex; gap: 8px; margin-top: var(--space-sm); padding-top: var(--space-xs); border-top: 1px solid var(--color-surface-border);">
+          <button class="btn btn-sm btn-outline" id="btnHeroManageAccount" style="flex: 1; font-size: 11px; padding: 5px 8px;">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            Account & Roles
+          </button>
+          <button class="btn btn-sm btn-outline" id="btnHeroSignOut" style="flex: 1; font-size: 11px; padding: 5px 8px; color: var(--color-error); border-color: rgba(239, 68, 68, 0.4); background: rgba(239, 68, 68, 0.04);">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+            Sign Out
+          </button>
+        </div>
       </div>
     `}
 
@@ -2272,9 +2310,11 @@ function renderHomeScreen() {
     openDocCenterModal();
   });
 
-  // Persona Specific Buttons
+  // Persona & Session Specific Buttons
   document.getElementById('btnHomeSignIn')?.addEventListener('click', openAuthModal);
   document.getElementById('btnHomeRegister')?.addEventListener('click', openRegisterModal);
+  document.getElementById('btnHeroManageAccount')?.addEventListener('click', openRoleSwitcherModal);
+  document.getElementById('btnHeroSignOut')?.addEventListener('click', handleSignOut);
   document.getElementById('btnHomeOpenFacultySuite')?.addEventListener('click', openFacultyModal);
   document.getElementById('btnHomeTeachingRoster')?.addEventListener('click', () => switchTab('faculty'));
   document.getElementById('btnHomeExamOps')?.addEventListener('click', () => switchTab('coe'));
@@ -3324,7 +3364,52 @@ function renderServicesScreen() {
         <div style="font-size: 10px; color: var(--color-text-muted); margin-top: 4px;">Logged on ${g.date}</div>
       </div>
     `).join('')}
+
+    <!-- Institutional Account & Session -->
+    <div class="section-header-row" style="margin-top: var(--space-md);">
+      <span class="section-title">Institutional Account & Session</span>
+      <span class="badge-pill">Security</span>
+    </div>
+
+    <div class="card tilt-card" style="margin-bottom: var(--space-md); border-left: 4px solid var(--color-primary);">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <span class="freshness-badge current" style="font-size: 8px;">● ${u ? u.status : 'PUBLIC'}</span>
+          <h3 style="font-family: var(--font-display); font-size: 14px; font-weight: 700; margin-top: 2px;">
+            ${u ? u.name : 'Public Visitor Mode'}
+          </h3>
+          <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">
+            ${u ? `${u.email || u.institutionalId} • Role: ${u.activeRole}` : 'Sign in to access student credentials, fee receipts, and digital ID.'}
+          </p>
+        </div>
+        ${u && u.status !== 'PUBLIC' ? `
+          <button class="btn btn-sm btn-outline" id="btnServicesSignOut" style="color: var(--color-error); border-color: rgba(239, 68, 68, 0.4); background: rgba(239, 68, 68, 0.05); font-weight: 700;">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+            Sign Out
+          </button>
+        ` : `
+          <button class="btn btn-sm btn-primary" id="btnServicesSignIn">
+            Sign In →
+          </button>
+        `}
+      </div>
+      <div style="display: flex; gap: 8px; margin-top: var(--space-sm); padding-top: var(--space-xs); border-top: 1px solid var(--color-surface-border);">
+        <button class="btn btn-sm btn-outline" id="btnServicesManageRoles" style="flex: 1; font-size: 11px;">
+          Account Profile & Roles
+        </button>
+        ${!u || u.status === 'PUBLIC' ? `
+          <button class="btn btn-sm btn-outline" id="btnServicesRegister" style="flex: 1; font-size: 11px;">
+            Register Account
+          </button>
+        ` : ''}
+      </div>
+    </div>
   `;
+
+  document.getElementById('btnServicesSignOut')?.addEventListener('click', handleSignOut);
+  document.getElementById('btnServicesSignIn')?.addEventListener('click', openAuthModal);
+  document.getElementById('btnServicesRegister')?.addEventListener('click', openRegisterModal);
+  document.getElementById('btnServicesManageRoles')?.addEventListener('click', openRoleSwitcherModal);
 
   // 3D Flip
   const flipContainer = document.getElementById('idCardFlipperContainer');
@@ -4065,65 +4150,99 @@ function renderDocList(category = 'all') {
   });
 }
 
-// Modal: Authorized Multi-Role Switcher Sheet
+// Modal: Institutional Account, Roles & Session Profile
 function openRoleSwitcherModal() {
   const u = state.currentUser;
-  if (!u || u.status !== 'APPROVED') {
-    showToast('Role switching is only available for approved institutional accounts.', 'info');
+  if (!u || u.status === 'PUBLIC') {
+    openAuthModal();
     return;
   }
 
-  // Per rule: NO fake role switching! Only show already-approved roles!
-  if (u.approvedRoles.length <= 1) {
-    showToast(`Your account has 1 authorized institutional role (${u.approvedRoles[0]}).`, 'info');
-    return;
-  }
+  const approvedRoles = u.approvedRoles && u.approvedRoles.length ? u.approvedRoles : [u.activeRole || 'STUDENT'];
 
   el.authorizedRolesList.innerHTML = `
-    <div style="font-size: 12px; color: var(--color-text-secondary); margin-bottom: 12px;">
-      User: <strong>${u.name}</strong> • Select an already-approved institutional identity:
+    <!-- User Account Card -->
+    <div class="card" style="margin-bottom: var(--space-md); border-left: 4px solid var(--color-primary); background: var(--color-surface-elevated); padding: 12px;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+          <span class="freshness-badge current" style="font-size: 8px;">● ACTIVE IDENTITY</span>
+          <h3 style="font-family: var(--font-display); font-size: 15px; font-weight: 700; margin-top: 2px;">${u.name}</h3>
+          <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">${u.email || u.institutionalId || 'GRI Member'}</div>
+          <div style="font-size: 10px; color: var(--color-text-muted); margin-top: 2px;">Institutional ID: <strong>${u.institutionalId || u.id}</strong></div>
+        </div>
+        <span class="official-seal-chip">✓ ${u.status}</span>
+      </div>
+      <div style="display: flex; gap: 6px; margin-top: 10px; font-size: 10px;">
+        <span class="badge-pill">Current Role: ${u.activeRole || 'STUDENT'}</span>
+        <span class="badge-pill">${u.department || 'GRI Main Campus'}</span>
+      </div>
     </div>
 
-    ${u.approvedRoles.map(role => `
-      <div class="auth-role-option-row ${u.activeRole === role ? 'active' : ''}" data-role="${role}">
-        <div>
-          <div style="font-family: var(--font-display); font-weight: 700; font-size: 14px;">${role}</div>
-          <div style="font-size: 11px; color: var(--color-text-secondary);">
-            ${role === 'FACULTY' ? 'Teaching & Class Roster' : 'Doctoral Research & Publications'}
+    <!-- Authorized Roles List -->
+    <div style="font-size: 12px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+      <span>Authorized Roles (${approvedRoles.length})</span>
+      <span style="font-size: 10px; color: var(--color-text-muted); font-weight: 500;">
+        ${approvedRoles.length > 1 ? 'Tap to switch active role' : 'Single Authorized Role'}
+      </span>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 6px; margin-bottom: var(--space-md);">
+      ${approvedRoles.map(role => `
+        <div class="auth-role-option-row ${u.activeRole === role ? 'active' : ''}" data-role="${role}" style="cursor: ${approvedRoles.length > 1 ? 'pointer' : 'default'};">
+          <div>
+            <div style="font-family: var(--font-display); font-weight: 700; font-size: 13px;">${role}</div>
+            <div style="font-size: 10px; color: var(--color-text-secondary);">
+              ${role === 'FACULTY' ? 'Teaching & Class Roster' : role === 'ADMIN' ? 'Institutional Administration & Approvals' : role === 'COE_STAFF' ? 'Controller of Examinations Ops' : role === 'SCHOLAR' ? 'Doctoral Research & Publications' : 'Student Academics, Exams & Transit'}
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            ${u.activeRole === role ? '<span style="color: var(--color-primary); font-weight: 800; font-size: 11px;">✓ Active</span>' : (approvedRoles.length > 1 ? '<span style="font-size: 11px; color: var(--color-text-muted);">Switch →</span>' : '')}
           </div>
         </div>
-        <div style="display: flex; align-items: center; gap: 6px;">
-          ${u.activeRole === role ? '<span style="color: var(--color-primary); font-weight: 800;">✓ Active</span>' : '<span style="font-size: 11px; color: var(--color-text-muted);">Switch →</span>'}
-        </div>
-      </div>
-    `).join('')}
+      `).join('')}
+    </div>
+
+    <!-- Explicit Logout / Sign Out Action -->
+    <div style="padding-top: var(--space-sm); border-top: 1px solid var(--color-surface-border);">
+      <button class="btn btn-full btn-outline" id="btnModalSignOut" style="color: var(--color-error); border: 1.5px solid rgba(239, 68, 68, 0.4); background: rgba(239, 68, 68, 0.06); font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 6px;">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+        Sign Out of GRI Institutional Session
+      </button>
+    </div>
   `;
 
-  document.querySelectorAll('.auth-role-option-row').forEach(row => {
-    row.addEventListener('click', (e) => {
-      const r = e.currentTarget.getAttribute('data-role');
-      if (r !== u.activeRole) {
-        const prev = u.activeRole;
-        u.activeRole = r;
+  if (approvedRoles.length > 1) {
+    document.querySelectorAll('.auth-role-option-row').forEach(row => {
+      row.addEventListener('click', (e) => {
+        const r = e.currentTarget.getAttribute('data-role');
+        if (r !== u.activeRole) {
+          const prev = u.activeRole;
+          u.activeRole = r;
 
-        state.auditTrail.unshift({
-          id: `aud_${Date.now()}`,
-          timestamp: 'Just now',
-          actor: `${u.name} (${prev})`,
-          targetUser: u.name,
-          action: 'ROLE_SWITCHED',
-          previousStatus: prev,
-          newStatus: r,
-          remarks: `User switched between authorized approved roles`
-        });
+          state.auditTrail.unshift({
+            id: `aud_${Date.now()}`,
+            timestamp: 'Just now',
+            actor: `${u.name} (${prev})`,
+            targetUser: u.name,
+            action: 'ROLE_SWITCHED',
+            previousStatus: prev,
+            newStatus: r,
+            remarks: `User switched between authorized approved roles`
+          });
 
-        HapticFeedback.success();
-        showToast(`Switched active context to ${r}`);
-        el.roleSwitcherModal.classList.remove('active');
-        updateDynamicNavigation();
-        switchTab('home');
-      }
+          HapticFeedback.success();
+          showToast(`Switched active context to ${r}`);
+          el.roleSwitcherModal.classList.remove('active');
+          updateDynamicNavigation();
+          switchTab('home');
+        }
+      });
     });
+  }
+
+  document.getElementById('btnModalSignOut')?.addEventListener('click', () => {
+    el.roleSwitcherModal.classList.remove('active');
+    handleSignOut();
   });
 
   el.roleSwitcherModal.classList.add('active');
@@ -4206,6 +4325,11 @@ function initEvents() {
   // Quick sync button
   el.quickSyncBtn?.addEventListener('click', triggerSync);
 
+  // Mobile Top Bar Auth Actions
+  el.btnMobileLogin?.addEventListener('click', openAuthModal);
+  el.btnMobileRegister?.addEventListener('click', openRegisterModal);
+  el.btnMobileLogout?.addEventListener('click', handleSignOut);
+
   // Desktop Header Auth Action (Sign In / Sign Out)
   el.btnAuthActionDesktop?.addEventListener('click', () => {
     if (state.currentUser && state.currentUser.status !== 'PUBLIC') {
@@ -4215,16 +4339,12 @@ function initEvents() {
     }
   });
 
-  // Top Bar Role Badge Click
+  // Top Bar Role Badge Click -> Opens Account Profile & Role Switcher
   el.roleBadgeBtn?.addEventListener('click', () => {
     if (!state.currentUser || state.currentUser.status === 'PUBLIC') {
       openAuthModal();
-    } else if (state.currentUser.status !== 'APPROVED') {
-      switchTab('status');
-    } else if (state.currentUser.approvedRoles.length > 1) {
-      openRoleSwitcherModal();
     } else {
-      showToast(`Account: ${state.currentUser.name} • Status: Approved ${state.currentUser.activeRole}`);
+      openRoleSwitcherModal();
     }
   });
 

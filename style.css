@@ -595,6 +595,49 @@ a {
   height: 28px;
 }
 
+.mobile-auth-cluster {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.auth-guest-controls,
+.auth-user-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.auth-header-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 4px 9px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--trans-fast);
+}
+
+.auth-header-btn:active {
+  transform: scale(0.96);
+}
+
+.auth-header-btn.logout-btn {
+  color: var(--color-error);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.auth-header-btn.logout-btn:hover {
+  background: rgba(239, 68, 68, 0.18);
+  border-color: var(--color-error);
+}
+
 .role-pill-chip {
   font-family: var(--font-mono);
   font-size: 10px;
