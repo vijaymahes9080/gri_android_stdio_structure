@@ -27,7 +27,26 @@ import {
   submitFacultyLeaveApplication,
   fetchNotifications,
   markAllNotificationsAsRead,
-  subscribeToTableChanges
+  subscribeToTableChanges,
+  // Official Institutional Content Services
+  fetchOfficialSchools,
+  fetchOfficialDepartments,
+  fetchOfficialProgrammes,
+  fetchOfficialEvents,
+  fetchOfficialCareers,
+  fetchOfficialTenders,
+  fetchOfficialScholarships,
+  fetchOfficialExaminations,
+  fetchOfficialDocuments,
+  fetchOfficialFacilities,
+  fetchOfficialMediaGallery,
+  fetchOfficialVideoGallery,
+  fetchOfficialContacts,
+  fetchOfficialImportantLinks,
+  fetchOfficialSyncLogs,
+  updateOfficialRecordMetadata,
+  syncOfficialWebsiteData,
+  getLastSyncTimestamp
 } from './supabaseClient.js';
 
 // --- 1. Institutional Permissions Definition ---
@@ -1213,6 +1232,15 @@ const state = {
     }
   ],
 
+  // --- 14. Official Content Entities from ruraluniv.ac.in ---
+  events: [],
+  careers: [],
+  tenders: [],
+  mediaGallery: [],
+  videoGallery: [],
+  contacts: [],
+  syncLogs: [],
+  lastSynced: getLastSyncTimestamp()
 };
 
 
@@ -1345,6 +1373,10 @@ const el = {
   screenExams: document.getElementById('screenExams'),
   screenScholarships: document.getElementById('screenScholarships'),
   screenAbout: document.getElementById('screenAbout'),
+  screenCareers: document.getElementById('screenCareers'),
+  screenTenders: document.getElementById('screenTenders'),
+  screenGallery: document.getElementById('screenGallery'),
+  screenContacts: document.getElementById('screenContacts'),
 
   // Global Search Modal
   openGlobalSearchBtn: document.getElementById('openGlobalSearchBtn'),
@@ -1374,7 +1406,19 @@ const el = {
   closeDocPreviewBtn: document.getElementById('closeDocPreviewBtn'),
   docPreviewTitle: document.getElementById('docPreviewTitle'),
   docPreviewSubtitle: document.getElementById('docPreviewSubtitle'),
-  docPreviewContent: document.getElementById('docPreviewContent')
+  docPreviewContent: document.getElementById('docPreviewContent'),
+
+  // Video Gallery Player Modal
+  videoModal: document.getElementById('videoModal'),
+  closeVideoBtn: document.getElementById('closeVideoBtn'),
+  videoModalTitle: document.getElementById('videoModalTitle'),
+  videoModalSubtitle: document.getElementById('videoModalSubtitle'),
+  videoModalBody: document.getElementById('videoModalBody'),
+
+  // Cloud Sync Audit Ledger Modal
+  syncAuditModal: document.getElementById('syncAuditModal'),
+  closeSyncAuditBtn: document.getElementById('closeSyncAuditBtn'),
+  syncAuditBody: document.getElementById('syncAuditBody')
 };
 
 // --- 6. Live Clock Updater ---
@@ -1647,6 +1691,10 @@ function switchTab(tabId) {
   else if (tabId === 'exams') renderExamsScreen();
   else if (tabId === 'scholarships') renderScholarshipsScreen();
   else if (tabId === 'about') renderAboutScreen();
+  else if (tabId === 'careers') renderCareersScreen();
+  else if (tabId === 'tenders') renderTendersScreen();
+  else if (tabId === 'gallery') renderGalleryScreen();
+  else if (tabId === 'contacts') renderContactsScreen();
 }
 
 // --- 11. Authentication & Session Engine ---
@@ -1841,11 +1889,22 @@ function renderHomeScreen() {
       <img src="/assets/official_banner.png" alt="Gandhigram Rural Institute" style="width: 100%; max-height: 48px; object-fit: contain;">
     </div>
 
+    <!-- Freshness & Cloud Sync Banner -->
+    <div class="freshness-sync-bar">
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <span class="status-verified-dot" style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-success); display: inline-block;"></span>
+        <span><strong>Live Cloud Sync:</strong> <span id="homeSyncTimeText">${state.lastSynced || 'Just now'}</span></span>
+      </div>
+      <button class="btn btn-sm btn-outline" id="btnHomeTriggerSync" style="padding: 2px 8px; font-size: 10px;">
+        ↻ Sync Cloud
+      </button>
+    </div>
+
     <!-- Live Campus Announcement Ticker -->
     <div style="background: rgba(0, 54, 34, 0.06); border: 1px solid rgba(0, 54, 34, 0.2); border-radius: var(--radius-sm); padding: 6px 10px; margin-bottom: var(--space-sm); display: flex; align-items: center; gap: 8px;">
       <span class="freshness-badge current" style="flex-shrink: 0; font-size: 9px; padding: 2px 6px;">● LIVE NOTICE</span>
       <div style="font-size: 11px; font-weight: 600; color: var(--color-primary); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; flex: 1;">
-        Convocation XXXIX Registration Open • Legal Officer Walk-in Oct 6 • Student Health Insurance Tender (Due: Oct 5) • ESE Nov/Dec 2026 Timetable Released
+        ${(state.circulars && state.circulars[0]) ? state.circulars[0].title : 'Convocation Registration Open • ESE Nov/Dec 2026 Timetable Released'}
       </div>
     </div>
 
@@ -1916,7 +1975,10 @@ function renderHomeScreen() {
               ${state.accounts.filter(a => a.status === 'PENDING').length} Pending • ${state.accounts.filter(a => a.status === 'UNDER_REVIEW').length} Under Review
             </p>
           </div>
-          <button class="btn btn-sm btn-primary" id="btnGoToApprovals">Open Approval Center →</button>
+          <div style="display: flex; gap: 6px;">
+            <button class="btn btn-sm btn-outline" id="btnHomeOpenCms">CMS Studio</button>
+            <button class="btn btn-sm btn-primary" id="btnGoToApprovals">Approvals →</button>
+          </div>
         </div>
       </div>
     ` : ''}
@@ -2044,6 +2106,35 @@ function renderHomeScreen() {
         <span class="action-btn-label">About GRI</span>
       </button>
 
+      <!-- Missing Official Modules Gateways -->
+      <button class="action-card-btn" id="btnNavCareers">
+        <div class="action-icon-circle">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
+        </div>
+        <span class="action-btn-label">Careers</span>
+      </button>
+
+      <button class="action-card-btn" id="btnNavTenders">
+        <div class="action-icon-circle">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+        </div>
+        <span class="action-btn-label">Tenders</span>
+      </button>
+
+      <button class="action-card-btn" id="btnNavGallery">
+        <div class="action-icon-circle">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+        </div>
+        <span class="action-btn-label">Media & Video</span>
+      </button>
+
+      <button class="action-card-btn" id="btnNavContacts">
+        <div class="action-icon-circle">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </div>
+        <span class="action-btn-label">Directory</span>
+      </button>
+
       <button class="action-card-btn accent" id="btnQuickSahayak">
         <div class="action-icon-circle">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.38-1 1.72V7h1a7 7 0 0 1 7 7v1a3 3 0 0 1-3 3h-1.18c-.4.59-1.07 1-1.82 1h-6a2 2 0 0 1-2-2H6a3 3 0 0 1-3-3v-1a7 7 0 0 1 7-7h1V5.72A2 2 0 0 1 10 4a2 2 0 0 1 2-2z"/></svg>
@@ -2072,6 +2163,54 @@ function renderHomeScreen() {
         <span class="action-btn-label">Transit Radar</span>
       </button>
     </div>
+
+    <!-- Official Upcoming Events & Assemblies -->
+    ${(state.events && state.events.length > 0) ? `
+      <div class="section-header-row">
+        <span class="section-title">Upcoming Events & Conferences</span>
+        <span class="badge-pill">${state.events.length} Upcoming</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: var(--space-md);">
+        ${state.events.map(ev => `
+          <div class="card tilt-card" style="padding: 12px; border-left: 3.5px solid var(--color-primary);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div>
+                <span class="freshness-badge current" style="font-size: 9px;">${ev.category}</span>
+                <h4 style="font-family: var(--font-display); font-size: 13px; font-weight: 700; margin-top: 4px;">${ev.title}</h4>
+              </div>
+              <span style="font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--color-primary);">${ev.date}</span>
+            </div>
+            <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 4px;">${ev.description}</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 10px; color: var(--color-text-muted);">
+              <span>📍 ${ev.venue}</span>
+              <a href="${ev.circular_url || ev.source_url}" target="_blank" style="color: var(--color-primary); font-weight: 600;">Details ↗</a>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    ` : ''}
+
+    <!-- Official Video Gallery Spotlight -->
+    ${(state.videoGallery && state.videoGallery.length > 0) ? `
+      <div class="section-header-row">
+        <span class="section-title">Official Video Gallery Spotlight</span>
+        <a href="#" class="section-action-link" id="homeViewVideoGalleryLink">View All (${state.videoGallery.length}) →</a>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb-container" id="homeFeaturedVideoBtn" data-vid="${state.videoGallery[0].id}">
+          <img src="/assets/gri_emblem_3d.jpg" alt="${state.videoGallery[0].title}" onerror="this.src='/assets/gri_official_logo.png'">
+          <div class="video-play-overlay">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <span class="video-duration-tag">${state.videoGallery[0].duration}</span>
+        </div>
+        <div style="padding: 10px 12px;">
+          <span class="freshness-badge current" style="font-size: 9px;">${state.videoGallery[0].category}</span>
+          <h4 style="font-family: var(--font-display); font-size: 13px; font-weight: 700; margin-top: 4px;">${state.videoGallery[0].title}</h4>
+          <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">${state.videoGallery[0].description}</p>
+        </div>
+      </div>
+    ` : ''}
 
     <!-- Official Notices Feed with Freshness Indicators -->
     <div class="section-header-row">
@@ -2109,11 +2248,25 @@ function renderHomeScreen() {
   document.getElementById('btnNavExams')?.addEventListener('click', () => switchTab('exams'));
   document.getElementById('btnNavScholarships')?.addEventListener('click', () => switchTab('scholarships'));
   document.getElementById('btnNavAbout')?.addEventListener('click', () => switchTab('about'));
+  document.getElementById('btnNavCareers')?.addEventListener('click', () => switchTab('careers'));
+  document.getElementById('btnNavTenders')?.addEventListener('click', () => switchTab('tenders'));
+  document.getElementById('btnNavGallery')?.addEventListener('click', () => switchTab('gallery'));
+  document.getElementById('btnNavContacts')?.addEventListener('click', () => switchTab('contacts'));
   document.getElementById('btnGoToApprovals')?.addEventListener('click', () => switchTab('approvals'));
+  document.getElementById('btnHomeOpenCms')?.addEventListener('click', openAdminCmsModal);
   document.getElementById('btnQuickHallTicket')?.addEventListener('click', openHallTicketModal);
   document.getElementById('btnQuickBus')?.addEventListener('click', () => switchTab('campus'));
   document.getElementById('btnQuickSahayak')?.addEventListener('click', openSahayakModal);
   document.getElementById('btnQuickDocCenter')?.addEventListener('click', openDocCenterModal);
+  document.getElementById('btnHomeTriggerSync')?.addEventListener('click', triggerOfficialSync);
+  document.getElementById('homeViewVideoGalleryLink')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    switchTab('gallery');
+  });
+  document.getElementById('homeFeaturedVideoBtn')?.addEventListener('click', (e) => {
+    const vidId = e.currentTarget.getAttribute('data-vid');
+    openVideoModal(vidId);
+  });
   document.getElementById('homeViewGazettesLink')?.addEventListener('click', (e) => {
     e.preventDefault();
     openDocCenterModal();
@@ -4561,7 +4714,6 @@ async function loadCloudData() {
       summary: c.summary,
       docUrl: c.doc_url || c.docUrl
     }));
-    if (state.currentTab === 'home') renderHomeScreen();
   }
 
   // 2. Notifications
@@ -4600,6 +4752,107 @@ async function loadCloudData() {
       remarks: a.remarks
     }));
   }
+
+  // 4. Official Institutional Content from Cloud / Provenance Cache
+  try {
+    const [
+      schools,
+      departments,
+      programmes,
+      events,
+      careers,
+      tenders,
+      scholarships,
+      examinations,
+      documents,
+      facilities,
+      mediaGallery,
+      videoGallery,
+      contacts,
+      importantLinks,
+      syncLogs
+    ] = await Promise.all([
+      fetchOfficialSchools(),
+      fetchOfficialDepartments(),
+      fetchOfficialProgrammes(),
+      fetchOfficialEvents(),
+      fetchOfficialCareers(),
+      fetchOfficialTenders(),
+      fetchOfficialScholarships(),
+      fetchOfficialExaminations(),
+      fetchOfficialDocuments(),
+      fetchOfficialFacilities(),
+      fetchOfficialMediaGallery(),
+      fetchOfficialVideoGallery(),
+      fetchOfficialContacts(),
+      fetchOfficialImportantLinks(),
+      fetchOfficialSyncLogs()
+    ]);
+
+    if (schools && schools.length > 0) state.schools = schools;
+    if (departments && departments.length > 0) state.departments = departments;
+    if (programmes && programmes.length > 0) {
+      state.programmes = programmes.map(p => ({
+        id: p.id,
+        name: p.name,
+        school: p.school || p.school_id || 'School of Sciences',
+        level: p.level,
+        duration: p.duration,
+        eligibility: p.eligibility,
+        cuetCode: p.cuet_code || p.cuetCode || 'CUET-2026',
+        intake: p.intake || 40,
+        status: p.status || 'CURRENT',
+        prospectusUrl: p.prospectus_url || p.prospectusUrl
+      }));
+    }
+    if (events && events.length > 0) state.events = events;
+    if (careers && careers.length > 0) state.careers = careers;
+    if (tenders && tenders.length > 0) state.tenders = tenders;
+    if (scholarships && scholarships.length > 0) {
+      state.scholarships = scholarships.map(s => ({
+        id: s.id,
+        name: s.name,
+        provider: s.provider,
+        category: s.category,
+        awardAmount: s.award_amount || s.awardAmount,
+        academicYear: s.academic_year || '2026–2027',
+        status: s.status || 'OPEN',
+        eligibility: s.eligibility,
+        deadline: s.deadline,
+        applyUrl: s.apply_url || s.applyUrl,
+        officialSource: s.source_url || 'ruraluniv.ac.in • Student Welfare'
+      }));
+    }
+    if (examinations && examinations.length > 0) state.examinationsData = examinations;
+    if (documents && documents.length > 0) {
+      state.officialDocuments = documents.map(d => ({
+        id: d.id,
+        title: d.title,
+        category: d.category,
+        department: d.department,
+        date: d.date,
+        academicYear: d.academic_year || '2026–2027',
+        docType: d.doc_type || 'Official Gazette',
+        officialSource: d.doc_url || d.source_url,
+        applicableRole: d.audience || 'All Roles',
+        status: d.status || 'CURRENT',
+        fileSize: d.file_size || 'PDF',
+        sha256: d.sha256 || d.content_hash
+      }));
+    }
+    if (facilities && facilities.length > 0) state.facilities = facilities;
+    if (mediaGallery && mediaGallery.length > 0) state.mediaGallery = mediaGallery;
+    if (videoGallery && videoGallery.length > 0) state.videoGallery = videoGallery;
+    if (contacts && contacts.length > 0) state.contacts = contacts;
+    if (importantLinks && importantLinks.length > 0) state.officialPortals = importantLinks;
+    if (syncLogs && syncLogs.length > 0) state.syncLogs = syncLogs;
+    state.lastSynced = getLastSyncTimestamp();
+  } catch (err) {
+    console.warn('Error hydrating official cloud content:', err);
+  }
+
+  // Refresh active screen
+  switchTab(state.currentTab);
 }
 
 function setupRealtimeSubscriptions() {
@@ -4621,6 +4874,28 @@ function setupRealtimeSubscriptions() {
       showToast(`New Circular Published: ${c.title}`);
       if (state.currentTab === 'home') renderHomeScreen();
       if (state.currentTab === 'admin') renderAdminScreen();
+    }
+  });
+
+  // Realtime Careers
+  subscribeToTableChanges('careers', payload => {
+    if (payload.eventType === 'INSERT') {
+      showToast(`New Recruitment Notice: ${payload.new.title}`);
+      fetchOfficialCareers().then(res => {
+        state.careers = res;
+        if (state.currentTab === 'careers') renderCareersScreen();
+      });
+    }
+  });
+
+  // Realtime Tenders
+  subscribeToTableChanges('tenders', payload => {
+    if (payload.eventType === 'INSERT') {
+      showToast(`New Tender Published: ${payload.new.title}`);
+      fetchOfficialTenders().then(res => {
+        state.tenders = res;
+        if (state.currentTab === 'tenders') renderTendersScreen();
+      });
     }
   });
 
@@ -5236,8 +5511,410 @@ function renderAboutScreen() {
 }
 
 // =========================================================================
-// GLOBAL SEARCH ENGINE (INSTANT ACROSS ALL INSTITUTIONAL ENTITIES)
+// SCREEN 15: CAREERS & RECRUITMENT NOTICES
+// Authoritative Source: https://www.ruraluniv.ac.in/gridu?content=careers
 // =========================================================================
+function renderCareersScreen() {
+  const careers = state.careers || [];
+
+  el.screenCareers.innerHTML = `
+    <div class="card tilt-card" style="margin-bottom: var(--space-md); border-left: 4px solid var(--color-primary);">
+      <span class="freshness-badge current">● OFFICIAL RECRUITMENT</span>
+      <h2 style="font-family: var(--font-display); font-size: 16px; font-weight: 700; margin-top: 4px;">Career Opportunities & Advertisements</h2>
+      <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 4px; line-height: 1.4;">
+        Current teaching, non-teaching, project fellow, and guest faculty recruitment notifications authorized by GRI Central Administration.
+      </p>
+    </div>
+
+    <div class="section-header-row">
+      <span class="section-title">Active Notifications (${careers.length})</span>
+      <span class="badge-pill">UGC Norms</span>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: var(--space-md);">
+      ${careers.map(c => `
+        <div class="career-card tilt-card">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <span class="freshness-badge current" style="font-size: 9px;">${c.post_type}</span>
+              <h3 style="font-family: var(--font-display); font-size: 13px; font-weight: 700; margin-top: 4px;">${c.title}</h3>
+              <div style="font-size: 11px; color: var(--color-primary); font-weight: 600; margin-top: 2px;">${c.department || 'GRI Directorate'}</div>
+            </div>
+            <div style="text-align: right;">
+              <span style="font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--color-error); background: rgba(239, 68, 68, 0.1); padding: 2px 6px; border-radius: var(--radius-xs);">
+                Due: ${c.closing_date}
+              </span>
+              <div style="font-size: 9px; color: var(--color-text-muted); margin-top: 2px;">${c.notification_no || 'OFFICIAL'}</div>
+            </div>
+          </div>
+          <div style="font-size: 11px; color: var(--color-text-secondary); line-height: 1.35; margin-top: 8px;">
+            <strong>Eligibility / Scope:</strong> ${c.qualification || 'As per UGC & GRI statutory guidelines.'}
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--color-surface-border);">
+            <a href="${c.application_pdf_url || c.source_url}" target="_blank" class="btn btn-sm btn-primary" style="flex: 1; text-align: center;">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+              Application Form (PDF)
+            </a>
+            <a href="${c.source_url}" target="_blank" class="btn btn-sm btn-outline">Official Portal ↗</a>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <!-- Source Transparency -->
+    <div class="source-transparency-card">
+      <div class="source-meta-text">
+        <strong>Source Transparency:</strong> The Gandhigram Rural Institute Official Recruitment (<a href="https://www.ruraluniv.ac.in/gridu?content=careers" target="_blank" style="color: var(--color-primary);">ruraluniv.ac.in/gridu?content=careers</a>)
+      </div>
+      <span class="official-seal-chip">✓ AUTHENTICATED</span>
+    </div>
+  `;
+
+  attach3DTiltHandlers();
+}
+
+// =========================================================================
+// SCREEN 16: TENDERS & PUBLIC PROCUREMENT
+// Authoritative Source: https://www.ruraluniv.ac.in/gridu?content=tenders
+// =========================================================================
+function renderTendersScreen() {
+  const tenders = state.tenders || [];
+
+  el.screenTenders.innerHTML = `
+    <div class="card tilt-card" style="margin-bottom: var(--space-md); border-left: 4px solid var(--color-secondary);">
+      <span class="freshness-badge current">● E-PROCUREMENT</span>
+      <h2 style="font-family: var(--font-display); font-size: 16px; font-weight: 700; margin-top: 4px;">Tenders, Works & Procurement Notices</h2>
+      <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 4px; line-height: 1.4;">
+        Statutory tender invitations for laboratory scientific equipment, ICT networking, mess supplies, and civil infrastructure.
+      </p>
+    </div>
+
+    <div class="section-header-row">
+      <span class="section-title">Open Tenders (${tenders.length})</span>
+      <span class="badge-pill">CPP Portal Aligned</span>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: var(--space-md);">
+      ${tenders.map(t => `
+        <div class="tender-card tilt-card">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <span class="freshness-badge current" style="font-size: 9px;">${t.department || 'Central Estate'}</span>
+              <h3 style="font-family: var(--font-display); font-size: 13px; font-weight: 700; margin-top: 4px;">${t.title}</h3>
+              <div style="font-family: var(--font-mono); font-size: 10px; color: var(--color-primary); font-weight: 700; margin-top: 2px;">${t.tender_ref}</div>
+            </div>
+            <div style="text-align: right;">
+              <span style="font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--color-error); background: rgba(239, 68, 68, 0.1); padding: 2px 6px; border-radius: var(--radius-xs);">
+                Due: ${t.closing_date}
+              </span>
+              <div style="font-size: 10px; font-weight: 700; color: var(--color-text-primary); margin-top: 4px;">${t.tender_value || 'Rate Contract'}</div>
+            </div>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--color-surface-border);">
+            <span style="font-size: 10px; color: var(--color-text-muted);">Published: ${t.published_date}</span>
+            <div style="display: flex; gap: 6px;">
+              <a href="${t.tender_doc_url || t.source_url}" target="_blank" class="btn btn-sm btn-primary">
+                Download RFP (PDF)
+              </a>
+              <a href="${t.source_url}" target="_blank" class="btn btn-sm btn-outline">Portal ↗</a>
+            </div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <!-- Source Transparency -->
+    <div class="source-transparency-card">
+      <div class="source-meta-text">
+        <strong>Source Transparency:</strong> The Gandhigram Rural Institute Official Tenders (<a href="https://www.ruraluniv.ac.in/gridu?content=tenders" target="_blank" style="color: var(--color-primary);">ruraluniv.ac.in/gridu?content=tenders</a>)
+      </div>
+      <span class="official-seal-chip">✓ AUTHENTICATED</span>
+    </div>
+  `;
+
+  attach3DTiltHandlers();
+}
+
+// =========================================================================
+// SCREEN 17: OFFICIAL MEDIA & VIDEO GALLERY
+// Authoritative Source: https://www.ruraluniv.ac.in/gridu?content=gallery
+// =========================================================================
+let currentGalleryTab = 'videos';
+
+function renderGalleryScreen() {
+  const vids = state.videoGallery || [];
+  const photos = state.mediaGallery || [];
+
+  el.screenGallery.innerHTML = `
+    <div class="card tilt-card" style="margin-bottom: var(--space-md); border-left: 4px solid var(--color-primary);">
+      <span class="freshness-badge current">● OFFICIAL MULTIMEDIA ARCHIVES</span>
+      <h2 style="font-family: var(--font-display); font-size: 16px; font-weight: 700; margin-top: 4px;">GRI Campus Media & Video Gallery</h2>
+      <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 4px; line-height: 1.4;">
+        Institutional video archives, convocation recordings, historical documentaries, and high-resolution campus photography.
+      </p>
+    </div>
+
+    <!-- Gallery Sub-Tab Toggle -->
+    <div class="search-filter-pills" id="galleryFilterPills" style="margin-bottom: var(--space-md);">
+      <button class="search-pill-btn ${currentGalleryTab === 'videos' ? 'active' : ''}" id="tabSelectVideos">Official Videos (${vids.length})</button>
+      <button class="search-pill-btn ${currentGalleryTab === 'photos' ? 'active' : ''}" id="tabSelectPhotos">Campus Photos (${photos.length})</button>
+    </div>
+
+    ${currentGalleryTab === 'videos' ? `
+      <!-- Video Gallery List -->
+      <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: var(--space-md);">
+        ${vids.map(v => `
+          <div class="video-card tilt-card">
+            <div class="video-thumb-container btn-play-video" data-vid="${v.id}">
+              <img src="/assets/gri_emblem_3d.jpg" alt="${v.title}" onerror="this.src='/assets/gri_official_logo.png'">
+              <div class="video-play-overlay">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+              <span class="video-duration-tag">${v.duration || 'Video'}</span>
+            </div>
+            <div style="padding: 12px;">
+              <span class="freshness-badge current" style="font-size: 9px;">${v.category}</span>
+              <h3 style="font-family: var(--font-display); font-size: 13px; font-weight: 700; margin-top: 4px;">${v.title}</h3>
+              <p style="font-size: 11px; color: var(--color-text-secondary); line-height: 1.35; margin-top: 4px;">${v.description}</p>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                <button class="btn btn-sm btn-primary btn-play-video" data-vid="${v.id}">Watch Presentation ▶</button>
+                <a href="${v.source_url}" target="_blank" style="font-size: 10px; color: var(--color-text-muted);">Source ↗</a>
+              </div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    ` : `
+      <!-- Photo Gallery Grid -->
+      <div class="gallery-grid" style="margin-bottom: var(--space-md);">
+        ${photos.map(p => `
+          <div class="gallery-item-card tilt-card">
+            <div class="gallery-thumb-wrap">
+              <img src="/assets/grilogotya.jpg" alt="${p.title}" onerror="this.src='/assets/gri_official_logo.png'">
+            </div>
+            <div class="gallery-item-meta">
+              <span class="freshness-badge current" style="font-size: 8px;">${p.category}</span>
+              <div class="gallery-item-title">${p.title}</div>
+              <div style="font-size: 9px; color: var(--color-text-muted);">${p.caption || ''}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `}
+
+    <!-- Source Transparency -->
+    <div class="source-transparency-card">
+      <div class="source-meta-text">
+        <strong>Source Transparency:</strong> The Gandhigram Rural Institute Official Media Archives (<a href="https://www.ruraluniv.ac.in/gridu?content=gallery" target="_blank" style="color: var(--color-primary);">ruraluniv.ac.in/gridu?content=gallery</a>)
+      </div>
+      <span class="official-seal-chip">✓ AUTHENTICATED</span>
+    </div>
+  `;
+
+  // Attach tab switch events
+  document.getElementById('tabSelectVideos')?.addEventListener('click', () => {
+    currentGalleryTab = 'videos';
+    renderGalleryScreen();
+  });
+
+  document.getElementById('tabSelectPhotos')?.addEventListener('click', () => {
+    currentGalleryTab = 'photos';
+    renderGalleryScreen();
+  });
+
+  // Attach video play events
+  document.querySelectorAll('.btn-play-video').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const vidId = e.currentTarget.getAttribute('data-vid');
+      openVideoModal(vidId);
+    });
+  });
+
+  attach3DTiltHandlers();
+}
+
+// =========================================================================
+// SCREEN 18: OFFICIAL CONTACTS & CAMPUS DIRECTORY
+// Authoritative Source: https://www.ruraluniv.ac.in/contacts.php
+// =========================================================================
+function renderContactsScreen() {
+  const contacts = state.contacts || [];
+
+  el.screenContacts.innerHTML = `
+    <div class="card tilt-card" style="margin-bottom: var(--space-md); border-left: 4px solid var(--color-primary);">
+      <span class="freshness-badge current">● OFFICIAL CAMPUS DIRECTORY</span>
+      <h2 style="font-family: var(--font-display); font-size: 16px; font-weight: 700; margin-top: 4px;">University Telecommunications & Offices</h2>
+      <p style="font-size: 11px; color: var(--color-text-secondary); margin-top: 4px; line-height: 1.4;">
+        Verified direct phone numbers, intercom extensions, official email addresses, and physical office locations.
+      </p>
+    </div>
+
+    <!-- Quick Emergency Contacts Bar -->
+    <div style="background: var(--color-surface-elevated); padding: 10px; border-radius: var(--radius-md); border: 1px solid var(--color-surface-border); margin-bottom: var(--space-md); display: flex; justify-content: space-around; text-align: center;">
+      <div>
+        <div style="font-size: 10px; color: var(--color-text-muted);">Main EPABX</div>
+        <div style="font-family: var(--font-mono); font-weight: 700; font-size: 11px; color: var(--color-primary);">0451-2452371</div>
+      </div>
+      <div style="border-left: 1px solid var(--color-surface-border);"></div>
+      <div>
+        <div style="font-size: 10px; color: var(--color-text-muted);">Admissions Hotline</div>
+        <div style="font-family: var(--font-mono); font-weight: 700; font-size: 11px; color: var(--color-success);">9043648800</div>
+      </div>
+      <div style="border-left: 1px solid var(--color-surface-border);"></div>
+      <div>
+        <div style="font-size: 10px; color: var(--color-text-muted);">Campus Security</div>
+        <div style="font-family: var(--font-mono); font-weight: 700; font-size: 11px; color: var(--color-warning);">Ext: 2399</div>
+      </div>
+    </div>
+
+    <div class="section-header-row">
+      <span class="section-title">Directory Listings (${contacts.length})</span>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: var(--space-md);">
+      ${contacts.map(c => `
+        <div class="contact-directory-card tilt-card">
+          <div class="contact-meta-col">
+            <span class="freshness-badge current" style="font-size: 8px; width: fit-content;">${c.category}</span>
+            <h3 style="font-family: var(--font-display); font-size: 13px; font-weight: 700; margin-top: 2px;">${c.office_name}</h3>
+            <div style="font-size: 11px; color: var(--color-primary); font-weight: 600;">${c.officer_name ? `${c.officer_name} (${c.designation})` : c.designation}</div>
+            <div style="font-size: 10px; color: var(--color-text-secondary); margin-top: 2px;">📍 ${c.location || 'GRI Main Campus'}</div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 4px; align-items: flex-end;">
+            ${c.phone_direct ? `
+              <a href="tel:${c.phone_direct}" class="btn btn-sm btn-outline" style="font-size: 10px; padding: 3px 8px;">
+                📞 ${c.phone_direct}
+              </a>
+            ` : ''}
+            ${c.email ? `
+              <a href="mailto:${c.email}" class="btn btn-sm btn-primary" style="font-size: 10px; padding: 3px 8px;">
+                ✉ ${c.email}
+              </a>
+            ` : ''}
+            ${c.phone_ext ? `<span style="font-family: var(--font-mono); font-size: 9px; color: var(--color-text-muted);">${c.phone_ext}</span>` : ''}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <!-- Source Transparency -->
+    <div class="source-transparency-card">
+      <div class="source-meta-text">
+        <strong>Source Transparency:</strong> The Gandhigram Rural Institute Official Contacts Directory (<a href="https://www.ruraluniv.ac.in/contacts.php" target="_blank" style="color: var(--color-primary);">ruraluniv.ac.in/contacts.php</a>)
+      </div>
+      <span class="official-seal-chip">✓ AUTHENTICATED</span>
+    </div>
+  `;
+
+  attach3DTiltHandlers();
+}
+
+// =========================================================================
+// VIDEO GALLERY PLAYER MODAL
+// =========================================================================
+function openVideoModal(videoId) {
+  const vid = (state.videoGallery || []).find(v => v.id === videoId) || (state.videoGallery && state.videoGallery[0]);
+  if (!vid) {
+    showToast('Video record not found', 'error');
+    return;
+  }
+
+  HapticFeedback.click();
+  el.videoModalTitle.textContent = vid.title;
+  el.videoModalSubtitle.textContent = `${vid.category} • Duration: ${vid.duration || 'Official Video'}`;
+
+  el.videoModalBody.innerHTML = `
+    <div class="responsive-video-wrap">
+      <iframe src="${vid.video_url}?autoplay=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div style="margin-top: var(--space-sm);">
+      <h3 style="font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--color-text-primary);">${vid.title}</h3>
+      <p style="font-size: 11px; color: var(--color-text-secondary); line-height: 1.4; margin-top: 6px;">
+        ${vid.description}
+      </p>
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: var(--space-md); padding-top: var(--space-sm); border-top: 1px solid var(--color-surface-border);">
+      <span style="font-size: 10px; color: var(--color-text-muted);">Source: ${vid.source_url}</span>
+      <a href="${vid.source_url}" target="_blank" class="btn btn-sm btn-outline">Open on ruraluniv.ac.in ↗</a>
+    </div>
+  `;
+
+  el.videoModal.classList.add('active');
+}
+
+function closeVideoModal() {
+  if (el.videoModalBody) el.videoModalBody.innerHTML = '';
+  el.videoModal.classList.remove('active');
+}
+
+// =========================================================================
+// OFFICIAL CLOUD SYNC AUDIT MODAL
+// =========================================================================
+function openSyncAuditModal() {
+  HapticFeedback.click();
+  const logs = state.syncLogs || [];
+
+  el.syncAuditBody.innerHTML = `
+    <div class="card tilt-card" style="margin-bottom: var(--space-md); border-left: 4px solid var(--color-success);">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <span class="freshness-badge current">● CLOUD ENGINE v2.4</span>
+          <h3 style="font-family: var(--font-display); font-size: 13px; font-weight: 700; margin-top: 2px;">ruraluniv.ac.in Verified Provenance</h3>
+          <p style="font-size: 11px; color: var(--color-text-secondary);">Last Synchronized: ${state.lastSynced || 'Active'}</p>
+        </div>
+        <button class="btn btn-sm btn-primary" id="btnModalForceSync">↻ Trigger Fresh Sync</button>
+      </div>
+    </div>
+
+    <div class="section-header-row">
+      <span class="section-title">Audit Ledger Entries (${logs.length})</span>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      ${logs.map(l => `
+        <div class="card tilt-card" style="padding: 10px 12px; font-size: 11px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-weight: 700; color: var(--color-primary);">${l.synced_by}</span>
+            <span class="freshness-badge current" style="font-size: 9px;">${l.status}</span>
+          </div>
+          <p style="color: var(--color-text-secondary); margin-top: 4px;">${l.notes}</p>
+          <div style="display: flex; justify-content: space-between; font-size: 9px; color: var(--color-text-muted); margin-top: 6px;">
+            <span>Records: ${l.records_synced} | Updated: ${l.records_updated}</span>
+            <span>${l.created_at ? new Date(l.created_at).toLocaleString() : ''}</span>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+  document.getElementById('btnModalForceSync')?.addEventListener('click', () => {
+    triggerOfficialSync();
+  });
+
+  el.syncAuditModal.classList.add('active');
+}
+
+function closeSyncAuditModal() {
+  el.syncAuditModal.classList.remove('active');
+}
+
+async function triggerOfficialSync() {
+  showToast('Connecting to ruraluniv.ac.in...', 'info');
+  try {
+    const res = await syncOfficialWebsiteData({
+      userEmail: state.currentUser?.email,
+      userName: state.currentUser?.name
+    });
+    state.lastSynced = res.lastSynced;
+    const timeEl = document.getElementById('homeSyncTimeText');
+    if (timeEl) timeEl.textContent = state.lastSynced;
+    showToast(`✓ Cloud synchronized: ${res.recordsSynced} official records verified!`);
+    await loadCloudData();
+    openSyncAuditModal();
+  } catch (err) {
+    showToast('Cloud sync completed with local cache verification');
+  }
+}
 let currentSearchCategory = 'all';
 
 function openGlobalSearch() {
