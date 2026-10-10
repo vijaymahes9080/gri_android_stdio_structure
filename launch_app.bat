@@ -84,7 +84,7 @@ set "ACTIVITY=com.example.MainActivity"
 set "APK_PATH=app\build\outputs\apk\debug\app-debug.apk"
 
 echo [2/3] Checking app installation on phone...
-adb -s !DEVICE_ID! shell pm list packages | findstr /c:"!PACKAGE!" >nul 2>nul
+adb -s !DEVICE_ID! shell pm list packages --user 0 2>nul | findstr /c:"!PACKAGE!" >nul 2>nul
 if %ERRORLEVEL% equ 0 (
     echo [OK] App is already installed on your device.
 ) else (
@@ -113,8 +113,8 @@ if %ERRORLEVEL% equ 0 (
     echo [SUCCESS] App is now running on your phone!
     echo =====================================================================
 ) else (
-    echo [WARNING] Could not start activity directly. Trying monkey launcher...
-    adb -s !DEVICE_ID! shell monkey -p !PACKAGE! -c android.intent.category.LAUNCHER 1
+    echo [WARNING] Could not start activity directly. Trying launcher...
+    adb -s !DEVICE_ID! shell monkey -p !PACKAGE! -c android.intent.category.LAUNCHER 1 >nul 2>nul
 )
 
 echo.
