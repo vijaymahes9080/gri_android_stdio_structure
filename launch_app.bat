@@ -78,63 +78,46 @@ if "!DEVICE_FOUND!"=="0" (
 :device_ready
 echo.
 
-:: 3. Check for Flutter SDK
-echo [2/3] Checking Flutter SDK...
-set "FLUTTER_CMD="
+:: 3. Launch or Install Application
+set "PACKAGE=com.aistudio.grist.kxmpzq"
+set "ACTIVITY=com.example.MainActivity"
+set "APK_PATH=app\build\outputs\apk\debug\app-debug.apk"
 
-where flutter >nul 2>nul
+echo [2/3] Checking app installation on phone...
+adb -s !DEVICE_ID! shell pm list packages | findstr /c:"!PACKAGE!" >nul 2>nul
 if %ERRORLEVEL% equ 0 (
-    set "FLUTTER_CMD=flutter"
-) else if exist "D:\current project\flutter\bin\flutter.bat" (
-    set "FLUTTER_CMD=D:\current project\flutter\bin\flutter.bat"
-    set "PATH=D:\current project\flutter\bin;%PATH%"
-) else if exist "C:\flutter\bin\flutter.bat" (
-    set "FLUTTER_CMD=C:\flutter\bin\flutter.bat"
-    set "PATH=C:\flutter\bin;%PATH%"
-) else if exist "%LOCALAPPDATA%\flutter\bin\flutter.bat" (
-    set "FLUTTER_CMD=%LOCALAPPDATA%\flutter\bin\flutter.bat"
-    set "PATH=%LOCALAPPDATA%\flutter\bin;%PATH%"
-)
-
-if defined FLUTTER_CMD (
-    echo [OK] Flutter SDK found: !FLUTTER_CMD!
-    echo.
-    echo Resolving Flutter dependencies...
-    call !FLUTTER_CMD! pub get
-    if %ERRORLEVEL% neq 0 (
-        echo [WARNING] 'flutter pub get' exited with a warning, proceeding to run...
-    )
-    echo.
-    echo [3/3] Launching GRI Flutter App directly on your phone (!DEVICE_ID!)...
-    call !FLUTTER_CMD! run -d !DEVICE_ID!
-    goto :finished
+    echo [OK] App is already installed on your device.
 ) else (
-    echo [INFO] Flutter CLI is not yet in system PATH.
-    echo Checking for existing Android build wrapper...
-    
-    if exist "gradlew.bat" (
-        echo Building and installing native debug APK via Gradle wrapper...
-        call gradlew.bat installDebug
-        if %ERRORLEVEL% equ 0 (
-            echo.
-            echo [3/3] Starting GRI App on phone via ADB...
-            adb -s !DEVICE_ID! shell am start -n com.aistudio.grist.kxmpzq/com.example.MainActivity
-            goto :finished
+    if exist "!APK_PATH!" (
+        echo [INFO] Installing APK onto your phone...
+        adb -s !DEVICE_ID! install -r "!APK_PATH!"
+        if %ERRORLEVEL% neq 0 (
+            echo Re-installing with clean signature...
+            adb -s !DEVICE_ID! uninstall !PACKAGE! >nul 2>nul
+            adb -s !DEVICE_ID! install "!APK_PATH!"
         )
+    ) else (
+        echo [INFO] Building debug APK with Gradle wrapper...
+        call gradlew.bat assembleDebug
+        adb -s !DEVICE_ID! install -r "!APK_PATH!"
     )
-    
-    echo.
-    echo [INFO] To run via Flutter:
-    echo   1. Clone/extract Flutter SDK into 'D:\current project\flutter'
-    echo   2. Run 'flutter run -d !DEVICE_ID!'
-    echo.
 )
 
-:finished
 echo.
-echo =====================================================================
-echo [SUCCESS] Operation finished. Press any key to exit.
-echo =====================================================================
+echo [3/3] Launching GRI Mobile App on phone (!DEVICE_ID!)...
+adb -s !DEVICE_ID! shell am start -n !PACKAGE!/!ACTIVITY!
+
+if %ERRORLEVEL% equ 0 (
+    echo.
+    echo =====================================================================
+    echo [SUCCESS] App is now running on your phone!
+    echo =====================================================================
+) else (
+    echo [WARNING] Could not start activity directly. Trying monkey launcher...
+    adb -s !DEVICE_ID! shell monkey -p !PACKAGE! -c android.intent.category.LAUNCHER 1
+)
+
+echo.
 pause
 exit /b 0
 
