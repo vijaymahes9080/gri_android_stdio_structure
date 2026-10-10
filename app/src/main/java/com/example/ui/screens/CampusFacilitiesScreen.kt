@@ -317,7 +317,7 @@ fun CampusFacilitiesScreen(
       Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Surface(
           shape = RoundedCornerShape(12.dp),
-          color = GriSurfaceContainerLowest,
+          color = MaterialTheme.colorScheme.surface,
           shadowElevation = 0.5.dp
         ) {
           Row(
@@ -370,7 +370,7 @@ fun CampusFacilitiesScreen(
           .fillMaxWidth()
           .testTag("card_vector_campus_map"),
         shape = RoundedCornerShape(14.dp),
-        colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
       ) {
         Column(modifier = Modifier.padding(14.dp)) {
@@ -501,7 +501,7 @@ fun CampusFacilitiesScreen(
           .fillMaxWidth()
           .testTag("landmark_${item.id}"),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.5.dp)
       ) {
         Row(
@@ -596,7 +596,7 @@ fun CampusFacilitiesScreen(
         // Shuttle Bus Departure Board
         Surface(
           shape = RoundedCornerShape(12.dp),
-          color = GriSurfaceContainerLowest,
+          color = MaterialTheme.colorScheme.surface,
           modifier = Modifier.fillMaxWidth()
         ) {
           Column(modifier = Modifier.padding(12.dp)) {
@@ -620,7 +620,7 @@ fun CampusFacilitiesScreen(
           // Cafeteria Card
           Surface(
             shape = RoundedCornerShape(12.dp),
-            color = GriSurfaceContainerLowest,
+            color = MaterialTheme.colorScheme.surface,
             modifier = Modifier.weight(1f)
           ) {
             Column(modifier = Modifier.padding(12.dp)) {
@@ -634,7 +634,7 @@ fun CampusFacilitiesScreen(
           // Co-op Card
           Surface(
             shape = RoundedCornerShape(12.dp),
-            color = GriSurfaceContainerLowest,
+            color = MaterialTheme.colorScheme.surface,
             modifier = Modifier.weight(1f)
           ) {
             Column(modifier = Modifier.padding(12.dp)) {

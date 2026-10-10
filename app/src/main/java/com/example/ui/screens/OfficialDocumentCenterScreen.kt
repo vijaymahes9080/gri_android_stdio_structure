@@ -225,7 +225,7 @@ fun OfficialDocumentCenterScreen(
       Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Surface(
           shape = RoundedCornerShape(12.dp),
-          color = GriSurfaceContainerLowest,
+          color = MaterialTheme.colorScheme.surface,
           shadowElevation = 0.5.dp
         ) {
           Row(
@@ -278,7 +278,7 @@ fun OfficialDocumentCenterScreen(
           .fillMaxWidth()
           .testTag("card_priority_pinned_doc"),
         shape = RoundedCornerShape(14.dp),
-        colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.5.dp)
       ) {
         Box(modifier = Modifier.fillMaxWidth()) {
@@ -371,7 +371,7 @@ fun OfficialDocumentCenterScreen(
           .fillMaxWidth()
           .testTag("card_verify_document_authenticity"),
         shape = RoundedCornerShape(14.dp),
-        colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
       ) {
         Column(modifier = Modifier.padding(14.dp)) {
@@ -475,7 +475,7 @@ fun OfficialDocumentCenterScreen(
           .fillMaxWidth()
           .testTag("doc_item_${doc.id}"),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.5.dp)
       ) {
         Column(modifier = Modifier.padding(12.dp)) {

@@ -237,7 +237,7 @@ fun HomeDashboardScreen(
           .fillMaxWidth()
           .testTag("banner_hall_ticket_alert"),
         shape = RoundedCornerShape(14.dp),
-        colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.5.dp)
       ) {
         Box(modifier = Modifier.fillMaxWidth()) {
@@ -353,7 +353,7 @@ fun HomeDashboardScreen(
           .fillMaxWidth()
           .testTag("home_search_bar"),
         shape = RoundedCornerShape(12.dp),
-        color = GriSurfaceContainerLowest,
+        color = MaterialTheme.colorScheme.surface,
         shadowElevation = 1.dp
       ) {
         Row(
@@ -432,7 +432,7 @@ fun HomeDashboardScreen(
           .fillMaxWidth()
           .testTag("card_today_schedule"),
         shape = RoundedCornerShape(14.dp),
-        colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
       ) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -636,7 +636,7 @@ fun HomeDashboardScreen(
           .fillMaxWidth()
           .testTag("card_student_desk"),
         shape = RoundedCornerShape(14.dp),
-        colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
       ) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -741,7 +741,7 @@ fun HomeDashboardScreen(
           .fillMaxWidth()
           .testTag("card_institutional_circulars"),
         shape = RoundedCornerShape(14.dp),
-        colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
       ) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -945,7 +945,7 @@ fun HomeDashboardScreen(
           .fillMaxWidth()
           .testTag("card_campus_highlights"),
         shape = RoundedCornerShape(14.dp),
-        colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
       ) {
         Column(modifier = Modifier.padding(16.dp)) {

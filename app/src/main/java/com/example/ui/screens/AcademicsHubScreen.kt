@@ -239,7 +239,7 @@ fun AcademicsHubScreen(
               .weight(1f)
               .testTag("card_attendance_stat"),
             shape = RoundedCornerShape(12.dp),
-            colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
             elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
           ) {
             Column(modifier = Modifier.padding(12.dp)) {
@@ -263,7 +263,7 @@ fun AcademicsHubScreen(
               .weight(1f)
               .testTag("card_credits_stat"),
             shape = RoundedCornerShape(12.dp),
-            colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
             elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
           ) {
             Column(modifier = Modifier.padding(12.dp)) {
@@ -388,7 +388,7 @@ fun AcademicsHubScreen(
                 .fillMaxWidth()
                 .testTag("card_admit_card"),
               shape = RoundedCornerShape(14.dp),
-              colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
+              colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
               elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
             ) {
               Column(modifier = Modifier.padding(16.dp)) {
@@ -510,7 +510,7 @@ fun AcademicsHubScreen(
             Card(
               modifier = Modifier.fillMaxWidth(),
               shape = RoundedCornerShape(14.dp),
-              colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
+              colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
               elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
             ) {
               Column(modifier = Modifier.padding(14.dp)) {
@@ -587,7 +587,7 @@ fun AcademicsHubScreen(
           Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(14.dp),
-            colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
             elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
           ) {
             Column(modifier = Modifier.padding(16.dp)) {
@@ -685,7 +685,7 @@ fun AcademicCourseCard(
       .fillMaxWidth()
       .clickable { expanded = !expanded },
     shape = RoundedCornerShape(12.dp),
-    colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
+    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
     elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
   ) {
     Column(modifier = Modifier.padding(14.dp)) {
@@ -783,7 +783,7 @@ fun CiaRow(course: String, name: String, cia1: String, cia2: String, aggregate: 
 fun GradeSheetCard(sem: String, gpa: String, credits: String, refNo: String, onDownload: () -> Unit) {
   Surface(
     shape = RoundedCornerShape(10.dp),
-    color = GriSurfaceContainerLowest,
+    color = MaterialTheme.colorScheme.surface,
     shadowElevation = 0.5.dp,
     modifier = Modifier.fillMaxWidth()
   ) {

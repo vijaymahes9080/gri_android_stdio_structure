@@ -147,9 +147,9 @@ fun AdminDirectoryScreen(
               }
               Spacer(modifier = Modifier.width(12.dp))
               Column {
-                Text(uiState.currentUser?.name ?: "Priya S.", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = GriForestPrimary)
-                Text(uiState.currentUser?.department ?: "B.Sc. (Hons) Agriculture • 21AG104", fontSize = 11.sp, color = GriOnSurfaceVariant)
-                Text("Samarth ERP UID: GRI-2021-AG891", fontSize = 10.sp, color = GriOutline)
+                Text(uiState.currentUser?.name ?: "Priya S.", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+                Text(uiState.currentUser?.department ?: "B.Sc. (Hons) Agriculture • 21AG104", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("Samarth ERP UID: GRI-2021-AG891", fontSize = 10.sp, color = MaterialTheme.colorScheme.outline)
               }
             }
 
@@ -172,7 +172,7 @@ fun AdminDirectoryScreen(
           // Biometrics & Govt e-KYC status bar
           Surface(
             shape = RoundedCornerShape(8.dp),
-            color = GriSurfaceContainerLow,
+            color = MaterialTheme.colorScheme.surfaceVariant,
             modifier = Modifier.fillMaxWidth()
           ) {
             Row(
@@ -183,18 +183,18 @@ fun AdminDirectoryScreen(
               verticalAlignment = Alignment.CenterVertically
             ) {
               Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Default.Fingerprint, contentDescription = null, tint = GriForestPrimary, modifier = Modifier.size(16.dp))
+                Icon(Icons.Default.Fingerprint, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(16.dp))
                 Spacer(modifier = Modifier.width(6.dp))
-                Text("Biometrics: Enabled & Linked", fontSize = 11.sp, color = GriOnSurface, fontWeight = FontWeight.Medium)
+                Text("Biometrics: Enabled & Linked", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.Medium)
               }
-              Text("Govt. e-KYC Verified", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = GriForestPrimary)
+              Text("Govt. e-KYC Verified", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
             }
           }
 
           Spacer(modifier = Modifier.height(10.dp))
 
           // Multi-Role Switcher Strip
-          Text("Simulation & Role Switcher", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = GriOutline)
+          Text("Simulation & Role Switcher", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.outline)
           Spacer(modifier = Modifier.height(6.dp))
           Row(
             modifier = Modifier.fillMaxWidth(),
@@ -216,7 +216,7 @@ fun AdminDirectoryScreen(
           .fillMaxWidth()
           .testTag("card_governance_terminal"),
         shape = RoundedCornerShape(14.dp),
-        colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
       ) {
         Column(modifier = Modifier.padding(14.dp)) {
@@ -239,15 +239,15 @@ fun AdminDirectoryScreen(
               }
               Spacer(modifier = Modifier.width(10.dp))
               Column {
-                Text("Administrative Governance Terminal", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = GriForestPrimary)
-                Text("Authorised Officers & System Administration", fontSize = 10.sp, color = GriOutline)
+                Text("Administrative Governance Terminal", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+                Text("Authorised Officers & System Administration", fontSize = 10.sp, color = MaterialTheme.colorScheme.outline)
               }
             }
 
             Icon(
               imageVector = if (isGovTerminalExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
               contentDescription = null,
-              tint = GriForestPrimary
+              tint = MaterialTheme.colorScheme.primary
             )
           }
 
@@ -268,7 +268,7 @@ fun AdminDirectoryScreen(
               // Embedded Server & Cloud Sync Controls (Functional preservation)
               Surface(
                 shape = RoundedCornerShape(8.dp),
-                color = GriSurfaceContainerLow,
+                color = MaterialTheme.colorScheme.surfaceVariant,
                 modifier = Modifier.fillMaxWidth()
               ) {
                 Column(modifier = Modifier.padding(10.dp)) {
@@ -278,13 +278,13 @@ fun AdminDirectoryScreen(
                     verticalAlignment = Alignment.CenterVertically
                   ) {
                     Column {
-                      Text("Local Ktor ERP Server", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = GriOnSurface)
-                      Text("Port 8080 • ${uiState.ktorServerStatus}", fontSize = 10.sp, color = GriForestPrimary)
+                      Text("Local Ktor ERP Server", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+                      Text("Port 8080 • ${uiState.ktorServerStatus}", fontSize = 10.sp, color = MaterialTheme.colorScheme.primary)
                     }
                     Button(
                       onClick = onToggleServer,
                       shape = RoundedCornerShape(6.dp),
-                      colors = ButtonDefaults.buttonColors(containerColor = GriForestPrimary, contentColor = Color.White),
+                      colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary),
                       contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp)
                     ) {
                       Text("Re-Verify", fontSize = 11.sp)
@@ -299,13 +299,13 @@ fun AdminDirectoryScreen(
                     verticalAlignment = Alignment.CenterVertically
                   ) {
                     Column {
-                      Text("Cloud Data Synchronizer", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = GriOnSurface)
-                      Text(if (uiState.isSyncing) "Sync in progress..." else "Sync status: Up to date", fontSize = 10.sp, color = GriOutline)
+                      Text("Cloud Data Synchronizer", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+                      Text(if (uiState.isSyncing) "Sync in progress..." else "Sync status: Up to date", fontSize = 10.sp, color = MaterialTheme.colorScheme.outline)
                     }
                     Button(
                       onClick = onTriggerSync,
                       shape = RoundedCornerShape(6.dp),
-                      colors = ButtonDefaults.buttonColors(containerColor = GriSurfaceContainerHigh, contentColor = GriForestPrimary),
+                      colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surface, contentColor = MaterialTheme.colorScheme.primary),
                       contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp)
                     ) {
                       Icon(Icons.Default.Sync, contentDescription = null, modifier = Modifier.size(13.dp))
@@ -373,7 +373,7 @@ fun AdminDirectoryScreen(
       Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(14.dp),
-        colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
       ) {
         Column(modifier = Modifier.padding(14.dp)) {
@@ -383,11 +383,11 @@ fun AdminDirectoryScreen(
             verticalAlignment = Alignment.CenterVertically
           ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-              Icon(Icons.Default.Notifications, contentDescription = null, tint = GriForestPrimary, modifier = Modifier.size(18.dp))
+              Icon(Icons.Default.Notifications, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
               Spacer(modifier = Modifier.width(6.dp))
-              Text("Institutional Dispatch", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = GriOnSurface)
+              Text("Institutional Dispatch", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
             }
-            Text("3 Alerts", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = GriOchreContainer)
+            Text("3 Alerts", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.tertiary)
           }
 
           Spacer(modifier = Modifier.height(10.dp))
@@ -418,20 +418,20 @@ fun AdminDirectoryScreen(
       Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(14.dp),
-        colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
       ) {
         Column(modifier = Modifier.padding(14.dp)) {
           Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(Icons.Default.HistoryEdu, contentDescription = null, tint = GriForestPrimary, modifier = Modifier.size(18.dp))
+            Icon(Icons.Default.HistoryEdu, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
             Spacer(modifier = Modifier.width(6.dp))
-            Text("Gandhian Rural Heritage (Estd. 1956)", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = GriOnSurface)
+            Text("Gandhian Rural Heritage (Estd. 1956)", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
           }
           Spacer(modifier = Modifier.height(6.dp))
           Text(
             text = "Founded under Nai Talim principles by disciples of Mahatma Gandhi: Dr. T.S. Soundram and Dr. G. Ramachandran. Conferred Deemed to be University status by MoE, Govt of India.",
             fontSize = 11.sp,
-            color = GriOnSurfaceVariant,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             lineHeight = 16.sp
           )
           Spacer(modifier = Modifier.height(8.dp))
@@ -439,8 +439,8 @@ fun AdminDirectoryScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
           ) {
-            Text("NAAC Grade: A+ (CGPA 3.61)", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = GriForestPrimary)
-            Text("Motto: கிராமம் உயர நாடு உயரும்", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = GriTealSecondary)
+            Text("NAAC Grade: A+ (CGPA 3.61)", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+            Text("Motto: கிராமம் உயர நாடு உயரும்", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.secondary)
           }
         }
       }
@@ -451,13 +451,13 @@ fun AdminDirectoryScreen(
       Surface(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
-        color = GriSurfaceContainerHigh
+        color = MaterialTheme.colorScheme.surfaceVariant
       ) {
         Column(modifier = Modifier.padding(12.dp)) {
           Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(Icons.Default.HealthAndSafety, contentDescription = null, tint = Color(0xFFBA1A1A), modifier = Modifier.size(18.dp))
             Spacer(modifier = Modifier.width(6.dp))
-            Text("24x7 Emergency Campus SOS", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = GriOnSurface)
+            Text("24x7 Emergency Campus SOS", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
           }
           Spacer(modifier = Modifier.height(8.dp))
           Row(
@@ -480,8 +480,8 @@ fun AdminDirectoryScreen(
           .padding(vertical = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
       ) {
-        Text("GRI Campus OS • Build v3.4.2", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = GriOutline)
-        Text("Samarth e-Gov Integrated • Ministry of Education", fontSize = 9.sp, color = GriOutline)
+        Text("GRI Campus OS • Build v3.4.2", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.outline)
+        Text("Samarth e-Gov Integrated • Ministry of Education", fontSize = 9.sp, color = MaterialTheme.colorScheme.outline)
       }
     }
   }
@@ -498,14 +498,14 @@ fun RoleSwitchChip(
   val isSelected = current == role
   Surface(
     shape = RoundedCornerShape(8.dp),
-    color = if (isSelected) GriForestPrimary else GriSurfaceContainerLow,
+    color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant,
     modifier = modifier.clickable { onSelect(role) }
   ) {
     Text(
       text = title,
       fontSize = 11.sp,
       fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
-      color = if (isSelected) Color.White else GriOnSurface,
+      color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
       modifier = Modifier
         .padding(vertical = 8.dp)
         .fillMaxWidth(),
@@ -518,15 +518,15 @@ fun RoleSwitchChip(
 fun AdminStatBox(number: String, label: String, modifier: Modifier = Modifier) {
   Surface(
     shape = RoundedCornerShape(8.dp),
-    color = GriSurfaceContainerLow,
+    color = MaterialTheme.colorScheme.surfaceVariant,
     modifier = modifier
   ) {
     Column(
       modifier = Modifier.padding(8.dp),
       horizontalAlignment = Alignment.CenterHorizontally
     ) {
-      Text(number, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = GriForestPrimary)
-      Text(label, fontSize = 9.sp, color = GriOutline)
+      Text(number, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+      Text(label, fontSize = 9.sp, color = MaterialTheme.colorScheme.outline)
     }
   }
 }
@@ -535,7 +535,7 @@ fun AdminStatBox(number: String, label: String, modifier: Modifier = Modifier) {
 fun DispatchNotificationItem(priority: String, title: String, desc: String) {
   Surface(
     shape = RoundedCornerShape(8.dp),
-    color = GriSurfaceContainerLow,
+    color = MaterialTheme.colorScheme.surfaceVariant,
     modifier = Modifier
       .fillMaxWidth()
       .padding(vertical = 3.dp)
@@ -543,19 +543,20 @@ fun DispatchNotificationItem(priority: String, title: String, desc: String) {
     Column(modifier = Modifier.padding(8.dp)) {
       Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
       ) {
         Surface(
           shape = RoundedCornerShape(4.dp),
-          color = if (priority == "CRITICAL") Color(0xFFBA1A1A) else GriForestContainer
+          color = if (priority == "CRITICAL") Color(0xFFBA1A1A) else MaterialTheme.colorScheme.primaryContainer
         ) {
-          Text(priority, fontSize = 8.sp, fontWeight = FontWeight.Bold, color = Color.White, modifier = Modifier.padding(horizontal = 4.dp, vertical = 1.dp))
+          Text(priority, fontSize = 8.sp, fontWeight = FontWeight.Bold, color = if (priority == "CRITICAL") Color.White else MaterialTheme.colorScheme.onPrimaryContainer, modifier = Modifier.padding(horizontal = 4.dp, vertical = 1.dp))
         }
-        Text("Today", fontSize = 9.sp, color = GriOutline)
+        Text("Today", fontSize = 9.sp, color = MaterialTheme.colorScheme.outline)
       }
       Spacer(modifier = Modifier.height(2.dp))
-      Text(title, fontSize = 11.sp, fontWeight = FontWeight.Bold, color = GriOnSurface)
-      Text(desc, fontSize = 10.sp, color = GriOnSurfaceVariant)
+      Text(title, fontSize = 11.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+      Text(desc, fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
   }
 }
@@ -565,7 +566,7 @@ fun SosDialButton(label: String, ext: String, phone: String, modifier: Modifier 
   val context = LocalContext.current
   Surface(
     shape = RoundedCornerShape(8.dp),
-    color = GriSurfaceContainerLowest,
+    color = MaterialTheme.colorScheme.surface,
     modifier = modifier.clickable {
       val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phone"))
       try { context.startActivity(intent) } catch (_: Exception) {}
@@ -577,8 +578,8 @@ fun SosDialButton(label: String, ext: String, phone: String, modifier: Modifier 
     ) {
       Icon(Icons.Default.Call, contentDescription = null, tint = Color(0xFFBA1A1A), modifier = Modifier.size(14.dp))
       Spacer(modifier = Modifier.height(2.dp))
-      Text(label, fontSize = 10.sp, fontWeight = FontWeight.Bold, color = GriOnSurface)
-      Text(ext, fontSize = 8.sp, color = GriOutline)
+      Text(label, fontSize = 10.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+      Text(ext, fontSize = 8.sp, color = MaterialTheme.colorScheme.outline)
     }
   }
 }

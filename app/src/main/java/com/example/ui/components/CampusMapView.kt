@@ -400,7 +400,7 @@ fun CampusMapView(
   Column(
     modifier = modifier
       .fillMaxSize()
-      .background(GriSurfaceContainerLowest)
+      .background(MaterialTheme.colorScheme.background)
       .testTag("interactive_campus_map_view")
   ) {
 
@@ -878,7 +878,7 @@ fun CampusMapView(
           // Zoom In Button (+)
           Surface(
             shape = RoundedCornerShape(8.dp),
-            color = GriSurfaceContainerLowest,
+            color = MaterialTheme.colorScheme.surface,
             shadowElevation = 2.dp,
             modifier = Modifier
               .size(36.dp)
@@ -888,14 +888,14 @@ fun CampusMapView(
               .testTag("btn_map_zoom_in")
           ) {
             Box(contentAlignment = Alignment.Center) {
-              Icon(Icons.Default.Add, contentDescription = "Zoom In", tint = GriForestPrimary, modifier = Modifier.size(18.dp))
+              Icon(Icons.Default.Add, contentDescription = "Zoom In", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
             }
           }
 
           // Zoom Out Button (-)
           Surface(
             shape = RoundedCornerShape(8.dp),
-            color = GriSurfaceContainerLowest,
+            color = MaterialTheme.colorScheme.surface,
             shadowElevation = 2.dp,
             modifier = Modifier
               .size(36.dp)
@@ -905,14 +905,14 @@ fun CampusMapView(
               .testTag("btn_map_zoom_out")
           ) {
             Box(contentAlignment = Alignment.Center) {
-              Icon(Icons.Default.Remove, contentDescription = "Zoom Out", tint = GriForestPrimary, modifier = Modifier.size(18.dp))
+              Icon(Icons.Default.Remove, contentDescription = "Zoom Out", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
             }
           }
 
           // Reset View Button (Center & 1.0x scale)
           Surface(
             shape = RoundedCornerShape(8.dp),
-            color = GriSurfaceContainerLowest,
+            color = MaterialTheme.colorScheme.surface,
             shadowElevation = 2.dp,
             modifier = Modifier
               .size(36.dp)
@@ -923,7 +923,7 @@ fun CampusMapView(
               .testTag("btn_map_reset_view")
           ) {
             Box(contentAlignment = Alignment.Center) {
-              Icon(Icons.Default.RestartAlt, contentDescription = "Reset Map View", tint = GriOnSurfaceVariant, modifier = Modifier.size(18.dp))
+              Icon(Icons.Default.RestartAlt, contentDescription = "Reset Map View", tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(18.dp))
             }
           }
 
@@ -996,8 +996,8 @@ fun CampusMapView(
         val isSelected = building.id == selectedBuilding?.id
         Surface(
           shape = RoundedCornerShape(10.dp),
-          color = if (isSelected) GriForestPrimary else GriSurfaceContainerLowest,
-          border = if (isSelected) null else androidx.compose.foundation.BorderStroke(1.dp, GriSurfaceContainerHigh),
+          color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
+          border = if (isSelected) null else androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
           shadowElevation = if (isSelected) 2.dp else 0.5.dp,
           modifier = Modifier
             .clickable {
@@ -1061,7 +1061,7 @@ fun CampusMapView(
             .padding(horizontal = 12.dp, vertical = 8.dp)
             .testTag("card_selected_building_inspector"),
           shape = RoundedCornerShape(14.dp),
-          colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
+          colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
           elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
         ) {
           Column(modifier = Modifier.padding(14.dp)) {

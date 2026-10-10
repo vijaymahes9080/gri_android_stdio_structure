@@ -71,6 +71,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -673,9 +674,9 @@ fun GriApp(
               horizontalArrangement = Arrangement.SpaceBetween,
               verticalAlignment = Alignment.CenterVertically
             ) {
-              Text("GRI-Sahayak AI Assistant", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = GriForestPrimary)
+              Text("GRI-Sahayak AI Assistant", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
               IconButton(onClick = { onToggleAskAi(false) }) {
-                Icon(Icons.Default.Close, contentDescription = "Close AI Assistant")
+                Icon(Icons.Default.Close, contentDescription = "Close AI Assistant", tint = MaterialTheme.colorScheme.onSurface)
               }
             }
             AskGriAiScreen(

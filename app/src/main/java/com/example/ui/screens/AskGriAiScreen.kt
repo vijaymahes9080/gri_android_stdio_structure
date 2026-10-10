@@ -199,7 +199,7 @@ fun AskGriAiScreen(
             items(sampleQueries) { q ->
               Surface(
                 shape = RoundedCornerShape(999.dp),
-                color = GriSurfaceContainerLowest,
+                color = MaterialTheme.colorScheme.surfaceVariant,
                 border = androidx.compose.foundation.BorderStroke(1.dp, GriOutlineVariant),
                 modifier = Modifier.clickable {
                   inputQuery = q
@@ -209,7 +209,7 @@ fun AskGriAiScreen(
                 Text(
                   text = q,
                   fontSize = 11.sp,
-                  color = GriForestPrimary,
+                  color = MaterialTheme.colorScheme.onSurfaceVariant,
                   fontWeight = FontWeight.Medium,
                   modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)
                 )
@@ -248,7 +248,7 @@ fun AskGriAiScreen(
             .fillMaxWidth()
             .testTag("ai_response_card"),
           shape = RoundedCornerShape(14.dp),
-          colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
+          colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
           elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
         ) {
           Column(modifier = Modifier.padding(14.dp)) {
@@ -425,7 +425,7 @@ fun AskGriAiScreen(
           Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
             Card(
               shape = RoundedCornerShape(12.dp),
-              colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
+              colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
               elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
               modifier = Modifier.widthIn(max = 300.dp)
             ) {
@@ -443,7 +443,7 @@ fun AskGriAiScreen(
 
     // 3. INTERACTIVE QUERY INPUT BAR
     Surface(
-      color = GriSurfaceContainerLowest,
+      color = MaterialTheme.colorScheme.surface,
       shadowElevation = 3.dp,
       modifier = Modifier.fillMaxWidth()
     ) {
