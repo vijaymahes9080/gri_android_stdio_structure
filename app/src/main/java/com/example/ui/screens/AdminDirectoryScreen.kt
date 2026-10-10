@@ -113,7 +113,7 @@ fun AdminDirectoryScreen(
   LazyColumn(
     modifier = modifier
       .fillMaxSize()
-      .background(GriSurface)
+      .background(MaterialTheme.colorScheme.background)
       .testTag("admin_directory_screen"),
     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
     verticalArrangement = Arrangement.spacedBy(14.dp)
@@ -126,7 +126,7 @@ fun AdminDirectoryScreen(
           .fillMaxWidth()
           .testTag("card_user_identity"),
         shape = RoundedCornerShape(14.dp),
-        colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
       ) {
         Column(modifier = Modifier.padding(16.dp)) {

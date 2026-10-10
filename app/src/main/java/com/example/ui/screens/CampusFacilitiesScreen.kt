@@ -186,7 +186,7 @@ fun CampusFacilitiesScreen(
   Column(
     modifier = modifier
       .fillMaxSize()
-      .background(GriSurface)
+      .background(MaterialTheme.colorScheme.background)
       .testTag("campus_explore_screen")
   ) {
     // 1. TOP HEADER & VIEW MODE SELECTOR
@@ -202,8 +202,8 @@ fun CampusFacilitiesScreen(
         verticalAlignment = Alignment.CenterVertically
       ) {
         Column {
-          Text("Campus Navigator", fontSize = 11.sp, fontWeight = FontWeight.SemiBold, color = GriOutline)
-          Text("Explore GRI Campus", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = GriForestPrimary)
+          Text("Campus Navigator", fontSize = 11.sp, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onSurfaceVariant)
+          Text("Explore GRI Campus", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
         }
 
         Surface(

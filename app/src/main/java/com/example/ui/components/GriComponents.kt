@@ -178,19 +178,19 @@ fun GriTopBar(
               text = "GRI Mobile",
               style = MaterialTheme.typography.titleMedium,
               fontWeight = FontWeight.Bold,
-              color = GriForestPrimary,
+              color = MaterialTheme.colorScheme.onSurface,
               fontSize = 16.sp,
               maxLines = 1
             )
             Spacer(modifier = Modifier.width(6.dp))
             Surface(
               shape = RoundedCornerShape(999.dp),
-              color = GriForestPrimary.copy(alpha = 0.10f)
+              color = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)
             ) {
               Text(
                 text = "NAAC A+",
                 style = MaterialTheme.typography.labelSmall,
-                color = GriForestPrimary,
+                color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold,
                 fontSize = 9.sp,
                 modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
@@ -201,7 +201,7 @@ fun GriTopBar(
             text = "Deemed to be University • MoE",
             style = MaterialTheme.typography.bodySmall,
             fontSize = 10.sp,
-            color = GriOnSurfaceVariant,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             maxLines = 1
           )
         }
@@ -218,7 +218,7 @@ fun GriTopBar(
         Icon(
           imageVector = Icons.Default.PictureAsPdf,
           contentDescription = "Official Document Center",
-          tint = GriForestPrimary,
+          tint = MaterialTheme.colorScheme.onSurface,
           modifier = Modifier.size(19.dp)
         )
       }
@@ -234,13 +234,13 @@ fun GriTopBar(
           modifier = Modifier
             .size(28.dp)
             .clip(CircleShape)
-            .background(GriForestPrimary.copy(alpha = 0.10f)),
+            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)),
           contentAlignment = Alignment.Center
         ) {
           Icon(
             imageVector = Icons.Default.AutoAwesome,
             contentDescription = "GRI-Sahayak Institutional AI Assistant",
-            tint = GriForestPrimary,
+            tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier.size(16.dp)
           )
         }
@@ -257,7 +257,7 @@ fun GriTopBar(
           Icon(
             imageVector = Icons.Default.Campaign,
             contentDescription = "Notifications & Dispatch",
-            tint = GriOnSurfaceVariant,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.size(20.dp)
           )
           Box(
@@ -272,7 +272,7 @@ fun GriTopBar(
       // User Profile Avatar Circle
       Surface(
         shape = CircleShape,
-        color = GriForestPrimary,
+        color = MaterialTheme.colorScheme.primary,
         modifier = Modifier
           .padding(start = 4.dp, end = 8.dp)
           .size(32.dp)
@@ -287,7 +287,7 @@ fun GriTopBar(
               UserRole.ADMIN -> "AD"
               else -> "G"
             },
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onPrimary,
             fontWeight = FontWeight.Bold,
             fontSize = 11.sp
           )
@@ -1359,7 +1359,7 @@ fun HallTicketDialog(
                 text = "GANDHIGRAM RURAL INSTITUTE",
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Bold,
-                color = GriNavyPrimary
+                color = MaterialTheme.colorScheme.onSurface
               )
               Text(
                 text = "Office of the Controller of Examinations (CoE)",
@@ -1386,7 +1386,7 @@ fun HallTicketDialog(
         ) {
           // Banner
           Surface(
-            color = GriNavyPrimary,
+            color = MaterialTheme.colorScheme.primaryContainer,
             shape = RoundedCornerShape(GriRadius.sm),
             modifier = Modifier.fillMaxWidth()
           ) {
@@ -1397,29 +1397,31 @@ fun HallTicketDialog(
               horizontalArrangement = Arrangement.SpaceBetween,
               verticalAlignment = Alignment.CenterVertically
             ) {
-              Column {
+              Column(modifier = Modifier.weight(1f).padding(end = 8.dp)) {
                 Text(
                   text = "END SEMESTER EXAMINATIONS (ESE)",
                   style = MaterialTheme.typography.titleSmall,
                   fontWeight = FontWeight.Bold,
-                  color = Color.White
+                  color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
                 Text(
                   text = ticket.examSession,
                   style = MaterialTheme.typography.bodySmall,
-                  color = GriGoldSecondary
+                  color = GriOchreOnContainer
                 )
               }
               Surface(
-                color = GriGoldSecondary,
+                color = GriOchreOnContainer,
                 shape = RoundedCornerShape(GriRadius.xs)
               ) {
                 Text(
                   text = "OFFICIAL E-PASS",
                   style = MaterialTheme.typography.labelSmall,
                   fontWeight = FontWeight.Bold,
-                  color = Color.Black,
-                  modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp)
+                  color = Color.White,
+                  maxLines = 1,
+                  softWrap = false,
+                  modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                 )
               }
             }
@@ -1444,7 +1446,7 @@ fun HallTicketDialog(
                 }
                 Column(horizontalAlignment = Alignment.End) {
                   Text(text = "REGISTER / ROLL NO", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 9.sp)
-                  Text(text = ticket.registerNumber, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, color = GriNavyPrimary)
+                  Text(text = ticket.registerNumber, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
                 }
               }
 
@@ -1521,7 +1523,7 @@ fun HallTicketDialog(
             text = "EXAMINATION TIMETABLE (${ticket.exams.size} COURSES)",
             style = MaterialTheme.typography.labelMedium,
             fontWeight = FontWeight.Bold,
-            color = GriNavyPrimary
+            color = MaterialTheme.colorScheme.onSurface
           )
           Spacer(modifier = Modifier.height(6.dp))
 
@@ -1541,14 +1543,14 @@ fun HallTicketDialog(
                   verticalAlignment = Alignment.CenterVertically
                 ) {
                   Surface(
-                    color = GriNavyPrimary.copy(alpha = 0.1f),
+                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
                     shape = RoundedCornerShape(GriRadius.xs)
                   ) {
                     Text(
                       text = exam.courseCode,
                       style = MaterialTheme.typography.labelSmall,
                       fontWeight = FontWeight.Bold,
-                      color = GriNavyPrimary,
+                      color = MaterialTheme.colorScheme.primary,
                       modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
                     )
                   }
@@ -1556,7 +1558,7 @@ fun HallTicketDialog(
                     text = "${exam.date} • ${exam.session}",
                     style = MaterialTheme.typography.labelSmall,
                     fontWeight = FontWeight.Bold,
-                    color = GriGoldDark
+                    color = GriOchreOnContainer
                   )
                 }
 

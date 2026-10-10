@@ -325,7 +325,7 @@ fun GriApp(
             // Role & Multi-Role Chip
             Surface(
               shape = RoundedCornerShape(999.dp),
-              color = GriForestPrimary,
+              color = MaterialTheme.colorScheme.primary,
               modifier = Modifier
                 .clickable { onToggleRoleSwitcher(true) }
                 .testTag("chip_current_role")
@@ -337,13 +337,13 @@ fun GriApp(
                 Icon(
                   imageVector = Icons.Default.SwitchAccount,
                   contentDescription = null,
-                  tint = Color.White,
+                  tint = MaterialTheme.colorScheme.onPrimary,
                   modifier = Modifier.size(14.dp)
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
                   text = "${uiState.currentRole.name} • ${uiState.activeAccountStatus.name}",
-                  color = Color.White,
+                  color = MaterialTheme.colorScheme.onPrimary,
                   fontSize = 11.sp,
                   fontWeight = FontWeight.Bold
                 )
@@ -486,14 +486,18 @@ fun GriApp(
             label = {
               Text(
                 item.title,
-                style = MaterialTheme.typography.labelMedium,
+                style = MaterialTheme.typography.labelSmall,
+                fontSize = 10.sp,
+                maxLines = 1,
+                softWrap = false,
+                overflow = TextOverflow.Ellipsis,
                 fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium
               )
             },
             colors = NavigationBarItemDefaults.colors(
-              selectedIconColor = GriForestPrimary,
-              selectedTextColor = GriForestPrimary,
-              indicatorColor = GriForestPrimary.copy(alpha = 0.12f),
+              selectedIconColor = MaterialTheme.colorScheme.primary,
+              selectedTextColor = MaterialTheme.colorScheme.primary,
+              indicatorColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.18f),
               unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
               unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant
             ),
@@ -705,7 +709,7 @@ fun GriApp(
               horizontalArrangement = Arrangement.SpaceBetween,
               verticalAlignment = Alignment.CenterVertically
             ) {
-              Text("Official Document Center", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = GriForestPrimary)
+              Text("Official Document Center", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
               IconButton(onClick = { onToggleDocumentCenter(false) }) {
                 Icon(Icons.Default.Close, contentDescription = "Close Document Center")
               }
@@ -737,7 +741,7 @@ fun GriApp(
               horizontalArrangement = Arrangement.SpaceBetween,
               verticalAlignment = Alignment.CenterVertically
             ) {
-              Text("Faculty & Staff Academic Portal", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = GriForestPrimary)
+              Text("Faculty & Staff Academic Portal", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
               IconButton(onClick = { onToggleFacultyPortal(false) }) {
                 Icon(Icons.Default.Close, contentDescription = "Close Faculty Portal")
               }

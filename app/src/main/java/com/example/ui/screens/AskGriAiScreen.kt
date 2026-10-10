@@ -114,13 +114,13 @@ fun AskGriAiScreen(
   Column(
     modifier = modifier
       .fillMaxSize()
-      .background(GriSurface)
+      .background(MaterialTheme.colorScheme.background)
       .testTag("ask_gri_ai_screen")
   ) {
 
     // 1. TOP HEADER BANNER
     Surface(
-      color = GriSurfaceContainerLowest,
+      color = MaterialTheme.colorScheme.surface,
       shadowElevation = 1.dp,
       modifier = Modifier.fillMaxWidth()
     ) {
@@ -135,15 +135,15 @@ fun AskGriAiScreen(
               modifier = Modifier
                 .size(34.dp)
                 .clip(CircleShape)
-                .background(GriForestPrimary),
+                .background(MaterialTheme.colorScheme.primary),
               contentAlignment = Alignment.Center
             ) {
-              Icon(Icons.Default.AutoAwesome, contentDescription = null, tint = Color.White, modifier = Modifier.size(18.dp))
+              Icon(Icons.Default.AutoAwesome, contentDescription = null, tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(18.dp))
             }
             Spacer(modifier = Modifier.width(8.dp))
             Column {
-              Text("Ask GRI AI", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = GriForestPrimary)
-              Text("Powered by GRI Knowledge Base & UGC e-Office", fontSize = 10.sp, color = GriOutline)
+              Text("Ask GRI AI", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+              Text("Powered by GRI Knowledge Base & UGC e-Office", fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
           }
 

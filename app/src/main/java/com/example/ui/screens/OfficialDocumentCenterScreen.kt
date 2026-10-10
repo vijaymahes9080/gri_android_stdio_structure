@@ -177,7 +177,7 @@ fun OfficialDocumentCenterScreen(
   LazyColumn(
     modifier = modifier
       .fillMaxSize()
-      .background(GriSurface)
+      .background(MaterialTheme.colorScheme.background)
       .testTag("official_document_center_screen"),
     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
     verticalArrangement = Arrangement.spacedBy(14.dp)
@@ -192,8 +192,8 @@ fun OfficialDocumentCenterScreen(
           verticalAlignment = Alignment.CenterVertically
         ) {
           Column {
-            Text("NAAC 'A+' • e-Office Live Feed", fontSize = 11.sp, fontWeight = FontWeight.SemiBold, color = GriOutline)
-            Text("Official Document Center", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = GriForestPrimary)
+            Text("NAAC 'A+' • e-Office Live Feed", fontSize = 11.sp, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text("Official Document Center", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
           }
 
           Surface(

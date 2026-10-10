@@ -99,7 +99,7 @@ fun FacultyStaffPortalScreen(
   LazyColumn(
     modifier = modifier
       .fillMaxSize()
-      .background(GriSurface)
+      .background(MaterialTheme.colorScheme.background)
       .testTag("faculty_staff_portal_screen"),
     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
     verticalArrangement = Arrangement.spacedBy(14.dp)
@@ -110,7 +110,7 @@ fun FacultyStaffPortalScreen(
       Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(14.dp),
-        colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
       ) {
         Row(

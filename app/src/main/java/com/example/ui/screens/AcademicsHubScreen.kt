@@ -48,6 +48,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
+import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
@@ -109,7 +110,7 @@ fun AcademicsHubScreen(
   LazyColumn(
     modifier = modifier
       .fillMaxSize()
-      .background(GriSurface)
+      .background(MaterialTheme.colorScheme.background)
       .testTag("academics_screen"),
     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
     verticalArrangement = Arrangement.spacedBy(14.dp)
@@ -128,13 +129,13 @@ fun AcademicsHubScreen(
               text = "Academic Portal • COE Wing",
               fontSize = 11.sp,
               fontWeight = FontWeight.SemiBold,
-              color = GriOutline
+              color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Text(
               text = "Academics & Examinations",
               fontSize = 20.sp,
               fontWeight = FontWeight.Bold,
-              color = GriForestPrimary
+              color = MaterialTheme.colorScheme.primary
             )
           }
 
@@ -287,17 +288,18 @@ fun AcademicsHubScreen(
     item {
       Surface(
         shape = RoundedCornerShape(10.dp),
-        color = GriSurfaceContainerLowest,
+        color = MaterialTheme.colorScheme.surface,
         shadowElevation = 0.5.dp
       ) {
-        TabRow(
+        ScrollableTabRow(
           selectedTabIndex = selectedTab,
+          edgePadding = 8.dp,
           containerColor = Color.Transparent,
-          contentColor = GriForestPrimary,
+          contentColor = MaterialTheme.colorScheme.primary,
           indicator = { tabPositions ->
             TabRowDefaults.PrimaryIndicator(
               modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTab]),
-              color = GriForestPrimary,
+              color = MaterialTheme.colorScheme.primary,
               height = 3.dp
             )
           },
@@ -310,9 +312,11 @@ fun AcademicsHubScreen(
               text = {
                 Text(
                   text = title,
-                  fontSize = 11.sp,
+                  fontSize = 11.5.sp,
+                  maxLines = 1,
+                  softWrap = false,
                   fontWeight = if (selectedTab == index) FontWeight.Bold else FontWeight.Medium,
-                  color = if (selectedTab == index) GriForestPrimary else GriOutline
+                  color = if (selectedTab == index) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                 )
               }
             )

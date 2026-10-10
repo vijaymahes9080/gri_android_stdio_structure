@@ -10,7 +10,7 @@ echo                      Official Mobile Application Launcher
 echo =====================================================================
 echo.
 
-:: 1. Ensure ADB is in PATH
+:: 1. Ensure ADB and JAVA_HOME are set
 where adb >nul 2>nul
 if %ERRORLEVEL% neq 0 (
     if exist "%LOCALAPPDATA%\Android\Sdk\platform-tools\adb.exe" (
@@ -19,6 +19,13 @@ if %ERRORLEVEL% neq 0 (
         echo [!] ADB was not found in PATH or standard Android SDK location.
         echo Please ensure Android SDK platform-tools is installed.
         goto :failed
+    )
+)
+
+if "%JAVA_HOME%"=="" (
+    if exist "C:\Program Files\Microsoft\jdk-17.0.20.101-hotspot" (
+        set "JAVA_HOME=C:\Program Files\Microsoft\jdk-17.0.20.101-hotspot"
+        set "PATH=!JAVA_HOME!\bin;!PATH!"
     )
 )
 

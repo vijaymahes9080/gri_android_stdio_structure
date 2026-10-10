@@ -185,7 +185,7 @@ fun StudentServicesHubScreen(
   LazyColumn(
     modifier = modifier
       .fillMaxSize()
-      .background(GriSurface)
+      .background(MaterialTheme.colorScheme.background)
       .testTag("student_services_screen"),
     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
     verticalArrangement = Arrangement.spacedBy(14.dp)
@@ -195,8 +195,8 @@ fun StudentServicesHubScreen(
     item {
       Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Column {
-          Text("One-Stop Academic ERP", fontSize = 11.sp, fontWeight = FontWeight.SemiBold, color = GriOutline)
-          Text("Student Services Hub", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = GriForestPrimary)
+          Text("One-Stop Academic ERP", fontSize = 11.sp, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onSurfaceVariant)
+          Text("Student Services Hub", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
         }
 
         LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -204,14 +204,16 @@ fun StudentServicesHubScreen(
             val isSelected = activeHubCategory == key
             Surface(
               shape = RoundedCornerShape(999.dp),
-              color = if (isSelected) GriForestPrimary else GriSurfaceContainerLow,
+              color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant,
               modifier = Modifier.clickable { activeHubCategory = key }
             ) {
               Text(
                 text = label,
                 fontSize = 12.sp,
+                maxLines = 1,
+                softWrap = false,
                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
-                color = if (isSelected) Color.White else GriOnSurfaceVariant,
+                color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
               )
             }

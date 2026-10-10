@@ -1013,12 +1013,12 @@ fun AdminReviewDialog(
               text = "Application Review Dossier",
               style = MaterialTheme.typography.titleMedium,
               fontWeight = FontWeight.Bold,
-              color = GriForestPrimary
+              color = MaterialTheme.colorScheme.onSurface
             )
             Text(
               text = "Application ID: ${app.id}",
               style = MaterialTheme.typography.bodySmall,
-              color = GriOnSurfaceVariant
+              color = MaterialTheme.colorScheme.onSurfaceVariant
             )
           }
 
@@ -1269,7 +1269,7 @@ fun RegistrationWizardDialog(
               text = "Create Institutional Account",
               style = MaterialTheme.typography.titleMedium,
               fontWeight = FontWeight.Bold,
-              color = GriForestPrimary
+              color = MaterialTheme.colorScheme.onSurface
             )
             Text(
               text = "Step $currentStep of 3 • " + when (currentStep) {
@@ -1278,7 +1278,7 @@ fun RegistrationWizardDialog(
                 else -> "Institutional Details"
               },
               style = MaterialTheme.typography.bodySmall,
-              color = GriOnSurfaceVariant
+              color = MaterialTheme.colorScheme.onSurfaceVariant
             )
           }
 
@@ -1299,12 +1299,12 @@ fun RegistrationWizardDialog(
               modifier = Modifier
                 .size(if (currentStep == step) 24.dp else 18.dp)
                 .clip(CircleShape)
-                .background(if (step <= currentStep) GriForestPrimary else MaterialTheme.colorScheme.outlineVariant),
+                .background(if (step <= currentStep) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant),
               contentAlignment = Alignment.Center
             ) {
               Text(
                 text = "$step",
-                color = Color.White,
+                color = if (step <= currentStep) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
                 fontSize = if (currentStep == step) 11.sp else 9.sp,
                 fontWeight = FontWeight.Bold
               )
@@ -1315,7 +1315,7 @@ fun RegistrationWizardDialog(
                   .width(36.dp)
                   .height(3.dp)
                   .align(Alignment.CenterVertically)
-                  .background(if (step < currentStep) GriForestPrimary else MaterialTheme.colorScheme.outlineVariant)
+                  .background(if (step < currentStep) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant)
               )
             }
           }
@@ -1394,7 +1394,10 @@ fun RegistrationWizardDialog(
                 currentStep = 2
               }
             },
-            colors = ButtonDefaults.buttonColors(containerColor = GriForestPrimary),
+            colors = ButtonDefaults.buttonColors(
+              containerColor = MaterialTheme.colorScheme.primary,
+              contentColor = MaterialTheme.colorScheme.onPrimary
+            ),
             modifier = Modifier.fillMaxWidth().testTag("btn_step1_next")
           ) {
             Text("Next: Select Account Role", fontWeight = FontWeight.Bold)
@@ -1407,12 +1410,12 @@ fun RegistrationWizardDialog(
             text = "Select Requested Institutional Role:",
             style = MaterialTheme.typography.titleSmall,
             fontWeight = FontWeight.Bold,
-            color = GriForestPrimary
+            color = MaterialTheme.colorScheme.onSurface
           )
           Text(
             text = "Note: Admin roles cannot be requested directly and require administrator-controlled assignment.",
             style = MaterialTheme.typography.bodySmall,
-            color = GriOnSurfaceVariant,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             fontSize = 11.sp
           )
 
@@ -1434,11 +1437,11 @@ fun RegistrationWizardDialog(
                 .clickable { selectedRole = role },
               shape = RoundedCornerShape(10.dp),
               colors = CardDefaults.cardColors(
-                containerColor = if (selectedRole == role) GriForestPrimary.copy(alpha = 0.12f) else MaterialTheme.colorScheme.surface
+                containerColor = if (selectedRole == role) MaterialTheme.colorScheme.primary.copy(alpha = 0.15f) else MaterialTheme.colorScheme.surface
               ),
               border = BorderStroke(
                 if (selectedRole == role) 2.dp else 1.dp,
-                if (selectedRole == role) GriForestPrimary else MaterialTheme.colorScheme.outlineVariant
+                if (selectedRole == role) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant
               )
             ) {
               Row(
@@ -1448,12 +1451,12 @@ fun RegistrationWizardDialog(
                 RadioButton(
                   selected = selectedRole == role,
                   onClick = { selectedRole = role },
-                  colors = RadioButtonDefaults.colors(selectedColor = GriForestPrimary)
+                  colors = RadioButtonDefaults.colors(selectedColor = MaterialTheme.colorScheme.primary)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Column {
-                  Text(text = role.name, fontWeight = FontWeight.Bold, color = GriForestPrimary)
-                  Text(text = desc, fontSize = 11.sp, color = GriOnSurfaceVariant)
+                  Text(text = role.name, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+                  Text(text = desc, fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
               }
             }
@@ -1468,7 +1471,10 @@ fun RegistrationWizardDialog(
             OutlinedButton(onClick = { currentStep = 1 }) { Text("Back") }
             Button(
               onClick = { currentStep = 3 },
-              colors = ButtonDefaults.buttonColors(containerColor = GriForestPrimary),
+              colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
+              ),
               modifier = Modifier.testTag("btn_step2_next")
             ) {
               Text("Next: Institutional Details", fontWeight = FontWeight.Bold)
@@ -1482,7 +1488,7 @@ fun RegistrationWizardDialog(
             text = "Institutional Information for ${selectedRole.name}:",
             style = MaterialTheme.typography.titleSmall,
             fontWeight = FontWeight.Bold,
-            color = GriForestPrimary
+            color = MaterialTheme.colorScheme.onSurface
           )
 
           Spacer(modifier = Modifier.height(12.dp))
@@ -1550,51 +1556,54 @@ fun RegistrationWizardDialog(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.clickable { agreedToDeclaration = !agreedToDeclaration }
           ) {
-            Checkbox(
-              checked = agreedToDeclaration,
-              onCheckedChange = { agreedToDeclaration = it },
-              colors = CheckboxDefaults.colors(checkedColor = GriForestPrimary),
-              modifier = Modifier.testTag("reg_declaration_check")
-            )
-            Spacer(modifier = Modifier.width(6.dp))
-            Text(
-              text = "I declare that the information provided is accurate and subject to institutional verification by GRI Registrar.",
-              fontSize = 11.sp,
-              color = GriOnSurfaceVariant
-            )
-          }
-
-          Spacer(modifier = Modifier.height(16.dp))
-
-          Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-          ) {
-            OutlinedButton(onClick = { currentStep = 2 }) { Text("Back") }
-            Button(
-              onClick = {
-                if (!agreedToDeclaration) {
-                  validationError = "Please agree to the institutional declaration."
-                } else {
-                  onSubmit(
-                    fullName,
-                    email,
-                    mobile,
-                    instId.ifEmpty { "REG-2026-${(100..999).random()}" },
-                    selectedRole,
-                    department,
-                    programme,
-                    yearSemester,
-                    designation,
-                    researchTopic
-                  )
-                }
-              },
-              colors = ButtonDefaults.buttonColors(containerColor = GriForestPrimary),
-              modifier = Modifier.testTag("btn_submit_registration")
-            ) {
-              Text("Submit Application", fontWeight = FontWeight.Bold)
+              Checkbox(
+                checked = agreedToDeclaration,
+                onCheckedChange = { agreedToDeclaration = it },
+                colors = CheckboxDefaults.colors(checkedColor = MaterialTheme.colorScheme.primary),
+                modifier = Modifier.testTag("reg_declaration_check")
+              )
+              Spacer(modifier = Modifier.width(6.dp))
+              Text(
+                text = "I declare that the information provided is accurate and subject to institutional verification by GRI Registrar.",
+                fontSize = 11.sp,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+              )
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+              modifier = Modifier.fillMaxWidth(),
+              horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+              OutlinedButton(onClick = { currentStep = 2 }) { Text("Back") }
+              Button(
+                onClick = {
+                  if (!agreedToDeclaration) {
+                    validationError = "Please agree to the institutional declaration."
+                  } else {
+                    onSubmit(
+                      fullName,
+                      email,
+                      mobile,
+                      instId.ifEmpty { "REG-2026-${(100..999).random()}" },
+                      selectedRole,
+                      department,
+                      programme,
+                      yearSemester,
+                      designation,
+                      researchTopic
+                    )
+                  }
+                },
+                colors = ButtonDefaults.buttonColors(
+                  containerColor = MaterialTheme.colorScheme.primary,
+                  contentColor = MaterialTheme.colorScheme.onPrimary
+                ),
+                modifier = Modifier.testTag("btn_submit_registration")
+              ) {
+                Text("Submit Application", fontWeight = FontWeight.Bold)
+              }
           }
         }
       }
@@ -1637,12 +1646,12 @@ fun AuthorizedRoleSwitcherDialog(
               text = "Authorized Role Switcher",
               style = MaterialTheme.typography.titleMedium,
               fontWeight = FontWeight.Bold,
-              color = GriForestPrimary
+              color = MaterialTheme.colorScheme.onSurface
             )
             Text(
               text = "Switch between Registrar-approved identities",
               style = MaterialTheme.typography.bodySmall,
-              color = GriOnSurfaceVariant
+              color = MaterialTheme.colorScheme.onSurfaceVariant
             )
           }
 
@@ -1665,13 +1674,13 @@ fun AuthorizedRoleSwitcherDialog(
                 text = "Single Approved Role: ${currentRole.name}",
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Bold,
-                color = GriForestPrimary
+                color = MaterialTheme.colorScheme.primary
               )
               Spacer(modifier = Modifier.height(4.dp))
               Text(
                 text = "Your account currently has one authorized role. Multi-role access (such as Faculty + Research Scholar) requires administrative role assignment.",
                 style = MaterialTheme.typography.bodySmall,
-                color = GriOnSurfaceVariant,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontSize = 11.sp
               )
             }
@@ -1681,7 +1690,7 @@ fun AuthorizedRoleSwitcherDialog(
             text = "Select Active Institutional Role:",
             style = MaterialTheme.typography.labelMedium,
             fontWeight = FontWeight.Bold,
-            color = GriOnSurfaceVariant
+            color = MaterialTheme.colorScheme.onSurfaceVariant
           )
           Spacer(modifier = Modifier.height(10.dp))
 
@@ -1695,11 +1704,11 @@ fun AuthorizedRoleSwitcherDialog(
                 .testTag("role_switch_${role.name}"),
               shape = RoundedCornerShape(12.dp),
               colors = CardDefaults.cardColors(
-                containerColor = if (isActive) GriForestPrimary.copy(alpha = 0.12f) else MaterialTheme.colorScheme.surface
+                containerColor = if (isActive) MaterialTheme.colorScheme.primary.copy(alpha = 0.15f) else MaterialTheme.colorScheme.surface
               ),
               border = BorderStroke(
                 if (isActive) 2.dp else 1.dp,
-                if (isActive) GriForestPrimary else MaterialTheme.colorScheme.outlineVariant
+                if (isActive) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant
               )
             ) {
               Row(
@@ -1717,7 +1726,7 @@ fun AuthorizedRoleSwitcherDialog(
                       else -> Icons.Default.Person
                     },
                     contentDescription = null,
-                    tint = if (isActive) GriForestPrimary else GriOnSurfaceVariant,
+                    tint = if (isActive) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.size(22.dp)
                   )
                   Spacer(modifier = Modifier.width(12.dp))
@@ -1726,12 +1735,12 @@ fun AuthorizedRoleSwitcherDialog(
                       text = role.name,
                       style = MaterialTheme.typography.bodyLarge,
                       fontWeight = if (isActive) FontWeight.Bold else FontWeight.Medium,
-                      color = if (isActive) GriForestPrimary else MaterialTheme.colorScheme.onSurface
+                      color = if (isActive) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
                     )
                     Text(
                       text = if (isActive) "Active Institutional Session" else "Approved Role • Tap to activate",
                       style = MaterialTheme.typography.bodySmall,
-                      color = GriOnSurfaceVariant,
+                      color = MaterialTheme.colorScheme.onSurfaceVariant,
                       fontSize = 11.sp
                     )
                   }
@@ -1741,7 +1750,7 @@ fun AuthorizedRoleSwitcherDialog(
                   Icon(
                     imageVector = Icons.Default.CheckCircle,
                     contentDescription = "Active",
-                    tint = GriForestPrimary,
+                    tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(20.dp)
                   )
                 }

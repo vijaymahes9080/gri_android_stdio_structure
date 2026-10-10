@@ -137,7 +137,7 @@ fun HomeDashboardScreen(
   LazyColumn(
     modifier = modifier
       .fillMaxSize()
-      .background(GriSurface)
+      .background(MaterialTheme.colorScheme.background)
       .testTag("home_screen"),
     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
     verticalArrangement = Arrangement.spacedBy(14.dp)
@@ -150,7 +150,7 @@ fun HomeDashboardScreen(
           .fillMaxWidth()
           .testTag("card_greeting"),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = GriSurfaceContainerLowest),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
       ) {
         Row(
@@ -166,7 +166,7 @@ fun HomeDashboardScreen(
                 text = "Vanakkam, ${uiState.currentUser?.name ?: "Priya S."}",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                color = GriForestPrimary,
+                color = MaterialTheme.colorScheme.primary,
                 letterSpacing = (-0.2).sp
               )
               Spacer(modifier = Modifier.width(6.dp))
