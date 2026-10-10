@@ -22,9 +22,13 @@ if %ERRORLEVEL% neq 0 (
     )
 )
 
-:: 2. Check for connected Android device
+:: 2. Check for connected Android device with auto-retry
 echo [1/3] Detecting connected Android phone...
+set "RETRIES=0"
+
+:check_device
 set "DEVICE_FOUND=0"
+set "DEVICE_UNAUTH=0"
 set "DEVICE_ID="
 
 for /f "skip=1 tokens=1,2" %%A in ('adb devices') do (
@@ -32,8 +36,28 @@ for /f "skip=1 tokens=1,2" %%A in ('adb devices') do (
         set "DEVICE_FOUND=1"
         set "DEVICE_ID=%%A"
     ) else if "%%B"=="unauthorized" (
-        echo [WARNING] Device %%A is UNAUTHORIZED!
-        echo Please unlock your phone screen and tap 'Allow USB Debugging'.
+        set "DEVICE_UNAUTH=1"
+        set "DEVICE_ID=%%A"
+    )
+)
+
+if "!DEVICE_FOUND!"=="1" (
+    echo [OK] Authorized Phone connected: !DEVICE_ID!
+    goto :device_ready
+)
+
+if "!DEVICE_UNAUTH!"=="1" (
+    echo.
+    echo [*] Phone detected (!DEVICE_ID!), waiting for USB Debugging permission...
+    echo     -------------------------------------------------------------------
+    echo     1. UNLOCK your phone screen right now.
+    echo     2. Look for the prompt: 'Allow USB debugging?'
+    echo     3. Check '[x] Always allow from this computer' and tap 'ALLOW'.
+    echo     -------------------------------------------------------------------
+    set /a RETRIES+=1
+    if !RETRIES! lss 20 (
+        timeout /t 2 /nobreak >nul
+        goto :check_device
     )
 )
 
@@ -42,7 +66,7 @@ if "!DEVICE_FOUND!"=="0" (
     echo [ERROR] No authorized Android device detected!
     echo.
     echo Troubleshooting Steps:
-    echo   1. Connect your phone via USB cable.
+    echo   1. Connect your phone via USB cable (set USB mode to 'File Transfer' / 'MTP').
     echo   2. Enable 'Developer Options' on your phone:
     echo      Settings - About Phone - Tap 'Build Number' 7 times.
     echo   3. Enable 'USB Debugging' in Settings - Developer Options.
@@ -51,7 +75,7 @@ if "!DEVICE_FOUND!"=="0" (
     goto :failed
 )
 
-echo [OK] Phone detected: !DEVICE_ID!
+:device_ready
 echo.
 
 :: 3. Check for Flutter SDK
@@ -101,7 +125,7 @@ if defined FLUTTER_CMD (
     
     echo.
     echo [INFO] To run via Flutter:
-    echo   1. Download Flutter SDK to 'D:\current project\flutter'
+    echo   1. Clone/extract Flutter SDK into 'D:\current project\flutter'
     echo   2. Run 'flutter run -d !DEVICE_ID!'
     echo.
 )
