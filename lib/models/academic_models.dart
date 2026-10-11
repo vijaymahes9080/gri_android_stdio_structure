@@ -285,3 +285,142 @@ class SahayakMessage {
     this.source,
   });
 }
+
+class SchoolModel {
+  final String id;
+  final String name;
+  final String dean;
+  final String deanEmail;
+  final String deanPhone;
+  final int programmesCount;
+  final String highlights;
+  final List<DepartmentModel> departments;
+
+  SchoolModel({
+    required this.id,
+    required this.name,
+    required this.dean,
+    required this.deanEmail,
+    required this.deanPhone,
+    required this.programmesCount,
+    required this.highlights,
+    this.departments = const [],
+  });
+}
+
+class DepartmentModel {
+  final String id;
+  final String name;
+  final String hod;
+  final String hodEmail;
+  final String contact;
+  final List<String> programmes;
+  final String researchAreas;
+
+  DepartmentModel({
+    required this.id,
+    required this.name,
+    required this.hod,
+    required this.hodEmail,
+    required this.contact,
+    required this.programmes,
+    required this.researchAreas,
+  });
+}
+
+class LeadershipOfficerModel {
+  final String id;
+  final String name;
+  final String designation;
+  final String email;
+  final String phone;
+  final String portfolio;
+  final String officeLocation;
+
+  LeadershipOfficerModel({
+    required this.id,
+    required this.name,
+    required this.designation,
+    required this.email,
+    required this.phone,
+    required this.portfolio,
+    required this.officeLocation,
+  });
+}
+
+class ProspectusModel {
+  final String id;
+  final String title;
+  final String academicYear;
+  final String pdfUrl;
+  final String size;
+  final String summary;
+  final List<String> keyOfferings;
+
+  ProspectusModel({
+    required this.id,
+    required this.title,
+    required this.academicYear,
+    required this.pdfUrl,
+    required this.size,
+    required this.summary,
+    required this.keyOfferings,
+  });
+}
+
+class OfficialDownloadModel {
+  final String id;
+  final String title;
+  final String category;
+  final String fileUrl;
+  final String authority;
+  final String instructions;
+
+  OfficialDownloadModel({
+    required this.id,
+    required this.title,
+    required this.category,
+    required this.fileUrl,
+    required this.authority,
+    required this.instructions,
+  });
+}
+
+class ScholarshipItemModel {
+  final String id;
+  final String name;
+  final String beneficiary;
+  final String amount;
+  final String deadline;
+  final String officialNoticeUrl;
+  final List<String> eligibility;
+
+  ScholarshipItemModel({
+    required this.id,
+    required this.name,
+    required this.beneficiary,
+    required this.amount,
+    required this.deadline,
+    required this.officialNoticeUrl,
+    required this.eligibility,
+  });
+}
+
+class StatutoryBodyModel {
+  final String id;
+  final String name;
+  final String role;
+  final String frequency;
+  final List<String> keyMembers;
+  final String legalProvision;
+
+  StatutoryBodyModel({
+    required this.id,
+    required this.name,
+    required this.role,
+    required this.frequency,
+    required this.keyMembers,
+    required this.legalProvision,
+  });
+}
+

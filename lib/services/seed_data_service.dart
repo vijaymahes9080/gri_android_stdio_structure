@@ -227,6 +227,15 @@ class SeedDataService {
         highlights: "ICAR Accredited B.Sc. (Hons.) Agriculture, Organic Dairy Farm, Agro-Meteorological Unit",
       ),
       SchoolItem(
+        id: "sch_health",
+        name: "School of Rural Health and Sanitation",
+        dean: "Dr. M. G. Sethuraman",
+        deanEmail: "dean_health@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 203",
+        programmesCount: 7,
+        highlights: "WHO Collaborating Partner, Sanitary Inspector Training Pioneer in India since 1965",
+      ),
+      SchoolItem(
         id: "sch_socsci",
         name: "School of Social Sciences",
         dean: "Dr. P. Anandharajakumar",
@@ -235,6 +244,233 @@ class SeedDataService {
         programmesCount: 14,
         highlights: "Nai Talim Village Internship, Kasturba Seva Ashram Field Action Projects",
       ),
+      SchoolItem(
+        id: "sch_tamil",
+        name: "School of Tamil, Indian Languages and Rural Arts",
+        dean: "Dr. M. Kuruvammal",
+        deanEmail: "dean_tamil@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 205",
+        programmesCount: 10,
+        highlights: "Classical Tamil Palm-leaf Archives, Folk Arts Troupe, Rural Handicrafts Centre",
+      ),
+      SchoolItem(
+        id: "sch_english",
+        name: "School of English & Foreign Languages",
+        dean: "Dr. S. Senthilnathan",
+        deanEmail: "dean_english@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 206",
+        programmesCount: 6,
+        highlights: "Modern Digital Language Lab, Communicative English Resource Centre",
+      ),
+      SchoolItem(
+        id: "sch_mgmt",
+        name: "School of Management Studies",
+        dean: "Dr. S. B. Inayath Ahamed",
+        deanEmail: "dean_mgmt@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 207",
+        programmesCount: 8,
+        highlights: "MBA Rural Management, Agribusiness Incubator, Cooperative Banking Laboratory",
+      ),
+      SchoolItem(
+        id: "sch_cs",
+        name: "School of Computer Science & Technologies",
+        dean: "Dr. K. Somasundaram",
+        deanEmail: "dean_cs@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 208",
+        programmesCount: 11,
+        highlights: "NVIDIA Deep Learning Lab, High Performance Computing, 1 Gbps NKN Fibre Backbone",
+      ),
     ];
   }
+
+  // Official Leadership Roster (Chancellor, VC, Registrar, COE, FO, CVO, Deans)
+  List<Map<String, String>> get officialLeadership => [
+    {
+      "name": "Dr. KM. Annamalai",
+      "designation": "Honorable Chancellor",
+      "email": "chancellor@ruraluniv.ac.in",
+      "phone": "+91 451 2452371",
+      "portfolio": "Head of Institution, Presiding Officer of Convocation",
+      "location": "Chancellor Secretariat",
+    },
+    {
+      "name": "Prof. Dr. N. Panchanatham",
+      "designation": "Vice-Chancellor",
+      "email": "vc@ruraluniv.ac.in",
+      "phone": "+91 451 2452305",
+      "portfolio": "Chief Academic & Executive Officer, Chairman of Executive Council",
+      "location": "Vice-Chancellor Block",
+    },
+    {
+      "name": "Dr. K. Marimuthu",
+      "designation": "Registrar",
+      "email": "registrar@ruraluniv.ac.in",
+      "phone": "+91 451 2452371 Ext: 102",
+      "portfolio": "Custodian of University Records, Administration & Legal Affairs",
+      "location": "Administrative Block, Ground Floor",
+    },
+    {
+      "name": "Dr. V. Sivakumar",
+      "designation": "Controller of Examinations",
+      "email": "coe@ruraluniv.ac.in",
+      "phone": "+91 451 2452371 Ext: 104",
+      "portfolio": "End Semester Exams, CIA Evaluations, Degree Awarding & e-SANAD",
+      "location": "Examination Building",
+    },
+    {
+      "name": "Dr. K. Ravichandran",
+      "designation": "Finance Officer",
+      "email": "fo@ruraluniv.ac.in",
+      "phone": "+91 451 2452371 Ext: 106",
+      "portfolio": "University Budget, UGC Grants & Research Project Accounting",
+      "location": "Finance Wing, Admin Block",
+    },
+    {
+      "name": "Dr. P. Balasubramaniam",
+      "designation": "Chief Vigilance Officer",
+      "email": "cvo@ruraluniv.ac.in",
+      "phone": "+91 451 2452371 Ext: 108",
+      "portfolio": "Statutory Institutional Vigilance & Governance Integrity",
+      "location": "Vigilance Cell",
+    },
+    {
+      "name": "Dr. S. Meenakshi",
+      "designation": "Director, Research & Development Cell (RDC)",
+      "email": "rdc@ruraluniv.ac.in",
+      "phone": "+91 451 2452371 Ext: 112",
+      "portfolio": "Extramural Research Grants, IPR, Patenting & Ph.D. Directorate",
+      "location": "RDC Central Complex",
+    },
+    {
+      "name": "Dr. P. U. Mahalingam",
+      "designation": "Director, IQAC",
+      "email": "iqac@ruraluniv.ac.in",
+      "phone": "+91 451 2452371 Ext: 114",
+      "portfolio": "NAAC A+ Accreditation & Quality Benchmark Assessment",
+      "location": "IQAC Directorate",
+    },
+    {
+      "name": "Dr. S. Manivel",
+      "designation": "Dean of Student Welfare",
+      "email": "dsw@ruraluniv.ac.in",
+      "phone": "+91 451 2452371 Ext: 118",
+      "portfolio": "Hostel Affairs, Student Grievance Redressal & Anti-Ragging Cell",
+      "location": "Student Welfare Centre",
+    },
+  ];
+
+  // Official Prospectuses & Academic Admissions
+  List<Map<String, dynamic>> get officialProspectuses => [
+    {
+      "title": "GRI Admissions Prospectus 2026-27 (All Programmes)",
+      "year": "2026-27",
+      "pdfUrl": "https://www.ruraluniv.ac.in/includes/admissions/2026/pdf/Prospectus_202627.pdf",
+      "size": "5.4 MB",
+      "summary": "Official comprehensive prospectus detailing eligibility, seat matrix, fee concessions, reservation norms, and hostel accommodations for 2026-27.",
+      "programmes": ["Undergraduate (UG)", "Postgraduate (PG)", "B.Voc.", "Diploma", "Ph.D."],
+    },
+    {
+      "title": "GRI Admissions Prospectus 2025-26",
+      "year": "2025-26",
+      "pdfUrl": "https://www.ruraluniv.ac.in/includes/admissions/2025/pdf/Prospectus_202526.pdf",
+      "size": "4.8 MB",
+      "summary": "Reference prospectus for ongoing cohorts, fee structures, and curriculum outlines.",
+      "programmes": ["UG", "PG", "Diploma", "Doctoral"],
+    },
+  ];
+
+  // Official Downloadable Forms & Certificates
+  List<Map<String, String>> get officialForms => [
+    {
+      "title": "Application for Official Academic Transcripts",
+      "code": "COE-FORM-01",
+      "url": "http://ruraluniv.ac.in/includes/examination/pdf/Application_Transcript.pdf",
+      "authority": "Controller of Examinations",
+      "desc": "Statutory application to obtain attested academic grade transcripts for higher education and WES evaluation.",
+    },
+    {
+      "title": "Application for Duplicate Degree / Diploma Certificate",
+      "code": "COE-FORM-02",
+      "url": "http://ruraluniv.ac.in/includes/examination/pdf/DuplicateCertificate.pdf",
+      "authority": "Controller of Examinations",
+      "desc": "Prescribed form for applying for duplicate credentials with police inquiry report and affidavit.",
+    },
+    {
+      "title": "Certificate for Compliance of Ph.D. Degree with UGC Regulations",
+      "code": "RDC-FORM-03",
+      "url": "http://ruraluniv.ac.in/includes/studcorner/pdf/ugc_cc221217.pdf",
+      "authority": "Research and Development Cell",
+      "desc": "Official UGC compliance certificate for Ph.D. degree holders for teaching faculty recruitments.",
+    },
+    {
+      "title": "e-SANAD Digital Attestation Notification & Guidelines",
+      "code": "SANAD-NOTIF-04",
+      "url": "http://ruraluniv.ac.in/includes/examination/pdf/e-sanad301221.pdf",
+      "authority": "Ministry of External Affairs & GRI",
+      "desc": "Official instructions for paperless digital verification and apostille attestation via e-SANAD portal.",
+    },
+    {
+      "title": "Tatkal Scheme Instructions for Urgent Certificates",
+      "code": "TATKAL-FORM-05",
+      "url": "http://ruraluniv.ac.in/includes/examination/pdf/Tatkal_instruction.pdf",
+      "authority": "Controller of Examinations",
+      "desc": "Procedure and expedited fee schedule for obtaining provisional certificates within 48 hours.",
+    },
+    {
+      "title": "Krishi Vigyan Kendra (KVK Dindigul) Profile & Soil Services",
+      "code": "ICAR-KVK-06",
+      "url": "http://ruraluniv.ac.in/includes/academics/pdf/KVK.pdf",
+      "authority": "ICAR - GRI Farm Science Centre",
+      "desc": "Agricultural extension, soil testing services, organic bio-fertilizers, and rural farmers training schedule.",
+    },
+    {
+      "title": "Rural Energy Centre Programme Brochure",
+      "code": "REC-BROCHURE-07",
+      "url": "http://ruraluniv.ac.in/includes/academics/programmes/brochure/15330.pdf",
+      "authority": "School of Computer Science & Technologies",
+      "desc": "Curriculum and research facilities in Biomass Gasification and Solar Energy testing.",
+    },
+  ];
+
+  // Statutory Scholarships & Government ID Portals
+  List<Map<String, dynamic>> get officialScholarships => [
+    {
+      "title": "SC / ST / SCC Post-Matric Government Scholarship 2026-27",
+      "authority": "Government of Tamil Nadu & Ministry of Social Justice",
+      "beneficiary": "SC, ST, and Converted Christian Scheduled Caste Students",
+      "details": "100% Tuition Fee waiver, maintenance allowances, and examination fee reimbursement.",
+      "noticeUrl": "https://doc.ruraluniv.ac.in/studentcorner/view/330",
+    },
+    {
+      "title": "APAAR ID Creation (One Nation One Student ID)",
+      "authority": "Ministry of Education & National Academic Depository (NAD)",
+      "beneficiary": "All Enrolled Students (Mandatory for Credit Transfer)",
+      "details": "12-digit automated permanent academic account registry linked to DigiLocker and ABC (Academic Bank of Credits).",
+      "noticeUrl": "https://ruraluniv.ac.in/",
+    },
+    {
+      "title": "UMIS ID Integration (University Management Information System)",
+      "authority": "Tamil Nadu Higher Education Department",
+      "beneficiary": "All Tamil Nadu Domicile Students",
+      "details": "Mandatory state student registration for government entitlement schemes and scholarships.",
+      "noticeUrl": "https://ruraluniv.ac.in/",
+    },
+  ];
+
+  // University Contact & Campus Directions
+  Map<String, dynamic> get universityContact => {
+    "university_name": "The Gandhigram Rural Institute (Deemed to be University)",
+    "accreditation": "NAAC Re-accredited with 'A+' Grade (Cycle 4)",
+    "address": "Gandhigram - 624 302, Dindigul District, Tamil Nadu, India",
+    "epabx": "+91 451 2452371 to 2452376 (6 Lines)",
+    "fax": "+91 451 2454466",
+    "email_general": "gru64@ruraluniv.ac.in",
+    "email_admissions": "admissions@ruraluniv.ac.in",
+    "email_registrar": "registrar@ruraluniv.ac.in",
+    "email_coe": "coe@ruraluniv.ac.in",
+    "website": "https://ruraluniv.ac.in/",
+    "railway_access": "Dindigul Junction (12 km) or Ambathurai Railway Station (2 km)",
+    "airport_access": "Madurai International Airport (65 km)",
+  };
 }
+
