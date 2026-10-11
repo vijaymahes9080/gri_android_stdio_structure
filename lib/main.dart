@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'providers/gri_provider.dart';
 import 'models/user_model.dart';
 import 'utils/gri_colors.dart';
+import 'utils/gri_motion.dart';
 import 'widgets/gri_top_bar.dart';
 import 'widgets/gri_university_drawer.dart';
 import 'widgets/role_switcher_modal.dart';
@@ -39,6 +40,8 @@ class GriApplication extends StatelessWidget {
       title: 'The Gandhigram Rural Institute',
       debugShowCheckedModeBanner: false,
       theme: GriColors.lightTheme,
+      darkTheme: GriColors.darkTheme,
+      themeMode: ThemeMode.system,
       home: const MainScaffold(),
     );
   }
@@ -160,7 +163,15 @@ class MainScaffold extends StatelessWidget {
         Scaffold(
           appBar: const GriTopBar(),
           drawer: const GriUniversityDrawer(),
-          body: activeScreen,
+          body: AnimatedSwitcher(
+            duration: GriMotion.quick,
+            switchInCurve: GriMotion.easeOutCubic,
+            switchOutCurve: GriMotion.easeOutCubic,
+            child: KeyedSubtree(
+              key: ValueKey(provider.currentTab),
+              child: activeScreen,
+            ),
+          ),
           bottomNavigationBar: NavigationBar(
             selectedIndex: selectedNavIndex,
             backgroundColor: Colors.white,

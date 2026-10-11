@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import '../providers/gri_provider.dart';
 import '../models/user_model.dart';
 import '../utils/gri_colors.dart';
+import '../utils/gri_motion.dart';
 import '../screens/global_website_search_screen.dart';
-import '../screens/document_vault_screen.dart';
 import '../services/official_resource_registry.dart';
 
 class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
@@ -15,11 +15,21 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     final provider = context.watch<GriProvider>();
     final currentUser = provider.currentUser;
 
     return Container(
-      color: Colors.white,
+      decoration: BoxDecoration(
+        color: colorScheme.surface,
+        border: Border(
+          bottom: BorderSide(
+            color: colorScheme.outlineVariant,
+            width: 0.8,
+          ),
+        ),
+      ),
       child: SafeArea(
         bottom: false,
         child: Column(
@@ -32,14 +42,13 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                   // Drawer Hamburger Menu Trigger
                   Builder(
                     builder: (drawerCtx) => IconButton(
-                      icon: const Icon(Icons.menu, color: GriColors.forestPrimary, size: 22),
+                      icon: Icon(Icons.menu, color: colorScheme.primary, size: 22),
                       tooltip: "University Navigation",
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
+                      constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
                       onPressed: () => Scaffold.of(drawerCtx).openDrawer(),
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 4),
 
                   // University Emblem / Logo (High-Res Official Crest)
                   ClipRRect(
@@ -51,29 +60,29 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                       fit: BoxFit.contain,
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 10),
 
-                  // University Title
+                  // University Title & Metadata
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           "THE GANDHIGRAM RURAL INSTITUTE",
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w800,
-                            color: GriColors.forestPrimary,
-                            letterSpacing: 0.3,
+                            color: colorScheme.primary,
+                            letterSpacing: 0.4,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(
-                          "Deemed to be University • NAAC 'A' Grade • ruraluniv.ac.in",
+                          "Deemed to be University • NAAC 'A' Grade • 1956",
                           style: TextStyle(
                             fontSize: 10,
-                            color: Colors.grey.shade600,
+                            color: colorScheme.onSurfaceVariant,
                             fontWeight: FontWeight.w500,
                           ),
                           maxLines: 1,
@@ -85,44 +94,44 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
 
                   // Global Website & Portal Search Shortcut
                   IconButton(
-                    icon: const Icon(Icons.search, color: GriColors.forestPrimary, size: 21),
+                    icon: Icon(Icons.search, color: colorScheme.primary, size: 21),
                     tooltip: "Search 247 Official Pages",
+                    constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(builder: (_) => const GlobalWebsiteSearchScreen()),
                       );
                     },
-                    visualDensity: VisualDensity.compact,
                   ),
 
                   // AI Assistant Shortcut
                   IconButton(
                     icon: const Icon(Icons.auto_awesome, color: GriColors.ochrePrimary, size: 20),
                     tooltip: "GRI-Sahayak AI",
+                    constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
                     onPressed: () => provider.toggleAskAi(true),
-                    visualDensity: VisualDensity.compact,
                   ),
 
                   // Document Center Shortcut
                   IconButton(
-                    icon: const Icon(Icons.verified, color: GriColors.forestPrimary, size: 20),
+                    icon: Icon(Icons.verified, color: colorScheme.primary, size: 20),
                     tooltip: "Official Documents",
+                    constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
                     onPressed: () => provider.toggleDocumentCenter(true),
-                    visualDensity: VisualDensity.compact,
                   ),
 
                   // Cloud Sync Indicator
                   IconButton(
                     icon: provider.isSyncing
-                        ? const SizedBox(
+                        ? SizedBox(
                             width: 18,
                             height: 18,
-                            child: CircularProgressIndicator(strokeWidth: 2, color: GriColors.forestPrimary),
+                            child: CircularProgressIndicator(strokeWidth: 2, color: colorScheme.primary),
                           )
-                        : const Icon(Icons.sync, color: Colors.black54, size: 20),
+                        : Icon(Icons.sync, color: colorScheme.onSurfaceVariant, size: 20),
                     tooltip: "Sync with Cloud",
+                    constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
                     onPressed: provider.isSyncing ? null : () => provider.triggerCloudSync(),
-                    visualDensity: VisualDensity.compact,
                   ),
                 ],
               ),
@@ -130,19 +139,24 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
 
             // Row 2: Role Switcher & Institutional Account Strip
             Container(
-              height: 36,
-              color: GriColors.surfaceVariant.withOpacity(0.5),
+              height: 38,
+              decoration: BoxDecoration(
+                color: colorScheme.surfaceContainerHighest.withOpacity(0.4),
+                border: Border(
+                  top: BorderSide(color: colorScheme.outlineVariant.withOpacity(0.5), width: 0.5),
+                ),
+              ),
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 children: [
-                  // Active Role Chip
-                  InkWell(
+                  // Active Role Chip with Tactile Press
+                  GriPressable(
                     onTap: () => provider.toggleRoleSwitcher(true),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                       decoration: BoxDecoration(
-                        color: GriColors.forestPrimary,
+                        color: colorScheme.primary,
                         borderRadius: BorderRadius.circular(999),
                       ),
                       child: Row(
@@ -164,10 +178,10 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                   const SizedBox(width: 8),
 
                   // Quick Register Button
-                  InkWell(
+                  GriPressable(
                     onTap: () => provider.openRegistrationWizard(),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                       decoration: BoxDecoration(
                         color: GriColors.ochrePrimary,
                         borderRadius: BorderRadius.circular(999),
@@ -200,14 +214,14 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                           "${acc.name.split(' ').first} (${acc.role})",
                           style: TextStyle(
                             fontSize: 10.5,
-                            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                            color: isSelected ? GriColors.forestPrimary : Colors.black87,
+                            fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                            color: isSelected ? colorScheme.primary : colorScheme.onSurface,
                           ),
                         ),
-                        backgroundColor: isSelected ? GriColors.forestContainer : Colors.white,
+                        backgroundColor: isSelected ? colorScheme.primaryContainer : colorScheme.surface,
                         side: BorderSide(
-                          color: isSelected ? GriColors.forestPrimary : Colors.grey.shade300,
-                          width: isSelected ? 1.5 : 1,
+                          color: isSelected ? colorScheme.primary : colorScheme.outlineVariant,
+                          width: isSelected ? 1.4 : 0.8,
                         ),
                         padding: const EdgeInsets.symmetric(horizontal: 4),
                         onPressed: () => provider.switchUserAccount(acc),

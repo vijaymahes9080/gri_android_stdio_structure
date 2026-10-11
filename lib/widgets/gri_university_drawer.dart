@@ -310,16 +310,34 @@ class GriUniversityDrawer extends StatelessWidget {
           // Drawer Footer
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            color: Colors.grey.shade100,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surfaceContainerHighest.withOpacity(0.5),
+              border: Border(
+                top: BorderSide(
+                  color: Theme.of(context).colorScheme.outlineVariant,
+                  width: 0.8,
+                ),
+              ),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("v1.0.0+1 • NAAC 'A' Grade", style: TextStyle(fontSize: 11, color: Colors.grey)),
+                Text(
+                  "v1.0.0+1 • NAAC 'A' Grade",
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+                ),
                 InkWell(
                   onTap: () => _launchUrl("https://ruraluniv.ac.in/"),
-                  child: const Text(
+                  child: Text(
                     "ruraluniv.ac.in",
-                    style: TextStyle(fontSize: 11, color: GriColors.forestPrimary, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],
