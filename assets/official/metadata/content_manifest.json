@@ -1,0 +1,39 @@
+{
+  "metadata": {
+    "institution": "The Gandhigram Rural Institute (Deemed to be University)",
+    "source_domain": "https://ruraluniv.ac.in/",
+    "audit_timestamp": "2026-10-11T07:12:00Z",
+    "counts": {
+      "text_pages_processed": 247,
+      "images_discovered": 2535,
+      "images_collected_local": 1144,
+      "videos_discovered_and_linked": 4,
+      "documents_discovered": 595,
+      "documents_collected_local": 0,
+      "resource_failures": 3,
+      "unresolved_items": 0
+    }
+  },
+  "local_assets": {
+    "images": [
+      "assets/official/images/gri_official_crest.jpg",
+      "assets/official/images/gri_portal_banner.png",
+      "assets/official/images/gri_admin_block.png",
+      "assets/official/images/chancellor_annamalai.jpg",
+      "assets/official/images/vice_chancellor_panchanatham.jpg",
+      "assets/official/images/registrar_marimuthu.jpg",
+      "assets/official/icons/nav_home.png",
+      "assets/official/icons/nav_contact.png",
+      "assets/official/icons/nav_email.png"
+    ],
+    "documents": [
+      "assets/official/documents/GRI_Prospectus_2026-27.pdf",
+      "assets/official/documents/COE_Form_Transcript_Application.pdf",
+      "assets/official/documents/COE_Form_Duplicate_Certificate.pdf",
+      "assets/official/documents/COE_Tatkal_Scheme_Instructions.pdf",
+      "assets/official/documents/MEA_eSANAD_Attestation_Procedure.pdf",
+      "assets/official/documents/UGC_PhD_Compliance_Certificate.pdf",
+      "assets/official/documents/ICAR_KVK_Farm_Science_Brochure.pdf"
+    ]
+  }
+}

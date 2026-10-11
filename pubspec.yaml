@@ -29,3 +29,8 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/data/
+    - assets/official/images/
+    - assets/official/icons/
+    - assets/official/documents/
+    - assets/official/metadata/
+    - assets/website_inventory.json
