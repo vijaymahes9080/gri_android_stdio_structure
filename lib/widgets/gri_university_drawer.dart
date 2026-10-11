@@ -15,6 +15,7 @@ import '../screens/department_detail_screen.dart';
 import '../screens/institutional_article_screen.dart';
 import '../screens/document_vault_screen.dart';
 import '../screens/media_gallery_screen.dart';
+import '../services/official_resource_registry.dart';
 
 class GriUniversityDrawer extends StatelessWidget {
   const GriUniversityDrawer({super.key});
@@ -56,12 +57,11 @@ class GriUniversityDrawer extends StatelessWidget {
                       radius: 28,
                       backgroundColor: Colors.white,
                       child: ClipOval(
-                        child: Image.asset(
-                          'assets/official/images/gri_official_crest.jpg',
+                        child: OfficialResourceRegistry.buildImage(
+                          "IMG_OFFICIAL_CREST",
                           width: 48,
                           height: 48,
                           fit: BoxFit.contain,
-                          errorBuilder: (_, __, ___) => const Icon(Icons.school, color: GriColors.forestPrimary, size: 28),
                         ),
                       ),
                     ),

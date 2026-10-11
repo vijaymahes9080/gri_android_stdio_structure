@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/seed_data_service.dart';
 import '../utils/gri_colors.dart';
+import '../services/official_resource_registry.dart';
 
 class AdmissionsProspectusScreen extends StatefulWidget {
   const AdmissionsProspectusScreen({super.key});
@@ -119,14 +120,10 @@ class _AdmissionsProspectusScreenState extends State<AdmissionsProspectusScreen>
                               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                             ),
                             icon: const Icon(Icons.download, size: 14),
-                            label: const Text("Download PDF", style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold)),
+                            label: const Text("Open Prospectus", style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold)),
                             onPressed: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text("Downloading ${p['title']}..."),
-                                  backgroundColor: GriColors.forestPrimary,
-                                ),
-                              );
+                              final docId = p['year'] == '2026-27' ? 'DOC_PROSPECTUS_2026' : 'DOC_PROSPECTUS_2025';
+                              OfficialResourceRegistry.openDocument(context, docId);
                             },
                           ),
                         ],

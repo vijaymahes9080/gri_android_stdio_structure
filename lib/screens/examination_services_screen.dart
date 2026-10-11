@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/seed_data_service.dart';
 import '../utils/gri_colors.dart';
+import '../services/official_resource_registry.dart';
 
 class ExaminationServicesScreen extends StatefulWidget {
   const ExaminationServicesScreen({super.key});
@@ -102,14 +103,12 @@ class _ExaminationServicesScreenState extends State<ExaminationServicesScreen> w
                               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                             ),
                             icon: const Icon(Icons.download, size: 14),
-                            label: const Text("Download PDF", style: TextStyle(fontSize: 11)),
+                            label: const Text("Open Form", style: TextStyle(fontSize: 11)),
                             onPressed: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text("Downloading ${f['title']}..."),
-                                  backgroundColor: GriColors.forestPrimary,
-                                ),
-                              );
+                              final code = f["code"] ?? "";
+                              String docId = "DOC_COE_TRANSCRIPT";
+                              if (code == "COE-02") docId = "DOC_COE_DUPLICATE_CERT";
+                              OfficialResourceRegistry.openDocument(context, docId);
                             },
                           ),
                         ],

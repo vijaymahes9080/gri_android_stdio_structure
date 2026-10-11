@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../utils/gri_colors.dart';
+import '../services/official_resource_registry.dart';
 
 class MediaGalleryScreen extends StatelessWidget {
   const MediaGalleryScreen({super.key});
-
-  Future<void> _launchUrl(String url) async {
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,12 +55,9 @@ class MediaGalleryScreen extends StatelessWidget {
                       height: 180,
                       width: double.infinity,
                       color: Colors.black87,
-                      child: Image.asset(
-                        'assets/official/images/gri_admin_block.png',
+                      child: OfficialResourceRegistry.buildImage(
+                        "IMG_ADMIN_BLOCK",
                         fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => const Center(
-                          child: Icon(Icons.videocam, color: Colors.white54, size: 48),
-                        ),
                       ),
                     ),
                   ),
@@ -76,7 +66,7 @@ class MediaGalleryScreen extends StatelessWidget {
                     backgroundColor: GriColors.forestPrimary.withOpacity(0.9),
                     child: IconButton(
                       icon: const Icon(Icons.play_arrow, color: Colors.white, size: 36),
-                      onPressed: () => _launchUrl('https://drive.google.com/file/d/1OCMbFWcuSt2gzrlB8akSkFkTJ39U1ucF/preview'),
+                      onPressed: () => OfficialResourceRegistry.openVideo(context, "VID_CAMPUS_TOUR"),
                     ),
                   ),
                 ],
@@ -111,7 +101,7 @@ class MediaGalleryScreen extends StatelessWidget {
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       ),
-                      onPressed: () => _launchUrl('https://drive.google.com/file/d/1OCMbFWcuSt2gzrlB8akSkFkTJ39U1ucF/preview'),
+                      onPressed: () => OfficialResourceRegistry.openVideo(context, "VID_CAMPUS_TOUR"),
                       icon: const Icon(Icons.open_in_new, size: 16),
                       label: const Text("Launch Video Tour Stream"),
                     ),
@@ -136,7 +126,7 @@ class MediaGalleryScreen extends StatelessWidget {
             title: const Text("Official GRI YouTube Channel", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
             subtitle: Text("Official broadcasts, convocation ceremonies, seminars & cultural archives.", style: TextStyle(fontSize: 11, color: Colors.grey.shade600)),
             trailing: const Icon(Icons.arrow_forward_ios, size: 14, color: Colors.grey),
-            onTap: () => _launchUrl('https://www.youtube.com/channel/UCSxbqMXHb-NUau5lFUwDRyA'),
+            onTap: () => OfficialResourceRegistry.openVideo(context, "VID_YOUTUBE_CHANNEL"),
           ),
         ),
 
@@ -154,7 +144,7 @@ class MediaGalleryScreen extends StatelessWidget {
             title: const Text("UGC Anti-Ragging Awareness Film", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
             subtitle: Text("Statutory national anti-ragging documentary & helpline directives.", style: TextStyle(fontSize: 11, color: Colors.grey.shade600)),
             trailing: const Icon(Icons.arrow_forward_ios, size: 14, color: Colors.grey),
-            onTap: () => _launchUrl('https://www.antiragging.in/video.html'),
+            onTap: () => OfficialResourceRegistry.openVideo(context, "VID_ANTI_RAGGING_FILM"),
           ),
         ),
       ],
@@ -169,17 +159,17 @@ class MediaGalleryScreen extends StatelessWidget {
       mainAxisSpacing: 12,
       childAspectRatio: 0.85,
       children: [
-        _buildPhotoCard("assets/official/images/gri_official_crest.jpg", "University Emblem", "Charkha & Rising Sun"),
-        _buildPhotoCard("assets/official/images/gri_admin_block.png", "Administrative Block", "Historic 1956 Facade"),
-        _buildPhotoCard("assets/official/images/chancellor_annamalai.jpg", "Chancellor", "Dr. KM. Annamalai"),
-        _buildPhotoCard("assets/official/images/vice_chancellor_panchanatham.jpg", "Vice-Chancellor", "Prof. Dr. N. Panchanatham"),
-        _buildPhotoCard("assets/official/images/registrar_marimuthu.jpg", "Registrar", "Dr. K. Marimuthu"),
-        _buildPhotoCard("assets/official/images/gri_portal_banner.png", "Official Banner", "ruraluniv.ac.in"),
+        _buildPhotoCard("IMG_OFFICIAL_CREST", "University Emblem", "Charkha & Rising Sun"),
+        _buildPhotoCard("IMG_ADMIN_BLOCK", "Administrative Block", "Historic 1956 Facade"),
+        _buildPhotoCard("IMG_CHANCELLOR_ANNAMALAI", "Chancellor", "Dr. KM. Annamalai"),
+        _buildPhotoCard("IMG_VC_PANCHANATHAM", "Vice-Chancellor", "Prof. Dr. N. Panchanatham"),
+        _buildPhotoCard("IMG_REGISTRAR_MARIMUTHU", "Registrar", "Dr. K. Marimuthu"),
+        _buildPhotoCard("IMG_PORTAL_BANNER", "Official Banner", "ruraluniv.ac.in"),
       ],
     );
   }
 
-  Widget _buildPhotoCard(String assetPath, String title, String subtitle) {
+  Widget _buildPhotoCard(String resourceId, String title, String subtitle) {
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -192,10 +182,9 @@ class MediaGalleryScreen extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 color: Colors.grey.shade100,
-                child: Image.asset(
-                  assetPath,
+                child: OfficialResourceRegistry.buildImage(
+                  resourceId,
                   fit: BoxFit.contain,
-                  errorBuilder: (_, __, ___) => const Center(child: Icon(Icons.image, color: Colors.grey)),
                 ),
               ),
             ),

@@ -5,6 +5,7 @@ import '../models/user_model.dart';
 import '../utils/gri_colors.dart';
 import '../screens/global_website_search_screen.dart';
 import '../screens/document_vault_screen.dart';
+import '../services/official_resource_registry.dart';
 
 class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
   const GriTopBar({super.key});
@@ -43,17 +44,11 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                   // University Emblem / Logo (High-Res Official Crest)
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: Image.asset(
-                      'assets/official/images/gri_official_crest.jpg',
+                    child: OfficialResourceRegistry.buildImage(
+                      "IMG_OFFICIAL_CREST",
                       height: 38,
                       width: 38,
                       fit: BoxFit.contain,
-                      errorBuilder: (_, __, ___) => Container(
-                        height: 38,
-                        width: 38,
-                        color: GriColors.forestPrimary,
-                        child: const Icon(Icons.school, color: Colors.white, size: 22),
-                      ),
                     ),
                   ),
                   const SizedBox(width: 8),
