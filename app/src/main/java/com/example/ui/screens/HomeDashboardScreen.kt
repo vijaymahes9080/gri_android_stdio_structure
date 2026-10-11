@@ -453,7 +453,7 @@ fun HomeDashboardScreen(
                 text = "Today's Schedule",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
-                color = GriOnSurface
+                color = MaterialTheme.colorScheme.onSurface
               )
             }
             Row(
@@ -592,7 +592,7 @@ fun HomeDashboardScreen(
                     text = "OVERALL ATTENDANCE",
                     fontSize = 9.sp,
                     fontWeight = FontWeight.Bold,
-                    color = GriOutline,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     letterSpacing = 0.5.sp
                   )
                   Text(
@@ -649,12 +649,12 @@ fun HomeDashboardScreen(
               text = "Student Desk",
               fontSize = 16.sp,
               fontWeight = FontWeight.Bold,
-              color = GriOnSurface
+              color = MaterialTheme.colorScheme.onSurface
             )
             Text(
               text = "GRI Samarth Suite",
               fontSize = 11.sp,
-              color = GriOutline
+              color = MaterialTheme.colorScheme.onSurfaceVariant
             )
           }
 
@@ -762,7 +762,7 @@ fun HomeDashboardScreen(
                 text = "Institutional Circulars",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
-                color = GriOnSurface
+                color = MaterialTheme.colorScheme.onSurface
               )
             }
             Text(
@@ -825,7 +825,7 @@ fun HomeDashboardScreen(
                 text = "Revised Academic Calendar for Even Semester 2024-25 (UG/PG & Research Programmes).",
                 fontSize = 13.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = GriOnSurface,
+                color = MaterialTheme.colorScheme.onSurface,
                 lineHeight = 18.sp
               )
 
@@ -900,7 +900,7 @@ fun HomeDashboardScreen(
                 text = "Registration portal open for graduating batch of 2024. Gown distribution instructions issued.",
                 fontSize = 13.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = GriOnSurface,
+                color = MaterialTheme.colorScheme.onSurface,
                 lineHeight = 18.sp
               )
 
@@ -966,13 +966,13 @@ fun HomeDashboardScreen(
                 text = "Campus Life & Highlights",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
-                color = GriOnSurface
+                color = MaterialTheme.colorScheme.onSurface
               )
             }
             Text(
               text = "Upcoming",
               fontSize = 11.sp,
-              color = GriOutline
+              color = MaterialTheme.colorScheme.onSurfaceVariant
             )
           }
 
@@ -1012,12 +1012,12 @@ fun HomeDashboardScreen(
                   text = "Inter-Collegiate Rural Technology Summit 2025",
                   fontSize = 14.sp,
                   fontWeight = FontWeight.Bold,
-                  color = GriOnSurface
+                  color = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
                   text = "Showcasing grassroots innovation, agro-drone technologies, and sustainable organic farming models at the Multi-Purpose Auditorium.",
                   fontSize = 12.sp,
-                  color = GriOnSurfaceVariant,
+                  color = MaterialTheme.colorScheme.onSurfaceVariant,
                   modifier = Modifier.padding(top = 4.dp, bottom = 10.dp)
                 )
 
@@ -1107,12 +1107,12 @@ fun HomeDashboardScreen(
                 text = "24x7 Campus Helpline",
                 fontSize = 13.sp,
                 fontWeight = FontWeight.Bold,
-                color = GriOnSurface
+                color = MaterialTheme.colorScheme.onSurface
               )
               Text(
                 text = "Health Centre • Proctorial Board",
                 fontSize = 11.sp,
-                color = GriOnSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant
               )
             }
           }
@@ -1177,7 +1177,7 @@ fun HomeDashboardScreen(
                     else -> role.name
                   },
                   fontWeight = if (isCurrent) FontWeight.Bold else FontWeight.Medium,
-                  color = if (isCurrent) GriForestPrimary else GriOnSurface
+                  color = if (isCurrent) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
                 )
                 if (isCurrent) {
                   Icon(

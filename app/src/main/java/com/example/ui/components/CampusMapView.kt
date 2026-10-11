@@ -963,13 +963,13 @@ fun CampusMapView(
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
             verticalAlignment = Alignment.CenterVertically
           ) {
-            Icon(Icons.Default.Explore, contentDescription = null, tint = GriForestPrimary, modifier = Modifier.size(12.dp))
+            Icon(Icons.Default.Explore, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(12.dp))
             Spacer(modifier = Modifier.width(4.dp))
             Text(
               text = "Zoom: ${(scale * 100).roundToInt()}% • ${selectedBuilding?.let { "Sector ${it.sector}" } ?: "All Sectors"}",
               fontSize = 10.sp,
               fontWeight = FontWeight.Bold,
-              color = GriForestPrimary
+              color = MaterialTheme.colorScheme.primary
             )
           }
         }
@@ -981,7 +981,7 @@ fun CampusMapView(
       text = "Primary Campus Buildings (Tap to Focus)",
       fontSize = 12.sp,
       fontWeight = FontWeight.Bold,
-      color = GriOnSurface,
+      color = MaterialTheme.colorScheme.onSurface,
       modifier = Modifier.padding(horizontal = 14.dp, vertical = 4.dp)
     )
 
@@ -1035,12 +1035,12 @@ fun CampusMapView(
                 text = building.shortName,
                 fontSize = 11.sp,
                 fontWeight = FontWeight.Bold,
-                color = if (isSelected) Color.White else GriOnSurface
+                color = if (isSelected) Color.White else MaterialTheme.colorScheme.onSurface
               )
               Text(
                 text = "Sector ${building.sector} • ${building.code}",
                 fontSize = 9.sp,
-                color = if (isSelected) Color.White.copy(alpha = 0.8f) else GriOutline
+                color = if (isSelected) Color.White.copy(alpha = 0.8f) else MaterialTheme.colorScheme.onSurfaceVariant
               )
             }
           }
@@ -1098,7 +1098,7 @@ fun CampusMapView(
                       text = building.name,
                       fontSize = 13.sp,
                       fontWeight = FontWeight.Bold,
-                      color = GriOnSurface,
+                      color = MaterialTheme.colorScheme.onSurface,
                       maxLines = 1,
                       overflow = TextOverflow.Ellipsis
                     )
@@ -1111,13 +1111,13 @@ fun CampusMapView(
                     // Sector Badge
                     Surface(
                       shape = RoundedCornerShape(4.dp),
-                      color = GriForestPrimary.copy(alpha = 0.12f)
+                      color = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f)
                     ) {
                       Text(
                         text = "Sector ${building.sector}",
                         fontSize = 10.sp,
                         fontWeight = FontWeight.Bold,
-                        color = GriForestPrimary,
+                        color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(horizontal = 5.dp, vertical = 1.dp)
                       )
                     }

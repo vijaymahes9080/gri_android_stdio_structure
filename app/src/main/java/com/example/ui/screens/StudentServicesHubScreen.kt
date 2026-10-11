@@ -331,14 +331,14 @@ fun StudentServicesHubScreen(
               verticalAlignment = Alignment.CenterVertically
             ) {
               Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Default.CheckCircle, contentDescription = null, tint = GriForestPrimary, modifier = Modifier.size(16.dp))
+                Icon(Icons.Default.CheckCircle, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(16.dp))
                 Spacer(modifier = Modifier.width(8.dp))
                 Column {
                   Text("Bonafide Certificate (#REQ-8821)", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
-                  Text("Approved & Ready for Download", fontSize = 10.sp, color = GriForestPrimary)
+                  Text("Approved & Ready for Download", fontSize = 10.sp, color = MaterialTheme.colorScheme.primary)
                 }
               }
-              Icon(Icons.Default.Download, contentDescription = null, tint = GriForestPrimary, modifier = Modifier.size(18.dp))
+              Icon(Icons.Default.Download, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
             }
           }
 

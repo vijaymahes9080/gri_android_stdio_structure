@@ -92,5 +92,5 @@ val GriSurfaceDark = Color(0xFF111D18)
 val GriSurfaceVariantDark = Color(0xFF172922)
 val GriOnSurfaceDark = Color(0xFFE2EBE5)
 val GriOnSurfaceVariantDark = Color(0xFF9FB3A8)
-val GriOutlineDark = Color(0xFF2C4438)
+val GriOutlineDark = Color(0xFF89938D)
 

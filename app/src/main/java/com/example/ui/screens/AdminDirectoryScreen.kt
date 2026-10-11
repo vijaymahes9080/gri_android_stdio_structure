@@ -194,7 +194,7 @@ fun AdminDirectoryScreen(
           Spacer(modifier = Modifier.height(10.dp))
 
           // Multi-Role Switcher Strip
-          Text("Simulation & Role Switcher", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.outline)
+          Text("Simulation & Role Switcher", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurfaceVariant)
           Spacer(modifier = Modifier.height(6.dp))
           Row(
             modifier = Modifier.fillMaxWidth(),
@@ -240,7 +240,7 @@ fun AdminDirectoryScreen(
               Spacer(modifier = Modifier.width(10.dp))
               Column {
                 Text("Administrative Governance Terminal", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
-                Text("Authorised Officers & System Administration", fontSize = 10.sp, color = MaterialTheme.colorScheme.outline)
+                Text("Authorised Officers & System Administration", fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
               }
             }
 
@@ -526,7 +526,7 @@ fun AdminStatBox(number: String, label: String, modifier: Modifier = Modifier) {
       horizontalAlignment = Alignment.CenterHorizontally
     ) {
       Text(number, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
-      Text(label, fontSize = 9.sp, color = MaterialTheme.colorScheme.outline)
+      Text(label, fontSize = 9.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
   }
 }
