@@ -11,6 +11,9 @@ import 'governance_leadership_screen.dart';
 import 'examination_services_screen.dart';
 import 'scholarships_welfare_screen.dart';
 import 'contact_campus_info_screen.dart';
+import 'document_vault_screen.dart';
+import 'media_gallery_screen.dart';
+import 'global_website_search_screen.dart';
 
 class HomeDashboardScreen extends StatelessWidget {
   const HomeDashboardScreen({super.key});
@@ -395,6 +398,30 @@ class HomeDashboardScreen extends StatelessWidget {
             icon: Icons.directions_bus,
             color: Colors.blueGrey,
             destination: const ContactCampusInfoScreen(),
+          ),
+          _buildInstitutionalCard(
+            context: context,
+            title: "Official Document Vault (595 PDFs)",
+            subtitle: "Prospectuses, Regulations, COE Forms, SSR & NAAC Reports",
+            icon: Icons.folder_shared,
+            color: Colors.red,
+            destination: const DocumentVaultScreen(),
+          ),
+          _buildInstitutionalCard(
+            context: context,
+            title: "Media & Campus Video Tour",
+            subtitle: "300-Acre Panoramic Video, YouTube Channel & Photo Archive",
+            icon: Icons.video_library,
+            color: Colors.deepOrange,
+            destination: const MediaGalleryScreen(),
+          ),
+          _buildInstitutionalCard(
+            context: context,
+            title: "Universal Portal Directory & Search",
+            subtitle: "Instant Search Across All 247 Discovered Official Pages",
+            icon: Icons.search,
+            color: GriColors.forestPrimary,
+            destination: const GlobalWebsiteSearchScreen(),
           ),
 
           const SizedBox(height: 16),

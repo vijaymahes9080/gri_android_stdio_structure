@@ -4,6 +4,7 @@ import 'providers/gri_provider.dart';
 import 'models/user_model.dart';
 import 'utils/gri_colors.dart';
 import 'widgets/gri_top_bar.dart';
+import 'widgets/gri_university_drawer.dart';
 import 'widgets/role_switcher_modal.dart';
 import 'widgets/registration_wizard_modal.dart';
 import 'widgets/admin_review_modal.dart';
@@ -158,6 +159,7 @@ class MainScaffold extends StatelessWidget {
       children: [
         Scaffold(
           appBar: const GriTopBar(),
+          drawer: const GriUniversityDrawer(),
           body: activeScreen,
           bottomNavigationBar: NavigationBar(
             selectedIndex: selectedNavIndex,

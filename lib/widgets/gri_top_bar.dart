@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import '../providers/gri_provider.dart';
 import '../models/user_model.dart';
 import '../utils/gri_colors.dart';
+import '../screens/global_website_search_screen.dart';
+import '../screens/document_vault_screen.dart';
 
 class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
   const GriTopBar({super.key});
@@ -26,11 +28,23 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               child: Row(
                 children: [
-                  // University Emblem / Logo
+                  // Drawer Hamburger Menu Trigger
+                  Builder(
+                    builder: (drawerCtx) => IconButton(
+                      icon: const Icon(Icons.menu, color: GriColors.forestPrimary, size: 22),
+                      tooltip: "University Navigation",
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                      onPressed: () => Scaffold.of(drawerCtx).openDrawer(),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+
+                  // University Emblem / Logo (High-Res Official Crest)
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Image.asset(
-                      'assets/images/gri_official_logo.png',
+                      'assets/official/images/gri_official_crest.jpg',
                       height: 38,
                       width: 38,
                       fit: BoxFit.contain,
@@ -72,6 +86,18 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                         ),
                       ],
                     ),
+                  ),
+
+                  // Global Website & Portal Search Shortcut
+                  IconButton(
+                    icon: const Icon(Icons.search, color: GriColors.forestPrimary, size: 21),
+                    tooltip: "Search 247 Official Pages",
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => const GlobalWebsiteSearchScreen()),
+                      );
+                    },
+                    visualDensity: VisualDensity.compact,
                   ),
 
                   // AI Assistant Shortcut
