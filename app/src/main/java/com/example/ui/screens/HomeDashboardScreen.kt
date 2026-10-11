@@ -301,13 +301,13 @@ fun HomeDashboardScreen(
                 text = "End Semester Examinations (April-May 2025) Hall Tickets now live.",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
-                color = GriOnSurface,
+                color = MaterialTheme.colorScheme.onSurface,
                 lineHeight = 19.sp
               )
               Text(
                 text = "Download and verify departmental endorsement before 15th April.",
                 fontSize = 12.sp,
-                color = GriOnSurfaceVariant,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(top = 2.dp, bottom = 10.dp)
               )
 
@@ -392,7 +392,7 @@ fun HomeDashboardScreen(
               }),
               textStyle = androidx.compose.ui.text.TextStyle(
                 fontSize = 13.sp,
-                color = GriOnSurface
+                color = MaterialTheme.colorScheme.onSurface
               ),
               modifier = Modifier.fillMaxWidth()
             )
@@ -480,7 +480,7 @@ fun HomeDashboardScreen(
           // Active Lecture Box
           Surface(
             shape = RoundedCornerShape(10.dp),
-            color = GriSurfaceContainerLow,
+            color = MaterialTheme.colorScheme.surfaceVariant,
             modifier = Modifier.fillMaxWidth()
           ) {
             Column(modifier = Modifier.padding(12.dp)) {
@@ -514,7 +514,7 @@ fun HomeDashboardScreen(
                 text = "Rural Extension & Community Dev",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
-                color = GriOnSurface
+                color = MaterialTheme.colorScheme.onSurface
               )
 
               Spacer(modifier = Modifier.height(6.dp))
@@ -561,7 +561,7 @@ fun HomeDashboardScreen(
           // Overall Attendance Widget
           Surface(
             shape = RoundedCornerShape(8.dp),
-            color = GriSurfaceContainer,
+            color = MaterialTheme.colorScheme.surfaceVariant,
             modifier = Modifier.fillMaxWidth()
           ) {
             Row(
@@ -599,7 +599,7 @@ fun HomeDashboardScreen(
                     text = "88.5% • Good Standing",
                     fontSize = 13.sp,
                     fontWeight = FontWeight.Bold,
-                    color = GriForestPrimary
+                    color = MaterialTheme.colorScheme.primary
                   )
                 }
               }
@@ -612,15 +612,15 @@ fun HomeDashboardScreen(
                 CircularProgressIndicator(
                   progress = { 0.885f },
                   modifier = Modifier.fillMaxSize(),
-                  color = GriForestPrimary,
-                  trackColor = GriSurfaceContainerHigh,
+                  color = MaterialTheme.colorScheme.primary,
+                  trackColor = MaterialTheme.colorScheme.surface,
                   strokeWidth = 3.5.dp
                 )
                 Text(
                   text = "88%",
                   fontSize = 10.sp,
                   fontWeight = FontWeight.Bold,
-                  color = GriForestPrimary
+                  color = MaterialTheme.colorScheme.primary
                 )
               }
             }
@@ -1221,13 +1221,13 @@ fun StudentDeskIconItem(
       modifier = Modifier
         .size(48.dp)
         .clip(RoundedCornerShape(12.dp))
-        .background(if (isSpecial) GriTealContainer else GriSurfaceContainerLow),
+        .background(if (isSpecial) GriTealContainer else MaterialTheme.colorScheme.surfaceVariant),
       contentAlignment = Alignment.Center
     ) {
       Icon(
         imageVector = icon,
         contentDescription = title,
-        tint = if (isSpecial) GriTealOnContainer else GriForestPrimary,
+        tint = if (isSpecial) GriTealOnContainer else MaterialTheme.colorScheme.primary,
         modifier = Modifier.size(22.dp)
       )
 
@@ -1256,7 +1256,7 @@ fun StudentDeskIconItem(
       text = title,
       fontSize = 11.sp,
       fontWeight = FontWeight.SemiBold,
-      color = if (isSpecial) GriTealSecondary else GriOnSurface,
+      color = if (isSpecial) GriTealSecondary else MaterialTheme.colorScheme.onSurface,
       maxLines = 1,
       overflow = TextOverflow.Ellipsis
     )

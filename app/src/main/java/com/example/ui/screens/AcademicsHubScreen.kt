@@ -249,11 +249,11 @@ fun AcademicsHubScreen(
                 verticalAlignment = Alignment.CenterVertically
               ) {
                 Text("Attendance", fontSize = 11.sp, color = GriOutline, fontWeight = FontWeight.Bold)
-                Icon(Icons.Default.CheckCircle, contentDescription = null, tint = GriForestPrimary, modifier = Modifier.size(14.dp))
+                Icon(Icons.Default.CheckCircle, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(14.dp))
               }
               Spacer(modifier = Modifier.height(6.dp))
-              Text("88.5%", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = GriForestPrimary)
-              Text("Safe Zone (>75%)", fontSize = 10.sp, color = GriOnSurfaceVariant)
+              Text("88.5%", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+              Text("Safe Zone (>75%)", fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
           }
 
@@ -273,11 +273,11 @@ fun AcademicsHubScreen(
                 verticalAlignment = Alignment.CenterVertically
               ) {
                 Text("Workload", fontSize = 11.sp, color = GriOutline, fontWeight = FontWeight.Bold)
-                Icon(Icons.Default.Book, contentDescription = null, tint = GriTealSecondary, modifier = Modifier.size(14.dp))
+                Icon(Icons.Default.Book, contentDescription = null, tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(14.dp))
               }
               Spacer(modifier = Modifier.height(6.dp))
-              Text("24 Credits", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = GriTealSecondary)
-              Text("All Approved", fontSize = 10.sp, color = GriOnSurfaceVariant)
+              Text("24 Credits", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.secondary)
+              Text("All Approved", fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
           }
         }
@@ -416,12 +416,12 @@ fun AcademicsHubScreen(
                       text = "End Semester Examinations 2025",
                       fontSize = 15.sp,
                       fontWeight = FontWeight.Bold,
-                      color = GriOnSurface
+                      color = MaterialTheme.colorScheme.onSurface
                     )
                     Text(
                       text = "Roll No: 22AG1087 • B.Sc. (Hons) Agriculture",
                       fontSize = 12.sp,
-                      color = GriOnSurfaceVariant
+                      color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                   }
 
@@ -712,20 +712,20 @@ fun AcademicCourseCard(
         }
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-          Text(text = "Att: $attendance", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = GriForestPrimary)
+          Text(text = "Att: $attendance", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
           Spacer(modifier = Modifier.width(4.dp))
           Icon(
             imageVector = if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
             contentDescription = null,
-            tint = GriOnSurfaceVariant,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.size(18.dp)
           )
         }
       }
 
       Spacer(modifier = Modifier.height(6.dp))
-      Text(text = title, fontSize = 13.sp, fontWeight = FontWeight.Bold, color = GriOnSurface)
-      Text(text = "Instructor: $instructor", fontSize = 11.sp, color = GriOnSurfaceVariant, modifier = Modifier.padding(top = 2.dp))
+      Text(text = title, fontSize = 13.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+      Text(text = "Instructor: $instructor", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 2.dp))
 
       Spacer(modifier = Modifier.height(8.dp))
 

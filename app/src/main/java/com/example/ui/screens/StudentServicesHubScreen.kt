@@ -311,7 +311,7 @@ fun StudentServicesHubScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
           ) {
-            Text("Active e-Requests & Clearance", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = GriOnSurface)
+            Text("Active e-Requests & Clearance", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
             Text("2 Active", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = GriForestPrimary)
           }
 
@@ -320,7 +320,7 @@ fun StudentServicesHubScreen(
           // Request 1: Bonafide
           Surface(
             shape = RoundedCornerShape(8.dp),
-            color = GriSurfaceContainerLow,
+            color = MaterialTheme.colorScheme.surfaceVariant,
             modifier = Modifier.fillMaxWidth()
           ) {
             Row(
@@ -334,7 +334,7 @@ fun StudentServicesHubScreen(
                 Icon(Icons.Default.CheckCircle, contentDescription = null, tint = GriForestPrimary, modifier = Modifier.size(16.dp))
                 Spacer(modifier = Modifier.width(8.dp))
                 Column {
-                  Text("Bonafide Certificate (#REQ-8821)", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = GriOnSurface)
+                  Text("Bonafide Certificate (#REQ-8821)", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
                   Text("Approved & Ready for Download", fontSize = 10.sp, color = GriForestPrimary)
                 }
               }
@@ -347,7 +347,7 @@ fun StudentServicesHubScreen(
           // Request 2: Wi-Fi issue
           Surface(
             shape = RoundedCornerShape(8.dp),
-            color = GriSurfaceContainerLow,
+            color = MaterialTheme.colorScheme.surfaceVariant,
             modifier = Modifier.fillMaxWidth()
           ) {
             Row(
@@ -361,8 +361,8 @@ fun StudentServicesHubScreen(
                 Icon(Icons.Default.PendingActions, contentDescription = null, tint = GriOchreContainer, modifier = Modifier.size(16.dp))
                 Spacer(modifier = Modifier.width(8.dp))
                 Column {
-                  Text("Hostel Wi-Fi Node (#REQ-8904)", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = GriOnSurface)
-                  Text("Assigned to Campus Network Team", fontSize = 10.sp, color = GriOutline)
+                  Text("Hostel Wi-Fi Node (#REQ-8904)", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+                  Text("Assigned to Campus Network Team", fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
               }
               Text("In Progress", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = GriOchreContainer)
@@ -374,7 +374,7 @@ fun StudentServicesHubScreen(
 
     // 4. DIGITAL STUDENT DESK (6 PORTALS)
     item {
-      Text("Digital Campus Portals", fontSize = 15.sp, fontWeight = FontWeight.Bold, color = GriOnSurface)
+      Text("Digital Campus Portals", fontSize = 15.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
     }
 
     items(portalCards) { card ->
@@ -404,21 +404,21 @@ fun StudentServicesHubScreen(
                 modifier = Modifier
                   .size(36.dp)
                   .clip(RoundedCornerShape(8.dp))
-                  .background(GriSurfaceContainerLow),
+                  .background(MaterialTheme.colorScheme.surfaceVariant),
                 contentAlignment = Alignment.Center
               ) {
                 Icon(imageVector = card.icon, contentDescription = null, tint = GriForestPrimary, modifier = Modifier.size(20.dp))
               }
               Spacer(modifier = Modifier.width(10.dp))
               Column {
-                Text(card.title, fontSize = 13.sp, fontWeight = FontWeight.Bold, color = GriOnSurface)
-                Text(card.category, fontSize = 10.sp, color = GriOutline)
+                Text(card.title, fontSize = 13.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+                Text(card.category, fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
               }
             }
 
             Surface(
               shape = RoundedCornerShape(6.dp),
-              color = GriSurfaceContainerLow,
+              color = MaterialTheme.colorScheme.surfaceVariant,
               modifier = Modifier.clickable {
                 if (card.id == "grievance") {
                   showGrievanceModal = true
@@ -438,12 +438,12 @@ fun StudentServicesHubScreen(
           }
 
           Spacer(modifier = Modifier.height(8.dp))
-          Text(card.subtitle, fontSize = 11.sp, color = GriOnSurfaceVariant)
+          Text(card.subtitle, fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
 
           Spacer(modifier = Modifier.height(8.dp))
           Surface(
             shape = RoundedCornerShape(6.dp),
-            color = GriSurfaceContainerLow,
+            color = MaterialTheme.colorScheme.surfaceVariant,
             modifier = Modifier.fillMaxWidth()
           ) {
             Row(
@@ -452,7 +452,7 @@ fun StudentServicesHubScreen(
                 .padding(8.dp),
               horizontalArrangement = Arrangement.SpaceBetween
             ) {
-              Text(card.detail1, fontSize = 10.sp, color = GriOnSurface, fontWeight = FontWeight.Medium)
+              Text(card.detail1, fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.Medium)
               Text(card.detail2, fontSize = 10.sp, color = GriTealSecondary, fontWeight = FontWeight.Bold)
             }
           }
@@ -469,7 +469,7 @@ fun StudentServicesHubScreen(
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
       ) {
         Column(modifier = Modifier.padding(14.dp)) {
-          Text("Statutory Application Forms", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = GriOnSurface)
+          Text("Statutory Application Forms", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
           Spacer(modifier = Modifier.height(8.dp))
 
           OfficialFormItem(name = "Semester Fee Concession / EWS Form", code = "Form FA-09", onDownload = onNavigateToDocuments)
@@ -490,7 +490,7 @@ fun StudentServicesHubScreen(
         ) {
           Column(modifier = Modifier.padding(16.dp)) {
             Text("Lodge Confidential Grievance (GRI-Care)", fontSize = 15.sp, fontWeight = FontWeight.Bold, color = GriForestPrimary)
-            Text("Transmitted directly to Dean of Student Welfare & Internal Complaints Committee.", fontSize = 11.sp, color = GriOnSurfaceVariant)
+            Text("Transmitted directly to Dean of Student Welfare & Internal Complaints Committee.", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
 
             Spacer(modifier = Modifier.height(10.dp))
 
@@ -532,7 +532,7 @@ fun StudentServicesHubScreen(
               Button(
                 onClick = { showGrievanceModal = false },
                 shape = RoundedCornerShape(8.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = GriSurfaceContainerHigh, contentColor = GriOnSurface)
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant, contentColor = MaterialTheme.colorScheme.onSurface)
               ) {
                 Text("Cancel", fontSize = 12.sp)
               }
@@ -554,14 +554,14 @@ fun StudentServicesHubScreen(
       },
       text = {
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-          Text(portal.subtitle, fontSize = 12.sp, color = GriOnSurfaceVariant)
+          Text(portal.subtitle, fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
           Surface(
             shape = RoundedCornerShape(8.dp),
-            color = GriSurfaceContainerLow,
+            color = MaterialTheme.colorScheme.surfaceVariant,
             modifier = Modifier.fillMaxWidth()
           ) {
             Column(modifier = Modifier.padding(10.dp)) {
-              Text(portal.detail1, fontSize = 11.sp, fontWeight = FontWeight.SemiBold, color = GriOnSurface)
+              Text(portal.detail1, fontSize = 11.sp, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onSurface)
               Spacer(modifier = Modifier.height(2.dp))
               Text(portal.detail2, fontSize = 10.sp, color = GriTealSecondary, fontWeight = FontWeight.Bold)
             }
@@ -587,7 +587,7 @@ fun StudentServicesHubScreen(
       },
       dismissButton = {
         androidx.compose.material3.TextButton(onClick = { selectedPortalModal = null }) {
-          Text("Close", color = GriOnSurfaceVariant)
+          Text("Close", color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
       }
     )
@@ -604,7 +604,7 @@ fun OfficialFormItem(name: String, code: String, onDownload: () -> Unit) {
     verticalAlignment = Alignment.CenterVertically
   ) {
     Column(modifier = Modifier.weight(1f)) {
-      Text(name, fontSize = 12.sp, fontWeight = FontWeight.Medium, color = GriOnSurface)
+      Text(name, fontSize = 12.sp, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.onSurface)
       Text(code, fontSize = 10.sp, color = GriOutline)
     }
 

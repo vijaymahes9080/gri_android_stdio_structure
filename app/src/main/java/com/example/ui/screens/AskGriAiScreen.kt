@@ -167,15 +167,15 @@ fun AskGriAiScreen(
         // Student context tag
         Surface(
           shape = RoundedCornerShape(6.dp),
-          color = GriSurfaceContainerLow,
+          color = MaterialTheme.colorScheme.surfaceVariant,
           modifier = Modifier.fillMaxWidth()
         ) {
           Row(
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
             horizontalArrangement = Arrangement.SpaceBetween
           ) {
-            Text("Scoped: B.Sc. (Hons) Agriculture • Sem IV", fontSize = 10.sp, fontWeight = FontWeight.Medium, color = GriOnSurface)
-            Text("AY 2024-25 Regs", fontSize = 10.sp, color = GriOutline)
+            Text("Scoped: B.Sc. (Hons) Agriculture • Sem IV", fontSize = 10.sp, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.onSurface)
+            Text("AY 2024-25 Regs", fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
           }
         }
       }
@@ -285,7 +285,7 @@ fun AskGriAiScreen(
             Text(
               text = "Under the official GRI CBCS Examination Regulations, the statutory attendance criteria are governed as follows:",
               fontSize = 12.sp,
-              color = GriOnSurface,
+              color = MaterialTheme.colorScheme.onSurface,
               lineHeight = 17.sp
             )
 
@@ -312,7 +312,7 @@ fun AskGriAiScreen(
             // Embedded Utility Card 1: Official Regulation PDF
             Surface(
               shape = RoundedCornerShape(8.dp),
-              color = GriSurfaceContainerLow,
+              color = MaterialTheme.colorScheme.surfaceVariant,
               modifier = Modifier.fillMaxWidth()
             ) {
               Row(
@@ -326,8 +326,8 @@ fun AskGriAiScreen(
                   Icon(Icons.Default.Description, contentDescription = null, tint = GriForestPrimary, modifier = Modifier.size(20.dp))
                   Spacer(modifier = Modifier.width(8.dp))
                   Column {
-                    Text("GRI/AC/REG-2024/7.2 (PDF)", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = GriOnSurface)
-                    Text("Official Regulation on Attendance & Condonation", fontSize = 9.sp, color = GriOutline)
+                    Text("GRI/AC/REG-2024/7.2 (PDF)", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+                    Text("Official Regulation on Attendance & Condonation", fontSize = 9.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                   }
                 }
                 IconButton(onClick = onNavigateToDocuments, modifier = Modifier.size(28.dp)) {

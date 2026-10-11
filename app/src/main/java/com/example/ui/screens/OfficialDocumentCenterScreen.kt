@@ -215,7 +215,7 @@ fun OfficialDocumentCenterScreen(
         Text(
           text = "Authenticated repository of university orders, gazettes, and academic instruments.",
           fontSize = 12.sp,
-          color = GriOnSurfaceVariant
+          color = MaterialTheme.colorScheme.onSurfaceVariant
         )
       }
     }
@@ -243,7 +243,7 @@ fun OfficialDocumentCenterScreen(
               androidx.compose.foundation.text.BasicTextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                textStyle = androidx.compose.ui.text.TextStyle(fontSize = 12.sp, color = GriOnSurface),
+                textStyle = androidx.compose.ui.text.TextStyle(fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurface),
                 modifier = Modifier.fillMaxWidth()
               )
             }
@@ -255,14 +255,14 @@ fun OfficialDocumentCenterScreen(
             val isSelected = selectedCategory == cat
             Surface(
               shape = RoundedCornerShape(999.dp),
-              color = if (isSelected) GriForestPrimary else GriSurfaceContainerLow,
+              color = if (isSelected) GriForestPrimary else MaterialTheme.colorScheme.surfaceVariant,
               modifier = Modifier.clickable { selectedCategory = cat }
             ) {
               Text(
                 text = cat,
                 fontSize = 11.sp,
                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
-                color = if (isSelected) Color.White else GriOnSurfaceVariant,
+                color = if (isSelected) Color.White else MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)
               )
             }
@@ -316,14 +316,14 @@ fun OfficialDocumentCenterScreen(
               text = "NIRF 2024 Institutional Ranking & UGC Autonomy Statutory Guidelines",
               fontSize = 15.sp,
               fontWeight = FontWeight.Bold,
-              color = GriOnSurface,
+              color = MaterialTheme.colorScheme.onSurface,
               lineHeight = 20.sp
             )
 
             Text(
               text = "Gazette Extraordinary published by Vice-Chancellor Secretariat detailing university ranking metrics, rural extension patents, and research excellence.",
               fontSize = 12.sp,
-              color = GriOnSurfaceVariant,
+              color = MaterialTheme.colorScheme.onSurfaceVariant,
               modifier = Modifier.padding(top = 4.dp, bottom = 12.dp)
             )
 
@@ -387,7 +387,7 @@ fun OfficialDocumentCenterScreen(
             }
             Spacer(modifier = Modifier.width(10.dp))
             Column {
-              Text("Verify Document Authenticity", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = GriOnSurface)
+              Text("Verify Document Authenticity", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
               Text("Validate cryptographic signatures & e-Office registration", fontSize = 10.sp, color = GriOutline)
             }
           }
@@ -465,7 +465,7 @@ fun OfficialDocumentCenterScreen(
         text = "Repository Dispatches (${filteredDocs.size})",
         fontSize = 15.sp,
         fontWeight = FontWeight.Bold,
-        color = GriOnSurface
+        color = MaterialTheme.colorScheme.onSurface
       )
     }
 
@@ -506,7 +506,7 @@ fun OfficialDocumentCenterScreen(
             text = doc.title,
             fontSize = 13.sp,
             fontWeight = FontWeight.SemiBold,
-            color = GriOnSurface,
+            color = MaterialTheme.colorScheme.onSurface,
             lineHeight = 18.sp
           )
 

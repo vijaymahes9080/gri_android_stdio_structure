@@ -214,11 +214,11 @@ class MainScaffold extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 16),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16),
                         child: Text(
                           "GRI-Sahayak AI Assistant",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: GriColors.forestPrimary),
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
                         ),
                       ),
                       IconButton(

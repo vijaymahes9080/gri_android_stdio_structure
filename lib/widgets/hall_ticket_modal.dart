@@ -23,29 +23,34 @@ class HallTicketModal extends StatelessWidget {
             // Header
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Image.asset(
-                      'assets/images/gri_official_logo.png',
-                      height: 36,
-                      errorBuilder: (_, __, ___) => const Icon(Icons.school, color: GriColors.forestPrimary),
-                    ),
-                    const SizedBox(width: 8),
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "CONTROLLER OF EXAMINATIONS",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: GriColors.forestPrimary),
+                Expanded(
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        'assets/images/gri_official_logo.png',
+                        height: 36,
+                        errorBuilder: (_, __, ___) => const Icon(Icons.school, color: GriColors.forestPrimary),
+                      ),
+                      const SizedBox(width: 8),
+                      const Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "CONTROLLER OF EXAMINATIONS",
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: GriColors.forestPrimary),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              "End Semester Examinations E-Hall Ticket",
+                              style: TextStyle(fontSize: 11, color: Colors.grey),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
                         ),
-                        Text(
-                          "End Semester Examinations E-Hall Ticket",
-                          style: TextStyle(fontSize: 11, color: Colors.grey),
-                        ),
-                      ],
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.close),
