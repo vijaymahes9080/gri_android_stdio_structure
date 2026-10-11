@@ -56,6 +56,42 @@ class _CampusFacilitiesScreenState extends State<CampusFacilitiesScreen> {
               inCharge: "Dr. K. S. Pushpa (Dean)",
               timings: "06:00 AM - 06:00 PM",
             ),
+            FacilityItem(
+              id: "fac_cc",
+              name: "University Computer Centre & IBC",
+              category: "Technology",
+              description: "High-speed campus network core with 1 Gbps NKN optical fiber backbone, HPC cluster, computing labs, and public Wi-Fi.",
+              location: "Technology Block, First Floor",
+              inCharge: "Dr. K. Somasundaram (Director, Computer Centre)",
+              timings: "08:30 AM - 07:30 PM",
+            ),
+            FacilityItem(
+              id: "fac_cedt",
+              name: "Centre for E-Content Development (CEDT)",
+              category: "Technology",
+              description: "State-of-the-art multimedia studio for SWAYAM/MOOC courseware recording, digital audio-visual production, and video editing.",
+              location: "CEDT Building",
+              inCharge: "Dr. L. Veeranjaneyulu (Director)",
+              timings: "09:00 AM - 05:30 PM",
+            ),
+            FacilityItem(
+              id: "fac_sports",
+              name: "Physical Education and Yoga Centre",
+              category: "Sports",
+              description: "400-meter standard athletic track, multipurpose indoor gymnasium, synthetic badminton courts, and daily Yogic practice hall.",
+              location: "University Sports Pavilion",
+              inCharge: "Director of Physical Education",
+              timings: "06:00 AM - 09:00 AM & 04:30 PM - 07:00 PM",
+            ),
+            FacilityItem(
+              id: "fac_inst",
+              name: "Central Instrumentation Facility (NMR & XRD)",
+              category: "Academic",
+              description: "Sophisticated analytical instrumentation facility housing Bruker 400 MHz Superconducting NMR spectrometer and Powder X-ray Diffractometer.",
+              location: "Science Complex, Ground Floor",
+              inCharge: "Dr. S. Kanthimathinathan (Dean, Sciences)",
+              timings: "09:30 AM - 05:00 PM",
+            ),
           ];
 
     final filtered = allFacilities.where((f) {

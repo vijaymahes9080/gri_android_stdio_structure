@@ -4,6 +4,13 @@ import '../providers/gri_provider.dart';
 import '../models/user_model.dart';
 import '../models/academic_models.dart';
 import '../utils/gri_colors.dart';
+import 'about_gri_heritage_screen.dart';
+import 'schools_programmes_hub_screen.dart';
+import 'admissions_prospectus_screen.dart';
+import 'governance_leadership_screen.dart';
+import 'examination_services_screen.dart';
+import 'scholarships_welfare_screen.dart';
+import 'contact_campus_info_screen.dart';
 
 class HomeDashboardScreen extends StatelessWidget {
   const HomeDashboardScreen({super.key});
@@ -313,7 +320,86 @@ class HomeDashboardScreen extends StatelessWidget {
 
           const SizedBox(height: 16),
 
-          // 5. Official University Banner
+          // 5. Official University Portals & Institutional Modules
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                "OFFICIAL UNIVERSITY PORTALS & HUBS",
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: GriColors.forestPrimary,
+                  letterSpacing: 0.5,
+                ),
+              ),
+              Text(
+                "ruraluniv.ac.in",
+                style: TextStyle(fontSize: 11, color: Colors.grey.shade600, fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          _buildInstitutionalCard(
+            context: context,
+            title: "About GRI & Heritage",
+            subtitle: "1956 Genesis, Vision, Mission, Founders & Emblem",
+            icon: Icons.history_edu,
+            color: GriColors.forestPrimary,
+            destination: const AboutGriHeritageScreen(),
+          ),
+          _buildInstitutionalCard(
+            context: context,
+            title: "8 Schools & Academic Programmes",
+            subtitle: "Schools, 20+ Departments, Programmes, CBCS & Centres",
+            icon: Icons.account_balance,
+            color: Colors.indigo,
+            destination: const SchoolsProgrammesHubScreen(),
+          ),
+          _buildInstitutionalCard(
+            context: context,
+            title: "Admissions & Prospectus 2026-27",
+            subtitle: "Prospectuses, Seat Intake, Higher Doctorates & Samarth Portal",
+            icon: Icons.school,
+            color: Colors.deepPurple,
+            destination: const AdmissionsProspectusScreen(),
+          ),
+          _buildInstitutionalCard(
+            context: context,
+            title: "Governance & University Leadership",
+            subtitle: "Chancellor, VC, Registrar, Deans, Councils & Organogram",
+            icon: Icons.groups,
+            color: GriColors.ochrePrimary,
+            destination: const GovernanceLeadershipScreen(),
+          ),
+          _buildInstitutionalCard(
+            context: context,
+            title: "Examinations & Official Forms",
+            subtitle: "ESE Timetables, Transcript Forms, Tatkal & e-SANAD",
+            icon: Icons.assignment_turned_in,
+            color: Colors.teal,
+            destination: const ExaminationServicesScreen(),
+          ),
+          _buildInstitutionalCard(
+            context: context,
+            title: "Scholarships & Student Welfare",
+            subtitle: "SC/ST/SCC Schemes, APAAR ID, UMIS & Anti-Ragging",
+            icon: Icons.volunteer_activism,
+            color: Colors.brown,
+            destination: const ScholarshipsWelfareScreen(),
+          ),
+          _buildInstitutionalCard(
+            context: context,
+            title: "Contact & Campus Directions",
+            subtitle: "EPABX Board Lines, Dindigul/Madurai Transit & Emergencies",
+            icon: Icons.directions_bus,
+            color: Colors.blueGrey,
+            destination: const ContactCampusInfoScreen(),
+          ),
+
+          const SizedBox(height: 16),
+
+          // 6. Official University Banner
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Image.asset(
@@ -333,6 +419,31 @@ class HomeDashboardScreen extends StatelessWidget {
           ),
           const SizedBox(height: 24),
         ],
+      ),
+    );
+  }
+
+  Widget _buildInstitutionalCard({
+    required BuildContext context,
+    required String title,
+    required String subtitle,
+    required IconData icon,
+    required Color color,
+    required Widget destination,
+  }) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 10),
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: color.withOpacity(0.12),
+          child: Icon(icon, color: color, size: 22),
+        ),
+        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+        subtitle: Text(subtitle, style: TextStyle(fontSize: 11, color: Colors.grey.shade600)),
+        trailing: const Icon(Icons.arrow_forward_ios, size: 14, color: Colors.grey),
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (_) => destination));
+        },
       ),
     );
   }
