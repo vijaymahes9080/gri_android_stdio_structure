@@ -1,10 +1,28 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gri_app/main.dart';
 import 'package:gri_app/providers/gri_provider.dart';
 import 'package:gri_app/models/user_model.dart';
+import 'package:gri_app/screens/about_gri_heritage_screen.dart';
+import 'package:gri_app/screens/governance_leadership_screen.dart';
+import 'package:gri_app/screens/schools_programmes_hub_screen.dart';
+import 'package:gri_app/screens/admissions_prospectus_screen.dart';
+import 'package:gri_app/screens/document_vault_screen.dart';
+import 'package:gri_app/screens/global_website_search_screen.dart';
+import 'package:gri_app/screens/media_gallery_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  Widget createTestApp(Widget child) {
+    return ChangeNotifierProvider(
+      create: (_) => GriProvider(),
+      child: MaterialApp(
+        theme: ThemeData(useMaterial3: true),
+        home: child,
+      ),
+    );
+  }
+
   testWidgets('GRI App renders dashboard and title successfully', (WidgetTester tester) async {
     await tester.pumpWidget(
       ChangeNotifierProvider(
@@ -17,6 +35,62 @@ void main() {
 
     // Verify institutional title exists
     expect(find.text('THE GANDHIGRAM RURAL INSTITUTE'), findsOneWidget);
+  });
+
+  testWidgets('About GRI Heritage Screen renders genesis and Nai Talim content', (WidgetTester tester) async {
+    await tester.pumpWidget(createTestApp(const AboutGriHeritageScreen()));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('GENESIS & FOUNDING VISION'), findsOneWidget);
+    expect(find.textContaining('Nai Talim'), findsOneWidget);
+  });
+
+  testWidgets('Governance Leadership Screen displays key administrative officers', (WidgetTester tester) async {
+    await tester.pumpWidget(createTestApp(const GovernanceLeadershipScreen()));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('Chancellor'), findsWidgets);
+    expect(find.textContaining('Vice-Chancellor'), findsWidgets);
+  });
+
+  testWidgets('Schools Programmes Hub Screen displays faculties and search input', (WidgetTester tester) async {
+    await tester.pumpWidget(createTestApp(const SchoolsProgrammesHubScreen()));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(TextField), findsOneWidget);
+    expect(find.textContaining('School'), findsWidgets);
+  });
+
+  testWidgets('Admissions Prospectus Screen renders fee policies and official downloads', (WidgetTester tester) async {
+    await tester.pumpWidget(createTestApp(const AdmissionsProspectusScreen()));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('OFFICIAL PROSPECTUS'), findsWidgets);
+  });
+
+  testWidgets('Document Vault Screen renders official document categories', (WidgetTester tester) async {
+    await tester.pumpWidget(createTestApp(const DocumentVaultScreen()));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('Official Institutional Document Vault'), findsOneWidget);
+  });
+
+  testWidgets('Media Gallery Screen renders official photo and video sections', (WidgetTester tester) async {
+    await tester.pumpWidget(createTestApp(const MediaGalleryScreen()));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('Official University Media Gallery'), findsOneWidget);
+  });
+
+  testWidgets('Global Website Search Screen allows entering queries', (WidgetTester tester) async {
+    await tester.pumpWidget(createTestApp(const GlobalWebsiteSearchScreen()));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(TextField), findsOneWidget);
+    await tester.enterText(find.byType(TextField), 'physics');
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('physics'), findsWidgets);
   });
 
   test('GRI Provider initializes with default student role and courses', () {
