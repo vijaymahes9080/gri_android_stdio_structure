@@ -15,6 +15,7 @@ import '../screens/department_detail_screen.dart';
 import '../screens/institutional_article_screen.dart';
 import '../screens/document_vault_screen.dart';
 import '../screens/media_gallery_screen.dart';
+import '../screens/official_portals_gateway_screen.dart';
 import '../services/official_resource_registry.dart';
 
 class GriUniversityDrawer extends StatelessWidget {
@@ -302,6 +303,15 @@ class GriUniversityDrawer extends StatelessWidget {
                   subtitle: const Text("Search all 247 official URLs", style: TextStyle(fontSize: 10)),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 12),
                   onTap: () => _push(context, const GlobalWebsiteSearchScreen()),
+                ),
+
+                // 14. Official Portals Gateway
+                ListTile(
+                  leading: const Icon(Icons.shield_outlined, color: Colors.blueAccent),
+                  title: const Text("14. Official Portals & Gateways", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                  subtitle: const Text("Samarth, Webmail, e-SANAD & Portals", style: TextStyle(fontSize: 10)),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 12),
+                  onTap: () => _push(context, const OfficialPortalsGatewayScreen()),
                 ),
               ],
             ),

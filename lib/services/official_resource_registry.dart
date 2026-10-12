@@ -428,6 +428,28 @@ class OfficialResourceRegistry {
     }
   }
 
+  /// Smart document launcher accepting either a registry ID or any official URL
+  static Future<void> smartOpenDocument(BuildContext context, String urlOrId, {String? title}) async {
+    if (_registry.containsKey(urlOrId)) {
+      await openDocument(context, urlOrId);
+      return;
+    }
+
+    final docTitle = title ?? "Official Document";
+    _showSnack(context, "Accessing $docTitle...", isError: false);
+
+    try {
+      final uri = Uri.parse(urlOrId);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        _showSnack(context, "Cannot launch viewer for $urlOrId", isError: true);
+      }
+    } catch (e) {
+      _showSnack(context, "Error opening document: $e", isError: true);
+    }
+  }
+
   /// Launch official video stream safely
   static Future<void> openVideo(BuildContext context, String id) async {
     final resource = _registry[id];

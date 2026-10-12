@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gri_app/services/official_resource_registry.dart';
 import 'package:gri_app/services/seed_data_service.dart';
+import 'package:gri_app/services/official_web_sync_service.dart';
+import 'package:gri_app/screens/official_portals_gateway_screen.dart';
 
 void main() {
   group('OfficialResourceRegistry Tests', () {
@@ -130,6 +132,42 @@ void main() {
       for (final s in scholarships) {
         expect(s.title.isNotEmpty, isTrue);
         expect(s.portalUrl.isNotEmpty, isTrue);
+      }
+    });
+  });
+
+  group('OfficialWebSyncService & Portals Gateway Tests', () {
+    test('OfficialWebSyncService returns valid notices with fallback resilience', () async {
+      final syncService = OfficialWebSyncService.instance;
+      final notices = await syncService.fetchOfficialNotices();
+
+      expect(notices.isNotEmpty, isTrue);
+      expect(notices.length, greaterThanOrEqualTo(5));
+
+      for (final notice in notices) {
+        expect(notice.title.isNotEmpty, isTrue);
+        expect(notice.category.isNotEmpty, isTrue);
+        expect(notice.issuedBy.isNotEmpty, isTrue);
+        expect(notice.publishedDate.isNotEmpty, isTrue);
+      }
+    });
+
+    test('OfficialPortalsGatewayScreen indexes 10 official verified external portals', () {
+      final portals = OfficialPortalsGatewayScreen.portals;
+      expect(portals.length, equals(10));
+
+      // Key portals verification
+      expect(portals.any((p) => p.id == 'portal_samarth'), isTrue);
+      expect(portals.any((p) => p.id == 'portal_student_erp'), isTrue);
+      expect(portals.any((p) => p.id == 'portal_esanad'), isTrue);
+      expect(portals.any((p) => p.id == 'portal_webmail'), isTrue);
+      expect(portals.any((p) => p.id == 'portal_apaar'), isTrue);
+
+      for (final p in portals) {
+        expect(p.title.isNotEmpty, isTrue);
+        expect(p.url, startsWith('https://'));
+        expect(p.authRequirement.isNotEmpty, isTrue);
+        expect(p.authority.isNotEmpty, isTrue);
       }
     });
   });

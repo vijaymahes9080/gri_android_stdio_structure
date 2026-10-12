@@ -15,6 +15,7 @@ import 'contact_campus_info_screen.dart';
 import 'document_vault_screen.dart';
 import 'media_gallery_screen.dart';
 import 'global_website_search_screen.dart';
+import 'official_portals_gateway_screen.dart';
 
 class HomeDashboardScreen extends StatelessWidget {
   const HomeDashboardScreen({super.key});
@@ -553,6 +554,14 @@ class HomeDashboardScreen extends StatelessWidget {
                   icon: Icons.search,
                   badge: "247 Pages",
                   destination: const GlobalWebsiteSearchScreen(),
+                ),
+                _buildInstitutionalCard(
+                  context: context,
+                  title: "Official External Portals & Gateways",
+                  subtitle: "Samarth CUET, Webmail, e-SANAD, Biometrics & Student ERP",
+                  icon: Icons.shield_outlined,
+                  badge: "10 Gateways",
+                  destination: const OfficialPortalsGatewayScreen(),
                 ),
                 _buildInstitutionalCard(
                   context: context,

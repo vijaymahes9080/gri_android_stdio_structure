@@ -10,6 +10,7 @@ import 'package:gri_app/screens/admissions_prospectus_screen.dart';
 import 'package:gri_app/screens/document_vault_screen.dart';
 import 'package:gri_app/screens/global_website_search_screen.dart';
 import 'package:gri_app/screens/media_gallery_screen.dart';
+import 'package:gri_app/screens/official_portals_gateway_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -97,6 +98,16 @@ void main() {
     await tester.pump();
 
     expect(find.text('physics'), findsOneWidget);
+  });
+
+  testWidgets('Official Portals Gateway Screen renders security advisory and portals', (WidgetTester tester) async {
+    await tester.pumpWidget(createTestApp(const OfficialPortalsGatewayScreen()));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Official Portals & Gateways'), findsOneWidget);
+    expect(find.text('Official Authentication Disclaimer'), findsOneWidget);
+    expect(find.textContaining('Samarth@GRI'), findsOneWidget);
+    expect(find.textContaining('GRI Integrated Student Portal'), findsOneWidget);
   });
 
   test('GRI Provider initializes with default student role and courses', () {

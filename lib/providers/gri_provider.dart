@@ -3,6 +3,7 @@ import '../models/user_model.dart';
 import '../models/academic_models.dart';
 import '../services/seed_data_service.dart';
 import '../services/supabase_service.dart';
+import '../services/official_web_sync_service.dart';
 
 enum NavigationTab {
   HOME,
@@ -470,6 +471,23 @@ class GriProvider extends ChangeNotifier {
 
     // Preload institutional seed
     SeedDataService.instance.loadSeedData();
+    syncOfficialWebsite();
+  }
+
+  bool _isSyncingWebsite = false;
+  bool get isSyncingWebsite => _isSyncingWebsite;
+
+  Future<void> syncOfficialWebsite({bool force = false}) async {
+    _isSyncingWebsite = true;
+    notifyListeners();
+    try {
+      final live = await OfficialWebSyncService.instance.fetchOfficialNotices(forceRefresh: force);
+      if (live.isNotEmpty) {
+        _circulars = live;
+      }
+    } catch (_) {}
+    _isSyncingWebsite = false;
+    notifyListeners();
   }
 
   // Navigation Methods
@@ -878,12 +896,13 @@ class GriProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Cloud Sync Simulation
+  // Cloud & Official Web Sync
   Future<void> triggerCloudSync() async {
     _isSyncing = true;
     notifyListeners();
 
-    await Future.delayed(const Duration(seconds: 1));
+    // Concurrently refresh official website announcements
+    await syncOfficialWebsite(force: true);
 
     // Attempt Supabase fetch if configured
     if (SupabaseService.instance.isInitialized) {
@@ -895,7 +914,7 @@ class GriProvider extends ChangeNotifier {
 
     _isSyncing = false;
     _pendingSyncCount = 0;
-    _showNotification("Cloud synchronization complete. All records synchronized.");
+    _showNotification("Official website and records synchronized.");
     notifyListeners();
   }
 
