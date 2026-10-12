@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../services/seed_data_service.dart';
-import '../utils/gri_colors.dart';
 import '../utils/gri_motion.dart';
 
 class CampusFacilitiesScreen extends StatefulWidget {

@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/gri_provider.dart';
-import '../models/user_model.dart';
 import '../models/academic_models.dart';
 import '../utils/gri_colors.dart';
 import '../utils/gri_motion.dart';
-import 'about_gri_heritage_screen.dart';
 import 'schools_programmes_hub_screen.dart';
 import 'admissions_prospectus_screen.dart';
 import 'governance_leadership_screen.dart';
 import 'examination_services_screen.dart';
 import 'scholarships_welfare_screen.dart';
-import 'contact_campus_info_screen.dart';
+import 'campus_facilities_screen.dart';
 import 'document_vault_screen.dart';
-import 'media_gallery_screen.dart';
 import 'global_website_search_screen.dart';
 import 'official_portals_gateway_screen.dart';
+import '../services/official_resource_registry.dart';
 
+/// Production-Grade Home Dashboard for The Gandhigram Rural Institute
+/// Engineered to executive government & university digital standards:
+/// - Authoritative institutional header with NAAC 'A' accreditation
+/// - Prominent universal catalog search across 247 official URLs
+/// - Live circulars ticker with server sync & fallback
+/// - Bento-style 8-module academic grid
+/// - Interactive student/faculty desk & quick services
 class HomeDashboardScreen extends StatelessWidget {
   const HomeDashboardScreen({super.key});
 
@@ -24,6 +29,7 @@ class HomeDashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
     final provider = context.watch<GriProvider>();
     final user = provider.currentUser;
 
@@ -33,118 +39,127 @@ class HomeDashboardScreen extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         children: [
-          // 1. Personalized Institutional Header Card (Gandhian Heritage Identity)
+          // 1. Executive Institutional Header Card (Khadi Ivory & Forest Tone)
           GriFadeSlideEntrance(
             delay: const Duration(milliseconds: 30),
             child: Container(
               decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [GriColors.forestDark, GriColors.forestPrimary],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+                color: isDark ? GriColors.darkSurface1 : Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+                  width: 1.0,
                 ),
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
-                    color: GriColors.forestDark.withOpacity(0.18),
-                    blurRadius: 12,
-                    offset: const Offset(0, 4),
+                    color: Color(0x08000000),
+                    blurRadius: 8,
+                    offset: Offset(0, 2),
                   ),
                 ],
               ),
               child: Padding(
-                padding: const EdgeInsets.all(18),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // Top Row: User Avatar, Identity & Role Switcher
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(color: GriColors.ochrePrimary, width: 2),
-                                ),
-                                child: CircleAvatar(
-                                  radius: 25,
-                                  backgroundColor: Colors.white,
-                                  backgroundImage: const AssetImage('assets/images/student_avatar.jpg'),
-                                  child: user == null
-                                      ? const Icon(Icons.person, color: GriColors.forestPrimary)
-                                      : null,
-                                ),
+                        // Avatar with Institutional Border
+                        Container(
+                          width: 48,
+                          height: 48,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: GriColors.forestPrimary.withValues(alpha: 0.3),
+                              width: 1.5,
+                            ),
+                          ),
+                          child: ClipOval(
+                            child: Image.asset(
+                              'assets/images/student_avatar.jpg',
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, __, ___) => CircleAvatar(
+                                backgroundColor: GriColors.forestContainer,
+                                child: Icon(Icons.person, color: colorScheme.primary, size: 24),
                               ),
-                              const SizedBox(width: 14),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Flexible(
-                                          child: Text(
-                                            user?.name ?? "Vijay Pradhap",
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w700,
-                                              letterSpacing: 0.2,
-                                            ),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 6),
-                                        const Icon(Icons.verified, color: GriColors.ochreTertiary, size: 16),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 2),
-                                    Text(
-                                      "${user?.rollNo ?? '2024-MS-4011'} • ${user?.department ?? 'Computer Science'}",
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+
+                        // Name, Roll Number, Department
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      user?.name ?? "Vijay Pradhap",
                                       style: TextStyle(
-                                        color: Colors.white.withOpacity(0.9),
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w700,
+                                        letterSpacing: -0.1,
+                                        color: isDark ? GriColors.darkOnSurface : GriColors.onSurface,
                                       ),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     ),
-                                  ],
+                                  ),
+                                  const SizedBox(width: 6),
+                                  const Icon(
+                                    Icons.verified,
+                                    color: GriColors.ochrePrimary,
+                                    size: 15,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                "${user?.rollNo ?? '2024-MS-4011'} • ${user?.department ?? 'Computer Science'}",
+                                style: TextStyle(
+                                  fontSize: 11.5,
+                                  color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                                  fontWeight: FontWeight.w500,
                                 ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ],
                           ),
                         ),
-                        const SizedBox(width: 8),
-                        GriPressable(
+
+                        // Role Selector Action Pill
+                        InkWell(
                           onTap: () => provider.toggleRoleSwitcher(true),
+                          borderRadius: BorderRadius.circular(999),
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                             decoration: BoxDecoration(
-                              color: GriColors.ochrePrimary,
+                              color: GriColors.forestPrimary.withValues(alpha: isDark ? 0.25 : 0.08),
                               borderRadius: BorderRadius.circular(999),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.15),
-                                  blurRadius: 4,
-                                  offset: const Offset(0, 2),
-                                ),
-                              ],
+                              border: Border.all(
+                                color: GriColors.forestPrimary.withValues(alpha: 0.25),
+                                width: 1.0,
+                              ),
                             ),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                const Icon(Icons.swap_horiz, color: Colors.white, size: 14),
+                                const Icon(Icons.swap_horiz, size: 13, color: GriColors.forestPrimary),
                                 const SizedBox(width: 4),
                                 Text(
                                   provider.currentRole.name,
                                   style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 11,
+                                    fontSize: 10.5,
                                     fontWeight: FontWeight.w700,
+                                    color: GriColors.forestPrimary,
+                                    letterSpacing: 0.2,
                                   ),
                                 ),
                               ],
@@ -153,26 +168,82 @@ class HomeDashboardScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 16),
-                    // Academic Metrics Glass Container
-                    Container(
-                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.12),
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(color: Colors.white.withOpacity(0.18), width: 0.8),
+
+                    const SizedBox(height: 14),
+                    const Divider(height: 1),
+                    const SizedBox(height: 12),
+
+                    // Academic Metrics Bar
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        _buildMetric(context, "Semester", user?.semester ?? "Sem IV"),
+                        _buildMetricDivider(context),
+                        _buildMetric(context, "CGPA", user?.cgpa ?? "8.92"),
+                        _buildMetricDivider(context),
+                        _buildMetric(context, "Attendance", "87%", isHighlight: true),
+                        _buildMetricDivider(context),
+                        _buildMetric(context, "Hostel", user?.isHostelite == true ? "Kasturba" : "Day Scholar"),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 14),
+
+          // 2. Prominent Universal Catalog Search Bar
+          GriFadeSlideEntrance(
+            delay: const Duration(milliseconds: 60),
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const GlobalWebsiteSearchScreen()),
+                );
+              },
+              borderRadius: BorderRadius.circular(14),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                decoration: BoxDecoration(
+                  color: isDark ? GriColors.darkSurface2 : Colors.white,
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(
+                    color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+                    width: 1.0,
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.search,
+                      color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.forestPrimary,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        "Search 247 official pages, circulars, syllabi...",
+                        style: TextStyle(
+                          fontSize: 12.5,
+                          color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          _buildMetric("Semester", user?.semester ?? "Sem IV"),
-                          Container(height: 26, width: 0.8, color: Colors.white24),
-                          _buildMetric("CGPA", user?.cgpa ?? "8.92"),
-                          Container(height: 26, width: 0.8, color: Colors.white24),
-                          _buildMetric("Attendance", "87% (Eligible)", isHighlight: true),
-                          Container(height: 26, width: 0.8, color: Colors.white24),
-                          _buildMetric("Hostel", user?.isHostelite == true ? "Kasturba" : "Day Scholar"),
-                        ],
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: GriColors.forestPrimary.withValues(alpha: 0.08),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: const Text(
+                        "247 URLs",
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                          color: GriColors.forestPrimary,
+                        ),
                       ),
                     ),
                   ],
@@ -180,12 +251,12 @@ class HomeDashboardScreen extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 18),
+          const SizedBox(height: 16),
 
-          // 2. Urgent / Official Announcement Banner
+          // 3. Live University Circulars & Important Announcements
           if (provider.circulars.isNotEmpty) ...[
             GriFadeSlideEntrance(
-              delay: const Duration(milliseconds: 70),
+              delay: const Duration(milliseconds: 90),
               child: Builder(
                 builder: (context) {
                   final urgent = provider.circulars.firstWhere(
@@ -194,126 +265,143 @@ class HomeDashboardScreen extends StatelessWidget {
                   );
                   return Container(
                     decoration: BoxDecoration(
-                      color: GriColors.warningContainer,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: GriColors.ochrePrimary.withOpacity(0.3), width: 1),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(14),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: GriColors.warning.withOpacity(0.15),
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(Icons.campaign, color: GriColors.warning, size: 22),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
-                                      decoration: BoxDecoration(
-                                        color: GriColors.warning,
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                      child: const Text(
-                                        "URGENT CIRCULAR",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 9.5,
-                                          fontWeight: FontWeight.w800,
-                                          letterSpacing: 0.3,
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      urgent.publishedDate,
-                                      style: TextStyle(fontSize: 11, color: colorScheme.onSurfaceVariant),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  urgent.title,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 13.5,
-                                    color: colorScheme.onSurface,
-                                  ),
-                                ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  urgent.summary,
-                                  style: TextStyle(fontSize: 11.5, color: colorScheme.onSurfaceVariant),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                const SizedBox(height: 8),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Issued by: ${urgent.issuedBy}",
-                                      style: TextStyle(fontSize: 10.5, color: colorScheme.onSurfaceVariant),
-                                    ),
-                                    GriPressable(
-                                      onTap: () => provider.fetchHallTicket(),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text(
-                                            "Hall Ticket",
-                                            style: TextStyle(
-                                              fontSize: 11.5,
-                                              fontWeight: FontWeight.bold,
-                                              color: colorScheme.primary,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 3),
-                                          Icon(Icons.arrow_forward, size: 13, color: colorScheme.primary),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                      color: isDark ? GriColors.darkSurface2 : GriColors.warningContainer.withValues(alpha: 0.6),
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(
+                        color: GriColors.warning.withValues(alpha: 0.25),
+                        width: 1.0,
                       ),
+                    ),
+                    padding: const EdgeInsets.all(14),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: GriColors.warning.withValues(alpha: 0.12),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(Icons.campaign, color: GriColors.warning, size: 20),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                    decoration: BoxDecoration(
+                                      color: GriColors.warning,
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                    child: const Text(
+                                      "LIVE NOTICE",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 9,
+                                        fontWeight: FontWeight.w800,
+                                        letterSpacing: 0.4,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text(
+                                    urgent.publishedDate,
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                urgent.title,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 13,
+                                  color: isDark ? GriColors.darkOnSurface : GriColors.onSurface,
+                                ),
+                              ),
+                              const SizedBox(height: 3),
+                              Text(
+                                urgent.summary,
+                                style: TextStyle(
+                                  fontSize: 11.5,
+                                  color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                                  height: 1.35,
+                                ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const SizedBox(height: 8),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Source: ${urgent.issuedBy}",
+                                    style: TextStyle(
+                                      fontSize: 10.5,
+                                      color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (_) => const DocumentVaultScreen(initialCategory: "Circulars"),
+                                        ),
+                                      );
+                                    },
+                                    child: const Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          "Open Circular",
+                                          style: TextStyle(
+                                            fontSize: 11.5,
+                                            fontWeight: FontWeight.w700,
+                                            color: GriColors.forestPrimary,
+                                          ),
+                                        ),
+                                        SizedBox(width: 3),
+                                        Icon(Icons.arrow_forward, size: 12, color: GriColors.forestPrimary),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   );
                 },
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 18),
           ],
 
-          // 3. Quick Campus Services Hub (Harmonized Gandhian Palette)
+          // 4. Quick Campus Services Hub (8 Grid Actions)
           GriFadeSlideEntrance(
-            delay: const Duration(milliseconds: 110),
+            delay: const Duration(milliseconds: 120),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "QUICK CAMPUS SERVICES",
+                    const Text(
+                      "QUICK SERVICES DOCK",
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 11,
                         fontWeight: FontWeight.w800,
-                        color: colorScheme.primary,
                         letterSpacing: 0.6,
+                        color: Colors.grey,
                       ),
                     ),
                     Text(
@@ -322,19 +410,20 @@ class HomeDashboardScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 10),
                 GridView.count(
                   crossAxisCount: 4,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  mainAxisSpacing: 12,
-                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 8,
+                  childAspectRatio: 0.95,
                   children: [
                     _buildQuickAction(
                       context: context,
                       icon: Icons.school_outlined,
                       label: "Courses",
-                      color: colorScheme.primary,
+                      color: GriColors.forestPrimary,
                       onTap: () => provider.switchTab(NavigationTab.ACADEMICS),
                     ),
                     _buildQuickAction(
@@ -355,7 +444,7 @@ class HomeDashboardScreen extends StatelessWidget {
                       context: context,
                       icon: Icons.support_agent_outlined,
                       label: "Grievances",
-                      color: colorScheme.primary,
+                      color: GriColors.forestPrimary,
                       onTap: () => provider.switchTab(NavigationTab.SERVICES),
                     ),
                     _buildQuickAction(
@@ -376,7 +465,7 @@ class HomeDashboardScreen extends StatelessWidget {
                       context: context,
                       icon: Icons.badge_outlined,
                       label: "Staff Portal",
-                      color: colorScheme.primary,
+                      color: GriColors.forestPrimary,
                       onTap: () => provider.toggleFacultyPortal(true),
                     ),
                     _buildQuickAction(
@@ -391,9 +480,9 @@ class HomeDashboardScreen extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 22),
+          const SizedBox(height: 20),
 
-          // 4. Enrolled Courses & Attendance Snapshot
+          // 5. Bento Academic Grid: 8 Core University Modules
           GriFadeSlideEntrance(
             delay: const Duration(milliseconds: 150),
             child: Column(
@@ -402,23 +491,148 @@ class HomeDashboardScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "MY COURSES & ATTENDANCE",
+                    const Text(
+                      "INSTITUTIONAL MODULES",
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 11,
                         fontWeight: FontWeight.w800,
-                        color: colorScheme.primary,
                         letterSpacing: 0.6,
+                        color: Colors.grey,
                       ),
                     ),
-                    GriPressable(
-                      onTap: () => provider.switchTab(NavigationTab.ACADEMICS),
-                      child: Text(
-                        "View All →",
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: GriColors.forestPrimary.withValues(alpha: 0.08),
+                        borderRadius: BorderRadius.circular(999),
+                      ),
+                      child: const Text(
+                        "Official ruraluniv.ac.in",
                         style: TextStyle(
-                          fontSize: 12,
+                          fontSize: 10,
+                          color: GriColors.forestPrimary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+
+                // 2-Column Bento Grid
+                GridView.count(
+                  crossAxisCount: 2,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  childAspectRatio: 1.45,
+                  children: [
+                    _buildBentoCard(
+                      context: context,
+                      title: "Schools & Academics",
+                      subtitle: "8 Faculties • CUET Intake",
+                      icon: Icons.account_balance_outlined,
+                      badge: "8 Faculties",
+                      badgeColor: GriColors.forestPrimary,
+                      destination: const SchoolsProgrammesHubScreen(),
+                    ),
+                    _buildBentoCard(
+                      context: context,
+                      title: "Admissions 2026-27",
+                      subtitle: "Prospectus • 5-Tier Refund",
+                      icon: Icons.how_to_reg_outlined,
+                      badge: "CUET 2026",
+                      badgeColor: GriColors.ochrePrimary,
+                      destination: const AdmissionsProspectusScreen(),
+                    ),
+                    _buildBentoCard(
+                      context: context,
+                      title: "COE & Examinations",
+                      subtitle: "Timetables • Tatkal Scheme",
+                      icon: Icons.assignment_turned_in_outlined,
+                      badge: "COE Hub",
+                      badgeColor: GriColors.forestPrimary,
+                      destination: const ExaminationServicesScreen(),
+                    ),
+                    _buildBentoCard(
+                      context: context,
+                      title: "Governance & Officers",
+                      subtitle: "Chancellor • VC • Syndicate",
+                      icon: Icons.groups_outlined,
+                      badge: "Authorities",
+                      badgeColor: GriColors.ochrePrimary,
+                      destination: const GovernanceLeadershipScreen(),
+                    ),
+                    _buildBentoCard(
+                      context: context,
+                      title: "Campus Facilities",
+                      subtitle: "300-Acre Map • Library",
+                      icon: Icons.apartment_outlined,
+                      badge: "Infrastructure",
+                      badgeColor: GriColors.tealSecondary,
+                      destination: const CampusFacilitiesScreen(),
+                    ),
+                    _buildBentoCard(
+                      context: context,
+                      title: "Scholarships & Welfare",
+                      subtitle: "Post-Matric • APAAR ID",
+                      icon: Icons.volunteer_activism_outlined,
+                      badge: "DigiLocker",
+                      badgeColor: GriColors.tealSecondary,
+                      destination: const ScholarshipsWelfareScreen(),
+                    ),
+                    _buildBentoCard(
+                      context: context,
+                      title: "Document Vault",
+                      subtitle: "595 Institutional PDFs",
+                      icon: Icons.folder_shared_outlined,
+                      badge: "595 PDFs",
+                      badgeColor: Colors.indigo,
+                      destination: const DocumentVaultScreen(),
+                    ),
+                    _buildBentoCard(
+                      context: context,
+                      title: "Official Gateways",
+                      subtitle: "Samarth • Webmail • ERP",
+                      icon: Icons.shield_outlined,
+                      badge: "10 Portals",
+                      badgeColor: Colors.indigo,
+                      destination: const OfficialPortalsGatewayScreen(),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
+
+          // 6. My Courses & Attendance Snapshot
+          GriFadeSlideEntrance(
+            delay: const Duration(milliseconds: 180),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "MY COURSES & ATTENDANCE",
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 0.6,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () => provider.switchTab(NavigationTab.ACADEMICS),
+                      child: const Text(
+                        "All Courses →",
+                        style: TextStyle(
+                          fontSize: 11.5,
                           fontWeight: FontWeight.bold,
-                          color: colorScheme.primary,
+                          color: GriColors.forestPrimary,
                         ),
                       ),
                     ),
@@ -429,172 +643,39 @@ class HomeDashboardScreen extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 22),
+          const SizedBox(height: 16),
 
-          // 5. Categorized Official University Portals & Hubs
+          // 7. Official Institutional Accreditation Footer Banner
           GriFadeSlideEntrance(
-            delay: const Duration(milliseconds: 190),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "OFFICIAL UNIVERSITY PORTALS & HUBS",
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w800,
-                        color: colorScheme.primary,
-                        letterSpacing: 0.6,
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                      decoration: BoxDecoration(
-                        color: colorScheme.surfaceContainerHighest,
-                        borderRadius: BorderRadius.circular(999),
-                        border: Border.all(color: colorScheme.outlineVariant, width: 0.8),
-                      ),
-                      child: Text(
-                        "ruraluniv.ac.in",
-                        style: TextStyle(
-                          fontSize: 10.5,
-                          color: colorScheme.primary,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-
-                // Group A: Heritage & Governance
-                _buildSectionHeader("INSTITUTIONAL HERITAGE & GOVERNANCE"),
-                _buildInstitutionalCard(
-                  context: context,
-                  title: "About GRI & Heritage",
-                  subtitle: "1956 Genesis, Vision, Mission, Founders & Emblem",
-                  icon: Icons.history_edu,
-                  badge: "1956 Genesis",
-                  destination: const AboutGriHeritageScreen(),
-                ),
-                _buildInstitutionalCard(
-                  context: context,
-                  title: "Governance & University Leadership",
-                  subtitle: "Chancellor, VC, Registrar, Deans, Councils & Organogram",
-                  icon: Icons.groups_outlined,
-                  badge: "Statutory",
-                  destination: const GovernanceLeadershipScreen(),
-                ),
-
-                const SizedBox(height: 10),
-                // Group B: Academics & Admissions
-                _buildSectionHeader("ACADEMIC HUBS & ADMISSIONS"),
-                _buildInstitutionalCard(
-                  context: context,
-                  title: "8 Schools & Academic Programmes",
-                  subtitle: "Schools, 20+ Departments, Programmes, CBCS & Centres",
-                  icon: Icons.account_balance_outlined,
-                  badge: "8 Schools",
-                  destination: const SchoolsProgrammesHubScreen(),
-                ),
-                _buildInstitutionalCard(
-                  context: context,
-                  title: "Admissions & Prospectus 2026-27",
-                  subtitle: "Prospectuses, Seat Intake, Higher Doctorates & Samarth",
-                  icon: Icons.school_outlined,
-                  badge: "2026-27",
-                  destination: const AdmissionsProspectusScreen(),
-                ),
-
-                const SizedBox(height: 10),
-                // Group C: Examination & Welfare
-                _buildSectionHeader("EXAMINATION & WELFARE SERVICES"),
-                _buildInstitutionalCard(
-                  context: context,
-                  title: "Examinations & Official Forms",
-                  subtitle: "ESE Timetables, Transcript Forms, Tatkal & e-SANAD",
-                  icon: Icons.assignment_turned_in_outlined,
-                  badge: "COE Services",
-                  destination: const ExaminationServicesScreen(),
-                ),
-                _buildInstitutionalCard(
-                  context: context,
-                  title: "Scholarships & Student Welfare",
-                  subtitle: "SC/ST/SCC Schemes, APAAR ID, UMIS & Anti-Ragging",
-                  icon: Icons.volunteer_activism_outlined,
-                  badge: "APAAR / DigiLocker",
-                  destination: const ScholarshipsWelfareScreen(),
-                ),
-
-                const SizedBox(height: 10),
-                // Group D: Archives, Directory & Transit
-                _buildSectionHeader("CAMPUS, VAULT & ARCHIVES"),
-                _buildInstitutionalCard(
-                  context: context,
-                  title: "Official Document Vault",
-                  subtitle: "Catalog of 595 Official PDFs, Circulars & Statutory Reports",
-                  icon: Icons.folder_shared_outlined,
-                  badge: "595 PDFs",
-                  destination: const DocumentVaultScreen(),
-                ),
-                _buildInstitutionalCard(
-                  context: context,
-                  title: "Media & Campus Video Tour",
-                  subtitle: "300-Acre Panoramic Video, YouTube Channel & Photo Archive",
-                  icon: Icons.video_library_outlined,
-                  badge: "Media Gallery",
-                  destination: const MediaGalleryScreen(),
-                ),
-                _buildInstitutionalCard(
-                  context: context,
-                  title: "Universal Portal Directory & Search",
-                  subtitle: "Instant Search Across All 247 Discovered Official Pages",
-                  icon: Icons.search,
-                  badge: "247 Pages",
-                  destination: const GlobalWebsiteSearchScreen(),
-                ),
-                _buildInstitutionalCard(
-                  context: context,
-                  title: "Official External Portals & Gateways",
-                  subtitle: "Samarth CUET, Webmail, e-SANAD, Biometrics & Student ERP",
-                  icon: Icons.shield_outlined,
-                  badge: "10 Gateways",
-                  destination: const OfficialPortalsGatewayScreen(),
-                ),
-                _buildInstitutionalCard(
-                  context: context,
-                  title: "Contact & Campus Directions",
-                  subtitle: "EPABX Board Lines, Dindigul/Madurai Transit & Emergencies",
-                  icon: Icons.directions_bus_outlined,
-                  badge: "EPABX Directory",
-                  destination: const ContactCampusInfoScreen(),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 18),
-
-          // 6. Institutional Brand Banner
-          GriFadeSlideEntrance(
-            delay: const Duration(milliseconds: 230),
+            delay: const Duration(milliseconds: 210),
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
               decoration: BoxDecoration(
-                color: colorScheme.surface,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: colorScheme.outlineVariant, width: 0.8),
+                color: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(
+                  color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+                  width: 1.0,
+                ),
               ),
               child: Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: colorScheme.primaryContainer,
+                    width: 36,
+                    height: 36,
+                    padding: const EdgeInsets.all(2),
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
+                      color: Colors.white,
                     ),
-                    child: Icon(Icons.school, color: colorScheme.primary, size: 20),
+                    child: ClipOval(
+                      child: OfficialResourceRegistry.buildImage(
+                        "IMG_OFFICIAL_CREST",
+                        width: 32,
+                        height: 32,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
@@ -605,15 +686,15 @@ class HomeDashboardScreen extends StatelessWidget {
                           "The Gandhigram Rural Institute",
                           style: TextStyle(
                             fontWeight: FontWeight.w700,
-                            fontSize: 12.5,
-                            color: colorScheme.onSurface,
+                            fontSize: 12,
+                            color: isDark ? GriColors.darkOnSurface : GriColors.onSurface,
                           ),
                         ),
                         Text(
-                          "Education for Life • NAAC 'A' Grade (3.63 CGPA)",
+                          "Ministry of Education, Govt. of India • NAAC 'A' Grade (3.63 CGPA)",
                           style: TextStyle(
-                            fontSize: 10.5,
-                            color: colorScheme.onSurfaceVariant,
+                            fontSize: 10,
+                            color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
                           ),
                         ),
                       ],
@@ -623,223 +704,45 @@ class HomeDashboardScreen extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 28),
+          const SizedBox(height: 24),
         ],
       ),
     );
   }
 
-  Widget _buildSectionHeader(String title) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 2, top: 4, bottom: 6),
-      child: Text(
-        title,
-        style: const TextStyle(
-          fontSize: 10,
-          fontWeight: FontWeight.w700,
-          color: GriColors.ochrePrimary,
-          letterSpacing: 0.6,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCourseItem(BuildContext context, CourseModel course, GriProvider provider) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final isAboveThreshold = course.attendancePercent >= 75;
-
-    return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      decoration: BoxDecoration(
-        color: colorScheme.surface,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: colorScheme.outlineVariant, width: 0.8),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-              decoration: BoxDecoration(
-                color: isAboveThreshold ? GriColors.forestContainer : GriColors.warningContainer,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    "${course.attendancePercent}%",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w800,
-                      fontSize: 13,
-                      color: isAboveThreshold ? GriColors.forestPrimary : GriColors.warning,
-                    ),
-                  ),
-                  Text(
-                    isAboveThreshold ? "Eligible" : "Warning",
-                    style: TextStyle(
-                      fontSize: 9,
-                      fontWeight: FontWeight.w700,
-                      color: isAboveThreshold ? GriColors.forestPrimary : GriColors.warning,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "${course.code}: ${course.title}",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 13,
-                      color: colorScheme.onSurface,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    "${course.instructor} • ${course.schedule}",
-                    style: TextStyle(fontSize: 11, color: colorScheme.onSurfaceVariant),
-                  ),
-                ],
-              ),
-            ),
-            GriPressable(
-              onTap: () => provider.markAttendance(course.id),
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: colorScheme.primaryContainer.withOpacity(0.5),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(Icons.add_task, color: colorScheme.primary, size: 18),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildInstitutionalCard({
-    required BuildContext context,
-    required String title,
-    required String subtitle,
-    required IconData icon,
-    required String badge,
-    required Widget destination,
-  }) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: GriPressable(
-        onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (_) => destination));
-        },
-        child: Container(
-          decoration: BoxDecoration(
-            color: colorScheme.surface,
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: colorScheme.outlineVariant, width: 0.8),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(9),
-                  decoration: BoxDecoration(
-                    color: colorScheme.primaryContainer.withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Icon(icon, color: colorScheme.primary, size: 20),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Flexible(
-                            child: Text(
-                              title,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 13,
-                                color: colorScheme.onSurface,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          const SizedBox(width: 6),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                            decoration: BoxDecoration(
-                              color: GriColors.ochreContainer,
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: Text(
-                              badge,
-                              style: const TextStyle(
-                                fontSize: 9,
-                                fontWeight: FontWeight.w800,
-                                color: GriColors.ochreOnContainer,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        subtitle,
-                        style: TextStyle(fontSize: 11, color: colorScheme.onSurfaceVariant),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Icon(Icons.arrow_forward_ios, size: 12, color: colorScheme.outline),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMetric(String label, String value, {bool isHighlight = false}) {
+  Widget _buildMetric(BuildContext context, String label, String value, {bool isHighlight = false}) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Column(
       children: [
         Text(
           value,
           style: TextStyle(
-            color: isHighlight ? GriColors.ochreTertiary : Colors.white,
-            fontWeight: FontWeight.w800,
             fontSize: 13,
+            fontWeight: FontWeight.w800,
+            color: isHighlight
+                ? GriColors.forestPrimary
+                : (isDark ? GriColors.darkOnSurface : GriColors.onSurface),
           ),
         ),
         const SizedBox(height: 2),
         Text(
           label,
           style: TextStyle(
-            color: Colors.white.withOpacity(0.85),
             fontSize: 10,
+            color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
             fontWeight: FontWeight.w500,
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildMetricDivider(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Container(
+      height: 22,
+      width: 1.0,
+      color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
     );
   }
 
@@ -850,44 +753,222 @@ class HomeDashboardScreen extends StatelessWidget {
     required Color color,
     required VoidCallback onTap,
   }) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
-    return GriPressable(
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(12),
       child: Container(
-        decoration: BoxDecoration(
-          color: colorScheme.surface,
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: colorScheme.outlineVariant, width: 0.8),
-        ),
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+        decoration: BoxDecoration(
+          color: isDark ? GriColors.darkSurface1 : Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+            width: 1.0,
+          ),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(7),
               decoration: BoxDecoration(
-                color: color.withOpacity(0.12),
+                color: color.withValues(alpha: isDark ? 0.2 : 0.08),
                 shape: BoxShape.circle,
               ),
-              child: Icon(icon, color: color, size: 20),
+              child: Icon(icon, color: color, size: 18),
             ),
             const SizedBox(height: 6),
             Text(
               label,
               style: TextStyle(
-                fontSize: 10.5,
-                fontWeight: FontWeight.w700,
-                color: colorScheme.onSurface,
+                fontSize: 11,
+                fontWeight: FontWeight.w600,
+                color: isDark ? GriColors.darkOnSurface : GriColors.onSurface,
               ),
-              textAlign: TextAlign.center,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildBentoCard({
+    required BuildContext context,
+    required String title,
+    required String subtitle,
+    required IconData icon,
+    required String badge,
+    required Color badgeColor,
+    required Widget destination,
+  }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(builder: (_) => destination));
+      },
+      borderRadius: BorderRadius.circular(14),
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: isDark ? GriColors.darkSurface1 : Colors.white,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+            width: 1.0,
+          ),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x06000000),
+              blurRadius: 6,
+              offset: Offset(0, 1),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Icon(icon, color: badgeColor, size: 22),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: badgeColor.withValues(alpha: isDark ? 0.25 : 0.08),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    badge,
+                    style: TextStyle(
+                      fontSize: 9,
+                      fontWeight: FontWeight.w700,
+                      color: badgeColor,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 12.5,
+                    fontWeight: FontWeight.w700,
+                    color: isDark ? GriColors.darkOnSurface : GriColors.onSurface,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  subtitle,
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCourseItem(BuildContext context, CourseModel course, GriProvider provider) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isAboveThreshold = course.attendancePercent >= 75;
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: isDark ? GriColors.darkSurface1 : Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+          width: 1.0,
+        ),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+            decoration: BoxDecoration(
+              color: isAboveThreshold
+                  ? GriColors.forestPrimary.withValues(alpha: isDark ? 0.25 : 0.08)
+                  : GriColors.warning.withValues(alpha: isDark ? 0.25 : 0.08),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Column(
+              children: [
+                Text(
+                  "${course.attendancePercent}%",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 12.5,
+                    color: isAboveThreshold ? GriColors.forestPrimary : GriColors.warning,
+                  ),
+                ),
+                Text(
+                  isAboveThreshold ? "Eligible" : "Low",
+                  style: TextStyle(
+                    fontSize: 8.5,
+                    fontWeight: FontWeight.w700,
+                    color: isAboveThreshold ? GriColors.forestPrimary : GriColors.warning,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "${course.code}: ${course.title}",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 12.5,
+                    color: isDark ? GriColors.darkOnSurface : GriColors.onSurface,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  "${course.instructor} • ${course.schedule}",
+                  style: TextStyle(
+                    fontSize: 10.5,
+                    color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          InkWell(
+            onTap: () => provider.markAttendance(course.id),
+            borderRadius: BorderRadius.circular(999),
+            child: Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: GriColors.forestPrimary.withValues(alpha: 0.08),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.check, color: GriColors.forestPrimary, size: 16),
+            ),
+          ),
+        ],
       ),
     );
   }

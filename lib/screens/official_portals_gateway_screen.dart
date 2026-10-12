@@ -28,6 +28,8 @@ class OfficialPortalItem {
   });
 }
 
+/// Production-Grade Official Portals & Gateways Screen
+/// Secure launch directory for 10 authorization-protected enterprise and government portals.
 class OfficialPortalsGatewayScreen extends StatelessWidget {
   const OfficialPortalsGatewayScreen({super.key});
 
@@ -177,9 +179,9 @@ class OfficialPortalsGatewayScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: portal.color.withOpacity(0.08),
+                color: portal.color.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: portal.color.withOpacity(0.3)),
+                border: Border.all(color: portal.color.withValues(alpha: 0.3)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -255,40 +257,59 @@ class OfficialPortalsGatewayScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Scaffold(
+      backgroundColor: isDark ? GriColors.darkCanvas : GriColors.surfaceCanvas,
       appBar: AppBar(
-        title: const Text("Official Portals & Gateways", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-        backgroundColor: GriColors.forestPrimary,
-        foregroundColor: Colors.white,
+        title: const Text(
+          "Official Portals & Gateways",
+          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+        ),
+        backgroundColor: isDark ? GriColors.darkSurface1 : Colors.white,
+        foregroundColor: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+        elevation: 0,
       ),
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         children: [
           // Security Advisory Header Card
           Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: Colors.amber.shade50,
+              color: isDark ? GriColors.darkSurface2 : GriColors.warningContainer.withValues(alpha: 0.5),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.amber.shade300),
+              border: Border.all(
+                color: GriColors.warning.withValues(alpha: 0.3),
+                width: 1.0,
+              ),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.shield, color: Colors.amber.shade900, size: 24),
+                const Icon(Icons.shield, color: GriColors.warning, size: 22),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         "Official Authentication Disclaimer",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.amber.shade900),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 13,
+                          color: GriColors.warning,
+                        ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         "The portals listed below are official university and national government services that require personal credentials or OTPs. All sessions open in your trusted device browser.",
-                        style: TextStyle(fontSize: 11, color: Colors.amber.shade900, height: 1.3),
+                        style: TextStyle(
+                          fontSize: 11.5,
+                          color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                          height: 1.35,
+                        ),
                       ),
                     ],
                   ),
@@ -297,91 +318,116 @@ class OfficialPortalsGatewayScreen extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 14),
 
           // Portals List
           ...portals.map((portal) => Padding(
-                padding: const EdgeInsets.only(bottom: 12),
-                child: Card(
-                  elevation: 1.5,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(12),
-                    onTap: () => _showLaunchDialog(context, portal),
-                    child: Padding(
-                      padding: const EdgeInsets.all(14),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: portal.color.withOpacity(0.12),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Icon(portal.icon, color: portal.color, size: 24),
+                padding: const EdgeInsets.only(bottom: 10),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(12),
+                  onTap: () => _showLaunchDialog(context, portal),
+                  child: Container(
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: isDark ? GriColors.darkSurface1 : Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+                        width: 1.0,
+                      ),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0x06000000),
+                          blurRadius: 6,
+                          offset: Offset(0, 1),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(9),
+                              decoration: BoxDecoration(
+                                color: portal.color.withValues(alpha: isDark ? 0.25 : 0.1),
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            portal.title,
-                                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                              child: Icon(portal.icon, color: portal.color, size: 22),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          portal.title,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 13,
+                                            color: isDark ? GriColors.darkOnSurface : GriColors.onSurface,
                                           ),
                                         ),
-                                        if (portal.isExternalGov)
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                            decoration: BoxDecoration(
-                                              color: Colors.indigo.shade50,
-                                              borderRadius: BorderRadius.circular(4),
-                                              border: Border.all(color: Colors.indigo.shade200),
-                                            ),
-                                            child: const Text(
-                                              "Gov of India",
-                                              style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.indigo),
-                                            ),
+                                      ),
+                                      if (portal.isExternalGov)
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                          decoration: BoxDecoration(
+                                            color: Colors.indigo.withValues(alpha: 0.08),
+                                            borderRadius: BorderRadius.circular(4),
+                                            border: Border.all(color: Colors.indigo.withValues(alpha: 0.2)),
                                           ),
-                                      ],
+                                          child: const Text(
+                                            "Gov of India",
+                                            style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.indigo),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 3),
+                                  Text(
+                                    portal.subtitle,
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                                      height: 1.3,
                                     ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      portal.subtitle,
-                                      style: TextStyle(fontSize: 11, color: Colors.grey.shade700, height: 1.25),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          const Divider(height: 16),
-                          Row(
-                            children: [
-                              Icon(Icons.group, size: 12, color: Colors.grey.shade600),
-                              const SizedBox(width: 4),
-                              Text(
-                                portal.audience,
-                                style: TextStyle(fontSize: 10, color: Colors.grey.shade600, fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        const Divider(height: 1),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: [
+                            Icon(Icons.group, size: 12, color: isDark ? GriColors.darkOnSurfaceVariant : Colors.grey),
+                            const SizedBox(width: 4),
+                            Text(
+                              portal.audience,
+                              style: TextStyle(
+                                fontSize: 10.5,
+                                color: isDark ? GriColors.darkOnSurfaceVariant : Colors.grey.shade700,
+                                fontWeight: FontWeight.w500,
                               ),
-                              const Spacer(),
-                              Text(
-                                "Launch Portal",
-                                style: TextStyle(fontSize: 11, color: portal.color, fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(width: 4),
-                              Icon(Icons.arrow_forward_ios, size: 10, color: portal.color),
-                            ],
-                          ),
-                        ],
-                      ),
+                            ),
+                            const Spacer(),
+                            Text(
+                              "Launch Portal",
+                              style: TextStyle(fontSize: 11, color: portal.color, fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(width: 4),
+                            Icon(Icons.arrow_forward_ios, size: 9, color: portal.color),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ),

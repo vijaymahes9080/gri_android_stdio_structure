@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../utils/gri_colors.dart';
 import 'about_gri_heritage_screen.dart';
 import 'governance_leadership_screen.dart';
@@ -92,7 +91,6 @@ class _GlobalWebsiteSearchScreenState extends State<GlobalWebsiteSearchScreen> {
 
   void _navigateToPage(Map<String, dynamic> page) {
     final url = (page['url'] ?? '').toString().toLowerCase();
-    final cat = (page['category'] ?? '').toString().toLowerCase();
     final title = (page['title'] ?? 'GRI Official Portal').toString();
 
     if (url.contains('department=')) {

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import '../utils/gri_colors.dart';
 import '../services/official_resource_registry.dart';
 
+/// Production-Grade Official Document Vault Screen
+/// Instant indexing across 595 institutional PDFs, circulars, prospectuses, and statutory reports.
 class DocumentVaultScreen extends StatefulWidget {
-  const DocumentVaultScreen({super.key});
+  final String? initialCategory;
+  const DocumentVaultScreen({super.key, this.initialCategory});
 
   @override
   State<DocumentVaultScreen> createState() => _DocumentVaultScreenState();
@@ -11,7 +14,7 @@ class DocumentVaultScreen extends StatefulWidget {
 
 class _DocumentVaultScreenState extends State<DocumentVaultScreen> {
   final TextEditingController _searchController = TextEditingController();
-  String _selectedCategory = "All";
+  late String _selectedCategory;
 
   final List<String> _categories = [
     "All",
@@ -21,10 +24,19 @@ class _DocumentVaultScreenState extends State<DocumentVaultScreen> {
     "Regulations",
     "Circulars",
     "Governance",
+    "CBCS Syllabus",
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _selectedCategory = widget.initialCategory ?? "All";
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final allDocs = OfficialResourceRegistry.getDocuments();
     final query = _searchController.text.trim().toLowerCase();
 
@@ -37,28 +49,45 @@ class _DocumentVaultScreenState extends State<DocumentVaultScreen> {
     }).toList();
 
     return Scaffold(
+      backgroundColor: isDark ? GriColors.darkCanvas : GriColors.surfaceCanvas,
       appBar: AppBar(
-        title: const Text("Official Document Vault", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-        backgroundColor: GriColors.forestPrimary,
-        foregroundColor: Colors.white,
+        title: const Text(
+          "Official Document Vault",
+          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+        ),
+        backgroundColor: isDark ? GriColors.darkSurface1 : Colors.white,
+        foregroundColor: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+        elevation: 0,
       ),
       body: Column(
         children: [
           // Search & Metrics Header
           Container(
-            padding: const EdgeInsets.all(12),
-            color: GriColors.forestPrimary.withOpacity(0.06),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(
+              color: isDark ? GriColors.darkSurface1 : Colors.white,
+              border: Border(
+                bottom: BorderSide(
+                  color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+                  width: 1.0,
+                ),
+              ),
+            ),
             child: Column(
               children: [
                 TextField(
                   controller: _searchController,
                   onChanged: (_) => setState(() {}),
                   decoration: InputDecoration(
-                    hintText: "Search official prospectuses, COE forms, circulars...",
-                    prefixIcon: const Icon(Icons.search, color: GriColors.forestPrimary),
+                    hintText: "Search 595 official prospectuses, forms, circulars...",
+                    hintStyle: TextStyle(
+                      fontSize: 12.5,
+                      color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                    ),
+                    prefixIcon: const Icon(Icons.search, color: GriColors.forestPrimary, size: 20),
                     suffixIcon: _searchController.text.isNotEmpty
                         ? IconButton(
-                            icon: const Icon(Icons.clear),
+                            icon: const Icon(Icons.clear, size: 18),
                             onPressed: () {
                               _searchController.clear();
                               setState(() {});
@@ -66,27 +95,54 @@ class _DocumentVaultScreenState extends State<DocumentVaultScreen> {
                           )
                         : null,
                     filled: true,
-                    fillColor: Colors.white,
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    fillColor: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant.withValues(alpha: 0.5),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.grey.shade300),
+                      borderSide: BorderSide(
+                        color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+                        width: 1.0,
+                      ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.grey.shade300),
+                      borderSide: BorderSide(
+                        color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+                        width: 1.0,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: GriColors.forestPrimary, width: 1.5),
                     ),
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Total Registered Documents: ${allDocs.length}", style: TextStyle(fontSize: 11, color: Colors.grey.shade700, fontWeight: FontWeight.bold)),
+                    Text(
+                      "Catalog: ${allDocs.length} Official Documents",
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: isDark ? GriColors.darkOnSurfaceVariant : Colors.grey.shade700,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                      decoration: BoxDecoration(color: GriColors.forestPrimary.withOpacity(0.12), borderRadius: BorderRadius.circular(4)),
-                      child: Text("${allDocs.where((d) => d.isBundledLocally).length} Pre-bundled Offline", style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: GriColors.forestPrimary)),
+                      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: GriColors.forestPrimary.withValues(alpha: 0.08),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Text(
+                        "${allDocs.where((d) => d.isBundledLocally).length} Pre-bundled Offline",
+                        style: const TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                          color: GriColors.forestPrimary,
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -104,10 +160,22 @@ class _DocumentVaultScreenState extends State<DocumentVaultScreen> {
                 return Padding(
                   padding: const EdgeInsets.only(right: 6),
                   child: FilterChip(
-                    label: Text(c, style: TextStyle(fontSize: 11, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal)),
+                    label: Text(
+                      c,
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                        color: isSelected ? Colors.white : (isDark ? GriColors.darkOnSurface : Colors.black87),
+                      ),
+                    ),
                     selected: isSelected,
-                    selectedColor: GriColors.forestPrimary.withOpacity(0.18),
-                    checkmarkColor: GriColors.forestPrimary,
+                    selectedColor: GriColors.forestPrimary,
+                    backgroundColor: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
+                    checkmarkColor: Colors.white,
+                    side: BorderSide(
+                      color: isSelected ? GriColors.forestPrimary : (isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant),
+                      width: 0.8,
+                    ),
                     onSelected: (val) {
                       setState(() {
                         _selectedCategory = c;
@@ -128,9 +196,12 @@ class _DocumentVaultScreenState extends State<DocumentVaultScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.folder_off, size: 48, color: Colors.grey.shade400),
-                        const SizedBox(height: 8),
-                        const Text("No documents match your query", style: TextStyle(fontWeight: FontWeight.bold)),
+                        Icon(Icons.folder_off_outlined, size: 48, color: Colors.grey.shade400),
+                        const SizedBox(height: 10),
+                        const Text(
+                          "No documents match your query",
+                          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
+                        ),
                       ],
                     ),
                   )
@@ -142,40 +213,77 @@ class _DocumentVaultScreenState extends State<DocumentVaultScreen> {
                       final isBundled = doc.isBundledLocally;
 
                       return ListTile(
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        leading: CircleAvatar(
-                          backgroundColor: Colors.red.withOpacity(0.12),
-                          child: const Icon(Icons.picture_as_pdf, color: Colors.red, size: 22),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                        leading: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: Colors.red.withValues(alpha: isDark ? 0.25 : 0.08),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Icon(Icons.picture_as_pdf, color: Colors.red, size: 20),
                         ),
                         title: Text(
                           doc.title,
-                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12.5,
+                            color: isDark ? GriColors.darkOnSurface : GriColors.onSurface,
+                          ),
                         ),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const SizedBox(height: 2),
-                            Text("${doc.module} • ${doc.formattedSize}", style: TextStyle(fontSize: 11, color: Colors.grey.shade600)),
+                            Text(
+                              "${doc.module} • ${doc.formattedSize}",
+                              style: TextStyle(
+                                fontSize: 11,
+                                color: isDark ? GriColors.darkOnSurfaceVariant : Colors.grey.shade600,
+                              ),
+                            ),
                             const SizedBox(height: 4),
                             Row(
                               children: [
                                 if (isBundled)
                                   Container(
                                     padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                    decoration: BoxDecoration(color: Colors.green.withOpacity(0.12), borderRadius: BorderRadius.circular(4)),
-                                    child: const Text("Pre-bundled Offline", style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.green)),
+                                    decoration: BoxDecoration(
+                                      color: Colors.green.withValues(alpha: 0.12),
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                    child: const Text(
+                                      "Pre-bundled Offline",
+                                      style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.green),
+                                    ),
                                   )
                                 else
                                   Container(
                                     padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                    decoration: BoxDecoration(color: Colors.blue.withOpacity(0.12), borderRadius: BorderRadius.circular(4)),
-                                    child: const Text("Official Cloud Stream", style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.blue)),
+                                    decoration: BoxDecoration(
+                                      color: Colors.blue.withValues(alpha: 0.12),
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                    child: const Text(
+                                      "Official Cloud Stream",
+                                      style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.blue),
+                                    ),
                                   ),
                                 const SizedBox(width: 6),
                                 Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                  decoration: BoxDecoration(color: Colors.grey.withOpacity(0.12), borderRadius: BorderRadius.circular(4)),
-                                  child: Text(doc.category, style: const TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.black87)),
+                                  decoration: BoxDecoration(
+                                    color: isDark ? GriColors.darkSurface2 : Colors.grey.shade100,
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Text(
+                                    doc.category,
+                                    style: TextStyle(
+                                      fontSize: 9,
+                                      fontWeight: FontWeight.bold,
+                                      color: isDark ? GriColors.darkOnSurfaceVariant : Colors.black87,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -183,9 +291,10 @@ class _DocumentVaultScreenState extends State<DocumentVaultScreen> {
                         ),
                         trailing: ElevatedButton.icon(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: isBundled ? GriColors.forestPrimary : Colors.grey.shade800,
+                            backgroundColor: isBundled ? GriColors.forestPrimary : (isDark ? GriColors.darkSurface2 : Colors.grey.shade800),
                             foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                             textStyle: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
                           ),
                           onPressed: () => OfficialResourceRegistry.openDocument(context, doc.id),

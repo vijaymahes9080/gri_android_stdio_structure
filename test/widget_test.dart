@@ -11,6 +11,7 @@ import 'package:gri_app/screens/document_vault_screen.dart';
 import 'package:gri_app/screens/global_website_search_screen.dart';
 import 'package:gri_app/screens/media_gallery_screen.dart';
 import 'package:gri_app/screens/official_portals_gateway_screen.dart';
+import 'package:gri_app/screens/gri_splash_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -28,7 +29,7 @@ void main() {
     await tester.pumpWidget(
       ChangeNotifierProvider(
         create: (_) => GriProvider(),
-        child: const GriApplication(),
+        child: const GriApplication(home: MainScaffold()),
       ),
     );
 
@@ -144,5 +145,24 @@ void main() {
 
     expect(provider.grievances.length, initialCount + 1);
     expect(provider.grievances.first.subject, "Bus Delaybat");
+  });
+
+  testWidgets('GRI Splash Screen renders official identity and accreditation', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      ChangeNotifierProvider(
+        create: (_) => GriProvider(),
+        child: const MaterialApp(home: GriSplashScreen()),
+      ),
+    );
+
+    // Initial frame of splash screen
+    await tester.pump();
+    expect(find.text('காந்திகிராம கிராமிய நிறுவனம்'), findsOneWidget);
+    expect(find.text('THE GANDHIGRAM RURAL INSTITUTE'), findsOneWidget);
+    expect(find.textContaining('NAAC'), findsOneWidget);
+
+    // Settle timer transition to MainScaffold
+    await tester.pump(const Duration(milliseconds: 2300));
+    await tester.pumpAndSettle();
   });
 }

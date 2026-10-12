@@ -2,68 +2,93 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/gri_provider.dart';
 import '../utils/gri_colors.dart';
-import '../utils/gri_motion.dart';
 import '../screens/global_website_search_screen.dart';
 import '../services/official_resource_registry.dart';
 
+/// Refined Pro-Level Institutional App Bar (58dp)
+/// Built according to government & academic design standards:
+/// - Prominent official crest and university hierarchy
+/// - Clean global action icons with accessible 48x48dp touch targets
+/// - Integrated role status badge
 class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
   const GriTopBar({super.key});
 
   @override
-  Size get preferredSize => const Size.fromHeight(108);
+  Size get preferredSize => const Size.fromHeight(58);
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
     final provider = context.watch<GriProvider>();
-    final currentUser = provider.currentUser;
 
     return Container(
+      height: preferredSize.height + MediaQuery.of(context).padding.top,
       decoration: BoxDecoration(
-        color: colorScheme.surface,
+        color: isDark ? GriColors.darkSurface1 : Colors.white,
         border: Border(
           bottom: BorderSide(
-            color: colorScheme.outlineVariant,
-            width: 0.8,
+            color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+            width: 1.0,
           ),
         ),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x06000000),
+            blurRadius: 4,
+            offset: Offset(0, 1),
+          ),
+        ],
       ),
       child: SafeArea(
         bottom: false,
-        child: Column(
-          children: [
-            // Row 1: University Branding & Global Action Icons
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              child: Row(
-                children: [
-                  // Drawer Hamburger Menu Trigger
-                  Builder(
-                    builder: (drawerCtx) => IconButton(
-                      icon: Icon(Icons.menu, color: colorScheme.primary, size: 22),
-                      tooltip: "University Navigation",
-                      constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
-                      onPressed: () => Scaffold.of(drawerCtx).openDrawer(),
-                    ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          child: Row(
+            children: [
+              // Drawer Hamburger Trigger
+              Builder(
+                builder: (drawerCtx) => IconButton(
+                  icon: Icon(
+                    Icons.menu,
+                    color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+                    size: 24,
                   ),
-                  const SizedBox(width: 4),
+                  tooltip: "University Navigation Menu",
+                  constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
+                  onPressed: () => Scaffold.of(drawerCtx).openDrawer(),
+                ),
+              ),
 
-                  // University Emblem / Logo (High-Res Official Crest)
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: OfficialResourceRegistry.buildImage(
-                      "IMG_OFFICIAL_CREST",
-                      height: 38,
-                      width: 38,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                  const SizedBox(width: 10),
+              const SizedBox(width: 4),
 
-                  // University Title & Metadata
-                  Expanded(
+              // Official University Crest
+              ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: OfficialResourceRegistry.buildImage(
+                  "IMG_OFFICIAL_CREST",
+                  height: 34,
+                  width: 34,
+                  fit: BoxFit.contain,
+                ),
+              ),
+
+              const SizedBox(width: 10),
+
+              // University Title & Metadata
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    // Quick return to Home
+                    if (provider.currentTab != NavigationTab.HOME) {
+                      provider.switchTab(NavigationTab.HOME);
+                    }
+                  },
+                  borderRadius: BorderRadius.circular(6),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 2),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -71,18 +96,20 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w800,
-                            color: colorScheme.primary,
-                            letterSpacing: 0.4,
+                            letterSpacing: 0.3,
+                            color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
+                        const SizedBox(height: 1),
                         Text(
-                          "Deemed to be University • NAAC 'A' Grade • 1956",
+                          "Deemed to be University • NAAC 'A' Grade",
                           style: TextStyle(
                             fontSize: 10,
-                            color: colorScheme.onSurfaceVariant,
                             fontWeight: FontWeight.w500,
+                            color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                            letterSpacing: 0.1,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -90,147 +117,87 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                       ],
                     ),
                   ),
-
-                  // Global Website & Portal Search Shortcut
-                  IconButton(
-                    icon: Icon(Icons.search, color: colorScheme.primary, size: 21),
-                    tooltip: "Search 247 Official Pages",
-                    constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => const GlobalWebsiteSearchScreen()),
-                      );
-                    },
-                  ),
-
-                  // AI Assistant Shortcut
-                  IconButton(
-                    icon: const Icon(Icons.auto_awesome, color: GriColors.ochrePrimary, size: 20),
-                    tooltip: "GRI-Sahayak AI",
-                    constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
-                    onPressed: () => provider.toggleAskAi(true),
-                  ),
-
-                  // Document Center Shortcut
-                  IconButton(
-                    icon: Icon(Icons.verified, color: colorScheme.primary, size: 20),
-                    tooltip: "Official Documents",
-                    constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
-                    onPressed: () => provider.toggleDocumentCenter(true),
-                  ),
-
-                  // Cloud Sync Indicator
-                  IconButton(
-                    icon: provider.isSyncing
-                        ? SizedBox(
-                            width: 18,
-                            height: 18,
-                            child: CircularProgressIndicator(strokeWidth: 2, color: colorScheme.primary),
-                          )
-                        : Icon(Icons.sync, color: colorScheme.onSurfaceVariant, size: 20),
-                    tooltip: "Sync with Cloud",
-                    constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
-                    onPressed: provider.isSyncing ? null : () => provider.triggerCloudSync(),
-                  ),
-                ],
-              ),
-            ),
-
-            // Row 2: Role Switcher & Institutional Account Strip
-            Container(
-              height: 38,
-              decoration: BoxDecoration(
-                color: colorScheme.surfaceContainerHighest.withOpacity(0.4),
-                border: Border(
-                  top: BorderSide(color: colorScheme.outlineVariant.withOpacity(0.5), width: 0.5),
                 ),
               ),
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                children: [
-                  // Active Role Chip with Tactile Press
-                  GriPressable(
-                    onTap: () => provider.toggleRoleSwitcher(true),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: colorScheme.primary,
-                        borderRadius: BorderRadius.circular(999),
-                      ),
-                      child: Row(
-                        children: [
-                          const Icon(Icons.switch_account, color: Colors.white, size: 13),
-                          const SizedBox(width: 4),
-                          Text(
-                            "${provider.currentRole.name} • ${provider.activeAccountStatus.name}",
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
 
-                  // Quick Register Button
-                  GriPressable(
-                    onTap: () => provider.openRegistrationWizard(),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: GriColors.ochrePrimary,
-                        borderRadius: BorderRadius.circular(999),
-                      ),
-                      child: const Row(
-                        children: [
-                          Icon(Icons.app_registration, color: Colors.white, size: 13),
-                          SizedBox(width: 4),
-                          Text(
-                            "+ Register",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-
-                  // Preset Account Chips
-                  ...provider.availableAccounts.map((acc) {
-                    final isSelected = currentUser?.id == acc.id;
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 6),
-                      child: ActionChip(
-                        label: Text(
-                          "${acc.name.split(' ').first} (${acc.role})",
-                          style: TextStyle(
-                            fontSize: 10.5,
-                            fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                            color: isSelected ? colorScheme.primary : colorScheme.onSurface,
-                          ),
-                        ),
-                        backgroundColor: isSelected ? colorScheme.primaryContainer : colorScheme.surface,
-                        side: BorderSide(
-                          color: isSelected ? colorScheme.primary : colorScheme.outlineVariant,
-                          width: isSelected ? 1.4 : 0.8,
-                        ),
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        onPressed: () => provider.switchUserAccount(acc),
-                      ),
-                    );
-                  }),
-                ],
+              // Universal Catalog Search Shortcut
+              IconButton(
+                icon: Icon(
+                  Icons.search,
+                  color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+                  size: 22,
+                ),
+                tooltip: "Search 247 Official Pages",
+                constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const GlobalWebsiteSearchScreen()),
+                  );
+                },
               ),
-            ),
-          ],
+
+              // Cloud Sync Status Indicator
+              IconButton(
+                icon: provider.isSyncing
+                    ? SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+                        ),
+                      )
+                    : Icon(
+                        Icons.cloud_done_outlined,
+                        color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                        size: 20,
+                      ),
+                tooltip: "Cloud Data Synchronized",
+                constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
+                onPressed: provider.isSyncing ? null : () => provider.triggerCloudSync(),
+              ),
+
+              // Active Role Status Badge Button
+              Padding(
+                padding: const EdgeInsets.only(left: 2, right: 4),
+                child: InkWell(
+                  onTap: () => provider.toggleRoleSwitcher(true),
+                  borderRadius: BorderRadius.circular(999),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: GriColors.forestPrimary.withValues(alpha: isDark ? 0.3 : 0.1),
+                      borderRadius: BorderRadius.circular(999),
+                      border: Border.all(
+                        color: GriColors.forestPrimary.withValues(alpha: 0.25),
+                        width: 1.0,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.person,
+                          size: 14,
+                          color: GriColors.forestPrimary,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          provider.currentRole.name,
+                          style: const TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w700,
+                            color: GriColors.forestPrimary,
+                            letterSpacing: 0.3,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

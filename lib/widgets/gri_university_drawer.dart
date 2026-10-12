@@ -9,7 +9,6 @@ import '../screens/examination_services_screen.dart';
 import '../screens/scholarships_welfare_screen.dart';
 import '../screens/contact_campus_info_screen.dart';
 import '../screens/campus_facilities_screen.dart';
-import '../screens/official_document_center_screen.dart';
 import '../screens/global_website_search_screen.dart';
 import '../screens/department_detail_screen.dart';
 import '../screens/institutional_article_screen.dart';
@@ -18,6 +17,8 @@ import '../screens/media_gallery_screen.dart';
 import '../screens/official_portals_gateway_screen.dart';
 import '../services/official_resource_registry.dart';
 
+/// Pro-Level Institutional University Drawer
+/// Categorized logically into five official governance and academic divisions.
 class GriUniversityDrawer extends StatelessWidget {
   const GriUniversityDrawer({super.key});
 
@@ -35,7 +36,12 @@ class GriUniversityDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
+
     return Drawer(
+      backgroundColor: isDark ? GriColors.darkSurface1 : Colors.white,
       child: Column(
         children: [
           // Institutional Header
@@ -43,46 +49,72 @@ class GriUniversityDrawer extends StatelessWidget {
             padding: EdgeInsets.only(
               top: MediaQuery.of(context).padding.top + 16,
               bottom: 16,
-              left: 16,
-              right: 16,
+              left: 18,
+              right: 18,
             ),
-            decoration: const BoxDecoration(
-              color: GriColors.forestPrimary,
+            decoration: BoxDecoration(
+              color: isDark ? GriColors.darkSurface2 : GriColors.forestDark,
+              border: Border(
+                bottom: BorderSide(
+                  color: isDark ? GriColors.darkOutlineVariant : GriColors.forestPrimary,
+                  width: 1.0,
+                ),
+              ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    CircleAvatar(
-                      radius: 28,
-                      backgroundColor: Colors.white,
+                    Container(
+                      width: 52,
+                      height: 52,
+                      padding: const EdgeInsets.all(3),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                        border: Border.all(color: GriColors.ochrePrimary, width: 1.5),
+                      ),
                       child: ClipOval(
                         child: OfficialResourceRegistry.buildImage(
                           "IMG_OFFICIAL_CREST",
-                          width: 48,
-                          height: 48,
+                          width: 46,
+                          height: 46,
                           fit: BoxFit.contain,
                         ),
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    const SizedBox(width: 14),
                     const Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             "THE GANDHIGRAM",
-                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13, letterSpacing: 0.5),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 13,
+                              letterSpacing: 0.5,
+                            ),
                           ),
                           Text(
                             "RURAL INSTITUTE",
-                            style: TextStyle(color: GriColors.ochrePrimary, fontWeight: FontWeight.bold, fontSize: 13, letterSpacing: 0.5),
+                            style: TextStyle(
+                              color: GriColors.ochreAccent,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 13,
+                              letterSpacing: 0.5,
+                            ),
                           ),
-                          SizedBox(height: 2),
+                          SizedBox(height: 3),
                           Text(
-                            "Deemed to be University • Estd. 1956",
-                            style: TextStyle(color: Colors.white70, fontSize: 10),
+                            "Deemed to be University • NAAC 'A' Grade • 1956",
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: 9.5,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ],
                       ),
@@ -90,22 +122,27 @@ class GriUniversityDrawer extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 14),
+
                 // Search Shortcut Bar inside Drawer
                 InkWell(
                   onTap: () => _push(context, const GlobalWebsiteSearchScreen()),
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(10),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.15),
-                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.white.withValues(alpha: 0.12),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: Colors.white.withValues(alpha: 0.2),
+                        width: 0.8,
+                      ),
                     ),
                     child: const Row(
                       children: [
-                        Icon(Icons.search, color: Colors.white70, size: 18),
+                        Icon(Icons.search, color: Colors.white70, size: 17),
                         SizedBox(width: 8),
                         Text(
-                          "Search 247 official pages...",
+                          "Search 247 official web pages...",
                           style: TextStyle(color: Colors.white70, fontSize: 12),
                         ),
                       ],
@@ -119,198 +156,133 @@ class GriUniversityDrawer extends StatelessWidget {
           // Categorized Navigation List
           Expanded(
             child: ListView(
-              padding: EdgeInsets.zero,
+              padding: const EdgeInsets.symmetric(vertical: 8),
               children: [
-                // 1. About & Heritage
+                // SECTION 1: ACADEMICS & SCHOOLS
+                _buildSectionHeader("ACADEMICS & PROGRAMMES"),
                 ExpansionTile(
-                  leading: const Icon(Icons.history_edu, color: GriColors.forestPrimary),
-                  title: const Text("1. About GRI & Heritage", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                  leading: const Icon(Icons.school, color: GriColors.forestPrimary, size: 21),
+                  title: const Text("Schools & Departments", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                   children: [
-                    _buildSubItem(context, "Heritage, Genesis & Founders", () => _push(context, const AboutGriHeritageScreen())),
-                    _buildSubItem(context, "Vision & Mission", () => _push(context, const AboutGriHeritageScreen())),
-                    _buildSubItem(context, "3H Nai Talim Philosophy", () => _push(context, const AboutGriHeritageScreen())),
-                    _buildSubItem(context, "Former Chancellors & VCs", () => _push(context, const AboutGriHeritageScreen())),
-                    _buildSubItem(context, "Best Practices & Shanti Sena", () => _push(context, const InstitutionalArticleScreen(
-                      title: "Best Practices & Institutional Distinctiveness",
-                      category: "Institutional Heritage",
-                      sourceUrl: "https://ruraluniv.ac.in/aboutgri?content=best_practices",
-                    ))),
-                  ],
-                ),
-
-                // 2. Governance & Leadership
-                ExpansionTile(
-                  leading: const Icon(Icons.account_balance, color: GriColors.ochrePrimary),
-                  title: const Text("2. Governance & Authorities", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-                  children: [
-                    _buildSubItem(context, "Chancellor & Vice-Chancellor", () => _push(context, const GovernanceLeadershipScreen())),
-                    _buildSubItem(context, "Registrar & Executive Officers", () => _push(context, const GovernanceLeadershipScreen())),
-                    _buildSubItem(context, "Deans & Heads of Departments", () => _push(context, const GovernanceLeadershipScreen())),
-                    _buildSubItem(context, "Statutory Bodies (Syndicate/Senate)", () => _push(context, const GovernanceLeadershipScreen())),
-                  ],
-                ),
-
-                // 3. 8 Schools & Academic Departments
-                ExpansionTile(
-                  leading: const Icon(Icons.school, color: Colors.indigo),
-                  title: const Text("3. Schools & Departments", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-                  children: [
-                    _buildSubItem(context, "Overview of 8 Statutory Schools", () => _push(context, const SchoolsProgrammesHubScreen())),
+                    _buildSubItem(context, "All 8 Statutory Schools", () => _push(context, const SchoolsProgrammesHubScreen())),
                     _buildSubItem(context, "School of Sciences", () => _push(context, const DepartmentDetailScreen(
                       departmentId: "Maths",
-                      departmentName: "DEPARTMENT OF MATHEMATICS",
+                      departmentName: "Department of Mathematics",
                       schoolName: "School of Sciences",
                       hodName: "Dr. P. Balasubramaniam",
-                      sourceUrl: "https://ruraluniv.ac.in/faculties?department=maths_profile",
+                      email: "hodmaths@ruraluniv.ac.in",
+                      sourceUrl: "https://ruraluniv.ac.in/faculties?department=maths",
                     ))),
-                    _buildSubItem(context, "Department of Physics", () => _push(context, const DepartmentDetailScreen(
-                      departmentId: "Physics",
-                      departmentName: "DEPARTMENT OF PHYSICS",
-                      schoolName: "School of Sciences",
-                      hodName: "Dr. S. Arumugam",
-                      sourceUrl: "https://ruraluniv.ac.in/faculties?department=Physics_profile",
+                    _buildSubItem(context, "School of Agriculture & Rural Dev.", () => _push(context, const DepartmentDetailScreen(
+                      departmentId: "Agriculture",
+                      departmentName: "Faculty of Rural Development",
+                      schoolName: "School of Agriculture and Animal Husbandry",
+                      hodName: "Dr. T. Senthilvel",
+                      email: "hodagri@ruraluniv.ac.in",
+                      sourceUrl: "https://ruraluniv.ac.in/faculties?department=agri",
                     ))),
-                    _buildSubItem(context, "Department of Chemistry", () => _push(context, const DepartmentDetailScreen(
-                      departmentId: "Chemistry",
-                      departmentName: "DEPARTMENT OF CHEMISTRY",
-                      schoolName: "School of Sciences",
-                      hodName: "Dr. S. Meenakshi",
-                      sourceUrl: "https://ruraluniv.ac.in/faculties?department=Chemistry_profile",
-                    ))),
-                    _buildSubItem(context, "School of Agriculture & Animal Sciences", () => _push(context, const DepartmentDetailScreen(
-                      departmentId: "Agri",
-                      departmentName: "FACULTY OF AGRICULTURE & ANIMAL HUSBANDRY",
-                      schoolName: "School of Agriculture",
-                      hodName: "Dr. T. Senthivel",
-                      sourceUrl: "https://ruraluniv.ac.in/faculties?department=Agri_profile",
-                    ))),
-                    _buildSubItem(context, "School of Management Studies", () => _push(context, const DepartmentDetailScreen(
-                      departmentId: "RIM",
-                      departmentName: "RURAL INDUSTRIES & MANAGEMENT (RIM)",
-                      schoolName: "School of Management Studies",
-                      hodName: "Dr. K. Ravichandran",
-                      sourceUrl: "https://ruraluniv.ac.in/faculties?department=RIM_profile",
+                    _buildSubItem(context, "School of Social Sciences", () => _push(context, const DepartmentDetailScreen(
+                      departmentId: "SocialSciences",
+                      departmentName: "Department of Applied Research",
+                      schoolName: "School of Social Sciences",
+                      hodName: "Dr. S. Radhakrishnan",
+                      email: "hodsocial@ruraluniv.ac.in",
+                      sourceUrl: "https://ruraluniv.ac.in/faculties?department=social",
                     ))),
                   ],
                 ),
-
-                // 4. Admissions & Prospectuses
-                ExpansionTile(
-                  leading: const Icon(Icons.app_registration, color: Colors.deepPurple),
-                  title: const Text("4. Admissions & Prospectus", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-                  children: [
-                    _buildSubItem(context, "Prospectus 2026-27 & 2025-26", () => _push(context, const AdmissionsProspectusScreen())),
-                    _buildSubItem(context, "UGC 5-Tier Fee Refund Policy", () => _push(context, const AdmissionsProspectusScreen())),
-                    _buildSubItem(context, "Research Regulations (Ph.D./D.Sc.)", () => _push(context, const AdmissionsProspectusScreen())),
-                    _buildSubItem(context, "CUET Samarth Admission Portal", () => _launchUrl("https://ruraluniv.samarth.ac.in/")),
-                    _buildSubItem(context, "Study in India Portal", () => _launchUrl("https://www.studyinindia.gov.in/")),
-                  ],
-                ),
-
-                // 5. Examinations & COE Services
-                ExpansionTile(
-                  leading: const Icon(Icons.assignment_turned_in, color: Colors.teal),
-                  title: const Text("5. Examinations & COE", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-                  children: [
-                    _buildSubItem(context, "COE Forms (Transcript, Duplicate)", () => _push(context, const ExaminationServicesScreen())),
-                    _buildSubItem(context, "Tatkal Scheme Portal", () => _push(context, const ExaminationServicesScreen())),
-                    _buildSubItem(context, "MEA e-SANAD Digital Attestation", () => _push(context, const ExaminationServicesScreen())),
-                    _buildSubItem(context, "End Semester Timetables", () => _push(context, const ExaminationServicesScreen())),
-                  ],
-                ),
-
-                // 6. Research & Development Cell
-                ExpansionTile(
-                  leading: const Icon(Icons.science, color: Colors.blueGrey),
-                  title: const Text("6. Research & Development", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-                  children: [
-                    _buildSubItem(context, "RDC Governance & Patents", () => _push(context, const InstitutionalArticleScreen(
-                      title: "Research & Development Cell (RDC)",
-                      category: "Research",
-                      sourceUrl: "https://ruraluniv.ac.in/academics?content=Patents",
-                    ))),
-                    _buildSubItem(context, "Ongoing Sponsored Projects", () => _push(context, const InstitutionalArticleScreen(
-                      title: "Ongoing Sponsored Research Projects",
-                      category: "Research",
-                      sourceUrl: "https://ruraluniv.ac.in/academics?content=Projects",
-                    ))),
-                  ],
-                ),
-
-                // 7. Student Welfare & Scholarships
-                ExpansionTile(
-                  leading: const Icon(Icons.volunteer_activism, color: Colors.brown),
-                  title: const Text("7. Scholarships & Welfare", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-                  children: [
-                    _buildSubItem(context, "SC/ST/SCC Government Scholarships", () => _push(context, const ScholarshipsWelfareScreen())),
-                    _buildSubItem(context, "APAAR ID & DigiLocker Setup", () => _push(context, const ScholarshipsWelfareScreen())),
-                    _buildSubItem(context, "Anti-Ragging 24x7 Helpline", () => _push(context, const ScholarshipsWelfareScreen())),
-                  ],
-                ),
-
-                // 8. Campus Facilities
-                ExpansionTile(
-                  leading: const Icon(Icons.domain, color: Colors.orange),
-                  title: const Text("8. Campus Facilities", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-                  children: [
-                    _buildSubItem(context, "Library & e-ShodhSindhu", () => _push(context, const CampusFacilitiesScreen())),
-                    _buildSubItem(context, "Computer Centre & IT Labs", () => _push(context, const CampusFacilitiesScreen())),
-                    _buildSubItem(context, "Kasturba Hospital & Health Centre", () => _push(context, const CampusFacilitiesScreen())),
-                    _buildSubItem(context, "Sports & Yoga Centre", () => _push(context, const CampusFacilitiesScreen())),
-                  ],
-                ),
-
-                // 9. Document Vault (595 Documents)
                 ListTile(
-                  leading: const Icon(Icons.folder_shared, color: Colors.red),
-                  title: const Text("9. Official Document Vault (595)", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-                  subtitle: const Text("Downloadable PDFs, Forms & Regulations", style: TextStyle(fontSize: 10)),
-                  trailing: const Icon(Icons.arrow_forward_ios, size: 12),
-                  onTap: () => _push(context, const DocumentVaultScreen()),
+                  leading: const Icon(Icons.menu_book_outlined, color: GriColors.forestPrimary, size: 21),
+                  title: const Text("CBCS Curriculum & Syllabi", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
+                  onTap: () => _push(context, const DocumentVaultScreen(initialCategory: "CBCS Syllabus")),
                 ),
 
-                // 10. Media & Videos
+                // SECTION 2: ADMISSIONS & EXAMINATIONS
+                const Divider(height: 16),
+                _buildSectionHeader("ADMISSIONS & EXAMINATIONS"),
                 ListTile(
-                  leading: const Icon(Icons.video_library, color: Colors.deepOrange),
-                  title: const Text("10. Media & Video Tour", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-                  subtitle: const Text("Campus Video Tour & YouTube", style: TextStyle(fontSize: 10)),
-                  trailing: const Icon(Icons.arrow_forward_ios, size: 12),
+                  leading: const Icon(Icons.how_to_reg_outlined, color: GriColors.forestPrimary, size: 21),
+                  title: const Text("Admissions 2026-27 & CUET", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
+                  onTap: () => _push(context, const AdmissionsProspectusScreen()),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.assignment_turned_in_outlined, color: GriColors.forestPrimary, size: 21),
+                  title: const Text("Controller of Examinations (COE)", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
+                  onTap: () => _push(context, const ExaminationServicesScreen()),
+                ),
+
+                // SECTION 3: GOVERNANCE & HERITAGE
+                const Divider(height: 16),
+                _buildSectionHeader("GOVERNANCE & HERITAGE"),
+                ListTile(
+                  leading: const Icon(Icons.history_edu, color: GriColors.ochrePrimary, size: 21),
+                  title: const Text("About GRI & Gandhian Heritage", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
+                  onTap: () => _push(context, const AboutGriHeritageScreen()),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.account_balance, color: GriColors.ochrePrimary, size: 21),
+                  title: const Text("Governance & Authorities", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
+                  onTap: () => _push(context, const GovernanceLeadershipScreen()),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.gavel_outlined, color: GriColors.ochrePrimary, size: 21),
+                  title: const Text("Mandatory Disclosures & NAAC", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
+                  onTap: () => _push(context, const InstitutionalArticleScreen(
+                    title: "Mandatory Disclosures & NAAC SSR",
+                    category: "Statutory Compliance",
+                    sourceUrl: "https://ruraluniv.ac.in/naac?content=ssr",
+                  )),
+                ),
+
+                // SECTION 4: CAMPUS & STUDENT LIFE
+                const Divider(height: 16),
+                _buildSectionHeader("CAMPUS & STUDENT WELFARE"),
+                ListTile(
+                  leading: const Icon(Icons.apartment, color: GriColors.tealSecondary, size: 21),
+                  title: const Text("300-Acre Campus & Facilities", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
+                  onTap: () => _push(context, const CampusFacilitiesScreen()),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.card_giftcard, color: GriColors.tealSecondary, size: 21),
+                  title: const Text("Scholarships & Welfare Schemes", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
+                  onTap: () => _push(context, const ScholarshipsWelfareScreen()),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.video_library_outlined, color: GriColors.tealSecondary, size: 21),
+                  title: const Text("Media Gallery & Campus 360", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
                   onTap: () => _push(context, const MediaGalleryScreen()),
                 ),
-
-                // 11. Disclosures & Accreditation
                 ListTile(
-                  leading: const Icon(Icons.verified, color: Colors.purple),
-                  title: const Text("11. NAAC, NIRF & Disclosures", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-                  subtitle: const Text("Accreditation, SSR & RTI Roster", style: TextStyle(fontSize: 10)),
-                  trailing: const Icon(Icons.arrow_forward_ios, size: 12),
-                  onTap: () => _push(context, const OfficialDocumentCenterScreen()),
-                ),
-
-                // 12. Contact & Transit
-                ListTile(
-                  leading: const Icon(Icons.directions_bus, color: Colors.teal),
-                  title: const Text("12. Contact & Campus Directions", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-                  subtitle: const Text("EPABX, Dindigul 12km & Emergencies", style: TextStyle(fontSize: 10)),
-                  trailing: const Icon(Icons.arrow_forward_ios, size: 12),
+                  leading: const Icon(Icons.contact_phone_outlined, color: GriColors.tealSecondary, size: 21),
+                  title: const Text("Campus Directory & Emergency", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
                   onTap: () => _push(context, const ContactCampusInfoScreen()),
                 ),
 
-                // 13. Universal Search
+                // SECTION 5: DIGITAL SERVICES & PORTALS
+                const Divider(height: 16),
+                _buildSectionHeader("DIGITAL SERVICES & VAULT"),
                 ListTile(
-                  leading: const Icon(Icons.search, color: GriColors.forestPrimary),
-                  title: const Text("13. Universal Website Search", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-                  subtitle: const Text("Search all 247 official URLs", style: TextStyle(fontSize: 10)),
-                  trailing: const Icon(Icons.arrow_forward_ios, size: 12),
-                  onTap: () => _push(context, const GlobalWebsiteSearchScreen()),
+                  leading: const Icon(Icons.folder_shared_outlined, color: Colors.indigo, size: 21),
+                  title: const Text("Official Document Vault", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  subtitle: const Text("595 institutional PDFs & circulars", style: TextStyle(fontSize: 10.5)),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
+                  onTap: () => _push(context, const DocumentVaultScreen()),
                 ),
-
-                // 14. Official Portals Gateway
                 ListTile(
-                  leading: const Icon(Icons.shield_outlined, color: Colors.blueAccent),
-                  title: const Text("14. Official Portals & Gateways", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-                  subtitle: const Text("Samarth, Webmail, e-SANAD & Portals", style: TextStyle(fontSize: 10)),
-                  trailing: const Icon(Icons.arrow_forward_ios, size: 12),
+                  leading: const Icon(Icons.shield_outlined, color: Colors.indigo, size: 21),
+                  title: const Text("Official Portals & Gateways", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  subtitle: const Text("Samarth, Webmail, e-SANAD & Portals", style: TextStyle(fontSize: 10.5)),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
                   onTap: () => _push(context, const OfficialPortalsGatewayScreen()),
                 ),
               ],
@@ -321,11 +293,11 @@ class GriUniversityDrawer extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surfaceContainerHighest.withOpacity(0.5),
+              color: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
               border: Border(
                 top: BorderSide(
-                  color: Theme.of(context).colorScheme.outlineVariant,
-                  width: 0.8,
+                  color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+                  width: 1.0,
                 ),
               ),
             ),
@@ -333,19 +305,20 @@ class GriUniversityDrawer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "v1.0.0+1 • NAAC 'A' Grade",
+                  "GRI v1.0 • NAAC 'A' Grade",
                   style: TextStyle(
                     fontSize: 11,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    color: colorScheme.onSurfaceVariant,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 InkWell(
                   onTap: () => _launchUrl("https://ruraluniv.ac.in/"),
                   child: Text(
-                    "ruraluniv.ac.in",
+                    "ruraluniv.ac.in ↗",
                     style: TextStyle(
                       fontSize: 11,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: colorScheme.primary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -358,10 +331,25 @@ class GriUniversityDrawer extends StatelessWidget {
     );
   }
 
+  Widget _buildSectionHeader(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 18, top: 8, bottom: 4),
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0.8,
+          color: Colors.grey,
+        ),
+      ),
+    );
+  }
+
   Widget _buildSubItem(BuildContext context, String title, VoidCallback onTap) {
     return ListTile(
       contentPadding: const EdgeInsets.only(left: 48, right: 16),
-      title: Text(title, style: const TextStyle(fontSize: 12)),
+      title: Text(title, style: const TextStyle(fontSize: 12.5)),
       trailing: const Icon(Icons.arrow_forward_ios, size: 10, color: Colors.grey),
       dense: true,
       onTap: onTap,

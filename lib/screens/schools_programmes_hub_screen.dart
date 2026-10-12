@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../services/seed_data_service.dart';
 import '../utils/gri_colors.dart';
 
+/// Production-Grade Schools & Academic Programmes Screen
+/// Covers the 8 statutory schools, degree browser with filters, specialized research centres, and CBCS framework.
 class SchoolsProgrammesHubScreen extends StatefulWidget {
   const SchoolsProgrammesHubScreen({super.key});
 
@@ -75,6 +77,8 @@ class _SchoolsProgrammesHubScreenState extends State<SchoolsProgrammesHubScreen>
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final seed = SeedDataService.instance;
     final schools = seed.schools;
 
@@ -84,17 +88,24 @@ class _SchoolsProgrammesHubScreenState extends State<SchoolsProgrammesHubScreen>
     }).toList();
 
     return Scaffold(
+      backgroundColor: isDark ? GriColors.darkCanvas : GriColors.surfaceCanvas,
       appBar: AppBar(
-        title: const Text("Schools & Academic Programmes"),
-        backgroundColor: GriColors.forestPrimary,
-        foregroundColor: Colors.white,
+        title: const Text(
+          "Schools & Academic Programmes",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+        ),
+        backgroundColor: isDark ? GriColors.darkSurface1 : Colors.white,
+        foregroundColor: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+        elevation: 0,
         bottom: TabBar(
           controller: _tabController,
           isScrollable: true,
-          indicatorColor: GriColors.ochrePrimary,
-          labelColor: Colors.white,
-          unselectedLabelColor: Colors.white70,
-          labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+          indicatorColor: GriColors.forestPrimary,
+          indicatorWeight: 2.5,
+          labelColor: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+          unselectedLabelColor: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+          labelStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
+          unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
           tabs: const [
             Tab(text: "8 Schools of Study"),
             Tab(text: "Programmes Offered"),
@@ -108,44 +119,94 @@ class _SchoolsProgrammesHubScreenState extends State<SchoolsProgrammesHubScreen>
         children: [
           // 1. Schools of Study
           ListView.builder(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             itemCount: schools.length,
             itemBuilder: (context, index) {
               final sch = schools[index];
-              return Card(
+              return Container(
                 margin: const EdgeInsets.only(bottom: 12),
-                child: Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              sch.name,
-                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: GriColors.forestPrimary),
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: isDark ? GriColors.darkSurface1 : Colors.white,
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(
+                    color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+                    width: 1.0,
+                  ),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x06000000),
+                      blurRadius: 6,
+                      offset: Offset(0, 1),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            sch.name,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 13.5,
+                              color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
                             ),
                           ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                            decoration: BoxDecoration(color: GriColors.ochrePrimary.withOpacity(0.12), borderRadius: BorderRadius.circular(6)),
-                            child: Text("${sch.programmesCount} Progs", style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: GriColors.ochrePrimary)),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                          decoration: BoxDecoration(
+                            color: GriColors.ochrePrimary.withValues(alpha: isDark ? 0.25 : 0.1),
+                            borderRadius: BorderRadius.circular(6),
                           ),
-                        ],
+                          child: Text(
+                            "${sch.programmesCount} Progs",
+                            style: const TextStyle(
+                              fontSize: 10.5,
+                              fontWeight: FontWeight.w700,
+                              color: GriColors.ochrePrimary,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      "Dean: ${sch.dean}",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12,
+                        color: isDark ? GriColors.darkOnSurface : Colors.black87,
                       ),
-                      const SizedBox(height: 6),
-                      Text("Dean: ${sch.dean}", style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12)),
-                      Text("Email: ${sch.deanEmail} • Phone: ${sch.deanPhone}", style: TextStyle(fontSize: 11, color: Colors.grey.shade700)),
-                      const SizedBox(height: 8),
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(color: Colors.grey.shade50, borderRadius: BorderRadius.circular(6)),
-                        child: Text("Key Highlights: ${sch.highlights}", style: const TextStyle(fontSize: 11.5, height: 1.3)),
+                    ),
+                    Text(
+                      "Email: ${sch.deanEmail} • Phone: ${sch.deanPhone}",
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
                       ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 8),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant.withValues(alpha: 0.5),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        "Key Highlights: ${sch.highlights}",
+                        style: TextStyle(
+                          fontSize: 11.5,
+                          height: 1.35,
+                          color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               );
             },
@@ -157,7 +218,7 @@ class _SchoolsProgrammesHubScreenState extends State<SchoolsProgrammesHubScreen>
               // Degree Filters
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                 child: Row(
                   children: [
                     _filterChip("All", "all"),
@@ -171,42 +232,85 @@ class _SchoolsProgrammesHubScreenState extends State<SchoolsProgrammesHubScreen>
               ),
               Expanded(
                 child: ListView.builder(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                   itemCount: filteredProgs.length,
                   itemBuilder: (context, index) {
                     final p = filteredProgs[index];
-                    return Card(
+                    return Container(
                       margin: const EdgeInsets.only(bottom: 10),
-                      child: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Text(p["name"] as String, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13.5)),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                  decoration: BoxDecoration(color: GriColors.forestPrimary.withOpacity(0.08), borderRadius: BorderRadius.circular(4)),
-                                  child: Text(p["degree"] as String, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 10.5, color: GriColors.forestPrimary)),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 4),
-                            Text("School: ${p['school']} • Duration: ${p['duration']}", style: TextStyle(fontSize: 11.5, color: Colors.grey.shade700)),
-                            const SizedBox(height: 6),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("Intake: ${p['intake']} Seats", style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600)),
-                                Text("Fee: ${p['fee']}", style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: GriColors.ochrePrimary)),
-                              ],
-                            ),
-                          ],
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: isDark ? GriColors.darkSurface1 : Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+                          width: 1.0,
                         ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  p["name"] as String,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 13,
+                                    color: isDark ? GriColors.darkOnSurface : GriColors.onSurface,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: GriColors.forestPrimary.withValues(alpha: isDark ? 0.25 : 0.08),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Text(
+                                  p["degree"] as String,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 10,
+                                    color: GriColors.forestPrimary,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            "School: ${p['school']} • Duration: ${p['duration']}",
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Intake: ${p['intake']} Seats",
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w600,
+                                  color: isDark ? GriColors.darkOnSurface : Colors.black87,
+                                ),
+                              ),
+                              Text(
+                                "Fee: ${p['fee']}",
+                                style: const TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold,
+                                  color: GriColors.ochrePrimary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     );
                   },
@@ -217,32 +321,67 @@ class _SchoolsProgrammesHubScreenState extends State<SchoolsProgrammesHubScreen>
 
           // 3. Specialized Centres & Extension
           ListView.builder(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             itemCount: _centres.length,
             itemBuilder: (context, index) {
               final c = _centres[index];
-              return Card(
+              return Container(
                 margin: const EdgeInsets.only(bottom: 12),
-                child: Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(c["name"] ?? "", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13.5, color: GriColors.forestPrimary)),
-                      const SizedBox(height: 4),
-                      Text("Director / Head: ${c['director']}", style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 11.5)),
-                      const SizedBox(height: 6),
-                      Text(c["mandate"] ?? "", style: const TextStyle(fontSize: 12, height: 1.35)),
-                      const Divider(height: 16),
-                      Row(
-                        children: [
-                          const Icon(Icons.email_outlined, size: 13, color: Colors.grey),
-                          const SizedBox(width: 6),
-                          Text(c["contact"] ?? "", style: TextStyle(fontSize: 11, color: Colors.grey.shade800)),
-                        ],
-                      ),
-                    ],
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: isDark ? GriColors.darkSurface1 : Colors.white,
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(
+                    color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+                    width: 1.0,
                   ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      c["name"] ?? "",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 13.5,
+                        color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      "Director / Head: ${c['director']}",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 11.5,
+                        color: isDark ? GriColors.darkOnSurface : Colors.black87,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      c["mandate"] ?? "",
+                      style: TextStyle(
+                        fontSize: 11.5,
+                        height: 1.35,
+                        color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    const Divider(height: 1),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Icon(Icons.email_outlined, size: 13, color: isDark ? GriColors.darkOnSurfaceVariant : Colors.grey),
+                        const SizedBox(width: 6),
+                        Text(
+                          c["contact"] ?? "",
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: isDark ? GriColors.darkOnSurface : Colors.black87,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               );
             },
@@ -250,24 +389,33 @@ class _SchoolsProgrammesHubScreenState extends State<SchoolsProgrammesHubScreen>
 
           // 4. CBCS Academic Regulations
           ListView(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             children: [
-              Card(
-                color: GriColors.forestContainer.withOpacity(0.5),
-                child: const Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: Text(
-                    "Choice Based Credit System (CBCS) Framework",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: GriColors.forestOnContainer),
+              Container(
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: GriColors.forestPrimary.withValues(alpha: isDark ? 0.25 : 0.08),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: GriColors.forestPrimary.withValues(alpha: 0.2),
+                    width: 1.0,
+                  ),
+                ),
+                child: const Text(
+                  "Choice Based Credit System (CBCS) Framework",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 13.5,
+                    color: GriColors.forestPrimary,
                   ),
                 ),
               ),
               const SizedBox(height: 12),
-              _buildCbcsCard("Core Courses (CC)", "Compulsory discipline-specific papers covering foundational and advanced domain expertise. Accounting for ~60% of total credits."),
-              _buildCbcsCard("Discipline Specific Electives (DSE)", "Advanced elective papers chosen by students from their respective department domain."),
-              _buildCbcsCard("Generic Electives / Non-Major (GE)", "Interdisciplinary papers selected from other Schools (e.g., Computer Science student studying Rural Energy or Folk Arts)."),
-              _buildCbcsCard("Nai Talim & Village Placement (VPP)", "Mandatory 2 credits field immersion where students stay in designated rural villages for participatory research."),
-              _buildCbcsCard("Continuous Internal Assessment (CIA)", "40% weightage allocated across mid-semester tests, seminar presentations, assignments, and class attendance (>75% mandatory)."),
+              _buildCbcsCard(context, "Core Courses (CC)", "Compulsory discipline-specific papers covering foundational and advanced domain expertise. Accounting for ~60% of total credits."),
+              _buildCbcsCard(context, "Discipline Specific Electives (DSE)", "Advanced elective papers chosen by students from their respective department domain."),
+              _buildCbcsCard(context, "Generic Electives / Non-Major (GE)", "Interdisciplinary papers selected from other Schools (e.g., Computer Science student studying Rural Energy or Folk Arts)."),
+              _buildCbcsCard(context, "Nai Talim & Village Placement (VPP)", "Mandatory 2 credits field immersion where students stay in designated rural villages for participatory research."),
+              _buildCbcsCard(context, "Continuous Internal Assessment (CIA)", "40% weightage allocated across mid-semester tests, seminar presentations, assignments, and class attendance (>75% mandatory)."),
             ],
           ),
         ],
@@ -277,32 +425,66 @@ class _SchoolsProgrammesHubScreenState extends State<SchoolsProgrammesHubScreen>
 
   Widget _filterChip(String label, String value) {
     final isSelected = _programmeFilter == value;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.only(right: 6),
       child: FilterChip(
         selected: isSelected,
-        label: Text(label, style: TextStyle(fontSize: 11, color: isSelected ? Colors.white : Colors.black87)),
+        label: Text(
+          label,
+          style: TextStyle(
+            fontSize: 11,
+            fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+            color: isSelected ? Colors.white : (isDark ? GriColors.darkOnSurface : Colors.black87),
+          ),
+        ),
         selectedColor: GriColors.forestPrimary,
-        backgroundColor: Colors.grey.shade100,
+        backgroundColor: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
         checkmarkColor: Colors.white,
+        side: BorderSide(
+          color: isSelected ? GriColors.forestPrimary : (isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant),
+          width: 0.8,
+        ),
         onSelected: (_) => setState(() => _programmeFilter = value),
       ),
     );
   }
 
-  Widget _buildCbcsCard(String title, String desc) {
-    return Card(
+  Widget _buildCbcsCard(BuildContext context, String title, String desc) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Container(
       margin: const EdgeInsets.only(bottom: 10),
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: GriColors.forestPrimary)),
-            const SizedBox(height: 4),
-            Text(desc, style: const TextStyle(fontSize: 12, height: 1.3)),
-          ],
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: isDark ? GriColors.darkSurface1 : Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+          width: 1.0,
         ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 13,
+              color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            desc,
+            style: TextStyle(
+              fontSize: 11.5,
+              height: 1.35,
+              color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+            ),
+          ),
+        ],
       ),
     );
   }

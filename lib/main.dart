@@ -21,6 +21,8 @@ import 'screens/ask_gri_ai_screen.dart';
 import 'screens/official_document_center_screen.dart';
 import 'screens/faculty_staff_portal_screen.dart';
 
+import 'screens/gri_splash_screen.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
@@ -32,7 +34,9 @@ void main() {
 }
 
 class GriApplication extends StatelessWidget {
-  const GriApplication({super.key});
+  const GriApplication({super.key, this.home});
+
+  final Widget? home;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +46,7 @@ class GriApplication extends StatelessWidget {
       theme: GriColors.lightTheme,
       darkTheme: GriColors.darkTheme,
       themeMode: ThemeMode.system,
-      home: const MainScaffold(),
+      home: home ?? const GriSplashScreen(),
     );
   }
 }
@@ -174,15 +178,20 @@ class MainScaffold extends StatelessWidget {
           ),
           bottomNavigationBar: NavigationBar(
             selectedIndex: selectedNavIndex,
-            backgroundColor: Colors.white,
-            indicatorColor: GriColors.forestPrimary.withOpacity(0.12),
+            backgroundColor: Theme.of(context).brightness == Brightness.dark
+                ? GriColors.darkSurface1
+                : Colors.white,
+            indicatorColor: GriColors.forestPrimary.withValues(alpha: 0.14),
+            elevation: 1,
+            height: 64,
+            labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
             onDestinationSelected: (index) {
               provider.switchTab(navItems[index].tab);
             },
             destinations: navItems
                 .map((item) => NavigationDestination(
-                      icon: Icon(item.icon),
-                      selectedIcon: Icon(item.icon, color: GriColors.forestPrimary),
+                      icon: Icon(item.icon, size: 22),
+                      selectedIcon: Icon(item.icon, color: GriColors.forestPrimary, size: 22),
                       label: item.title,
                     ))
                 .toList(),
