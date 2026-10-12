@@ -44,7 +44,7 @@ class _StudentServicesHubScreenState extends State<StudentServicesHubScreen> wit
           child: TabBar(
             controller: _tabController,
             labelColor: GriColors.forestPrimary,
-            unselectedColor: Colors.grey.shade600,
+            unselectedLabelColor: Colors.grey.shade600,
             indicatorColor: GriColors.forestPrimary,
             labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
             tabs: const [

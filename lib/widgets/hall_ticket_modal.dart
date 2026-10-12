@@ -23,6 +23,7 @@ class HallTicketModal extends StatelessWidget {
             // Header
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
                 Expanded(
                   child: Row(
                     children: [

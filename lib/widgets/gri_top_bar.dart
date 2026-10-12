@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/gri_provider.dart';
-import '../models/user_model.dart';
 import '../utils/gri_colors.dart';
 import '../utils/gri_motion.dart';
 import '../screens/global_website_search_screen.dart';

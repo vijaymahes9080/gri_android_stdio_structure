@@ -317,6 +317,8 @@ class DepartmentModel {
   final List<String> programmes;
   final String researchAreas;
 
+  String get headOfDepartment => hod;
+
   DepartmentModel({
     required this.id,
     required this.name,
@@ -376,6 +378,8 @@ class OfficialDownloadModel {
   final String authority;
   final String instructions;
 
+  String get downloadUrl => fileUrl;
+
   OfficialDownloadModel({
     required this.id,
     required this.title,
@@ -394,6 +398,9 @@ class ScholarshipItemModel {
   final String deadline;
   final String officialNoticeUrl;
   final List<String> eligibility;
+
+  String get title => name;
+  String get portalUrl => officialNoticeUrl;
 
   ScholarshipItemModel({
     required this.id,

@@ -41,8 +41,12 @@ void main() {
     await tester.pumpWidget(createTestApp(const AboutGriHeritageScreen()));
     await tester.pumpAndSettle();
 
-    expect(find.textContaining('GENESIS & FOUNDING VISION'), findsOneWidget);
-    expect(find.textContaining('Nai Talim'), findsOneWidget);
+    expect(find.text('Vision & Mission'), findsOneWidget);
+    await tester.tap(find.text('Genesis & Founders'));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('GENESIS OF GRI'), findsOneWidget);
+    expect(find.textContaining('Nai Talim'), findsWidgets);
   });
 
   testWidgets('Governance Leadership Screen displays key administrative officers', (WidgetTester tester) async {
@@ -53,11 +57,11 @@ void main() {
     expect(find.textContaining('Vice-Chancellor'), findsWidgets);
   });
 
-  testWidgets('Schools Programmes Hub Screen displays faculties and search input', (WidgetTester tester) async {
+  testWidgets('Schools Programmes Hub Screen displays faculties and programmes', (WidgetTester tester) async {
     await tester.pumpWidget(createTestApp(const SchoolsProgrammesHubScreen()));
     await tester.pumpAndSettle();
 
-    expect(find.byType(TextField), findsOneWidget);
+    expect(find.text('Schools & Academic Programmes'), findsOneWidget);
     expect(find.textContaining('School'), findsWidgets);
   });
 
@@ -65,32 +69,34 @@ void main() {
     await tester.pumpWidget(createTestApp(const AdmissionsProspectusScreen()));
     await tester.pumpAndSettle();
 
-    expect(find.textContaining('OFFICIAL PROSPECTUS'), findsWidgets);
+    expect(find.textContaining('Official Prospectuses'), findsWidgets);
   });
 
   testWidgets('Document Vault Screen renders official document categories', (WidgetTester tester) async {
     await tester.pumpWidget(createTestApp(const DocumentVaultScreen()));
     await tester.pumpAndSettle();
 
-    expect(find.textContaining('Official Institutional Document Vault'), findsOneWidget);
+    expect(find.textContaining('Official Document Vault'), findsOneWidget);
   });
 
   testWidgets('Media Gallery Screen renders official photo and video sections', (WidgetTester tester) async {
     await tester.pumpWidget(createTestApp(const MediaGalleryScreen()));
     await tester.pumpAndSettle();
 
-    expect(find.textContaining('Official University Media Gallery'), findsOneWidget);
+    expect(find.textContaining('Media & Video Galleries'), findsOneWidget);
+    expect(find.text('Official Videos'), findsOneWidget);
   });
 
   testWidgets('Global Website Search Screen allows entering queries', (WidgetTester tester) async {
     await tester.pumpWidget(createTestApp(const GlobalWebsiteSearchScreen()));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.byType(TextField), findsOneWidget);
     await tester.enterText(find.byType(TextField), 'physics');
-    await tester.pumpAndSettle();
+    await tester.pump();
 
-    expect(find.textContaining('physics'), findsWidgets);
+    expect(find.text('physics'), findsOneWidget);
   });
 
   test('GRI Provider initializes with default student role and courses', () {

@@ -208,7 +208,7 @@ class _AskGriAiScreenState extends State<AskGriAiScreen> {
                 ),
                 const SizedBox(width: 8),
                 IconButton.filled(
-                  style: IconButton.filled(
+                  style: IconButton.styleFrom(
                     backgroundColor: GriColors.forestPrimary,
                   ),
                   icon: const Icon(Icons.send, size: 18),

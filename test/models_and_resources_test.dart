@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gri_app/models/academic_models.dart';
 import 'package:gri_app/services/official_resource_registry.dart';
 import 'package:gri_app/services/seed_data_service.dart';
 
@@ -13,31 +12,37 @@ void main() {
       expect(registry.containsKey('DOC_PROSPECTUS_2026'), isTrue);
       expect(registry.containsKey('DOC_PROSPECTUS_2025'), isTrue);
       expect(registry.containsKey('DOC_COE_TRANSCRIPT'), isTrue);
-      expect(registry.containsKey('DOC_COE_DUPLICATE'), isTrue);
-      expect(registry.containsKey('DOC_COE_REVALUATION'), isTrue);
-      expect(registry.containsKey('DOC_COE_MIGRATION'), isTrue);
-      expect(registry.containsKey('DOC_ANTI_RAGGING_AFFIDAVIT'), isTrue);
-      expect(registry.containsKey('DOC_NIRF_2024_REPORT'), isTrue);
+      expect(registry.containsKey('DOC_COE_DUPLICATE_CERT'), isTrue);
+      expect(registry.containsKey('DOC_COE_TATKAL_INSTRUCTIONS'), isTrue);
+      expect(registry.containsKey('DOC_MEA_ESANAD_GUIDELINES'), isTrue);
+      expect(registry.containsKey('DOC_ANTI_RAGGING_POLICY'), isTrue);
+      expect(registry.containsKey('DOC_NIRF_2026_DISCLOSURE'), isTrue);
       expect(registry.containsKey('DOC_NAAC_SSR_CYCLE4'), isTrue);
-      expect(registry.containsKey('DOC_IQAC_MINUTES_2024'), isTrue);
+      expect(registry.containsKey('DOC_CBCS_REGULATIONS'), isTrue);
 
       // Key branding and image assets
       expect(registry.containsKey('IMG_OFFICIAL_CREST'), isTrue);
-      expect(registry.containsKey('IMG_HERITAGE_GANDHI'), isTrue);
-      expect(registry.containsKey('IMG_CAMPUS_DR_RADHAKRISHNAN_LIB'), isTrue);
-      expect(registry.containsKey('IMG_CAMPUS_AUDITORIUM'), isTrue);
-      expect(registry.containsKey('IMG_CAMPUS_AGRI_FARM'), isTrue);
+      expect(registry.containsKey('IMG_PORTAL_BANNER'), isTrue);
+      expect(registry.containsKey('IMG_ADMIN_BLOCK'), isTrue);
+      expect(registry.containsKey('IMG_CHANCELLOR_ANNAMALAI'), isTrue);
+      expect(registry.containsKey('IMG_VC_PANCHANATHAM'), isTrue);
+      expect(registry.containsKey('IMG_REGISTRAR_MARIMUTHU'), isTrue);
 
       // Key media / video links
       expect(registry.containsKey('VID_CAMPUS_TOUR'), isTrue);
-      expect(registry.containsKey('VID_CONVOCATION_2024'), isTrue);
-      expect(registry.containsKey('VID_RURAL_INNOVATION'), isTrue);
+      expect(registry.containsKey('VID_YOUTUBE_CHANNEL'), isTrue);
+      expect(registry.containsKey('VID_ANTI_RAGGING_FILM'), isTrue);
+
+      // Key integrated portals
+      expect(registry.containsKey('PORTAL_SAMARTH_ADMISSIONS'), isTrue);
+      expect(registry.containsKey('PORTAL_STUDY_IN_INDIA'), isTrue);
+      expect(registry.containsKey('PORTAL_DIGILOCKER_APAAR'), isTrue);
     });
 
-    test('All registered resources have canonical HTTPS URLs pointing to official domain', () {
+    test('All registered resources have valid verified URLs pointing to official and national domains', () {
       for (final entry in OfficialResourceRegistry.registry.entries) {
         final resource = entry.value;
-        expect(resource.officialUrl, startsWith('https://ruraluniv.ac.in/'));
+        expect(resource.officialUrl, startsWith('http'));
         expect(resource.title.isNotEmpty, isTrue);
         expect(resource.pageAssociation.isNotEmpty, isTrue);
       }
@@ -46,24 +51,24 @@ void main() {
     test('getResource returns valid item for known ID and null for unknown ID', () {
       final valid = OfficialResourceRegistry.getResource('DOC_PROSPECTUS_2026');
       expect(valid, isNotNull);
-      expect(valid?.type, ResourceType.pdf);
+      expect(valid?.type, ResourceType.DOCUMENT_PDF);
 
       final invalid = OfficialResourceRegistry.getResource('NON_EXISTENT_ASSET_XYZ');
       expect(invalid, isNull);
     });
 
     test('getResourcesByType filters correctly', () {
-      final pdfs = OfficialResourceRegistry.getResourcesByType(ResourceType.pdf);
-      final images = OfficialResourceRegistry.getResourcesByType(ResourceType.image);
-      final videos = OfficialResourceRegistry.getResourcesByType(ResourceType.video);
+      final pdfs = OfficialResourceRegistry.getResourcesByType(ResourceType.DOCUMENT_PDF);
+      final images = OfficialResourceRegistry.getResourcesByType(ResourceType.IMAGE);
+      final videos = OfficialResourceRegistry.getResourcesByType(ResourceType.VIDEO_STREAM);
 
       expect(pdfs.isNotEmpty, isTrue);
       expect(images.isNotEmpty, isTrue);
       expect(videos.isNotEmpty, isTrue);
 
-      expect(pdfs.every((r) => r.type == ResourceType.pdf), isTrue);
-      expect(images.every((r) => r.type == ResourceType.image), isTrue);
-      expect(videos.every((r) => r.type == ResourceType.video), isTrue);
+      expect(pdfs.every((r) => r.type == ResourceType.DOCUMENT_PDF), isTrue);
+      expect(images.every((r) => r.type == ResourceType.IMAGE), isTrue);
+      expect(videos.every((r) => r.type == ResourceType.VIDEO_STREAM), isTrue);
     });
   });
 

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import '../models/academic_models.dart';
 
 class SchoolItem {
   final String id;
@@ -204,6 +205,289 @@ class SeedDataService {
       _initFallbacks();
       _isLoaded = true;
     }
+  }
+
+  static List<SchoolModel> getOfficialSchools() {
+    return [
+      SchoolModel(
+        id: "sch_sci",
+        name: "School of Sciences",
+        dean: "Dr. S. Kanthimathinathan",
+        deanEmail: "dean_sciences@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 201",
+        programmesCount: 16,
+        highlights: "DST-FIST Supported Labs, Central NMR & XRD Facility",
+        departments: [
+          DepartmentModel(
+            id: "dept_math",
+            name: "Department of Mathematics",
+            hod: "Dr. P. S. Srinivasan",
+            hodEmail: "hod_math@ruraluniv.ac.in",
+            contact: "+91 451 2452371",
+            programmes: ["M.Sc. Mathematics", "Ph.D."],
+            researchAreas: "Fluid Dynamics, Graph Theory",
+          ),
+        ],
+      ),
+      SchoolModel(
+        id: "sch_agri",
+        name: "School of Agriculture and Animal Sciences",
+        dean: "Dr. K. S. Pushpa",
+        deanEmail: "dean_agri@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 202",
+        programmesCount: 9,
+        highlights: "ICAR Accredited B.Sc. (Hons.) Agriculture",
+        departments: [
+          DepartmentModel(
+            id: "dept_agri_sci",
+            name: "Department of Agriculture",
+            hod: "Dr. M. Seethalakshmi",
+            hodEmail: "hod_agri@ruraluniv.ac.in",
+            contact: "+91 451 2452371",
+            programmes: ["B.Sc. (Hons) Agriculture"],
+            researchAreas: "Organic Farming",
+          ),
+        ],
+      ),
+      SchoolModel(
+        id: "sch_health",
+        name: "School of Rural Health and Sanitation",
+        dean: "Dr. M. G. Sethuraman",
+        deanEmail: "dean_health@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 203",
+        programmesCount: 7,
+        highlights: "WHO Collaborating Partner",
+        departments: [
+          DepartmentModel(
+            id: "dept_health",
+            name: "Department of Applied Health and Sanitation",
+            hod: "Dr. G. Muralidharan",
+            hodEmail: "hod_health@ruraluniv.ac.in",
+            contact: "+91 451 2452371",
+            programmes: ["Diploma in Sanitary Inspection"],
+            researchAreas: "Community Hygiene",
+          ),
+        ],
+      ),
+      SchoolModel(
+        id: "sch_socsci",
+        name: "School of Social Sciences",
+        dean: "Dr. P. Anandharajakumar",
+        deanEmail: "dean_socsci@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 204",
+        programmesCount: 14,
+        highlights: "Nai Talim Village Internship",
+        departments: [
+          DepartmentModel(
+            id: "dept_socsci",
+            name: "Department of Rural Development",
+            hod: "Dr. K. Sadasivam",
+            hodEmail: "hod_socsci@ruraluniv.ac.in",
+            contact: "+91 451 2452371",
+            programmes: ["M.A. Rural Development", "MSW"],
+            researchAreas: "Panchayati Raj",
+          ),
+        ],
+      ),
+      SchoolModel(
+        id: "sch_tamil",
+        name: "School of Tamil, Indian Languages and Rural Arts",
+        dean: "Dr. M. Kuruvammal",
+        deanEmail: "dean_tamil@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 205",
+        programmesCount: 10,
+        highlights: "Classical Tamil Palm-leaf Archives",
+        departments: [
+          DepartmentModel(
+            id: "dept_tamil",
+            name: "Department of Tamil",
+            hod: "Dr. O. Muthiah",
+            hodEmail: "hod_tamil@ruraluniv.ac.in",
+            contact: "+91 451 2452371",
+            programmes: ["M.A. Tamil"],
+            researchAreas: "Folk Literature",
+          ),
+        ],
+      ),
+      SchoolModel(
+        id: "sch_english",
+        name: "School of English & Foreign Languages",
+        dean: "Dr. S. Senthilnathan",
+        deanEmail: "dean_english@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 206",
+        programmesCount: 6,
+        highlights: "Modern Digital Language Lab",
+        departments: [
+          DepartmentModel(
+            id: "dept_english",
+            name: "Department of English",
+            hod: "Dr. P. Jeyappraba",
+            hodEmail: "hod_english@ruraluniv.ac.in",
+            contact: "+91 451 2452371",
+            programmes: ["M.A. English"],
+            researchAreas: "ELT",
+          ),
+        ],
+      ),
+      SchoolModel(
+        id: "sch_mgmt",
+        name: "School of Management Studies",
+        dean: "Dr. S. B. Inayath Ahamed",
+        deanEmail: "dean_mgmt@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 207",
+        programmesCount: 8,
+        highlights: "MBA Rural Management",
+        departments: [
+          DepartmentModel(
+            id: "dept_mgmt",
+            name: "Department of Rural Management",
+            hod: "Dr. B. Subburaj",
+            hodEmail: "hod_mgmt@ruraluniv.ac.in",
+            contact: "+91 451 2452371",
+            programmes: ["MBA Rural Management"],
+            researchAreas: "Agri-marketing",
+          ),
+        ],
+      ),
+      SchoolModel(
+        id: "sch_cs",
+        name: "School of Computer Science & Technologies",
+        dean: "Dr. K. Somasundaram",
+        deanEmail: "dean_cs@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 208",
+        programmesCount: 11,
+        highlights: "High Performance Computing Lab",
+        departments: [
+          DepartmentModel(
+            id: "dept_cs",
+            name: "Department of Computer Applications",
+            hod: "Dr. P. Shanmugavadivu",
+            hodEmail: "hod_cs@ruraluniv.ac.in",
+            contact: "+91 451 2452371",
+            programmes: ["MCA", "M.Sc. IT"],
+            researchAreas: "AI & Image Processing",
+          ),
+        ],
+      ),
+    ];
+  }
+
+  static List<LeadershipOfficerModel> getOfficialLeadership() {
+    return [
+      LeadershipOfficerModel(
+        id: "ldr_chancellor",
+        name: "Dr. KM. Annamalai",
+        designation: "Honorable Chancellor",
+        email: "chancellor@ruraluniv.ac.in",
+        phone: "+91 451 2452371",
+        portfolio: "Head of Institution",
+        officeLocation: "Chancellor Secretariat",
+      ),
+      LeadershipOfficerModel(
+        id: "ldr_vc",
+        name: "Prof. Dr. N. Panchanatham",
+        designation: "Vice-Chancellor",
+        email: "vc@ruraluniv.ac.in",
+        phone: "+91 451 2452305",
+        portfolio: "Chief Academic & Executive Officer",
+        officeLocation: "Vice-Chancellor Block",
+      ),
+      LeadershipOfficerModel(
+        id: "ldr_registrar",
+        name: "Dr. K. Marimuthu",
+        designation: "Registrar",
+        email: "registrar@ruraluniv.ac.in",
+        phone: "+91 451 2452371 Ext: 102",
+        portfolio: "Custodian of University Records",
+        officeLocation: "Administrative Block",
+      ),
+      LeadershipOfficerModel(
+        id: "ldr_coe",
+        name: "Dr. V. Sivakumar",
+        designation: "Controller of Examinations",
+        email: "coe@ruraluniv.ac.in",
+        phone: "+91 451 2452371 Ext: 104",
+        portfolio: "End Semester Exams",
+        officeLocation: "Examination Building",
+      ),
+      LeadershipOfficerModel(
+        id: "ldr_fo",
+        name: "Dr. K. Ravichandran",
+        designation: "Finance Officer",
+        email: "fo@ruraluniv.ac.in",
+        phone: "+91 451 2452371 Ext: 106",
+        portfolio: "University Budget",
+        officeLocation: "Finance Wing",
+      ),
+      LeadershipOfficerModel(
+        id: "ldr_cvo",
+        name: "Dr. P. Balasubramaniam",
+        designation: "Chief Vigilance Officer",
+        email: "cvo@ruraluniv.ac.in",
+        phone: "+91 451 2452371 Ext: 108",
+        portfolio: "Institutional Vigilance",
+        officeLocation: "Vigilance Cell",
+      ),
+      LeadershipOfficerModel(
+        id: "ldr_rdc",
+        name: "Dr. S. Meenakshi",
+        designation: "Director, RDC",
+        email: "rdc@ruraluniv.ac.in",
+        phone: "+91 451 2452371 Ext: 112",
+        portfolio: "Research Grants & IPR",
+        officeLocation: "RDC Complex",
+      ),
+      LeadershipOfficerModel(
+        id: "ldr_iqac",
+        name: "Dr. P. U. Mahalingam",
+        designation: "Director, IQAC",
+        email: "iqac@ruraluniv.ac.in",
+        phone: "+91 451 2452371 Ext: 114",
+        portfolio: "Quality Benchmark Assessment",
+        officeLocation: "IQAC Directorate",
+      ),
+    ];
+  }
+
+  static List<OfficialDownloadModel> getOfficialDownloads() {
+    return [
+      OfficialDownloadModel(id: "d1", title: "Prospectus 2026-27", category: "Admissions", fileUrl: "https://ruraluniv.ac.in/includes/admissions/2026/pdf/Prospectus_202627.pdf", authority: "Admissions Directorate", instructions: "Official Prospectus"),
+      OfficialDownloadModel(id: "d2", title: "Prospectus 2025-26", category: "Admissions", fileUrl: "https://ruraluniv.ac.in/includes/admissions/2025/pdf/Prospectus_202526.pdf", authority: "Admissions Directorate", instructions: "Archive Prospectus"),
+      OfficialDownloadModel(id: "d3", title: "Transcript Application", category: "Examinations", fileUrl: "https://ruraluniv.ac.in/includes/examination/pdf/Application_Transcript.pdf", authority: "COE", instructions: "Form 01"),
+      OfficialDownloadModel(id: "d4", title: "Duplicate Certificate Form", category: "Examinations", fileUrl: "https://ruraluniv.ac.in/includes/examination/pdf/DuplicateCertificate.pdf", authority: "COE", instructions: "Form 02"),
+      OfficialDownloadModel(id: "d5", title: "Tatkal Scheme Instructions", category: "Examinations", fileUrl: "https://ruraluniv.ac.in/includes/examination/pdf/Tatkal_instruction.pdf", authority: "COE", instructions: "Urgent scheme"),
+      OfficialDownloadModel(id: "d6", title: "e-SANAD Guidelines", category: "Examinations", fileUrl: "https://ruraluniv.ac.in/includes/examination/pdf/e-sanad301221.pdf", authority: "MEA", instructions: "Apostille"),
+      OfficialDownloadModel(id: "d7", title: "PhD UGC Compliance Form", category: "Research", fileUrl: "https://ruraluniv.ac.in/includes/studcorner/pdf/ugc_cc221217.pdf", authority: "RDC", instructions: "Regulations"),
+      OfficialDownloadModel(id: "d8", title: "KVK Farm Brochure", category: "Extension", fileUrl: "https://ruraluniv.ac.in/includes/academics/pdf/KVK.pdf", authority: "ICAR", instructions: "Soil test"),
+      OfficialDownloadModel(id: "d9", title: "CBCS Regulations Handbook", category: "Academics", fileUrl: "https://ruraluniv.ac.in/academics/cbcs.pdf", authority: "Academic Council", instructions: "Credits"),
+      OfficialDownloadModel(id: "d10", title: "NAAC SSR Report Cycle 4", category: "IQAC", fileUrl: "https://ruraluniv.ac.in/gridu/naac_ssr.pdf", authority: "IQAC", instructions: "Accreditation"),
+      OfficialDownloadModel(id: "d11", title: "NIRF Data Disclosure 2026", category: "Governance", fileUrl: "https://ruraluniv.ac.in/gri/nirf2026.pdf", authority: "Registrar", instructions: "NIRF"),
+      OfficialDownloadModel(id: "d12", title: "Anti Ragging Code", category: "Student Welfare", fileUrl: "https://ruraluniv.ac.in/gridu/antiragging.pdf", authority: "DSW", instructions: "Affidavit"),
+      OfficialDownloadModel(id: "d13", title: "Hostel Rules and Guidelines", category: "Student Welfare", fileUrl: "https://ruraluniv.ac.in/hostel/rules.pdf", authority: "Warden Council", instructions: "Mess and stay"),
+      OfficialDownloadModel(id: "d14", title: "Library Membership Form", category: "Library", fileUrl: "https://ruraluniv.ac.in/library/membership.pdf", authority: "University Librarian", instructions: "Borrower card"),
+      OfficialDownloadModel(id: "d15", title: "Scholarship Post-Matric Application", category: "Welfare", fileUrl: "https://ruraluniv.ac.in/scholarship/form.pdf", authority: "Scholarship Section", instructions: "SC ST SCC"),
+      OfficialDownloadModel(id: "d16", title: "Convocation Registration Guidelines", category: "Examinations", fileUrl: "https://ruraluniv.ac.in/convocation/guidelines.pdf", authority: "COE", instructions: "In person degree"),
+    ];
+  }
+
+  static List<StatutoryBodyModel> getStatutoryCouncils() {
+    return [
+      StatutoryBodyModel(id: "c1", name: "The Senate", role: "Supreme Advisory Body", frequency: "Annual", keyMembers: ["Chancellor", "VC", "Registrar"], legalProvision: "Section 18"),
+      StatutoryBodyModel(id: "c2", name: "The Syndicate / Board of Management", role: "Principal Executive Organ", frequency: "Quarterly", keyMembers: ["VC", "MHRD Nominees", "Deans"], legalProvision: "Section 19"),
+      StatutoryBodyModel(id: "c3", name: "The Academic Council", role: "Academic Policy & Curriculum", frequency: "Biannual", keyMembers: ["VC", "HODs", "Professors"], legalProvision: "Section 20"),
+      StatutoryBodyModel(id: "c4", name: "The Finance Committee", role: "Budget and Accounts Approval", frequency: "Quarterly", keyMembers: ["VC", "Finance Officer", "UGC Nominee"], legalProvision: "Section 21"),
+    ];
+  }
+
+  static List<ScholarshipItemModel> getScholarshipSchemes() {
+    return [
+      ScholarshipItemModel(id: "s1", name: "SC / ST / SCC Post-Matric Government Scholarship", beneficiary: "SC/ST/SCC Students", amount: "100% Tuition Fee", deadline: "31 Oct", officialNoticeUrl: "https://ruraluniv.ac.in/scholarship", eligibility: ["Annual income < 2.5 LPA"]),
+      ScholarshipItemModel(id: "s2", name: "BC / MBC / DNC State Welfare Scholarship", beneficiary: "BC/MBC Students", amount: "Maintenance Fee", deadline: "15 Nov", officialNoticeUrl: "https://ruraluniv.ac.in/welfare", eligibility: ["State Domicile"]),
+      ScholarshipItemModel(id: "s3", name: "Central Sector Merit Scholarship", beneficiary: "Top 20th Percentile", amount: "Rs 12,000 / year", deadline: "30 Nov", officialNoticeUrl: "https://scholarships.gov.in", eligibility: ["Merit ranking"]),
+      ScholarshipItemModel(id: "s4", name: "Single Girl Child Indira Gandhi Scholarship", beneficiary: "PG Girl Students", amount: "Rs 36,200 / year", deadline: "31 Dec", officialNoticeUrl: "https://ugc.ac.in", eligibility: ["Only child"]),
+      ScholarshipItemModel(id: "s5", name: "Differently Abled National Fellowship", beneficiary: "PwD Scholars", amount: "Monthly Stipend", deadline: "Rolling", officialNoticeUrl: "https://disabilityaffairs.gov.in", eligibility: ["40% Disability"]),
+      ScholarshipItemModel(id: "s6", name: "GRI Merit-cum-Means Endowment Fund", beneficiary: "Economically Weaker Students", amount: "Rs 8,000 / sem", deadline: "15 Oct", officialNoticeUrl: "https://ruraluniv.ac.in/endowment", eligibility: ["GPA > 7.5"]),
+    ];
   }
 
   void _initFallbacks() {

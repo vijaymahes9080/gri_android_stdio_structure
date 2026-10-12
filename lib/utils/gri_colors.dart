@@ -95,7 +95,7 @@ class GriColors {
         scrolledUnderElevation: 0.5,
         centerTitle: false,
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: surfaceCard,
         elevation: 0,
         margin: EdgeInsets.zero,
@@ -146,7 +146,7 @@ class GriColors {
         scrolledUnderElevation: 0.5,
         centerTitle: false,
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: darkSurface1,
         elevation: 0,
         margin: EdgeInsets.zero,

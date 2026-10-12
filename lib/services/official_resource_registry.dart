@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../utils/gri_colors.dart';
@@ -7,7 +6,12 @@ enum ResourceType {
   IMAGE,
   DOCUMENT_PDF,
   VIDEO_STREAM,
-  PORTAL,
+  PORTAL;
+
+  static ResourceType get pdf => DOCUMENT_PDF;
+  static ResourceType get image => IMAGE;
+  static ResourceType get video => VIDEO_STREAM;
+  static ResourceType get portal => PORTAL;
 }
 
 class OfficialResource {
@@ -36,6 +40,9 @@ class OfficialResource {
   });
 
   bool get isBundledLocally => localPath != null && localPath!.isNotEmpty;
+
+  String get officialUrl => sourceUrl;
+  String get pageAssociation => module;
 
   String get formattedSize {
     if (sizeBytes == null || sizeBytes == 0) return "Available on Server";
@@ -297,8 +304,15 @@ class OfficialResourceRegistry {
     ),
   };
 
+  /// Public read-only access to the full registered resource map
+  static Map<String, OfficialResource> get registry => Map.unmodifiable(_registry);
+
   /// Retrieve a registered resource by its stable ID
   static OfficialResource? getResource(String id) => _registry[id];
+
+  /// Get resources filtered by type
+  static List<OfficialResource> getResourcesByType(ResourceType type) =>
+      _registry.values.where((r) => r.type == type).toList();
 
   /// Get all registered official documents
   static List<OfficialResource> getDocuments() =>
