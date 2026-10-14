@@ -16,6 +16,7 @@ This audit contrasts the **live web presence** of The Gandhigram Rural Institute
 | **Campus Infrastructure** | Static descriptions of library, health centre, hostels | `CampusFacilitiesScreen` with GPS coordinates & map toggle | **Mobile Advantage** | App provides one-touch Google Maps navigation and instant security dialer. |
 | **Grievance Redressal** | Static PDF circular with UGC contact info | Interactive `StudentServicesHubScreen` filing form | **Mobile Advantage** | App provides interactive submission workflow and status badges (`RESOLVED`, `IN_REVIEW`). |
 | **Notices & Circulars** | Web text marquee ticker with PDF links | Live Notice Card on `HomeDashboardScreen` | **Low Gap** | Implement background push notifications for newly published CoE circulars. |
+| **Institutional Web Portals** | 12 specialized web portals (Student, Scholar, Hostel, LMS, E-Track, Attendance) | Quick service dock on `HomeDashboardScreen` | **High Value Opportunity** | Implement hybrid secure session WebViews with JWT cookie injection and biometric token re-use. |
 | **Intranet OPAC Library** | Private LAN IP (`10.10.12.48`) OPAC updates | Library facility info tile | **Blocked by Network** | Provide intranet fallback banner notifying students to connect to campus Wi-Fi. |
 
 ---

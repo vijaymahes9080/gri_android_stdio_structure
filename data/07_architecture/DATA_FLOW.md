@@ -78,3 +78,38 @@ graph TD
 | **2.0 Academic Engine** | Roll Number, Semester index, Course code query | Hall Ticket Dossier, QR Hash, Subject Syllabus | `D2: Academic Syllabi` |
 | **3.0 Campus Navigator** | Facility Category filter, GPS location trigger | Coordinates (`10.2798, 77.9333`), Phone Hotlines | `D3: Campus Facilities` |
 | **4.0 Sync Manager** | Local cache timestamps, Network connectivity status | Verified Document Blobs, Delta JSON Updates | `D4: Document Vault` |
+
+
+---
+
+## 3. DFD Level 2 — E-Governance & Portal Single Sign-On (SSO) Flow
+
+The Level 2 decomposition specifies the data exchange across the university's mission-critical web portals:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Student as Student / Scholar User
+    participant App as GRI Mobile Client
+    participant Vault as Secure Storage (Keystore)
+    participant Gateway as Portal SSO Gateway
+    participant Portal as Target Portal (Hostel/GRIIMS/LMS)
+
+    Student->>App: Launch Portal (e.g. Hostel / LMS / G-Track)
+    App->>Vault: Retrieve User Credentials / JWT Session Token
+    alt Token Valid
+        Vault-->>App: Return Active Secure Session
+        App->>Gateway: POST /sso/verify-token (Bearer Token)
+        Gateway-->>App: Issue Portal Authorization Cookie
+        App->>Portal: Load In-App WebView with Injected Session Cookie
+        Portal-->>Student: Display Authenticated Dashboard Directly
+    else Token Expired / First Login
+        App->>Gateway: Request OAuth2 / SAML Credentials Flow
+        Student->>App: Input Institutional Credentials
+        Gateway->>Portal: Authenticate User
+        Portal-->>Gateway: Return Session Payload & Roles
+        Gateway-->>App: Deliver Encrypted Tokens
+        App->>Vault: Store Encrypted Session Token
+        App->>Portal: Launch Authenticated In-App WebView
+    end
+```

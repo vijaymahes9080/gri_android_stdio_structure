@@ -52,7 +52,11 @@ lib/
 │   │   ├── domain/
 │   │   └── presentation/         # StudentServicesHubScreen, GrievanceFormDialog
 │   │
-│   └── governance/               # Leadership, administration, statutory disclosures
+│   ├── governance/               # Leadership, administration, statutory disclosures
+│   └── portals/                  # Central Web Portal Hub & E-Governance Gateways
+│       ├── data/                 # Session tokens, cookie manager, SSO bridge
+│       ├── domain/               # PortalGatewayModel, DocketMovementEntity
+│       └── presentation/         # PortalHubScreen, InAppPortalWebView, ETrackStatusView
 │       ├── data/
 │       ├── domain/
 │       └── presentation/         # AdminDirectoryScreen, OfficerContactTile

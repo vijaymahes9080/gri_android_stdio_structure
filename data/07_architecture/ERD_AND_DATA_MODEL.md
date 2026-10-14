@@ -136,3 +136,46 @@ erDiagram
 | `download_url` | `TEXT` | NOT NULL | Official source link on `ruraluniv.ac.in` |
 | `sha256_checksum` | `VARCHAR(64)` | NULLABLE | SHA-256 hash for local offline verification |
 | `access_status` | `VARCHAR(40)` | NOT NULL | `PUBLIC_VERIFIED`, `RESTRICTED_LAN`, etc. |
+
+
+---
+
+## 4. Institutional Portals & E-Governance Data Models
+
+```sql
+-- Table: Portal Gateway Registry
+CREATE TABLE portal_gateways (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    portal_key VARCHAR(50) UNIQUE NOT NULL, -- e.g., 'hostel', 'griims', 'etrack', 'lms', 'attendance'
+    display_name VARCHAR(150) NOT NULL,
+    endpoint_url TEXT NOT NULL,
+    auth_strategy VARCHAR(50) NOT NULL, -- 'SSO_COOKIE', 'JWT_BEARER', 'EXTERNAL_REDIRECT'
+    target_persona VARCHAR(50) NOT NULL, -- 'STUDENT', 'SCHOLAR', 'FACULTY', 'ADMIN'
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Table: User Secure Portal Sessions
+CREATE TABLE user_portal_sessions (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    portal_id UUID REFERENCES portal_gateways(id) ON DELETE CASCADE,
+    session_token TEXT NOT NULL,
+    refresh_token TEXT,
+    expires_at TIMESTAMPTZ NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Table: G-Track Digital File Tracking Dockets
+CREATE TABLE etrack_dockets (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    docket_number VARCHAR(100) UNIQUE NOT NULL,
+    subject TEXT NOT NULL,
+    origin_department VARCHAR(150) NOT NULL,
+    current_location VARCHAR(150) NOT NULL,
+    current_officer VARCHAR(150),
+    status VARCHAR(50) NOT NULL, -- 'DISPATCHED', 'IN_TRANSIT', 'RECEIVED', 'CLOSED'
+    movement_history JSONB NOT NULL DEFAULT '[]'::jsonb,
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+```

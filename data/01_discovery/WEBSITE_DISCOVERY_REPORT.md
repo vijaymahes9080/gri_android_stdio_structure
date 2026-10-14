@@ -15,8 +15,26 @@ The content discovery of the official website of **The Gandhigram Rural Institut
 
 ## 2. Institutional Web Modules & Discovery Summary
 
-| # | Institutional Module Category | Discovered URLs | Verified Live | Inaccessible / Failed | Primary Flutter Screen Mapping |
-| :-: | :--- | :-: | :-: | :-: | :--- |
+| # | Institutional Module Category | Discovered URLs | Verified Live | Auth / Intranet | Inaccessible | Primary Flutter Screen Mapping |
+| :-: | :--- | :-: | :-: | :-: | :-: | :--- |
+| **1** | **Institutional Portals & E-Governance** | 17 | 14 | 3 | 0 | `lib/screens/home_dashboard_screen.dart` |
+| **2** | **Home & Portal Index** | 1 | 1 | 0 | 0 | `lib/screens/home_dashboard_screen.dart` |
+| **3** | **Institution Profile & Heritage** | 62 | 62 | 0 | 0 | `lib/screens/home_dashboard_screen.dart` / Drawer |
+| **4** | **General Institutional Information** | 115 | 115 | 0 | 0 | `lib/screens/official_document_center_screen.dart` |
+| **5** | **Schools, Departments & Academics** | 52 | 52 | 0 | 0 | `lib/screens/schools_programmes_hub_screen.dart` |
+| **6** | **Governance & Authorities** | 20 | 20 | 0 | 0 | `lib/screens/admin_directory_screen.dart` |
+| **7** | **Admissions & Prospectus** | 6 | 6 | 0 | 0 | `lib/screens/academics_hub_screen.dart` |
+| **8** | **Examinations & CoE Services** | 4 | 4 | 0 | 0 | `lib/screens/examination_services_screen.dart` |
+| **9** | **Campus & Infrastructure Facilities** | 5 | 5 | 0 | 0 | `lib/screens/campus_facilities_screen.dart` |
+| **10** | **Student Services & Scholarships** | 1 | 1 | 0 | 0 | `lib/screens/student_services_hub_screen.dart` |
+| **11** | **Announcements, Circulars & e-News** | 15 | 15 | 0 | 0 | `lib/screens/home_dashboard_screen.dart` |
+| **12** | **Accreditation & Statutory Disclosures**| 4 | 4 | 0 | 0 | `lib/screens/official_document_center_screen.dart` |
+| **13** | **Contact & Campus Transit** | 3 | 3 | 0 | 0 | `lib/screens/campus_facilities_screen.dart` |
+| **14** | **Research, Innovations & Publications** | 1 | 1 | 0 | 0 | `lib/screens/official_document_center_screen.dart` |
+| **15** | **Inaccessible / Deprecated Routes** | 3 | 0 | 0 | 3 | Exception Catalog (`BROKEN_LINKS.csv`) |
+| **TOTAL** | **15 Institutional Categories** | **309** | **299** | **7** | **3** | **100% Mapped to Mobile App** |
+
+--- | :-: | :-: | :-: | :--- |
 | **1** | **Home & Portal Index** | 1 | 1 | 0 | `lib/screens/home_dashboard_screen.dart` |
 | **2** | **Institution Profile & Heritage** | 62 | 62 | 0 | `lib/screens/home_dashboard_screen.dart` / Drawer |
 | **3** | **General Institutional Information** | 73 | 73 | 0 | `lib/screens/official_document_center_screen.dart` |

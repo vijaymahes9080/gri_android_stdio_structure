@@ -31,3 +31,21 @@ During the discovery and data acquisition of the official website of **The Gandh
 - `https://ruraluniv.ac.in/cell?content=cika` (HTTP 404 - Broken internal navigation link)
 - `https://ruraluniv.ac.in/includes/griims/app/login` (Connection refused - Deprecated 2018 portal)
 - Both instances are documented in [`data/10_quality_assurance/BROKEN_LINKS.csv`](file:///d:/current%20project/gri/data/10_quality_assurance/BROKEN_LINKS.csv).
+
+
+---
+
+## 3. Authentication-Protected Sub-Portals & Perimeter Boundaries
+
+The following endpoints require valid institutional credentials, multi-factor tokens, or role-based session cookies:
+
+| Endpoint URL | System Name | Access Mechanism | Mobile Handling Strategy |
+| :--- | :--- | :--- | :--- |
+| `https://portal.ruraluniv.ac.in/` | Student Portal Gateway | Roll Number + Password (HTTP 403 on direct GET) | Native Login Dialog -> Secure Cookie Injection |
+| `https://portal.ruraluniv.ac.in/lms` | LMS Portal | Student / Staff credentials (HTTP 403 on direct GET) | OAuth2 Bearer Token + In-App WebView |
+| `https://pension.ruraluniv.ac.in/` | Pensioner Portal | PPO Number + OTP (HTTP 403 on direct GET) | Dedicated Pensioner View + Encrypted Cache |
+| `https://attendance.ruraluniv.ac.in/` | Attendance Management | Faculty Biometric / Department credentials | Biometric Keyguard -> Direct Cloud Sync |
+| `https://portal.ruraluniv.ac.in/etrack` | G-Track File System | Administrative Staff credentials | In-App Barcode Scanner + Status Endpoint |
+
+### Mobile Mitigation Strategy:
+When the mobile app detects an unauthenticated user attempting to launch an authentication-protected portal, it displays an in-app biometric/credentials prompt, authenticates against the central identity provider, and injects session cookies directly into the embedded web view.
