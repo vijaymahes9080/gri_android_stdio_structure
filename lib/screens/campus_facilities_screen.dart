@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../services/seed_data_service.dart';
 import '../utils/gri_motion.dart';
 
@@ -221,24 +222,37 @@ class _CampusFacilitiesScreenState extends State<CampusFacilitiesScreen> {
                           style: TextStyle(fontSize: 11.5, color: colorScheme.onSurfaceVariant),
                         ),
                         const SizedBox(height: 12),
-                        Row(
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
                           children: [
                             OutlinedButton.icon(
                               style: OutlinedButton.styleFrom(
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                               ),
                               icon: const Icon(Icons.navigation, size: 14),
                               label: const Text("Navigate via Google Maps", style: TextStyle(fontSize: 11)),
-                              onPressed: () {},
+                              onPressed: () async {
+                                final uri = Uri.parse("https://maps.google.com/?q=10.2798,77.9333");
+                                if (await canLaunchUrl(uri)) {
+                                  await launchUrl(uri, mode: LaunchMode.externalApplication);
+                                }
+                              },
                             ),
-                            const SizedBox(width: 8),
                             OutlinedButton.icon(
                               style: OutlinedButton.styleFrom(
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                               ),
                               icon: const Icon(Icons.phone, size: 14),
                               label: const Text("Security (+91 451 2452371)", style: TextStyle(fontSize: 11)),
-                              onPressed: () {},
+                              onPressed: () async {
+                                final uri = Uri.parse("tel:+914512452371");
+                                if (await canLaunchUrl(uri)) {
+                                  await launchUrl(uri);
+                                }
+                              },
                             ),
                           ],
                         ),

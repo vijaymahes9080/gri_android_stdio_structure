@@ -304,30 +304,37 @@ class HallTicketModal extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Row(
-                  children: [
-                    Icon(Icons.verified, size: 18, color: GriColors.forestPrimary),
-                    SizedBox(width: 6),
-                    Text(
-                      "e-SANAD Verified E-Pass",
-                      style: TextStyle(
-                        fontSize: 11,
-                        fontWeight: FontWeight.bold,
-                        color: GriColors.forestPrimary,
+                const Flexible(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.verified, size: 16, color: GriColors.forestPrimary),
+                      SizedBox(width: 4),
+                      Flexible(
+                        child: Text(
+                          "e-SANAD Verified",
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                            color: GriColors.forestPrimary,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
+                const SizedBox(width: 8),
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: GriColors.forestPrimary,
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   ),
-                  icon: const Icon(Icons.download, size: 15),
+                  icon: const Icon(Icons.download, size: 14),
                   label: const Text(
-                    "Save / Close E-Ticket",
+                    "Save / Close",
                     style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold),
                   ),
                   onPressed: () {

@@ -67,9 +67,9 @@ class _ApplicationStatusScreenState extends State<ApplicationStatusScreen> {
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
-                    _buildStep("1. Application Submitted", true, "Verified with Application ID: ${user?.applicationId.isNotEmpty == true ? user!.applicationId : 'APP-2026-9042'}"),
-                    _buildStep("2. Department Roll Verification", status != AccountStatus.PENDING_APPROVAL, "Cross-verified with Head of the Department"),
-                    _buildStep("3. Registrar Directorate Approval", status == AccountStatus.APPROVED, "Authorized for full institutional campus access"),
+                    _buildStep("1. Application Submitted", true, "Verified with Application ID: ${user?.applicationId.isNotEmpty == true ? user!.applicationId : 'APP-2026-9042'}", context),
+                    _buildStep("2. Department Roll Verification", status != AccountStatus.PENDING_APPROVAL, "Cross-verified with Head of the Department", context),
+                    _buildStep("3. Registrar Directorate Approval", status == AccountStatus.APPROVED, "Authorized for full institutional campus access", context),
                   ],
                 ),
               ),
@@ -79,19 +79,23 @@ class _ApplicationStatusScreenState extends State<ApplicationStatusScreen> {
             // Clarification Form if Admin Query is present
             if (user?.adminClarificationQuery.isNotEmpty == true) ...[
               Card(
-                color: Colors.amber.shade50,
+                color: Theme.of(context).brightness == Brightness.dark ? GriColors.darkSurface2 : Colors.amber.shade50,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
-                  side: BorderSide(color: Colors.amber.shade300),
+                  side: BorderSide(color: Theme.of(context).brightness == Brightness.dark ? GriColors.darkOutlineVariant : Colors.amber.shade300),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         "Clarification Requested by Registrar:",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.brown),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                          color: Theme.of(context).brightness == Brightness.dark ? Colors.amberAccent : Colors.brown,
+                        ),
                       ),
                       const SizedBox(height: 6),
                       Text(user!.adminClarificationQuery, style: const TextStyle(fontSize: 12.5)),
@@ -101,8 +105,6 @@ class _ApplicationStatusScreenState extends State<ApplicationStatusScreen> {
                         maxLines: 2,
                         decoration: InputDecoration(
                           hintText: "Enter your response or certificate reference...",
-                          fillColor: Colors.white,
-                          filled: true,
                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                           contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                         ),
@@ -140,7 +142,8 @@ class _ApplicationStatusScreenState extends State<ApplicationStatusScreen> {
     );
   }
 
-  Widget _buildStep(String title, bool isDone, String sub) {
+  Widget _buildStep(String title, bool isDone, String sub, BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
@@ -148,7 +151,7 @@ class _ApplicationStatusScreenState extends State<ApplicationStatusScreen> {
         children: [
           Icon(
             isDone ? Icons.check_circle : Icons.radio_button_unchecked,
-            color: isDone ? GriColors.forestPrimary : Colors.grey,
+            color: isDone ? GriColors.forestPrimary : (isDark ? Colors.grey.shade600 : Colors.grey),
             size: 20,
           ),
           const SizedBox(width: 10),
@@ -156,8 +159,23 @@ class _ApplicationStatusScreenState extends State<ApplicationStatusScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: isDone ? Colors.black87 : Colors.grey)),
-                Text(sub, style: TextStyle(fontSize: 11, color: Colors.grey.shade600)),
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13,
+                    color: isDone
+                        ? (isDark ? Colors.white : Colors.black87)
+                        : (isDark ? Colors.grey.shade500 : Colors.grey),
+                  ),
+                ),
+                Text(
+                  sub,
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: isDark ? Colors.grey.shade400 : Colors.grey.shade600,
+                  ),
+                ),
               ],
             ),
           ),

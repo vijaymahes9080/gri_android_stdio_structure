@@ -44,16 +44,22 @@ class _AdminDirectoryScreenState extends State<AdminDirectoryScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Row(
-                      children: [
-                        Icon(Icons.terminal, color: Colors.greenAccent, size: 20),
-                        SizedBox(width: 8),
-                        Text(
-                          "SYSTEM GOVERNANCE TERMINAL",
-                          style: TextStyle(color: Colors.greenAccent, fontWeight: FontWeight.bold, fontSize: 12),
-                        ),
-                      ],
+                    const Expanded(
+                      child: Row(
+                        children: [
+                          Icon(Icons.terminal, color: Colors.greenAccent, size: 18),
+                          SizedBox(width: 6),
+                          Flexible(
+                            child: Text(
+                              "SYSTEM GOVERNANCE TERMINAL",
+                              style: TextStyle(color: Colors.greenAccent, fontWeight: FontWeight.bold, fontSize: 11.5),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
+                    const SizedBox(width: 6),
                     Text(
                       provider.ktorServerStatus,
                       style: const TextStyle(color: Colors.white70, fontSize: 11),
@@ -96,7 +102,9 @@ class _AdminDirectoryScreenState extends State<AdminDirectoryScreen> {
         // Publish Circular (Admin Action)
         if (provider.currentRole.name == "ADMIN" || provider.currentRole.name == "SUPER_ADMIN") ...[
           Card(
-            color: Colors.white,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? GriColors.darkSurface1
+                : Colors.white,
             child: Padding(
               padding: const EdgeInsets.all(14),
               child: Column(

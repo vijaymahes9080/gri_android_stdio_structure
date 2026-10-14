@@ -162,7 +162,53 @@ class MainScaffold extends StatelessWidget {
     int selectedNavIndex = navItems.indexWhere((item) => item.tab == provider.currentTab);
     if (selectedNavIndex == -1) selectedNavIndex = 0;
 
-    return Stack(
+    final hasModalOpen = provider.isRoleSwitcherOpen ||
+        provider.isRegistrationWizardOpen ||
+        provider.isAdminReviewOpen ||
+        provider.hallTicketData != null ||
+        provider.isAskAiOpen ||
+        provider.isDocumentCenterOpen ||
+        provider.isFacultyPortalOpen;
+    final canReturnToHome = !hasModalOpen && provider.currentTab != NavigationTab.HOME;
+
+    return PopScope(
+      canPop: !hasModalOpen && !canReturnToHome,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
+        if (provider.isRoleSwitcherOpen) {
+          provider.toggleRoleSwitcher(false);
+          return;
+        }
+        if (provider.isRegistrationWizardOpen) {
+          provider.closeRegistrationWizard();
+          return;
+        }
+        if (provider.isAdminReviewOpen) {
+          provider.closeAdminReviewModal();
+          return;
+        }
+        if (provider.hallTicketData != null) {
+          provider.clearHallTicket();
+          return;
+        }
+        if (provider.isAskAiOpen) {
+          provider.toggleAskAi(false);
+          return;
+        }
+        if (provider.isDocumentCenterOpen) {
+          provider.toggleDocumentCenter(false);
+          return;
+        }
+        if (provider.isFacultyPortalOpen) {
+          provider.toggleFacultyPortal(false);
+          return;
+        }
+        if (provider.currentTab != NavigationTab.HOME) {
+          provider.switchTab(NavigationTab.HOME);
+          return;
+        }
+      },
+      child: Stack(
       children: [
         Scaffold(
           appBar: const GriTopBar(),
@@ -322,8 +368,9 @@ class MainScaffold extends StatelessWidget {
             ),
           ),
       ],
-    );
-  }
+    ),
+  );
+}
 }
 
 class _NavItem {

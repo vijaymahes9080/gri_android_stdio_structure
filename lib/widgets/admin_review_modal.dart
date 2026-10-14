@@ -181,8 +181,11 @@ class _AdminReviewModalState extends State<AdminReviewModal> {
             const SizedBox(height: 12),
 
             // Action Buttons
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              alignment: WrapAlignment.end,
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: [
                 if (!_showRejectInput && !_showQueryInput) ...[
                   OutlinedButton.icon(
@@ -190,14 +193,12 @@ class _AdminReviewModalState extends State<AdminReviewModal> {
                     label: const Text("Request Info"),
                     onPressed: () => setState(() => _showQueryInput = true),
                   ),
-                  const SizedBox(width: 8),
                   OutlinedButton.icon(
                     style: OutlinedButton.styleFrom(foregroundColor: GriColors.error),
                     icon: const Icon(Icons.cancel, size: 16),
                     label: const Text("Reject"),
                     onPressed: () => setState(() => _showRejectInput = true),
                   ),
-                  const SizedBox(width: 8),
                   ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: GriColors.forestPrimary,

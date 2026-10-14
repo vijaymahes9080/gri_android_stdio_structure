@@ -16,17 +16,19 @@ class RoleSwitcherModal extends StatelessWidget {
     final provider = context.watch<GriProvider>();
     final currentUser = provider.currentUser;
 
-    return Container(
-      decoration: BoxDecoration(
-        color: isDark ? GriColors.darkSurface1 : Colors.white,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-        border: Border(
-          top: BorderSide(
-            color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
-            width: 1.0,
+    return Material(
+      color: Colors.transparent,
+      child: Container(
+        decoration: BoxDecoration(
+          color: isDark ? GriColors.darkSurface1 : Colors.white,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          border: Border(
+            top: BorderSide(
+              color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+              width: 1.0,
+            ),
           ),
         ),
-      ),
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       child: SafeArea(
         top: false,
@@ -167,6 +169,7 @@ class RoleSwitcherModal extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 }

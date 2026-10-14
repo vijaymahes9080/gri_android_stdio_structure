@@ -10,6 +10,7 @@
 /.idea/assetWizardSettings.xml
 .DS_Store
 /build
+/android/build/
 /captures
 .externalNativeBuild
 .cxx
@@ -21,3 +22,6 @@ node_modules/
 dist/
 screenshots/
 audit_reports/
+*.hprof
+.dart_tool/
+.github/

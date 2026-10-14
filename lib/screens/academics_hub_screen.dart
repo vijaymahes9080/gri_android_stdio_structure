@@ -45,6 +45,7 @@ class _AcademicsHubScreenState extends State<AcademicsHubScreen> with SingleTick
           child: TabBar(
             controller: _tabController,
             isScrollable: true,
+            tabAlignment: TabAlignment.start,
             labelColor: colorScheme.primary,
             unselectedLabelColor: colorScheme.onSurfaceVariant,
             indicatorColor: colorScheme.primary,

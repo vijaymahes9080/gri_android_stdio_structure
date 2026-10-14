@@ -40,11 +40,17 @@ class _StudentServicesHubScreenState extends State<StudentServicesHubScreen> wit
     return Column(
       children: [
         Container(
-          color: Colors.white,
+          color: Theme.of(context).brightness == Brightness.dark
+              ? GriColors.darkSurface1
+              : Colors.white,
           child: TabBar(
             controller: _tabController,
+            isScrollable: true,
+            tabAlignment: TabAlignment.start,
             labelColor: GriColors.forestPrimary,
-            unselectedLabelColor: Colors.grey.shade600,
+            unselectedLabelColor: Theme.of(context).brightness == Brightness.dark
+                ? GriColors.darkOnSurfaceVariant
+                : Colors.grey.shade600,
             indicatorColor: GriColors.forestPrimary,
             labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
             tabs: const [
@@ -65,18 +71,23 @@ class _StudentServicesHubScreenState extends State<StudentServicesHubScreen> wit
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        "STUDENT GRIEVANCE REDRESSAL",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: GriColors.forestPrimary),
+                      const Expanded(
+                        child: Text(
+                          "STUDENT GRIEVANCE REDRESSAL",
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.5, color: GriColors.forestPrimary),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
+                      const SizedBox(width: 8),
                       ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: GriColors.forestPrimary,
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                         ),
-                        icon: const Icon(Icons.add, size: 16),
-                        label: Text(_showGrievanceForm ? "Close Form" : "File Grievance"),
+                        icon: const Icon(Icons.add, size: 15),
+                        label: Text(_showGrievanceForm ? "Close Form" : "File Grievance", style: const TextStyle(fontSize: 11.5)),
                         onPressed: () => setState(() => _showGrievanceForm = !_showGrievanceForm),
                       ),
                     ],
@@ -208,12 +219,20 @@ class _StudentServicesHubScreenState extends State<StudentServicesHubScreen> wit
                               Container(
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                  color: Colors.grey.shade100,
+                                  color: Theme.of(context).brightness == Brightness.dark
+                                      ? GriColors.darkSurface2
+                                      : Colors.grey.shade100,
                                   borderRadius: BorderRadius.circular(6),
                                 ),
                                 child: Text(
                                   "University Remark: ${g.remarks}",
-                                  style: const TextStyle(fontSize: 11.5, fontStyle: FontStyle.italic),
+                                  style: TextStyle(
+                                    fontSize: 11.5,
+                                    fontStyle: FontStyle.italic,
+                                    color: Theme.of(context).brightness == Brightness.dark
+                                        ? GriColors.darkOnSurface
+                                        : Colors.black87,
+                                  ),
                                 ),
                               ),
                             ],
