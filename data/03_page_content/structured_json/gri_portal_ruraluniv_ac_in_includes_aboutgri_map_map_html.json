@@ -1,0 +1,19 @@
+{
+  "page_id": "gri_portal_ruraluniv_ac_in_includes_aboutgri_map_map_html",
+  "title": "GRI-Map",
+  "name": "Interactive Campus Geoportal",
+  "url": "https://ruraluniv.ac.in/includes/aboutgri/map/map.html",
+  "category": "Contact & Campus Transit",
+  "target_screen": "lib/screens/campus_facilities_screen.dart",
+  "http_status": 200,
+  "accessibility_status": "ACCESSIBLE",
+  "links_count": 0,
+  "documents_count": 0,
+  "images_count": 2,
+  "documents": [],
+  "images": [
+    "http://ruraluniv.ac.in/images/bannerTyagu.png",
+    "https://ruraluniv.ac.in/includes/aboutgri/map/grimap.png"
+  ],
+  "text_preview": "GRI-Map\nOn mouse click Zoom in the Map\nDeveloped and maintained by: COMPUTER CENTRE, GRI. | All rights reserved @ www.ruraluniv.ac.in"
+}

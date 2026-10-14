@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title> GRI-Etrack | Login</title>
+		
+		<link rel="shortcut icon"  href="https://portal.ruraluniv.ac.in/img/favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="https://portal.ruraluniv.ac.in/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="https://portal.ruraluniv.ac.in/css/bootstrap.css" /
+		
+		<link rel="apple-touch-icon-precomposed" href="https://portal.ruraluniv.ac.in/img/glyphicons-halflings.png">
+		<link rel="apple-touch-icon-precomposed" href="https://portal.ruraluniv.ac.in/img/glyphicons-halflings-white.png">
+		<link rel="stylesheet" href="https://portal.ruraluniv.ac.in/css/etrack.css" />
+		<script src="https://portal.ruraluniv.ac.in/js/jquery/jquerymain.js" type="text/javascript" ></script>
+			
+		<script src="https://portal.ruraluniv.ac.in/js/bootstrap.js" ></script>
+		<script src="https://portal.ruraluniv.ac.in/js/bootstrap.min.js" type="text/javascript" ></script>
+		<script src="https://portal.ruraluniv.ac.in/assets/plugins/jquery/jquery.min.js"></script>
+		
+		 <!-- DataTables -->
+        <link rel="stylesheet" href="https://portal.ruraluniv.ac.in/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+        <link rel="stylesheet" href="https://portal.ruraluniv.ac.in/assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+        <link rel="stylesheet" href="https://portal.ruraluniv.ac.in/assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+        <!-- Theme style 
+        <link rel="stylesheet" href="https://portal.ruraluniv.ac.in/assets/dist/css/adminlte.min.css">-->
+        <!-- Bootstrap 4 -->
+        <script src="https://portal.ruraluniv.ac.in/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- DataTables  & Plugins -->
+        <script src="https://portal.ruraluniv.ac.in/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+        <script src="https://portal.ruraluniv.ac.in/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+        <script src="https://portal.ruraluniv.ac.in/assets/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+        <script src="https://portal.ruraluniv.ac.in/assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+        <script src="https://portal.ruraluniv.ac.in/assets/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+        <script src="https://portal.ruraluniv.ac.in/assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+        <script src="https://portal.ruraluniv.ac.in/assets/plugins/jszip/jszip.min.js"></script>
+        <script src="https://portal.ruraluniv.ac.in/assets/plugins/pdfmake/pdfmake.min.js"></script>
+        <script src="https://portal.ruraluniv.ac.in/assets/plugins/pdfmake/vfs_fonts.js"></script>
+        <script src="https://portal.ruraluniv.ac.in/assets/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+        <script src="https://portal.ruraluniv.ac.in/assets/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+        <script src="https://portal.ruraluniv.ac.in/assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+        <!-- AdminLTE App -->
+        <script src="https://portal.ruraluniv.ac.in/dist/js/adminlte.min.js"></script>
+        <!-- AdminLTE for demo purposes -->
+        <script src="https://portal.ruraluniv.ac.in/dist/js/demo.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+	</head>
+    <body  style='background:url(https://portal.ruraluniv.ac.in/img/etrack_bg.jpg);'>
+  
+	<div class='container-fluid' >
+		
+       
+      <div class="container">
+          <header><b>THE GANDHIGRAM RURAL INSTITUTE</b></header>
+          <img  width="100" height="60" src='https://portal.ruraluniv.ac.in/img/grilogo.png' class="img-responsive center-block"/>
+          <br>
+          <header><b>G-Track Login Form</b></header>
+         <form action="https://portal.ruraluniv.ac.in/Etrack/ServiceLoginAuth" method='post'>
+             <input type="hidden" id="base_url" value="https://portal.ruraluniv.ac.in/">
+            <div class="input-field">
+               <input name='uname' type="text" required>
+               <label>Username</label>
+            </div>
+            <div class="input-field">
+               <input name='pword' class="pswrd" type="password" required>
+               <span class="show">SHOW</span>
+               <label>Password</label>
+            </div>
+            <div class=''>
+                           </div>
+            <div class="button">
+               <div class="inner"></div>
+               <button><i class='glyphicon glyphicon-log-in'></i>&nbsp;LOGIN</button>
+            </div>
+           
+         </form>
+         <img  width="50" height="40" src='https://portal.ruraluniv.ac.in/img/griims.png' class="img-responsive center-block"/>
+      </div>
+      <div class='row' id="footerGRI">
+    	<div class='col-lg-12 col-md-12 col-12'>
+    	    <br><br>
+    		<font size="3" weight="2" face="arial" color="#ffffff">Designed,Developed & Maintained by Computer Centre - GRI</font>
+    	</div>
+    </div>
+
+      <script>
+         var input = document.querySelector('.pswrd');
+         var show = document.querySelector('.show');
+         show.addEventListener('click', active);
+         function active(){
+           if(input.type === "password"){
+             input.type = "text";
+             show.style.color = "#1DA1F2";
+             show.textContent = "HIDE";
+           }else{
+             input.type = "password";
+             show.textContent = "SHOW";
+             show.style.color = "#111";
+           }
+         }
+         
+        
+      </script>
+   </body>
+</html>

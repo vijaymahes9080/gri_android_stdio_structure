@@ -1,15 +1,16 @@
 Module_Name,Pages_Count,Description,Target_Flutter_Screen
-Accreditation & Disclosures,4,Official institutional module covering accreditation & disclosures,lib/screens/home_dashboard_screen.dart
-Admissions & Prospectus,6,Official institutional module covering admissions & prospectus,lib/screens/academics_hub_screen.dart
+Accreditation & Disclosures,4,Official institutional module covering accreditation & disclosures,lib/screens/official_document_center_screen.dart
+Admissions & Prospectus,6,Official institutional module covering admissions & prospectus,lib/screens/admissions_prospectus_screen.dart
 Announcements & Circulars,15,Official institutional module covering announcements & circulars,lib/screens/home_dashboard_screen.dart
-Campus & Facilities,5,Official institutional module covering campus & facilities,lib/screens/campus_facilities_screen.dart
-Contact & Campus Transit,3,Official institutional module covering contact & campus transit,lib/screens/campus_facilities_screen.dart
-Examinations & COE Services,4,Official institutional module covering examinations & coe services,lib/screens/academics_hub_screen.dart
-General Institutional Information,73,Official institutional module covering general institutional information,lib/screens/home_dashboard_screen.dart
-Governance & Administration,20,Official institutional module covering governance & administration,lib/screens/admin_directory_screen.dart
+Campus & Facilities,4,Official institutional module covering campus & facilities,lib/screens/campus_facilities_screen.dart
+Contact & Campus Transit,3,Official institutional module covering contact & campus transit,lib/screens/contact_campus_info_screen.dart
+Examinations & COE Services,49,Official institutional module covering examinations & coe services,lib/screens/examination_services_screen.dart
+General Institutional Information,71,Official institutional module covering general institutional information,lib/screens/home_dashboard_screen.dart
+Governance & Administration,20,Official institutional module covering governance & administration,lib/screens/governance_leadership_screen.dart
 Home & Portal Index,1,Official institutional module covering home & portal index,lib/screens/home_dashboard_screen.dart
 Inaccessible / Blocked,3,Official institutional module covering inaccessible / blocked,lib/screens/home_dashboard_screen.dart
-Institution Profile & Heritage,62,Official institutional module covering institution profile & heritage,lib/screens/home_dashboard_screen.dart
-Research & Publications,1,Official institutional module covering research & publications,lib/screens/home_dashboard_screen.dart
-"Schools, Departments & Academics",52,"Official institutional module covering schools, departments & academics",lib/screens/academics_hub_screen.dart
-Student Services & Scholarships,1,Official institutional module covering student services & scholarships,lib/screens/student_services_hub_screen.dart
+Institution Profile & Heritage,62,Official institutional module covering institution profile & heritage,lib/screens/about_gri_heritage_screen.dart
+Institutional Portals & E-Governance,17,"Centralized university portals covering student, scholar, hostel, file-tracking, attendance, LMS, and departmental gateways",lib/screens/examination_services_screen.dart
+Research & Publications,1,Official institutional module covering research & publications,lib/screens/campus_facilities_screen.dart
+"Schools, Departments & Academics",52,"Official institutional module covering schools, departments & academics",lib/screens/schools_programmes_hub_screen.dart
+Student Services & Scholarships,1,Official institutional module covering student services & scholarships,lib/screens/scholarships_welfare_screen.dart

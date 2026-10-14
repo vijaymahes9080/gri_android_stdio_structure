@@ -1,0 +1,19 @@
+{
+  "page_id": "gri_portal_portal_ruraluniv_ac_in_etrack",
+  "title": "GRI-Etrack | Login",
+  "name": "G-Track Document & File Tracking System",
+  "url": "https://portal.ruraluniv.ac.in/etrack",
+  "category": "Institutional Portals & E-Governance",
+  "target_screen": "lib/screens/admin_directory_screen.dart",
+  "http_status": 200,
+  "accessibility_status": "ACCESSIBLE",
+  "links_count": 0,
+  "documents_count": 0,
+  "images_count": 2,
+  "documents": [],
+  "images": [
+    "https://portal.ruraluniv.ac.in/img/grilogo.png",
+    "https://portal.ruraluniv.ac.in/img/griims.png"
+  ],
+  "text_preview": "GRI-Etrack | Login\nTHE GANDHIGRAM RURAL INSTITUTE\nG-Track Login Form\nUsername\nSHOW\nPassword\nLOGIN\nDesigned,Developed & Maintained by Computer Centre - GRI"
+}

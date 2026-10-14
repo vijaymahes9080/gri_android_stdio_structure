@@ -11,12 +11,13 @@ Every discovered URL, downloadable document, and institutional asset has been tr
 
 | Verification Dimension | Total Target In Scope | Verified / Processed | Coverage Rate | Status |
 | :--- | :---: | :---: | :---: | :---: |
-| **URL Discovery Coverage** | 250 pages | 250 cataloged | **100.0%** | **COMPLETE** |
-| **Active Live Page Access** | 250 pages | 247 accessible | **98.8%** | **VERIFIED** |
-| **Page Content Extraction** | 250 pages | 250 HTML / MD / JSON files | **100.0%** | **COMPLETE** |
-| **Asset Metadata Cataloging**| 1,047 items | 1,047 records | **100.0%** | **COMPLETE** |
+| **URL Discovery Coverage** | 309 pages | 309 cataloged | **100.0%** | **COMPLETE** |
+| **Active Live Page Access** | 309 pages | 299 accessible | **96.8%** | **VERIFIED** |
+| **Auth/Intranet Portals** | 7 portals | 7 isolated & classified | **100.0%** | **AUTH_REQUIRED** |
+| **Page Content Extraction** | 309 pages | 309 HTML / MD / JSON files | **100.0%** | **COMPLETE** |
+| **Asset Metadata Cataloging**| 1,409 items | 1,409 records | **100.0%** | **COMPLETE** |
 | **High-Priority Local Asset Verification** | 24 core files | 24 byte-verified on disk | **100.0%** | **VERIFIED** |
-| **Page-Asset Relationship Mapping** | 8,102 pairs | 8,102 bipartite edges | **100.0%** | **COMPLETE** |
+| **Page-Asset Relationship Mapping** | 8,464 pairs | 8,464 bipartite edges | **100.0%** | **COMPLETE** |
 | **Intranet Restriction Audit**| 3 internal URLs | 3 identified & documented | **100.0%** | **ISOLATED** |
 | **Duplicate Binary Identification** | 4 hash collisions | 4 documented with SHA-256 | **100.0%** | **DEDUPLICATED** |
 
@@ -26,7 +27,8 @@ Every discovered URL, downloadable document, and institutional asset has been tr
 
 ```mermaid
 pie title URL & Page Status Breakdown
-    "VERIFIED Live (247)" : 247
+    "VERIFIED Live (299)" : 299
+    "AUTH_REQUIRED Portals (7)" : 7
     "FAILED / Inaccessible (3)" : 3
 ```
 

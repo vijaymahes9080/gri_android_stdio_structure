@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="css/Start.css">
+	<link rel="stylesheet" href="css/w3.css">
+	<link rel="stylesheet" href="css/START_Gallery.css">
+	<link rel="stylesheet" href="css/template-style.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<style>
+.footer {
+   /*position: fixed;*/
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   color: white;
+   text-align: center;
+   min-height: 220px;
+   background-color: #097AAC; /* For browsers that do not support gradients */
+   border-top: 5px solid #efefef;
+   overflow: hidden;
+}
+.START-GRIver4-FooterUL{
+	text-align:left;
+}
+.START_responsive{
+  width: 100%;
+  max-width: 900px;
+  height: auto;
+}
+.START_responsive2{
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+}
+#start_content_title{
+	  font-family: Verdana, sans-serif;
+  font-size: 20px;
+  color: #2874A6;
+}
+#cont100{
+	width:90%;
+	height:800px;
+	margin:auto;
+	padding:auto;	
+}
+#cont1000{
+	width:90%;
+	margin:auto;
+	padding:auto;
+}
+#start_content_div {
+	width:90%;
+
+}
+
+/* Clear floats after the columns */
+.START_3columnOverFlow{ 
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px){
+  .START_2Column1{
+    width: 100%;
+  }
+  .START_2Column2{
+    width: 100%;
+  }
+}
+.START_GRIver4-WindowsIconMenuDiv{
+	max-width:100%;
+    margin: auto;
+	padding:auto;
+	background-image: linear-gradient(to bottom, #ffffff,#ffffff);
+	background-color:#ffffff;
+	overflow:hidden;
+	text-align:center;
+	display: block;
+}
+#START_GRIver4-WindowsIconMenuBG1{
+	background-image: linear-gradient(to bottom right, #7758EC, #31B8F8 );
+	background-color:#7758EC;
+	border: 1px solid #FFE5C3;
+	box-shadow: 5px 5px #E3E8E8;
+}
+#START_GRIver4-WindowsIconMenuBG2{
+	background-image: linear-gradient(to bottom, #FAD65F,#F76B1C);
+	background-color:#F76B1C;
+	border: 1px solid #F76B1C;
+	box-shadow: 5px 5px #E3E8E8;
+}
+#START_GRIver4-WindowsIconMenuBG3{
+	background-image: linear-gradient(to bottom, #4CC7C0 , #385FF1);
+	background-color:#C3FFFB;
+	border: 1px solid #385FF1;
+	box-shadow: 5px 5px #E3E8E8;
+}
+#START_GRIver4-WindowsIconMenuBG4{
+	background-image: linear-gradient(to bottom, #B028C8, #F10E3E);
+	background-color:#C3FFFB;
+	border: 1px solid #F10E3E;
+	box-shadow: 5px 5px #E3E8E8;
+}
+#START_GRIver4-WindowsIconMenuBG5{
+	background-image: linear-gradient(to bottom, #182BBC, #9052EB);
+	background-color:#C3FFFB;
+	border: 1px solid #8240E3;
+	box-shadow: 5px 5px #E3E8E8;
+}
+#START_GRIver4-WindowsIconMenuBG6{
+	background-image: linear-gradient(to bottom, #08B324, #18BABC);
+	background-color:#C3FFFB;
+	border: 1px solid #18BABC;
+	box-shadow: 5px 5px #E3E8E8;
+}
+.START_GRIver4-WindowsIconMenu{
+	width:170px;
+	height:170px;
+	float:left;
+	padding:10px;
+	margin:10px;
+	color:#1f1f1f;
+	border: 1px solid #B6FBF7;
+	border-radius: 5px;
+	overflow:hidden;
+	display: block;
+}
+.START-GRIver4-WindowsIconMenu-Name{
+	color:#ffffff;
+	font-size:14px;
+	}
+
+.START_3columnOverFlow{
+	width:60%;
+	margin:auto;
+	padding:auto;
+	-webkit-column-count: 2; /* Old Chrome, Safari and Opera */
+	-moz-column-count: 2; /* Old Firefox */
+	column-count: 2;
+}
+
+.START-GRIver4-Button1{
+	padding:10px; 
+	margin:10px; 	
+	border: 1px solid #A5FAFB;
+ 	border-radius: 5px;
+	background-color:#069D9F;
+	color:#fff;
+}
+.START-GRIver4-Button1:hover{
+	background-color:#fff;
+	color:#069D9F;
+}
+.START-GRIver4-Button2{
+	padding:10px; 
+	margin:10px; 	
+	border: 1px solid #fff;
+ 	border-radius: 5px;
+	background-color:#069D9F;
+	color:#fff;
+}
+.START-GRIver4-Button2:hover{
+	background-color:#29BABC;
+	border: 1px solid #069D9F;
+	color:#ffffff;
+}
+/* Safari and Chrome */
+@-webkit-keyframes moveOpen 
+	{
+  from {-webkit-transform: translate(0,-100px);}
+  10% {-webkit-transform: translate(0,20px);}
+  12% {-webkit-transform: translate(0,22px);}
+  16% {-webkit-transform: translate(0,20px);}
+  to {-webkit-transform: translate(0,-100px);}
+}
+.START-GRIver4-FlashNews1{
+	background-color:#efefef;
+	border:1px solid #efefef;
+	padding:auto;
+	margin:auto;
+	overflow: hidden;
+	width:100%;
+	font-family: Arial;
+	font-size:17px;
+}
+.START-GRIver4-FlashNews1-head{
+	float:left;
+	background-color:#008ECC;
+	color:#fff;
+	width:10%;
+}
+.START-GRIver4-FlashNews1-content{
+	float:left;
+	width:80%;
+	color:#06577A;
+}
+
+.START_GRIver4_2Column-Row{
+background-color:#ffffff;
+color: #0484BB;
+}
+/* Clear floats after the START_GRIver4_2Columns */
+.START_GRIver4_2Column-Row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Create two equal START_GRIver4_2Columns that floats next to each other */
+.START_GRIver4_2Column1 {
+  float: left;
+  width: 30%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+/* Responsive layout - makes the two START_GRIver4_2Columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .START_GRIver4_2Column1 {
+    width: 100%;
+  }
+}
+
+/* Create two equal START_GRIver4_2Columns that floats next to each other */
+.START_GRIver4_2Column2 {
+  float: left;
+  width: 70%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+/* Responsive layout - makes the two START_GRIver4_2Columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .START_GRIver4_2Column2 {
+    width: 100%;
+  }
+}
+
+
+
+/* Create two equal START_GRIver4_2Columns that floats next to each other */
+.START_GRIver4_2Column11 {
+  float: left;
+  width: 70%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the START_GRIver4_2Columns */
+.START_GRIver4_2Column-Row1:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - makes the two START_GRIver4_2Columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .START_GRIver4_2Column11 {
+    width: 100%;
+  }
+}
+
+/* Create two equal START_GRIver4_2Columns that floats next to each other */
+.START_GRIver4_2Column12 {
+  float: left;
+  width: 30%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Responsive layout - makes the two START_GRIver4_2Columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .START_GRIver4_2Column12 {
+    width: 100%;
+  }
+}
+
+body {
+	margin:0;
+	font-family:Arial;
+	background-color:#fff;
+}
+
+/*Navigation Bar Menu BG Color*/
+.topnav {
+  overflow: hidden;
+  background-color: #097AAC;
+/*  background-image: linear-gradient(#efefef, #097AAC, #efefef);*/
+  font-family: verdana, cambria, calibri;
+  font-weight:bold;
+}
+
+.START_Heading1{
+}
+.START_Justify1{
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.START_Banner1{
+    margin: auto;
+    width: 60%;
+    padding: 10px;
+	width:100%;
+	background-color:#ffffff;
+}
+.topnav a {
+  float: left;
+  display: block;
+  color: #32302A;
+  text-align: center;
+  padding: 9px 11px;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.TopNavActive {
+  background-color: #04D497;
+  color: white;
+  border-radius: 0px 0px 0px 0px;
+}
+
+.topnav .icon {
+  display: none;
+}
+
+.dropdown {
+    float: left;
+    overflow: hidden;
+
+}
+
+.dropdown .dropbtn {
+    font-size: 12px;
+	text-transform: uppercase;
+    border: none;
+    outline: none;
+    color: #fff;
+    padding: 8px 9px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+	font-weight:;
+}
+/*START NAV DropDown List BG Color*/
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+	opacity: 1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+
+}
+/*START NAV Menu Hover*/
+.topnav a:hover, .dropdown:hover .dropbtn {
+  background-color: #008ECC;
+  color: white;
+  border-radius: 0px 0px 0px 0px;
+
+}
+
+/*START NAV Menu DropDown Hover*/
+.dropdown-content a:hover {
+    background-color: #008ECC;
+    color: #fff;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+@media screen and (max-width: 600px) {
+  .topnav a:not(:first-child), .dropdown .dropbtn {
+    display: none;
+  }
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .topnav.responsive {position: relative;}
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  .topnav.responsive .dropdown {float: none;}
+  .topnav.responsive .dropdown-content {position: relative;}
+  .topnav.responsive .dropdown .dropbtn {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+}
+/*3 Column Begin*/
+* {
+    box-sizing: border-box;
+}
+
+/* Create three equal columns that floats next to each other */
+.START_column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+    .START_column {
+        width: 100%;
+    }
+}
+/*3 Column End*/
+
+
+
+/*Two Division Box Begin - Home.php(27-36)*/
+* {
+    box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.START_Column1 {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.START_Row1:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+/*Two Division Box End - Home.php(27-36)*/
+
+/*Table Design Begin*/
+#START_Table1 {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  min-width: 300px;
+  width:90%;
+  margin:auto;
+}
+
+#START_Table1 td, #START_Table1 th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#START_Table1 tr:nth-child(even){background-color: #f2f2f2;}
+
+#START_Table1 tr:hover {background-color: #ddd;}
+
+#START_Table1 th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+/*Table Design End*/
+
+/*Left Vertical Menu Begin*/
+.START_GRIver4_LeftMenu1 {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+.START_GRIver4_LeftMenu1 a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+ 
+.START_GRIver4_LeftMenu1 a.START_GRIver4_LeftMenu1-Active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.START_GRIver4_LeftMenu1 a:hover:not(.START_GRIver4_LeftMenu1-Active) {
+  background-color: #555;
+  color: white;
+}
+
+
+
+@media screen and (max-width: 700px) {
+  .START_GRIver4_LeftMenu1 {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .START_GRIver4_LeftMenu1 a {float: left;}
+  div.content {margin-left: 0;}
+}
+
+@media screen and (max-width: 400px) {
+  .START_GRIver4_LeftMenu1 a {
+    text-align: center;
+    float: none;
+  }
+}
+/*Left Vertical Menu End*/
+
+
+/*OnScrollHideMenu*/
+
+#START_V5_OnScrollHideMenu {
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: block;
+  transition: top 0.3s;
+}
+
+#START_V5_OnScrollHideMenu a {
+  float: right;
+  display: block;
+  color: #1f1f1f;
+  text-align: center;
+  padding: 5px;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+#START_V5_OnScrollHideMenu a:hover {
+  background-color: #1DBBEE;
+  color: black;
+}
+
+/*OnScrollHideMenu*/
+
+
+.START-GRIver4-StrengthNo{
+	font-size:2em; 
+	padding:2px;
+}
+</style>
+
+
+
+<script>
+/*OnScrollHideMenu Begin*/
+var prevScrollpos = window.pageYOffset;
+window.onscroll = function() {
+var currentScrollPos = window.pageYOffset;
+  if (prevScrollpos > currentScrollPos) {
+    document.getElementById("START_V5_OnScrollHideMenu").style.top = "0";
+  } else {
+    document.getElementById("START_V5_OnScrollHideMenu").style.top = "-50px";
+  }
+  prevScrollpos = currentScrollPos;
+}
+/*OnScrollHideMenu End*/
+</script>
+
+
+</head><div class="START_Banner1">
+    <a href="home.php"><img alt="GRI-DtbU" width="100%" src="img/GRIBanner1.png" class="START_responsive" ></a>
+
+</div>
+
+<style>
+	.START_responsive {
+	  width: 100%;
+	  max-width: 900px;
+	  height: auto;
+	}
+	
+	
+</style>	<div class="topnav" id="myTopnav">
+	  <div class="dropdown">
+		<button class="dropbtn" class="TopNavActive" style="background-color:#1DBBEE; color:#fff;">About DDU-KK
+<!--			<i class="fa fa-caret-down"></i>-->
+		</button>
+		<div class="dropdown-content">
+		  <a href="ddukk?content=VissionMision">Vission & Mision</a>
+		  <a href="ddukk?content=Objectives">Objectives</a>
+		  <a href="ddukk?content=KeyFeatures">Key Features</a>
+		  <a href="#">Guidelines</a>
+		</div>
+	  </div>
+	  <div class="dropdown">
+		<button class="dropbtn">UGC Sanction Orders
+<!--			<i class="fa fa-caret-down"></i>-->
+		</button>
+		<div class="dropdown-content">
+		  <a href="ddukk?content=SanctionOrder">All B.Voc Programmes Sanction Order Copy PDF</a>
+		</div>
+	  </div>
+	  <div class="dropdown">
+		<button class="dropbtn">Advisory Committee
+<!--			<i class="fa fa-caret-down"></i>-->
+		</button>
+		<div class="dropdown-content">
+			  <a href="#">Members</a>
+
+		</div>
+	  </div>
+	  <div class="dropdown">
+		<button class="dropbtn">Academic
+<!--			<i class="fa fa-caret-down"></i>-->
+		</button>
+		<div class="dropdown-content">
+			  <a href="ddukk?content=Programmes">Programmes</a>
+			  <a href="#">NSQF Regulation</a>
+			  <a href="#">Awards & Honors</a>
+			  <a href="ddukk?content=Equivalence">Equivalence of B.Voc. Degree</a>
+		</div>
+	  </div>
+	  <div class="dropdown">
+		<button class="dropbtn">Sector
+<!--			<i class="fa fa-caret-down"></i>-->
+		</button>
+		<div class="dropdown-content">
+			  <a href="http://www.asci-india.com/"  target="_blank">Agriculture</a>
+			  <a href="https://www.asdc.org.in/" target="_blank">Automotive</a>
+			  <a href="http://leatherssc.org/" target="_blank">Leather</a>
+			  <a href="https://www.ficsi.in/" target="_blank">Food Processing</a>
+			  <a href="https://mescindia.org/" target="_blank">Media</a>
+			  <a href="https://www.psscindia.org/" target="_blank">Power</a>
+			  
+		</div>
+	  </div>	  
+	  <div class="dropdown">
+		<button class="dropbtn">Gallery
+<!--			<i class="fa fa-caret-down"></i>-->
+		</button>
+		<div class="dropdown-content">
+			  <!--<a href="#"></a>-->
+			  <!--<a href="#"></a>-->
+			  <!--<a href="#"></a>-->
+			  <!--<a href="#"></a>-->
+		</div>
+	  </div>	  
+<!--	  <div class="dropdown">
+		<button class="dropbtn">Infrastructure
+			<i class="fa fa-caret-down"></i>
+		</button>
+		<div class="dropdown-content">
+			  <a href="#"></a>
+			  <a href="#"></a>
+			  <a href="#"></a>
+			  <a href="#"></a>
+			  
+		</div>
+	  </div>	  
+-->	  
+	  <div class="dropdown">
+		<button class="dropbtn">Contact us
+<!--			<i class="fa fa-caret-down"></i>-->
+		</button>
+		<div class="dropdown-content">
+			  <!--<a href="#"></a>-->
+			  <!--<a href="#"></a>-->
+			  <!--<a href="#"></a>-->
+			  <!--<a href="#"></a>-->
+			  
+		</div>
+	  </div>
+	  <div class="dropdown">
+		
+		    
+		<a href="ddukk?content=videoTour" class="dropbtn">Video Tour</a>
+		
+		<div class="dropdown-content">
+			  <!--<a href="#"></a>-->
+			  <!--<a href="#"></a>-->
+			  <!--<a href="#"></a>-->
+			  <!--<a href="#"></a>-->
+			  
+		</div>
+	  </div>	  
+
+
+	  <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+	</div>
+	
+	<body>
+
+
+
+<div id="cont100">
+	<div id="cont1000" style="height:800px;">
+		
+
+		<div id="start_content_div">
+			<div id="start_content_title">
+				Objectives
+			</div>
+			<br>
+			
+			<div id="content_matter">
+				<div id="admin_photo">
+					 <center><img src="img/ddukk_profile.jpg" height="100%"></center>
+
+					<ul style="padding:10px;">				 
+						<li>To formulate programmes / courses and create skilled manpower for industry requirements at various levels</li>
+						<li>To set up modular vocational training centers targeted towards empowering underprivileged youth from rural and urban and semi-urban communities, leading to employment and income generating opportunities</li>
+						<li>To empower men/women for socially and economically backward sections and helping them in augmenting their family income by providing meaningful skill trainings enhancing the market access for their goods and produces</li>
+						<li>To develop location specific rural enterprises by promoting rural entrepreneurs with eco-friendly and sustainable technologies that provide clean drinking water, energy access, smokeless cook-stoves, agri-farm support and many more; and</li>
+						<li>To create empowered youth leaders through leadership training programmes in order to ensure ownership, sustainability of project and commitment</li>
+					</ul>
+					 <br>
+				</div>
+			</div>
+			<br>
+		</div>
+	</div>
+</div>
+<style>
+.START-GRIver4-FooterUL li{
+	list-style-type: none;
+	color:#ffffff;
+}
+</style>
+<div class="footer">
+
+<div style="float:left;">
+	<ul class="START-GRIver4-FooterUL">
+		<li><h2 style="color:#EFEFEF;">About DDU-KK</h2>
+			<ul>
+				<li><a href="https://www.ruraluniv.ac.in/includes/kk/ddukk?content=VissionMision" style="text-decoration: none; color:#ffffff;">Vission</a></li>
+				<li><a href="https://www.ruraluniv.ac.in/includes/kk/ddukk?content=Objectives" style="text-decoration: none; color:#ffffff;">Objectives</a></li>
+				<li><a href="https://www.ruraluniv.ac.in/includes/kk/ddukk?content=KeyFeatures" style="text-decoration: none; color:#ffffff;">Key Features</a></li>
+				<li><a href="https://www.ruraluniv.ac.in/includes/kk/home#" style="text-decoration: none; color:#ffffff;">Guidelines</a></li>
+				
+			</ul>
+		</li>
+	</ul>
+</div>
+<div style="float:left;">
+	<ul class="START-GRIver4-FooterUL">
+		<li><h2 style="color:#EFEFEF;">UGC Sanction Orders</h2>
+			<ul>
+				<li><a href="https://www.ruraluniv.ac.in/includes/kk/ddukk?content=SanctionOrder" style="text-decoration: none; color:#ffffff;">All B.Voc Programmes Sanction Order Copy PDF</a></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				
+			</ul>
+		</li>
+	</ul>
+</div>
+<div style="float:left;">
+	<ul class="START-GRIver4-FooterUL">
+		<li><h2 style="color:#EFEFEF;">Advisory Committee Minutes</h2>
+		<!--
+			<ul>
+				<li><a href="https://www.ruraluniv.ac.in/includes/kk/ddukk?content=ACM1" style="text-decoration: none; color:#ffffff;">1st Advisory Committee Minutes</a></li>
+				<li><a href="https://www.ruraluniv.ac.in/includes/kk/ddukk?content=ACM2" style="text-decoration: none; color:#ffffff;">2nd Advisory Committee Minutes</a></li>
+				<li><a href="https://www.ruraluniv.ac.in/includes/kk/ddukk?content=ACM3" style="text-decoration: none; color:#ffffff;">3rd Advisory Committee Minutes</a></li>
+				<li><a href="https://www.ruraluniv.ac.in/includes/kk/ddukk?content=ACM4" style="text-decoration: none; color:#ffffff;">4th Advisory Committee Minutes</a></li>
+				<li><a href="https://www.ruraluniv.ac.in/includes/kk/ddukk?content=ACM5" style="text-decoration: none; color:#ffffff;">5th Advisory Committee Minutes</a></li>
+		
+			</ul>
+			-->
+		</li>
+	</ul>
+</div>
+<div style="float:left;">
+	<ul class="START-GRIver4-FooterUL">
+		<li><h2 style="color:#EFEFEF;"></h2>
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				
+			</ul>
+		</li>
+	</ul>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<!--
+<div STYLE="background-color:#5D1901">
+<i class="large material-icons" style="color:red;">alarm</i>Alarm
+<i class="large material-icons">backup</i>Backup
+<i class="large material-icons">home</i>Home
+<i class="large material-icons">mail</i>eMail
+</div>
+-->
+
+
+</div>
+<script>
+function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
+}
+</script>
+
+</body>
+</html>

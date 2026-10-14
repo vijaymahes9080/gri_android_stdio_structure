@@ -1,0 +1,19 @@
+{
+  "page_id": "gri_portal_ruraluniv_ac_in_griims1",
+  "title": "GRI | Ph.D. Tracking",
+  "name": "GRIIMS Ph.D. Lifecycle Tracking Portal",
+  "url": "https://ruraluniv.ac.in/GRIIMS1",
+  "category": "Institutional Portals & E-Governance",
+  "target_screen": "lib/screens/examination_services_screen.dart",
+  "http_status": 200,
+  "accessibility_status": "ACCESSIBLE",
+  "links_count": 0,
+  "documents_count": 0,
+  "images_count": 2,
+  "documents": [],
+  "images": [
+    "https://www.ruraluniv.ac.in/GRIIMS1/img/gri-header.png",
+    "https://www.ruraluniv.ac.in/GRIIMS1/img/griims.png"
+  ],
+  "text_preview": "GRI | Ph.D. Tracking\nGRI PORTAL\nUsername:\nPassword:\nSign In\n\u00a9 Computer Centre , GRI"
+}

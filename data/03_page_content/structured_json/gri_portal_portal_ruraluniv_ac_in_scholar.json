@@ -1,0 +1,19 @@
+{
+  "page_id": "gri_portal_portal_ruraluniv_ac_in_scholar",
+  "title": "Portal |",
+  "name": "Research Scholar Portal",
+  "url": "https://portal.ruraluniv.ac.in/scholar",
+  "category": "Institutional Portals & E-Governance",
+  "target_screen": "lib/screens/student_services_hub_screen.dart",
+  "http_status": 200,
+  "accessibility_status": "ACCESSIBLE",
+  "links_count": 1,
+  "documents_count": 0,
+  "images_count": 2,
+  "documents": [],
+  "images": [
+    "https://www.ruraluniv.ac.in/includes/griims/img/grilogo.png",
+    "https://portal.ruraluniv.ac.in/captcha/RVTUXU.jpg"
+  ],
+  "text_preview": "Portal |\nTHE GANDHIGRAM RURAL INSTITUTE\n( Deemed to be University )\nMinistry\r\n                  of Education (Shiksha Mantralaya),\nGovernment of India.\nRe-accredited\r\n                  by NAAC with 'A' Grade(3\nrd\nCycle)\nSCHOLAR PORTAL\nUsername\nPassword\nCaptcha\nLogin\nForgot Password\nDesigned,Developed & Maintained by Computer Centre - GRI"
+}

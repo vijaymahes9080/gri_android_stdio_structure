@@ -1,0 +1,19 @@
+{
+  "page_id": "gri_deep_www_ruraluniv_ac_in_includes_kk_ddukk_content_objectives",
+  "url": "https://www.ruraluniv.ac.in/includes/kk/ddukk?content=Objectives",
+  "title": "GRI - www_ruraluniv_ac_in_includes_kk_ddukk_content_objectives",
+  "category": "Examinations & COE Services",
+  "parent_url": "https://ruraluniv.ac.in/",
+  "http_status": 200,
+  "accessibility_status": "ACCESSIBLE",
+  "content_type": "html",
+  "target_screen": "lib/screens/academics_hub_screen.dart",
+  "documents_count": 0,
+  "images_count": 2,
+  "documents": [],
+  "images": [
+    "https://www.ruraluniv.ac.in/includes/kk/img/GRIBanner1.png",
+    "https://www.ruraluniv.ac.in/includes/kk/img/ddukk_profile.jpg"
+  ],
+  "verification_status": "VERIFIED"
+}

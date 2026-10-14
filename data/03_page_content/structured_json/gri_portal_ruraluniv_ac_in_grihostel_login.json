@@ -1,0 +1,25 @@
+{
+  "page_id": "gri_portal_ruraluniv_ac_in_grihostel_login",
+  "title": "Portal | Login",
+  "name": "GRI Hostel Management Portal",
+  "url": "https://ruraluniv.ac.in/grihostel/login",
+  "category": "Institutional Portals & E-Governance",
+  "target_screen": "lib/screens/campus_facilities_screen.dart",
+  "http_status": 200,
+  "accessibility_status": "ACCESSIBLE",
+  "links_count": 7,
+  "documents_count": 5,
+  "images_count": 2,
+  "documents": [
+    "https://ruraluniv.ac.in/grihostel/RR2026.pdf",
+    "https://www.ruraluniv.ac.in/grihostel/FreshLadTam2026.pdf",
+    "https://www.ruraluniv.ac.in/grihostel/FreshLadEng2026.pdf",
+    "https://www.ruraluniv.ac.in/grihostel/HATamil2026.pdf",
+    "https://www.ruraluniv.ac.in/grihostel/HAEnglish2026.pdf"
+  ],
+  "images": [
+    "https://www.ruraluniv.ac.in/grihostel/img/grilogo.png",
+    "https://www.ruraluniv.ac.in/grihostel/UserManual.png"
+  ],
+  "text_preview": "Portal | Login\nTHE GANDHIGRAM RURAL INSTITUTE (DEEMED TO BE UNIVERSITY)\nMinistry of Education (Shiksha Mantralaya), Government of India, Accredited by NAAC with 'A++' Grade (4\nth\nCycle)\nGRI Hostels\nAdmission Instruction (2026-2027)\nGRI-Hostels Rules and Regulations\nGRI Hostels\nFirst Year Students - Ladies Hostel Tamil\nFirst Year Students - Ladies Hostel English\nFirst Year Students - Boys Hostel\nSenior Students\nInstruction Tamil\nInstruction English\nRoad Map for Instructions\nHostel Portal\nForgot\nP"
+}

@@ -1,0 +1,16 @@
+{
+  "page_id": "gri_portal_portal_ruraluniv_ac_in_lms",
+  "title": "Learning Management System (LMS)",
+  "name": "Learning Management System (LMS)",
+  "url": "https://portal.ruraluniv.ac.in/lms",
+  "category": "Institutional Portals & E-Governance",
+  "target_screen": "lib/screens/academics_hub_screen.dart",
+  "http_status": 403,
+  "accessibility_status": "AUTH_REQUIRED",
+  "links_count": 0,
+  "documents_count": 0,
+  "images_count": 0,
+  "documents": [],
+  "images": [],
+  "text_preview": ""
+}

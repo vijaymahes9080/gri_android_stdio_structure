@@ -32,14 +32,15 @@ In accordance with strict project guidelines, this phase is **DISCOVERY + COLLEC
 
 ## 3. High-Level Collection Metrics
 
-- **Discovered Web Pages**: **250**
-- **Publicly Accessible & Verified Pages**: **247** (98.8% accessibility rate)
-- **Inaccessible / Deprecated Pages**: **3** (recorded with HTTP status in exception logs)
-- **Cataloged Assets**: **1,047** (PDF prospectuses, circulars, syllabi, logos, leadership portraits)
+- **Discovered Web Pages**: **309** (including 59 deep-crawled portal routes and e-News archives)
+- **Publicly Accessible & Verified Pages**: **299** (96.8% accessibility rate)
+- **Authentication-Protected / Intranet Portals**: **7** (Student Portal, LMS, Pensioner, E-Track, Attendance)
+- **Inaccessible / Deprecated Routes**: **3** (documented in exception logs)
+- **Cataloged Assets**: **1,409** (PDF prospectuses, circulars, syllabi, logos, leadership portraits)
 - **Locally Downloaded & Verified Assets**: **24** high-priority institutional binaries
-- **Remote Cataloged Assets**: **1,020** stream-verified URLs
-- **Page-to-Asset Bipartite Relationships**: **8,102**
-- **Discovered Institutional Modules**: **14**
+- **Remote Cataloged Assets**: **1,382** stream-verified URLs
+- **Page-to-Asset Bipartite Relationships**: **8,464** mapped connections
+- **Discovered Institutional Modules**: **15** (featuring dedicated *Institutional Portals & E-Governance*)
 
 ---
 

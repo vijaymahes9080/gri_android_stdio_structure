@@ -1,0 +1,71 @@
+<head>
+	<meta charset='utf-8'/>
+	<title>GRI-Map</title>
+
+	<style>
+	body{
+
+	background: #032351; /* Fallback background color for non supported browsers */ 
+	background-image: -moz-radial-gradient(center 45deg,circle cover, #08738a, #032351);
+	background-image: -webkit-gradient(radial, 50% 50%, 0, 50% 50%,800, from(#08738a), to(#032351));
+	background-image: -ms-linear-gradient(radial, #08738a, #032351);
+	background-image: -o-linear-gradient(radial, #08738a, #032351);
+	background-image: linear-gradient(radial, #08738a, #032351);
+	font-family:verdana;
+	}
+	/* styles unrelated to zoom */
+		* { border:0; margin:0; padding:0; }
+		p { position:absolute; top:3px; right:28px; color:#555; font:bold 13px/1 sans-serif;}
+
+		/* these styles are for the demo, but are not required for the plugin */
+		.zoom {
+			display:inline-block;
+			position: relative;
+		}
+		
+		/* magnifying glass icon */
+		.zoom:after {
+			content:'';
+			display:block; 
+			width:1px; 
+			height:1px; 
+			position:absolute; 
+			top:0;
+			right:0;
+			background:url(icon.png);
+		}
+
+		.zoom img {
+			display: block;
+		}
+
+		.zoom img::selection { background-color: transparent; }
+
+		#ex2 img:hover { cursor: url(grab.cur), default; }
+		#ex2 img:active { cursor: url(grabbed.cur), default; }
+	</style>
+	<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
+	<script src='jquery.zoom.js'></script>
+	<script>
+		$(document).ready(function(){
+			$('#ex1').zoom();
+			$('#ex2').zoom({ on:'grab' });
+			$('#ex3').zoom({ on:'click' });			 
+			$('#ex4').zoom({ on:'toggle' });
+		});
+	</script>
+</head>
+<div >
+<center><img src='http://ruraluniv.ac.in/images/bannerTyagu.png' width='80%'  alt='gribanner_white'></center>
+</div>
+<br><br><br>
+	<span class='zoom' id='ex2' title="On mouse click zoom the map" style="width:100%;">
+		<img src='grimap.png' width='100%'  alt='gri_map'/>
+		<p>On mouse click Zoom in the Map</p>
+	</span>
+	<br>
+	<br>
+	<br>
+<div style="color:#fff; font-family:calibri, verdana, arial;">
+<center>Developed and maintained by: COMPUTER CENTRE, GRI. | All rights reserved @ www.ruraluniv.ac.in</center>
+</div>

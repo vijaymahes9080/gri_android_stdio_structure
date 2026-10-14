@@ -1,0 +1,29 @@
+{
+  "page_id": "gri_portal_ruraluniv_ac_in_includes_kk_home",
+  "title": "The Gandhigram Rural Institute Deemed to be University",
+  "name": "DDU Kaushal Kendra Portal",
+  "url": "https://ruraluniv.ac.in/includes/kk/home",
+  "category": "Schools, Departments & Academics",
+  "target_screen": "lib/screens/schools_programmes_hub_screen.dart",
+  "http_status": 200,
+  "accessibility_status": "ACCESSIBLE",
+  "links_count": 25,
+  "documents_count": 0,
+  "images_count": 12,
+  "documents": [],
+  "images": [
+    "https://ruraluniv.ac.in/includes/kk/img/GRIBanner1.png",
+    "https://ruraluniv.ac.in/includes/kk/img/Start-Slide/1.jpg",
+    "https://ruraluniv.ac.in/includes/kk/img/Start-Slide/2.jpg",
+    "https://ruraluniv.ac.in/includes/kk/img/Start-Slide/3.jpg",
+    "https://ruraluniv.ac.in/includes/kk/img/Start-Slide/4.jpg",
+    "https://ruraluniv.ac.in/includes/kk/img/Start-Slide/5.jpg",
+    "https://ruraluniv.ac.in/includes/kk/img/Start-Slide/6.jpg",
+    "https://ruraluniv.ac.in/includes/kk/img/Start-Slide/7.jpg",
+    "https://ruraluniv.ac.in/includes/kk/img/Start-Slide/8.jpg",
+    "https://ruraluniv.ac.in/includes/kk/img/Start-Slide/9.jpg",
+    "https://ruraluniv.ac.in/includes/kk/img/Start-Slide/10.jpg",
+    "https://ruraluniv.ac.in/includes/kk/img/ddukk_profile2.jpg"
+  ],
+  "text_preview": "\ufeff\nThe Gandhigram Rural Institute Deemed to be University\nAbout DDU-KK\nVission & Mision\nObjectives\nKey Features\nGuidelines\nUGC Sanction Orders\nAll B.Voc Programmes Sanction Order Copy PDF\nAdvisory Committee\nMembers\nAcademic\nProgrammes\nNSQF Regulation\nAwards & Honors\nEquivalence of B.Voc. Degree\nSector\nAgriculture\nAutomotive\nLeather\nFood Processing\nMedia\nPower\nGallery\nContact us\nVideo Tour\n\u2630\nDeen Dayal Upadhyay \u2013 KAUSHAL Kendra\nThe University Grants Commission (UGC) has launched a scheme based on "
+}

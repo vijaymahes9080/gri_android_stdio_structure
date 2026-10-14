@@ -1,0 +1,29 @@
+{
+  "page_id": "gri_deep_www_ruraluniv_ac_in_includes_enews_2k25",
+  "url": "https://www.ruraluniv.ac.in/includes/enews/2k25",
+  "title": "GRI - www_ruraluniv_ac_in_includes_enews_2k25",
+  "category": "Examinations & COE Services",
+  "parent_url": "https://ruraluniv.ac.in/",
+  "http_status": 200,
+  "accessibility_status": "ACCESSIBLE",
+  "content_type": "html",
+  "target_screen": "lib/screens/academics_hub_screen.dart",
+  "documents_count": 0,
+  "images_count": 12,
+  "documents": [],
+  "images": [
+    "http://ruraluniv.ac.in/includes/enews/2025Jan/1.jpg",
+    "http://ruraluniv.ac.in/includes/enews/2025Feb/1.jpg",
+    "http://ruraluniv.ac.in/includes/enews/2025Mar/1.jpg",
+    "http://ruraluniv.ac.in/includes/enews/2025Apr/1.jpg",
+    "http://ruraluniv.ac.in/includes/enews/2025May/1.jpg",
+    "http://ruraluniv.ac.in/includes/enews/2025Jun/1.jpg",
+    "http://ruraluniv.ac.in/includes/enews/2025Jul/1.jpg",
+    "http://ruraluniv.ac.in/includes/enews/2025Aug/1.jpg",
+    "http://ruraluniv.ac.in/includes/enews/2025Sep/1.jpg",
+    "http://ruraluniv.ac.in/includes/enews/2025Oct/1.jpg",
+    "http://ruraluniv.ac.in/includes/enews/2025Nov/1.jpg",
+    "http://ruraluniv.ac.in/includes/enews/2025Dec/1.jpg"
+  ],
+  "verification_status": "VERIFIED"
+}

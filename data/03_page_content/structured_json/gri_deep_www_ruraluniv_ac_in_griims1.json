@@ -1,0 +1,19 @@
+{
+  "page_id": "gri_deep_www_ruraluniv_ac_in_griims1",
+  "url": "https://www.ruraluniv.ac.in/GRIIMS1/",
+  "title": "GRI | Ph.D. Tracking",
+  "category": "Institutional Portals & E-Governance",
+  "parent_url": "https://ruraluniv.ac.in/",
+  "http_status": 200,
+  "accessibility_status": "ACCESSIBLE",
+  "content_type": "html",
+  "target_screen": "lib/screens/home_dashboard_screen.dart",
+  "documents_count": 0,
+  "images_count": 2,
+  "documents": [],
+  "images": [
+    "https://www.ruraluniv.ac.in/GRIIMS1/img/gri-header.png",
+    "https://www.ruraluniv.ac.in/GRIIMS1/img/griims.png"
+  ],
+  "verification_status": "VERIFIED"
+}

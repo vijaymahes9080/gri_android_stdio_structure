@@ -1,0 +1,27 @@
+{
+  "page_id": "gri_deep_ruraluniv_ac_in_includes_enews_jul2016_jul2016_html",
+  "url": "http://ruraluniv.ac.in/includes/enews/jul2016/jul2016.html",
+  "title": "GRI e-News",
+  "category": "Examinations & COE Services",
+  "parent_url": "https://ruraluniv.ac.in/",
+  "http_status": 200,
+  "accessibility_status": "ACCESSIBLE",
+  "content_type": "html",
+  "target_screen": "lib/screens/academics_hub_screen.dart",
+  "documents_count": 0,
+  "images_count": 10,
+  "documents": [],
+  "images": [
+    "http://ruraluniv.ac.in/includes/enews/jul2016/1.jpg",
+    "http://ruraluniv.ac.in/includes/enews/jul2016/2.jpg",
+    "http://ruraluniv.ac.in/includes/enews/jul2016/3.jpg",
+    "http://ruraluniv.ac.in/includes/enews/jul2016/4.jpg",
+    "http://ruraluniv.ac.in/includes/enews/jul2016/5.jpg",
+    "http://ruraluniv.ac.in/includes/enews/jul2016/6.jpg",
+    "http://ruraluniv.ac.in/includes/enews/jul2016/7.jpg",
+    "http://ruraluniv.ac.in/includes/enews/jul2016/8.jpg",
+    "http://ruraluniv.ac.in/includes/enews/jul2016/9.jpg",
+    "http://ruraluniv.ac.in/includes/enews/jul2016/10.jpg"
+  ],
+  "verification_status": "VERIFIED"
+}

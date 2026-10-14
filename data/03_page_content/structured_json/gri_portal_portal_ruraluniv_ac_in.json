@@ -1,0 +1,16 @@
+{
+  "page_id": "gri_portal_portal_ruraluniv_ac_in",
+  "title": "Student Portal Gateway",
+  "name": "Student Portal Gateway",
+  "url": "https://portal.ruraluniv.ac.in/",
+  "category": "Institutional Portals & E-Governance",
+  "target_screen": "lib/screens/student_services_hub_screen.dart",
+  "http_status": 403,
+  "accessibility_status": "AUTH_REQUIRED",
+  "links_count": 0,
+  "documents_count": 0,
+  "images_count": 0,
+  "documents": [],
+  "images": [],
+  "text_preview": ""
+}

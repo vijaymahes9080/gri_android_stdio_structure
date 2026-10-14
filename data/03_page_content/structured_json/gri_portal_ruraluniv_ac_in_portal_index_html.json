@@ -1,0 +1,18 @@
+{
+  "page_id": "gri_portal_ruraluniv_ac_in_portal_index_html",
+  "title": "Main University Web Portal Hub",
+  "name": "Main University Web Portal Hub",
+  "url": "https://ruraluniv.ac.in/Portal/index.html",
+  "category": "Institutional Portals & E-Governance",
+  "target_screen": "lib/screens/home_dashboard_screen.dart",
+  "http_status": 200,
+  "accessibility_status": "ACCESSIBLE",
+  "links_count": 18,
+  "documents_count": 0,
+  "images_count": 1,
+  "documents": [],
+  "images": [
+    "https://ruraluniv.ac.in/Portal/img/banner1.png"
+  ],
+  "text_preview": "GRI - Portals\nGRI - SP\nGRI - Student Portal\nThis student portal is intended for the use of GRI Student Community only - Profile, Semester fees, Supplementary fees, CFA Marks,Payment History, Result, Grievances, Downloads, Useful Links, SC/ST Grievances and FeedBack Form.\nClick to Login Student Portal\nHome\nGRI - RSP\nGRI -  Research Scholar Portal\nThis scholar portal is intended for the use of GRI Scholar Community only - Profile, Course work examination fees, Course work supplementary fees.\nClick"
+}

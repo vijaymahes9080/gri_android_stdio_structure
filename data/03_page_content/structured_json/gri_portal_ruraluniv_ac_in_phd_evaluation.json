@@ -1,0 +1,19 @@
+{
+  "page_id": "gri_portal_ruraluniv_ac_in_phd_evaluation",
+  "title": "GRI|Ph.D. Evaluation Portal",
+  "name": "Examiner & Ph.D. Evaluation Portal",
+  "url": "https://ruraluniv.ac.in/phd_evaluation/",
+  "category": "Institutional Portals & E-Governance",
+  "target_screen": "lib/screens/examination_services_screen.dart",
+  "http_status": 200,
+  "accessibility_status": "ACCESSIBLE",
+  "links_count": 0,
+  "documents_count": 0,
+  "images_count": 2,
+  "documents": [],
+  "images": [
+    "https://www.ruraluniv.ac.in/phd_evaluation/assets/images/banner.png",
+    "https://www.ruraluniv.ac.in/phd_evaluation/assets/images/griims.png"
+  ],
+  "text_preview": "GRI|Ph.D. Evaluation Portal\nPh.D. Evaluation Portal\nSign In"
+}

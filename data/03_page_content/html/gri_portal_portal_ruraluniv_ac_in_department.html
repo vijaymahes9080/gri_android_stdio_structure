@@ -1,0 +1,232 @@
+<!--#07617D blue  --->
+<style>
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+.login-page {
+  width: 800px;
+  padding: 3% 0 0;
+  margin: auto;
+}
+.form {
+
+  position: relative;
+  z-index: 1;
+  background: #07617D;
+  max-width: 500px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.form input {
+  font-family: 'Open Sans', sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+.form button {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+  text-transform: uppercase;
+  outline: 0;
+  background:  #EF3B3A;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+button span {
+  font-family: 'Open Sans', sans-serif;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: -10px;
+  right: -20px;
+  transition: 0.5s;
+}
+
+button:hover span {
+  padding-right: 30px;
+}
+
+button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.form .message {
+  font-family: 'Open Sans', sans-serif;
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 12px;
+}
+.form .message a {
+  font-family: 'Open Sans', sans-serif;
+  color: #e84c3d;
+  text-decoration: none;
+}
+.form .register-form {
+  display: none;
+}
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 300px;
+  margin: 0 auto;
+}
+.container:before, .container:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.container .info {
+  margin: 50px auto;
+  text-align: center;
+}
+.container .info h1 {
+  margin: 0 0 15px;
+  padding: 0;
+  font-size: 36px;
+  font-weight: 300;
+  color: #1a1a1a;
+}
+.container .info span {
+  color: #4d4d4d;
+  font-size: 12px;
+}
+.container .info span a {
+  color: #000000;
+  text-decoration: none;
+}
+.container .info span .fa {
+  color: #EF3B3A;
+}
+body {
+  background-size: 100%
+}
+ form,
+@media screen and (max-width: 460px) {
+        .loginForm {
+          width: 100%;
+          max-width: 420px;
+        }
+        div.background {
+          margin-top: -60%;
+        }
+        div.background2 {
+          margin-top: -10%;
+        }
+        div.background2:before {
+          width: 80%;
+        }
+        form,
+        .powered {
+          opacity: 0.8;
+        }
+      }
+</style>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag form color 54473F---------->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="login.css">
+
+	
+</head>
+<body height="100%" width="100%" background="http://orig11.deviantart.net/20eb/f/2015/030/6/f/_minflat__dark_material_design_wallpaper__4k__by_dakoder-d8fjqzu.jpg"><!--img/department_bg1.jpg"//http://orig11.deviantart.net/20eb/f/2015/030/6/f/_minflat__dark_material_design_wallpaper__4k__by_dakoder-d8fjqzu.jpg-->
+<div class="login-page">
+  <div class="form">
+    <form  action="https://portal.ruraluniv.ac.in/Department/ServiceLoginAuth" method="post">
+          <div class='col-lg-12 col-md-12'>
+                <img 
+                  src="https://www.ruraluniv.ac.in/includes/griims/img/grilogo.png" class="pull-left img-responsive" width='20%' height='30%'/>
+            
+        <p style="color:white;"><b>THE GANDHIGRAM RURAL INSTITUTE<br/>
+                  ( Deemed to be University )<br/>Ministry
+                  of Education (Shiksha Mantralaya),</br> Government of India.<br /></p>
+                  <p style="color:white;">Re-accredited
+                  by NAAC with 'A' Grade(3<sup>rd</sup> Cycle)</b></p>
+                <p style=""><center><b style="color:white;font-size:20px;">DEPARTMENT PORTAL</b></center></p>
+                </div>
+      <input type="text" placeholder="username"  name="uname" /><span class="highlight">
+      <input type="password" placeholder="password"  name="pword" />      <div class="group">
+          <input type="text"  placeholder="Enter Captcha"  name="captcha" /><span class="highlight"></span
+          ><span class="bar"></span>
+          <label style="color:white;">Captcha</label>
+        </div>
+        <div class="group">
+          <center><img src='https://portal.ruraluniv.ac.in/captcha/P75S1B.jpg' class=' captcha' class='form-control'></center> <span class="highlight"></span><span class="bar"></span>
+     </div>
+     <br>
+     <button type="submit" class="buttonui pull-left">
+          <span> Login </span>
+          <div class="ripples buttonRipples">
+            <span class="ripplesCircle"></span>
+          </div>
+        </button><br>
+        <!--<a href='https://portal.ruraluniv.ac.in/Department/ResetPassword' style='color:#FFE4C9;font-size:18px;'>Forgot Password</a>--->
+      </form>
+      <br><br><br>
+      <div class="powered" style="color:white;">Designed,Developed & Maintained by Computer Centre - GRI
+      <br><br>
+	<center>	<img src="https://www.ruraluniv.ac.in/includes/griims/img/griims.png"  class='img-responsive' width='20%' height='30%'></center></div>
+    </div>
+    <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
+    <script>
+      $(window, document, undefined).ready(function () {
+        $("input").blur(function () {
+          var $this = $(this);
+          if ($this.val()) $this.addClass("used");
+          else $this.removeClass("used");
+        });
+
+        var $ripples = $(".ripples");
+
+        $ripples.on("click.Ripples", function (e) {
+          var $this = $(this);
+          var $offset = $this.parent().offset();
+          var $circle = $this.find(".ripplesCircle");
+
+          var x = e.pageX - $offset.left;
+          var y = e.pageY - $offset.top;
+
+          $circle.css({
+            top: y + "px",
+            left: x + "px",
+          });
+
+          $this.addClass("is-active");
+        });
+
+        $ripples.on(
+          "animationend webkitAnimationEnd mozAnimationEnd oanimationend MSAnimationEnd",
+          function (e) {
+            $(this).removeClass("is-active");
+          }
+        );
+      });
+    </script>
+  </body>
+</html>
