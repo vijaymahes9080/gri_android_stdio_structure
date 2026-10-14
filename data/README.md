@@ -27,6 +27,7 @@ In accordance with strict project guidelines, this phase is **DISCOVERY + COLLEC
 | [`10_quality_assurance/`](file:///d:/current%20project/gri/data/10_quality_assurance/) | Coverage matrices, `BROKEN_LINKS.csv`, `MISSING_OR_UNAVAILABLE_ASSETS.csv`, `DUPLICATE_ASSETS.csv`, and `CONTENT_GAP_ANALYSIS.md`. |
 | [`11_logs/`](file:///d:/current%20project/gri/data/11_logs/collection.log) | Timestamped execution log of crawler and extraction steps. |
 | [`12_exceptions/`](file:///d:/current%20project/gri/data/12_exceptions/ACCESS_LIMITATIONS.md) | Documented perimeter boundaries, intranet restrictions, and third-party portal redirections. |
+| [`13_browser_recordings/`](file:///d:/current%20project/gri/data/13_browser_recordings/BROWSER_VERIFICATION_AUDIT.md) | Master audit and index of 12 Chromium browser recording sessions covering 100% of live web pages. |
 
 ---
 
