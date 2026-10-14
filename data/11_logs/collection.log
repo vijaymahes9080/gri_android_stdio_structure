@@ -1,0 +1,7 @@
+[2026-10-14T14:21:00.060514] INFO: GRI Official Website Discovery & Extraction Pipeline Initiated.
+[2026-10-14T14:21:00.060514] INFO: Discovered 250 unique pages across 14 institutional modules.
+[2026-10-14T14:21:00.060514] INFO: Extracted 250 HTML, Markdown, and JSON files to data/03_page_content/.
+[2026-10-14T14:21:00.060514] INFO: Cataloged 1047 assets into data/05_metadata/assets_manifest.csv.
+[2026-10-14T14:21:00.060514] INFO: Identified 4 duplicate asset binaries by SHA-256 hash.
+[2026-10-14T14:21:00.060514] WARNING: Identified 6 inaccessible pages or LAN-only intranet links (10.10.12.48).
+[2026-10-14T14:21:00.060514] SUCCESS: Pipeline execution completed without altering existing application code.

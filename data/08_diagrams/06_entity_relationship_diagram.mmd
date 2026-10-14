@@ -1,0 +1,57 @@
+erDiagram
+    USERS ||--o{ USER_ROLES : assigned
+    USERS ||--o{ GRIEVANCES : submits
+    USERS ||--o| HALL_TICKETS : issued
+
+    SCHOOLS ||--|{ DEPARTMENTS : contains
+    DEPARTMENTS ||--|{ PROGRAMMES : offers
+    PROGRAMMES ||--|{ COURSES : teaches
+    COURSES ||--o{ EXAM_SCHEDULES : timetabled
+
+    HALL_TICKETS ||--|{ EXAM_SCHEDULES : includes
+
+    OFFICIAL_DOCUMENTS ||--o{ PAGE_ASSET_RELATIONSHIPS : linked
+    WEB_PAGES ||--o{ PAGE_ASSET_RELATIONSHIPS : contains
+
+    USERS {
+        uuid id PK
+        string full_name
+        string email UK
+        string register_number UK
+        string active_role
+        string account_status
+    }
+
+    HALL_TICKETS {
+        uuid id PK
+        uuid user_id FK
+        string roll_number
+        string student_name
+        string degree_name
+        string semester
+        string exam_center
+        string qr_verification_hash
+        boolean is_esanad_verified
+    }
+
+    GRIEVANCES {
+        uuid id PK
+        uuid user_id FK
+        string tracking_id UK
+        string category
+        string subject
+        text description
+        string status
+        text admin_remark
+    }
+
+    OFFICIAL_DOCUMENTS {
+        uuid id PK
+        string document_id UK
+        string title
+        string download_url
+        string file_type
+        bigint file_size_bytes
+        string sha256_checksum
+        string access_status
+    }

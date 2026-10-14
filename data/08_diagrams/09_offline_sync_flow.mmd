@@ -1,0 +1,28 @@
+stateDiagram-v2
+    [*] --> OfflineReady : App Launched
+
+    state OfflineReady {
+        [*] --> ReadLocalCache : Query Local SQLite / Drift
+        ReadLocalCache --> DisplayOfflineUI : Render Instant Cached Views
+    }
+
+    OfflineReady --> NetworkCheck : Connectivity Event Triggered
+    
+    state NetworkCheck {
+        CheckInternet --> Connected : Active Wi-Fi / Cellular
+        CheckInternet --> Disconnected : No Route to Host
+    }
+
+    Disconnected --> OfflineReady : Fallback to Cached State
+    Connected --> SyncNegotiation : Initiate Sync Handshake
+
+    state SyncNegotiation {
+        SendClientRevisions --> CompareServerVersions : Compare Timestamps / Hash
+        CompareServerVersions --> FetchDeltaUpdates : Server Has New Records
+        CompareServerVersions --> UpToDate : No Changes Detected
+    }
+
+    FetchDeltaUpdates --> ReconcileLocalDB : Write to SQLite within Transaction
+    ReconcileLocalDB --> RefreshUI : Notify ChangeNotifier & Refresh Views
+    UpToDate --> RefreshUI
+    RefreshUI --> OfflineReady : Maintain Synced State

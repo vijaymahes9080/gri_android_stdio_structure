@@ -1,0 +1,18 @@
+sequenceDiagram
+    autonumber
+    actor Admin as University Administrator
+    participant Portal as Admin Web Dashboard
+    participant Backend as Supabase Cloud Backend
+    participant Storage as Object Storage (CDN)
+    participant Client as GRI Mobile Application
+
+    Admin->>Portal: Upload New Circular / Examination Timetable (PDF)
+    Portal->>Storage: Store Document Blob & Compute SHA-256
+    Storage-->>Portal: Return Public CDN URL & Hash
+    Portal->>Backend: Insert Notice Metadata (Title, Role Targets, Expiry)
+    Backend->>Backend: Enforce RLS & Update Version Sequence
+    Backend-->>Portal: Confirm Publishing
+    Backend-)Client: Realtime Push Notification / Sync Event
+    Client->>Backend: Fetch Delta Notice Records
+    Client->>Storage: Download & Verify Document Checksum
+    Client->>Client: Cache Locally in SQLite & Display Badge

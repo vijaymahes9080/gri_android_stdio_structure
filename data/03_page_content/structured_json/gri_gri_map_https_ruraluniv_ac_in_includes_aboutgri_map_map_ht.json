@@ -1,0 +1,21 @@
+{
+  "id": "gri_gri_map_https_ruraluniv_ac_in_includes_aboutgri_map_map_ht",
+  "url": "https://ruraluniv.ac.in/includes/aboutgri/map/map.html",
+  "title": "GRI-Map",
+  "category": "Institution Profile & Heritage",
+  "parent_url": "https://ruraluniv.ac.in/",
+  "http_status": 200,
+  "accessibility": "ACCESSIBLE",
+  "verification_status": "VERIFIED",
+  "flutter_screen_mapping": "lib/screens/about_gri_heritage_screen.dart",
+  "extraction_timestamp": "2026-10-14T19:45:00Z",
+  "extracted_content": {
+    "heading": "GRI-Map",
+    "documents_count": 0,
+    "images_count": 2,
+    "documents": [],
+    "interactive_features": [
+      "content_view"
+    ]
+  }
+}

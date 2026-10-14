@@ -1,0 +1,28 @@
+graph TD
+    User["Student / Faculty User"]
+
+    P1["1.0 Role & Authentication Engine"]
+    P2["2.0 Academics & Examination Engine"]
+    P3["3.0 Campus Facilities & Transit Engine"]
+    P4["4.0 Offline Vault & Sync Engine"]
+
+    D1[("D1: User Profiles & Roles")]
+    D2[("D2: Academic Syllabi & Hall Tickets")]
+    D3[("D3: Campus Facilities & GPS Data")]
+    D4[("D4: Official Document Repository")]
+
+    User -->|1. Switch Role / Login| P1
+    P1 <-->|Manage Roles & Dossier| D1
+    P1 -->|Authorized Views| User
+
+    User -->|2. Request Hall Ticket / Syllabus| P2
+    P2 <-->|Fetch Schedules & Roll Info| D2
+    P2 -->|Render E-Hall Ticket with QR| User
+
+    User -->|3. View Facilities & Dial Hotline| P3
+    P3 <-->|Query Geo-Markers & Hours| D3
+    P3 -->|Render Campus Map & Dial Intent| User
+
+    P4 <-->|Background Delta Updates| D1
+    P4 <-->|Background Delta Updates| D2
+    P4 <-->|Verify Checksums & Fetch Blobs| D4

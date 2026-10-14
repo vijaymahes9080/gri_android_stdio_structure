@@ -1,0 +1,19 @@
+graph TD
+    Start["Initiate Crawl: ruraluniv.ac.in/home"] --> Normalize["URL Normalization & Query Parser"]
+    Normalize --> Dedupe["Deduplication & Canonical Match"]
+    Dedupe --> Fetch["HTTP Fetch / Browser Subagent Session"]
+    
+    Fetch --> StatusCheck{"HTTP Status = 200?"}
+    StatusCheck -->|No| LogErr["Log Broken / Restricted Link -> BROKEN_LINKS.csv"]
+    StatusCheck -->|Yes| Extract["Extract Clean Text, HTML, Tables & Metadata"]
+
+    Extract --> AssetScan["Scan Linked Assets (PDF, Images, Office)"]
+    AssetScan --> HashCheck{"SHA-256 Seen Before?"}
+    HashCheck -->|Yes| LogDup["Record Duplicate Binary -> DUPLICATE_ASSETS.csv"]
+    HashCheck -->|No| StoreAsset["Save to data/04_assets/ & Record in Manifest"]
+
+    StoreAsset --> MapRel["Map Page-Asset Bipartite Graph -> relationships/"]
+    LogDup --> MapRel
+    LogErr --> Summary["Compile Coverage & QA Statistics"]
+    MapRel --> Summary
+    Summary --> End["Discovery & Collection Checkpoint Complete"]

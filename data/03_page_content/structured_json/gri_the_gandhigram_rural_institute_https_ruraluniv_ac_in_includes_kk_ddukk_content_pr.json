@@ -1,0 +1,162 @@
+{
+  "id": "gri_the_gandhigram_rural_institute_https_ruraluniv_ac_in_includes_kk_ddukk_content_pr",
+  "url": "https://ruraluniv.ac.in/includes/kk/ddukk?content=Programmes",
+  "title": "The Gandhigram Rural Institute",
+  "category": "General Institutional Information",
+  "parent_url": "https://ruraluniv.ac.in/academics?content=programmes",
+  "http_status": 200,
+  "accessibility": "ACCESSIBLE",
+  "verification_status": "VERIFIED",
+  "flutter_screen_mapping": "lib/screens/home_dashboard_screen.dart",
+  "extraction_timestamp": "2026-10-14T19:45:00Z",
+  "extracted_content": {
+    "heading": "The Gandhigram Rural Institute",
+    "documents_count": 35,
+    "images_count": 2,
+    "documents": [
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/2024BVocFP.pdf",
+        "title": "From 2024-25"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/2024BVocDPT.pdf",
+        "title": "From 2024-25"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/29_Cer_Twowheeler_2021.pdf",
+        "title": "From 2021-22"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/29_BVoc_FEOM_2021.pdf",
+        "title": "From 2021-22"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/29_BVoc_FTQE_2021.pdf",
+        "title": "From 2021-22"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/29_DVoc_Software_2018.pdf",
+        "title": "From 2018-19"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/2024BVocFTQE.pdf",
+        "title": "From 2024-25"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/29_BVoc_FAD_2018.pdf",
+        "title": "From 2018-19"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/29_BVoc_MMPT_2021.pdf",
+        "title": "From 2021-22"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/29_BVoc_FP_2021.pdf",
+        "title": "From 2021-22"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/29_Dip_Two Wheeler_2018.pdf",
+        "title": "From 2018-19"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/2024BVocMMPT.pdf",
+        "title": "From 2024-25"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/29_Bvoc_MMPT_2018.pdf",
+        "title": "From 2018-19"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/BVocFEOM.pdf",
+        "title": "From 2015-16"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/29_Dvoc_REF&AC_2021.pdf",
+        "title": "From 2021-22"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/29_BVOC_DPT 2018.pdf",
+        "title": "From 2018-19"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/BVocFAD.pdf",
+        "title": "From 2015-16"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/29_BVoc_FEOM_2018.pdf",
+        "title": "From 2018-19"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/29_BVoc_RE_2021.pdf",
+        "title": "From 2021-22"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/29_BVoc_FTQE_2018.pdf",
+        "title": "From 2018-19"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/2024BVocFEOM.pdf",
+        "title": "From 2024-25"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/dip_two_wheeler2016.pdf",
+        "title": "From 2016-17"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/29_BVoc_RE_2024.pdf",
+        "title": "From 2024-25"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/29_BVoc_FAD_2021.pdf",
+        "title": "From 2021-22"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/29_BVoc_OAED_2022.pdf",
+        "title": "From 2022-23"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/29_Dip_Two Wheeler_2021.pdf",
+        "title": "From 2021-22"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/29_Bvoc_OAED_2018.pdf",
+        "title": "From 2018-19"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/2024FAD.pdf",
+        "title": "From 2024-25"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/29_BVoc_FP_2018.pdf",
+        "title": "From 2018-19"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/29_BVOC_DPT_2021.pdf",
+        "title": "From 2021-22"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/29_Dvoc_REF&AC_2018.pdf",
+        "title": "From 2018-19"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/2024BVocOAED.pdf",
+        "title": "From 2024-25"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/bvoc_dpt2017.pdf",
+        "title": "From 2017-18"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/29_BVoc_RE_2018.pdf",
+        "title": "From 2018-19"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/kk/pdf/29_Cer_Twowheeler_2016.pdf",
+        "title": "From 2016-17"
+      }
+    ],
+    "interactive_features": [
+      "programme_list"
+    ]
+  }
+}

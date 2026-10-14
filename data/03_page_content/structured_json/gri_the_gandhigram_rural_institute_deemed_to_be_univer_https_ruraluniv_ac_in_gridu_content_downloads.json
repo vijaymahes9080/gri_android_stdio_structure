@@ -1,0 +1,294 @@
+{
+  "id": "gri_the_gandhigram_rural_institute_deemed_to_be_univer_https_ruraluniv_ac_in_gridu_content_downloads",
+  "url": "https://ruraluniv.ac.in/gridu?content=downloads",
+  "title": "The Gandhigram Rural Institute - Deemed to be University",
+  "category": "General Institutional Information",
+  "parent_url": "https://ruraluniv.ac.in/",
+  "http_status": 200,
+  "accessibility": "ACCESSIBLE",
+  "verification_status": "VERIFIED",
+  "flutter_screen_mapping": "lib/screens/home_dashboard_screen.dart",
+  "extraction_timestamp": "2026-10-14T19:45:00Z",
+  "extracted_content": {
+    "heading": "The Gandhigram Rural Institute - Deemed to be University",
+    "documents_count": 68,
+    "images_count": 10,
+    "documents": [
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/code_ofConduct_Of_NonTeachingStaff.pdf",
+        "title": "Code of Conduct of Non-Teaching Staff"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/20022026_04.pdf",
+        "title": "Silver Jubilee Hall - Reservation Request Form"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/ManDisc/AICTEMandate2025.pdf",
+        "title": "AICTE"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/CFAAppealForm05042023.pdf",
+        "title": "CFA Application for Appeal"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/obe_pattern010621.pdf",
+        "title": "Question Paper Model for OBE Pattern - June 2021"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/infrastructure/hostel/HOSTEL_MANUAL.pdf",
+        "title": "Hostel"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/Electrical_Request.pdf",
+        "title": "Electrical Service Request Form"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/intranet_mail/GRI-STUDENTS-ACTIVITIES-2019-2024.pdf",
+        "title": "Students Activity"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/word_passwd.pdf",
+        "title": "Steps to Protect a Microsoft Word Document with Password"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/VideoWall_ReqestForm.pdf",
+        "title": "Video Wall Request Form"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/phd_profile.pdf",
+        "title": "Profile of Ph.D. Scholar"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/examination/pdf/DuplicateCertificate.pdf",
+        "title": "Application for Duplicate Certificates"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/examination/pdf/Application_Transcript.pdf",
+        "title": "Application for Transcript"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/admissions/2025/pdf/Prospectus_202526.pdf",
+        "title": "Prospectus\r\n\t\t\t\t\t\t\t2025-26"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/electronics.pdf",
+        "title": "Electronics Section - Job Card"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/infrastructure/hostel/ww_hostel.pdf",
+        "title": "Working Women Hostel"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/non_obe_pattern151220.pdf",
+        "title": "Question Paper Model for Non-OBE Pattern"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/UGCRegulations2023.pdf",
+        "title": "Deemed to be University Regulations - 2023"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/studcorner/pdf/ugc_cc221217.pdf",
+        "title": "Certificate for Compliance of Ph.D. Degree with UGC regulation"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/academics/programmes/brochure/15330.pdf",
+        "title": "Rural Energy Centre"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/academics/pdf/KVK.pdf",
+        "title": "KVK"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/20250624_3.pdf",
+        "title": "Proforma for Submission of Synopsis"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/t_shooting.pdf",
+        "title": "WiFi Connectivity Trouble Shooting form (students)"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/BanStudentsVehicles.pdf",
+        "title": "Ban on the Use of vehicles by students"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/wifi1.pdf",
+        "title": "WiFi Connectivity Registration form (students)"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/ManDisc/odl.pdf",
+        "title": "ODL - Application"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/no_dues_cc.pdf",
+        "title": "No Dues Certificate"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/manual/sanitation.pdf",
+        "title": "Sanitation Works"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/CourseWorkExam_Application.pdf",
+        "title": "Application for Ph.D. Course work Examinations"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/PhD_course_work__question paper_template.pdf",
+        "title": "Template for Question Paper pattern for Ph.D. Course Work"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/ApplicationAppeal23042021.pdf",
+        "title": "Application for Appeal"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/ExamHall2025.pdf",
+        "title": "Examination Hall - Requisition Form"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/PIO.pdf",
+        "title": "Public Information Officer"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/PhDCourseWork_AppJanSep2023.pdf",
+        "title": "Application for Ph.D. Course Work Examinations January/September 2023 Session & Earlier"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/ModifiedRemuneration_120523.pdf",
+        "title": "Modified Remuneration Form"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/ManDisc/6_2_1_B_Strategic_Plans.pdf",
+        "title": "Perspective Plans & Strategic Plans of GRI"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/UGCRegulations2010.pdf",
+        "title": "UGC Regulations (Minimum Eligiblity for Appointments) 2010"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/examination/pdf/ExaminationSystem.pdf",
+        "title": "Examination Manual"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/cetc/circular/pdf/Finance_Accounts_Manual170317.pdf",
+        "title": "Finance and Accounts"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/examination/pdf/e-sanad301221.pdf",
+        "title": "e-SANAD- Notification"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/USICJBSJC.pdf",
+        "title": "USIC Glass Blowing Section Job Card"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/admissions/2026/pdf/Prospectus_202627.pdf",
+        "title": "Prospectus\r\n\t\t\t\t\t\t\t2026-27"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/GRIMandatoryDisclosure26.pdf",
+        "title": "MANDATORY DISCLOSURES"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/vehicle_form.pdf",
+        "title": "Vehicle Requisition Form"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/ManDisc/MD202324.pdf",
+        "title": "NCTE"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/code_ofConduct_Of_Students.pdf",
+        "title": "Code of Conduct of Students"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/examination/pdf/Tatkal_instruction.pdf",
+        "title": "Tatkal Scheme - Instructions"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/phd_course130623.pdf",
+        "title": "Ph.D. Course Work Examinations - Application form (Semester pattern - September 2022 Session & Earlier)"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/Examiner Panel.docx",
+        "title": "Ph.D. Programme-Template for submitting Panel of Examiners"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/12b_status.pdf",
+        "title": "12 B Status"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/VivaVoce_Minutues.pdf",
+        "title": "Ph.D. Viva-Voce Minutes and Attendance Sheet - Format"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/CourseRegistrationForm.pdf",
+        "title": "Course Registration Form"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/InternetBrowsingID_RequestForm_TempTeachingNonteaching.pdf",
+        "title": "Internet Browsing ID request form (Temp. Teaching / Non-Teaching staff)"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/epabx.pdf",
+        "title": "EPABX - Job Card"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/infrastructure/guesthouse/pdf/FGH_operational_Manual.pdf",
+        "title": "Guest House"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/CCS_CCA_Rules.pdf",
+        "title": "CCS Rules"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/manual/CampusSecurity.pdf",
+        "title": "Campus Security"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/ESEApplication120922.pdf",
+        "title": "End Semester Examinations - Application form"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/course_work.pdf",
+        "title": "Ph.D. Course Work Examinations - Application form (Non-Semester pattern)"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/obe_pattern151220.pdf",
+        "title": "Question Paper Model for OBE Pattern"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/cetc/circular/pdf/vpp2032015.pdf",
+        "title": "VPP"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/nodues_phd_thesis.pdf",
+        "title": "No Dues format for submission of Ph.D. Thesis"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/phd_course291220.pdf",
+        "title": "Ph.D. Course Work Examinations - Application form (Semester pattern)"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/code_ofConduct_Of_TeachingStaff.pdf",
+        "title": "Code of Conduct of Teaching Staff"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/Water_RequestForm.pdf",
+        "title": "Water Request Form"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/non_obe_pattern010621.pdf",
+        "title": "Question Paper Model for NON-OBE Pattern - June 2021"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/downloads/pdf/Thesis_of_the_Month.pdf",
+        "title": "Thesis of the Month - formate"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/SDGs.pdf",
+        "title": "Sustainable Practices"
+      }
+    ],
+    "interactive_features": [
+      "content_view"
+    ]
+  }
+}

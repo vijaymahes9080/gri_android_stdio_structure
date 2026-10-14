@@ -1,0 +1,14 @@
+graph LR
+    User["Student / Faculty / Admin"]
+    AppSystem(("GRI Mobile Application System"))
+    OfficialWeb["Official Web Server (ruraluniv.ac.in)"]
+    LocalStorage[("Local Device Storage")]
+    CloudDB[("Institutional Database")]
+
+    User -->|User Actions, Role Switch, Grievance Submission| AppSystem
+    AppSystem -->|Screens, Hall Tickets, Document Previews| User
+
+    OfficialWeb -->|Notices, Circulars, Regulations & Media| AppSystem
+
+    AppSystem <-->|Read / Write Cached Dossiers| LocalStorage
+    AppSystem <-->|Delta Sync & Storage Retrieval| CloudDB

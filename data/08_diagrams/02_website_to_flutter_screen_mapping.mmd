@@ -1,0 +1,36 @@
+graph LR
+    subgraph WebRoutes ["GRI Official Website Routes"]
+        W_Home["/home & Notice Board"]
+        W_About["/aboutgri?content=..."]
+        W_Acad["/academics?content=..."]
+        W_Exam["/examination & Circulars"]
+        W_Admn["/admissions & Prospectus"]
+        W_Fac["/facilities & /infrastructure"]
+        W_Gov["/Governance & /administration"]
+        W_Serv["/students & Redressal"]
+        W_Docs["Public Documents & PDF Vault"]
+    end
+
+    subgraph FlutterApp ["Flutter Mobile App Screens (lib/screens/)"]
+        F_Home["HomeDashboardScreen"]
+        F_Acad["AcademicsHubScreen"]
+        F_Camp["CampusFacilitiesScreen"]
+        F_Serv["StudentServicesHubScreen"]
+        F_More["AdminDirectoryScreen"]
+        F_Modal_HT["HallTicketModal"]
+        F_Modal_RS["RoleSwitcherModal"]
+        F_Doc_Center["OfficialDocumentCenterScreen"]
+        F_Drawer["GriUniversityDrawer"]
+    end
+
+    W_Home --> F_Home
+    W_About --> F_Drawer
+    W_About --> F_Home
+    W_Acad --> F_Acad
+    W_Exam --> F_Acad
+    W_Exam --> F_Modal_HT
+    W_Admn --> F_Acad
+    W_Fac --> F_Camp
+    W_Gov --> F_More
+    W_Serv --> F_Serv
+    W_Docs --> F_Doc_Center

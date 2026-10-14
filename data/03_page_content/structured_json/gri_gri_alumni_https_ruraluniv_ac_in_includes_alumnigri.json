@@ -1,0 +1,66 @@
+{
+  "id": "gri_gri_alumni_https_ruraluniv_ac_in_includes_alumnigri",
+  "url": "https://ruraluniv.ac.in/includes/AlumniGRI",
+  "title": "GRI- Alumni",
+  "category": "General Institutional Information",
+  "parent_url": "https://ruraluniv.ac.in/",
+  "http_status": 200,
+  "accessibility": "ACCESSIBLE",
+  "verification_status": "VERIFIED",
+  "flutter_screen_mapping": "lib/screens/home_dashboard_screen.dart",
+  "extraction_timestamp": "2026-10-14T19:45:00Z",
+  "extracted_content": {
+    "heading": "GRI- Alumni",
+    "documents_count": 11,
+    "images_count": 31,
+    "documents": [
+      {
+        "url": "https://ruraluniv.ac.in/NAAC_DVV/Criterion_5/5_4_1_A/01-5.4.1a%20Second%20page.pdf",
+        "title": "NAAC 5.4.1.1"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/AlumniGRI/build/images/Award_2026.pdf",
+        "title": "Alumni Awardees 2026"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/AlumniGRI/build/images/AlumniMeetPhotoswithCaptions_April2024.pdf",
+        "title": "Gallery - Alumni Meet 2024"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/AlumniGRI/build/images/AlumniAward.pdf",
+        "title": "Distinguished Alumni Awardees - 2024"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/AlumniGRI/build/images/AlumniMeet2025.pdf",
+        "title": "Alumni Meet_2025"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/AlumniGRI/build/images/Alumni Association of GRI.pdf",
+        "title": "Bye-Laws"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/AlumniGRI/build/images/Distinguished Alumni Awardees - 2024.pdf",
+        "title": "Distinguished Alumni Awardees - List"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/AlumniGRI/build/images/Alumni_Events_2022-2023.pdf",
+        "title": "Alumni Events_2021-2022"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/AlumniGRI/build/images/AlumniReport2026.pdf",
+        "title": "Alumni Awards Function-2026 Report"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/AlumniGRI/build/images/NewsletterAPRIL2025.pdf",
+        "title": "April 2025"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/AlumniGRI/build/images/NewsletterJAN2025.pdf",
+        "title": "January 2025"
+      }
+    ],
+    "interactive_features": [
+      "html_form"
+    ]
+  }
+}

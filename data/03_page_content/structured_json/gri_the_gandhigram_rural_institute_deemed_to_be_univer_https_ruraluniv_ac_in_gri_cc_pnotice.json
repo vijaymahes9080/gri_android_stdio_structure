@@ -1,0 +1,390 @@
+{
+  "id": "gri_the_gandhigram_rural_institute_deemed_to_be_univer_https_ruraluniv_ac_in_gri_cc_pnotice",
+  "url": "https://ruraluniv.ac.in/gri?CC=pnotice",
+  "title": "The Gandhigram Rural Institute - Deemed to be University",
+  "category": "Announcements & Circulars",
+  "parent_url": "https://ruraluniv.ac.in/",
+  "http_status": 200,
+  "accessibility": "ACCESSIBLE",
+  "verification_status": "VERIFIED",
+  "flutter_screen_mapping": "lib/screens/home_dashboard_screen.dart",
+  "extraction_timestamp": "2026-10-14T19:45:00Z",
+  "extracted_content": {
+    "heading": "The Gandhigram Rural Institute - Deemed to be University",
+    "documents_count": 92,
+    "images_count": 9,
+    "documents": [
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice230121.pdf",
+        "title": "UGC dt. January, 2021"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/outsiders.pdf",
+        "title": "GRI dt.06.06.2016"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/regulations.pdf",
+        "title": "UGC dt.09.02.2018"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice251018a.pdf",
+        "title": "UGC dt. 16.10.2018"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/examination/pdf/DuplicateCertificate.pdf",
+        "title": "Application for Duplicate Certificates"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/academics/programmes/brochure/15330.pdf",
+        "title": "Rural Energy Centre"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice080921.pdf",
+        "title": "UGC dt. 02.09.2021"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice270218.pdf",
+        "title": "UGC dt.23.02.2018"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice120422.pdf",
+        "title": "UGC dt. 07.04.2022"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice120221a.pdf",
+        "title": "UGC dt. 08.02.2021"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice051218.pdf",
+        "title": "UGC dt. Oct., 2018"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/notice290719.pdf",
+        "title": "UGC dt.20.07.2019"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/indian_express.pdf",
+        "title": "The Indian Express dt.04.09.2016"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice070619.pdf",
+        "title": "UGC dt.04.06.2019"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/admissions/2026/pdf/Prospectus_202627.pdf",
+        "title": "Prospectus\r\n\t\t\t\t\t\t\t2026-27"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice281118.pdf",
+        "title": "UGC dt. 26.11.2018"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice090621.pdf",
+        "title": "UGC dt. 15.04.2021"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice_funiversity.pdf",
+        "title": "UGC dt. April, 2018"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice101219.pdf",
+        "title": "UGC dt.06.12.2019"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/ManDisc/MD202324.pdf",
+        "title": "NCTE"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/examination/pdf/Tatkal_instruction.pdf",
+        "title": "Tatkal Scheme - Instructions"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice141019.pdf",
+        "title": "UGC dt.10.10.2019"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/manual/CampusSecurity.pdf",
+        "title": "Campus Security"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/other_state100717.pdf",
+        "title": "GRI dt.07.07.2017"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice111218.pdf",
+        "title": "UGC dt. 07.12.2018"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice260820.pdf",
+        "title": "UGC dt.11.08.2020"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/SDGs.pdf",
+        "title": "Sustainable Practices"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/ugc140917.pdf",
+        "title": "UGC dt.11.09.2017"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice230920.pdf",
+        "title": "UGC dt.11.09.2020"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pwd090817.pdf",
+        "title": "GRI dt.08.08.2017"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/examination/pdf/Application_Transcript.pdf",
+        "title": "Application for Transcript"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice090719.pdf",
+        "title": "UGC dt.26.06.2019"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/UGCRegulations2023.pdf",
+        "title": "Deemed to be University Regulations - 2023"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/ManDisc/odl.pdf",
+        "title": "ODL - Application"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice111218a.pdf",
+        "title": "UGC dt. Dec., 2018"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/ManDisc/6_2_1_B_Strategic_Plans.pdf",
+        "title": "Perspective Plans & Strategic Plans of GRI"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice050819.pdf",
+        "title": "UGC dt.30.07.2019"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/examination/pdf/ExaminationSystem.pdf",
+        "title": "Examination Manual"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice.pdf",
+        "title": "GRI dt.30.08.2016"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/cetc/circular/pdf/Finance_Accounts_Manual170317.pdf",
+        "title": "Finance and Accounts"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/Officeorder09022018.pdf",
+        "title": "GRI dt.09.02.2018"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice_jun8.pdf",
+        "title": "UGC dt. 08.06.2018"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/tutionfee010416.pdf",
+        "title": "Reimbursement of Tuition fee to SC/ST/SCC students"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/code_ofConduct_Of_Students.pdf",
+        "title": "Code of Conduct of Students"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice151220.pdf",
+        "title": "UGC dt.08.12.2020"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice040619.pdf",
+        "title": "UGC dt.31.05.2019"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/p_notice180918.pdf",
+        "title": "UGC dt. Sep., 2018"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/cetc/circular/pdf/vpp2032015.pdf",
+        "title": "VPP"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/code_ofConduct_Of_NonTeachingStaff.pdf",
+        "title": "Code of Conduct of Non-Teaching Staff"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/ManDisc/AICTEMandate2025.pdf",
+        "title": "AICTE"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice090719a.pdf",
+        "title": "UGC dt.14.06.2019"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice120321.pdf",
+        "title": "UGC dt. 10.03.2021"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/infrastructure/hostel/ww_hostel.pdf",
+        "title": "Working Women Hostel"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/studcorner/pdf/ugc_cc221217.pdf",
+        "title": "Certificate for Compliance of Ph.D. Degree with UGC regulation"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/manual/sanitation.pdf",
+        "title": "Sanitation Works"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice071220.pdf",
+        "title": "UGC dt.05.12.2020"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/PIO.pdf",
+        "title": "Public Information Officer"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/UGCRegulations2010.pdf",
+        "title": "UGC Regulations (Minimum Eligiblity for Appointments) 2010"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/examination/pdf/e-sanad301221.pdf",
+        "title": "e-SANAD- Notification"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/dharnas.pdf",
+        "title": "GRI dt.10.10.2014"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice021120.pdf",
+        "title": "UGC dt.28.10.2020"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice080419.pdf",
+        "title": "UGC dt. 15.03.2019"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice041218.pdf",
+        "title": "UGC dt. 28.11.2018"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice251018.pdf",
+        "title": "UGC dt. 16.10.2018"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice221118.pdf",
+        "title": "UGC dt. 20.11.2018"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/CCS_CCA_Rules.pdf",
+        "title": "CCS Rules"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/ugc080817.pdf",
+        "title": "UGC dt.May, 2017"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice041120.pdf",
+        "title": "UGC dt.27.10.2020"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/scholarship131117.pdf",
+        "title": "GRI dt.11.11.2017"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/code_ofConduct_Of_TeachingStaff.pdf",
+        "title": "Code of Conduct of Teaching Staff"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice_jun5.pdf",
+        "title": "UGC dt. 05.06.2018"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/infrastructure/guesthouse/pdf/FGH_operational_Manual.pdf",
+        "title": "Guest House"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice_iipm.pdf",
+        "title": "UGC dt. April, 2018"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/infrastructure/hostel/HOSTEL_MANUAL.pdf",
+        "title": "Hostel"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pay.pdf",
+        "title": "UGC dt.19.01.2018"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/intranet_mail/GRI-STUDENTS-ACTIVITIES-2019-2024.pdf",
+        "title": "Students Activity"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/ugc110520.pdf",
+        "title": "UGC dt.10.05.2020"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/academics/pdf/KVK.pdf",
+        "title": "KVK"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice120221b.pdf",
+        "title": "UGC dt. 11.02.2021"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice280319.pdf",
+        "title": "UGC dt. 26.03.2019"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/BanStudentsVehicles.pdf",
+        "title": "Ban on the Use of vehicles by students"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/icar101017.pdf",
+        "title": "ICAR dt.29.09.2017"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/directions.pdf",
+        "title": "GRI dt.17.11.2017"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/scholarship020916.pdf",
+        "title": "GRI dt.20.08.2016"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/GRIMandatoryDisclosure26.pdf",
+        "title": "MANDATORY DISCLOSURES"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice100718.pdf",
+        "title": "UGC dt. 04.07.2018"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice070519.pdf",
+        "title": "UGC"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/12b_status.pdf",
+        "title": "12 B Status"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice060821.pdf",
+        "title": "UGC dt. 30.07.2021"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/the_hindu.pdf",
+        "title": "The Hindu (Tamil)  dt.04.09.2016"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/pnotice/pdf/pnotice280520.pdf",
+        "title": "UGC dt.20.04.2020"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/admissions/2025/pdf/Prospectus_202526.pdf",
+        "title": "Prospectus\r\n\t\t\t\t\t\t\t2025-26"
+      }
+    ],
+    "interactive_features": [
+      "content_view"
+    ]
+  }
+}

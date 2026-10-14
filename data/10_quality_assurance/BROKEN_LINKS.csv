@@ -1,0 +1,7 @@
+Source_Page,Target_URL,Resource_Type,HTTP_Status,Reason
+https://ruraluniv.ac.in/new?content=circulars,http://10.10.12.48/opac-tmpl/gril_current_update/grilibtoday.pdf,DOCUMENT_INTRANET,403_INTRANET_RESTRICTED,Internal campus LAN IP address not accessible via public Internet
+https://ruraluniv.ac.in/facilities?content=About_LCMS_Facility,https://ruraluniv.ac.in/includes/footer/pdf/UGCRegulations2010.pdf,DOCUMENT_INTRANET,403_INTRANET_RESTRICTED,Internal campus LAN IP address not accessible via public Internet
+https://ruraluniv.ac.in/administration?content=hod,https://ruraluniv.ac.in/includes/academics/faculties/profile/210.pdf,DOCUMENT_INTRANET,403_INTRANET_RESTRICTED,Internal campus LAN IP address not accessible via public Internet
+https://ruraluniv.ac.in/,https://ruraluniv.ac.in/season.html,HTML_PAGE,404,Accessibility: INACCESSIBLE
+https://ruraluniv.ac.in/,https://ruraluniv.ac.in/phd/instructions.html,HTML_PAGE,404,Accessibility: INACCESSIBLE
+https://ruraluniv.ac.in/,https://ruraluniv.ac.in/adminblock.html,HTML_PAGE,404,Accessibility: INACCESSIBLE

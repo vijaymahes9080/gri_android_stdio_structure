@@ -1,0 +1,34 @@
+graph TD
+    subgraph Client ["Client Device (Android / iOS / PWA)"]
+        UI["Material 3 Presentation Layer"]
+        VM["GriProvider (State Management)"]
+        Repo["Data Repositories"]
+        Cache["SQLite / Drift Local Cache"]
+    end
+
+    subgraph Edge ["Cloudflare / API Edge"]
+        TLS["HTTPS / TLS 1.3 Termination"]
+        Auth["JWT Role-Based Auth Gateway"]
+    end
+
+    subgraph Backend ["Institutional Cloud Backend"]
+        PG["PostgreSQL Database (Tables & RLS)"]
+        S3["Storage CDN (Official PDF / Images)"]
+        AI["pgvector (GRI-Sahayak AI Embeddings)"]
+    end
+
+    subgraph Source ["First-Party Institutional Servers"]
+        Web["ruraluniv.ac.in (HTTP / PHP Server)"]
+        Samarth["ruraluniv.samarth.ac.in (Govt. e-Gov)"]
+    end
+
+    UI <--> VM
+    VM <--> Repo
+    Repo <--> Cache
+    Repo <--> TLS
+    TLS <--> Auth
+    Auth <--> PG
+    Auth <--> S3
+    Auth <--> AI
+    Web -.->|Periodic Crawler / Scraper| PG
+    Samarth -.->|Official Student Data Sync| PG

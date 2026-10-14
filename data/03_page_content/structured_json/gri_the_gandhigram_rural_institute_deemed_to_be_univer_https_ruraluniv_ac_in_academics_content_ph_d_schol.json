@@ -1,0 +1,154 @@
+{
+  "id": "gri_the_gandhigram_rural_institute_deemed_to_be_univer_https_ruraluniv_ac_in_academics_content_ph_d_schol",
+  "url": "https://ruraluniv.ac.in/academics?content=Ph.D.Scholars",
+  "title": "The Gandhigram Rural Institute - Deemed to be University",
+  "category": "Schools, Departments & Academics",
+  "parent_url": "https://ruraluniv.ac.in/academics?content=Home",
+  "http_status": 200,
+  "accessibility": "ACCESSIBLE",
+  "verification_status": "VERIFIED",
+  "flutter_screen_mapping": "lib/screens/scholarships_welfare_screen.dart",
+  "extraction_timestamp": "2026-10-14T19:45:00Z",
+  "extracted_content": {
+    "heading": "The Gandhigram Rural Institute - Deemed to be University",
+    "documents_count": 33,
+    "images_count": 9,
+    "documents": [
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/code_ofConduct_Of_NonTeachingStaff.pdf",
+        "title": "Code of Conduct of Non-Teaching Staff"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/ManDisc/AICTEMandate2025.pdf",
+        "title": "AICTE"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/infrastructure/hostel/HOSTEL_MANUAL.pdf",
+        "title": "Hostel"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/intranet_mail/GRI-STUDENTS-ACTIVITIES-2019-2024.pdf",
+        "title": "Students Activity"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/examination/pdf/DuplicateCertificate.pdf",
+        "title": "Application for Duplicate Certificates"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/examination/pdf/Application_Transcript.pdf",
+        "title": "Application for Transcript"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/infrastructure/hostel/ww_hostel.pdf",
+        "title": "Working Women Hostel"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/UGCRegulations2023.pdf",
+        "title": "Deemed to be University Regulations - 2023"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/studcorner/pdf/ugc_cc221217.pdf",
+        "title": "Certificate for Compliance of Ph.D. Degree with UGC regulation"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/academics/programmes/brochure/15330.pdf",
+        "title": "Rural Energy Centre"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/academics/pdf/KVK.pdf",
+        "title": "KVK"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/BanStudentsVehicles.pdf",
+        "title": "Ban on the Use of vehicles by students"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/ManDisc/odl.pdf",
+        "title": "ODL - Application"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/manual/sanitation.pdf",
+        "title": "Sanitation Works"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/PIO.pdf",
+        "title": "Public Information Officer"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/ManDisc/6_2_1_B_Strategic_Plans.pdf",
+        "title": "Perspective Plans & Strategic Plans of GRI"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/UGCRegulations2010.pdf",
+        "title": "UGC Regulations (Minimum Eligiblity for Appointments) 2010"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/examination/pdf/ExaminationSystem.pdf",
+        "title": "Examination Manual"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/cetc/circular/pdf/Finance_Accounts_Manual170317.pdf",
+        "title": "Finance and Accounts"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/examination/pdf/e-sanad301221.pdf",
+        "title": "e-SANAD- Notification"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/admissions/2026/pdf/Prospectus_202627.pdf",
+        "title": "Prospectus\r\n\t\t\t\t\t\t\t2026-27"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/GRIMandatoryDisclosure26.pdf",
+        "title": "MANDATORY DISCLOSURES"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/ManDisc/MD202324.pdf",
+        "title": "NCTE"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/code_ofConduct_Of_Students.pdf",
+        "title": "Code of Conduct of Students"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/examination/pdf/Tatkal_instruction.pdf",
+        "title": "Tatkal Scheme - Instructions"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/12b_status.pdf",
+        "title": "12 B Status"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/CCS_CCA_Rules.pdf",
+        "title": "CCS Rules"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/manual/CampusSecurity.pdf",
+        "title": "Campus Security"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/cetc/circular/pdf/vpp2032015.pdf",
+        "title": "VPP"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/code_ofConduct_Of_TeachingStaff.pdf",
+        "title": "Code of Conduct of Teaching Staff"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/infrastructure/guesthouse/pdf/FGH_operational_Manual.pdf",
+        "title": "Guest House"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/admissions/2025/pdf/Prospectus_202526.pdf",
+        "title": "Prospectus\r\n\t\t\t\t\t\t\t2025-26"
+      },
+      {
+        "url": "https://ruraluniv.ac.in/includes/footer/pdf/SDGs.pdf",
+        "title": "Sustainable Practices"
+      }
+    ],
+    "interactive_features": [
+      "content_view"
+    ]
+  }
+}

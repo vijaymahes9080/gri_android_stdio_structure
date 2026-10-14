@@ -1,0 +1,16 @@
+{
+  "institution": "The Gandhigram Rural Institute (Deemed to be University)",
+  "source_domain": "https://ruraluniv.ac.in/",
+  "collection_timestamp": "2026-10-14T14:21:00.059458Z",
+  "total_pages_discovered": 250,
+  "total_pages_verified": 247,
+  "total_pages_inaccessible": 3,
+  "total_assets_cataloged": 1047,
+  "total_local_assets_collected": 24,
+  "total_remote_assets_cataloged": 1020,
+  "total_restricted_intranet_assets": 3,
+  "total_broken_links_identified": 6,
+  "total_duplicate_asset_binaries": 4,
+  "total_page_asset_relationships": 8102,
+  "modules_discovered_count": 14
+}

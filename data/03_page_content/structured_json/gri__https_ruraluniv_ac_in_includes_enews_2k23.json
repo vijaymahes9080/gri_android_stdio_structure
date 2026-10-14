@@ -1,0 +1,21 @@
+{
+  "id": "gri__https_ruraluniv_ac_in_includes_enews_2k23",
+  "url": "https://ruraluniv.ac.in/includes/enews/2k23",
+  "title": "",
+  "category": "Announcements & Circulars",
+  "parent_url": "https://ruraluniv.ac.in/",
+  "http_status": 200,
+  "accessibility": "ACCESSIBLE",
+  "verification_status": "VERIFIED",
+  "flutter_screen_mapping": "lib/screens/home_dashboard_screen.dart",
+  "extraction_timestamp": "2026-10-14T19:45:00Z",
+  "extracted_content": {
+    "heading": "",
+    "documents_count": 0,
+    "images_count": 12,
+    "documents": [],
+    "interactive_features": [
+      "content_view"
+    ]
+  }
+}

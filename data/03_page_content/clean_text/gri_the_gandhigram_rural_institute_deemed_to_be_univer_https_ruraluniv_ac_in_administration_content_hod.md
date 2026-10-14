@@ -1,0 +1,82 @@
+---
+id: "gri_the_gandhigram_rural_institute_deemed_to_be_univer_https_ruraluniv_ac_in_administration_content_hod"
+title: "The Gandhigram Rural Institute - Deemed to be University"
+url: "https://ruraluniv.ac.in/administration?content=hod"
+category: "Governance & Administration"
+http_status: 200
+accessibility: "ACCESSIBLE"
+flutter_mapping: "lib/screens/governance_leadership_screen.dart"
+timestamp: "2026-10-14T19:45:00Z"
+---
+
+# The Gandhigram Rural Institute - Deemed to be University
+
+- **Source URL**: [https://ruraluniv.ac.in/administration?content=hod](https://ruraluniv.ac.in/administration?content=hod)
+- **Institutional Category**: `Governance & Administration`
+- **Flutter Mobile Destination**: `lib/screens/governance_leadership_screen.dart`
+
+## Official Documents & Circulars (58)
+
+| # | Document Title | Source Download URL | Status |
+| :-: | :--- | :--- | :-: |
+| 1 | **Code of Conduct of Non-Teaching Staff** | [https://ruraluniv.ac.in/includes/footer/pdf/code_ofConduct_Of_NonTeachingStaff.pdf](https://ruraluniv.ac.in/includes/footer/pdf/code_ofConduct_Of_NonTeachingStaff.pdf) | Verified |
+| 2 | **AICTE** | [https://ruraluniv.ac.in/includes/ManDisc/AICTEMandate2025.pdf](https://ruraluniv.ac.in/includes/ManDisc/AICTEMandate2025.pdf) | Verified |
+| 3 | **Hostel** | [https://ruraluniv.ac.in/includes/infrastructure/hostel/HOSTEL_MANUAL.pdf](https://ruraluniv.ac.in/includes/infrastructure/hostel/HOSTEL_MANUAL.pdf) | Verified |
+| 4 | **Dr.B.GURUGNANAM** | [https://ruraluniv.ac.in/includes/academics/faculties/profile/275.pdf](https://ruraluniv.ac.in/includes/academics/faculties/profile/275.pdf) | Verified |
+| 5 | **Students Activity** | [https://ruraluniv.ac.in/intranet_mail/GRI-STUDENTS-ACTIVITIES-2019-2024.pdf](https://ruraluniv.ac.in/intranet_mail/GRI-STUDENTS-ACTIVITIES-2019-2024.pdf) | Verified |
+| 6 | **Dr.N.Devaki** | [https://ruraluniv.ac.in/includes/academics/faculties/profile/252.pdf](https://ruraluniv.ac.in/includes/academics/faculties/profile/252.pdf) | Verified |
+| 7 | **Dr.G.MAHADEVAN** | [https://ruraluniv.ac.in/includes/academics/faculties/profile/232.pdf](https://ruraluniv.ac.in/includes/academics/faculties/profile/232.pdf) | Verified |
+| 8 | **Dr. C.Sugumar** | [https://ruraluniv.ac.in/includes/academics/faculties/profile/267.pdf](https://ruraluniv.ac.in/includes/academics/faculties/profile/267.pdf) | Verified |
+| 9 | **Application for Duplicate Certificates** | [https://ruraluniv.ac.in/includes/examination/pdf/DuplicateCertificate.pdf](https://ruraluniv.ac.in/includes/examination/pdf/DuplicateCertificate.pdf) | Verified |
+| 10 | **Application for Transcript** | [https://ruraluniv.ac.in/includes/examination/pdf/Application_Transcript.pdf](https://ruraluniv.ac.in/includes/examination/pdf/Application_Transcript.pdf) | Verified |
+| 11 | **Working Women Hostel** | [https://ruraluniv.ac.in/includes/infrastructure/hostel/ww_hostel.pdf](https://ruraluniv.ac.in/includes/infrastructure/hostel/ww_hostel.pdf) | Verified |
+| 12 | **Dr.A.RAMANATHAN** | [https://ruraluniv.ac.in/includes/academics/faculties/profile/167.pdf](https://ruraluniv.ac.in/includes/academics/faculties/profile/167.pdf) | Verified |
+| 13 | **Dr.K.MANIKANDAN** | [https://ruraluniv.ac.in/includes/academics/faculties/profile/234.pdf](https://ruraluniv.ac.in/includes/academics/faculties/profile/234.pdf) | Verified |
+| 14 | **Dr.M.MARY SHANTHI RANI** | [https://ruraluniv.ac.in/includes/academics/faculties/profile/124.pdf](https://ruraluniv.ac.in/includes/academics/faculties/profile/124.pdf) | Verified |
+| 15 | **Deemed to be University Regulations - 2023** | [https://ruraluniv.ac.in/includes/footer/pdf/UGCRegulations2023.pdf](https://ruraluniv.ac.in/includes/footer/pdf/UGCRegulations2023.pdf) | Verified |
+| 16 | **Certificate for Compliance of Ph.D. Degree with UGC regulation** | [https://ruraluniv.ac.in/includes/studcorner/pdf/ugc_cc221217.pdf](https://ruraluniv.ac.in/includes/studcorner/pdf/ugc_cc221217.pdf) | Verified |
+| 17 | **Rural Energy Centre** | [https://ruraluniv.ac.in/includes/academics/programmes/brochure/15330.pdf](https://ruraluniv.ac.in/includes/academics/programmes/brochure/15330.pdf) | Verified |
+| 18 | **KVK** | [https://ruraluniv.ac.in/includes/academics/pdf/KVK.pdf](https://ruraluniv.ac.in/includes/academics/pdf/KVK.pdf) | Verified |
+| 19 | **Ban on the Use of vehicles by students** | [https://ruraluniv.ac.in/includes/footer/pdf/BanStudentsVehicles.pdf](https://ruraluniv.ac.in/includes/footer/pdf/BanStudentsVehicles.pdf) | Verified |
+| 20 | **ODL - Application** | [https://ruraluniv.ac.in/includes/ManDisc/odl.pdf](https://ruraluniv.ac.in/includes/ManDisc/odl.pdf) | Verified |
+| 21 | **Dr.R.I.SATHYA** | [https://ruraluniv.ac.in/includes/academics/faculties/profile/176.pdf](https://ruraluniv.ac.in/includes/academics/faculties/profile/176.pdf) | Verified |
+| 22 | **Sustainable Practices** | [https://ruraluniv.ac.in/includes/footer/pdf/SDGs.pdf](https://ruraluniv.ac.in/includes/footer/pdf/SDGs.pdf) | Verified |
+| 23 | **Sanitation Works** | [https://ruraluniv.ac.in/includes/manual/sanitation.pdf](https://ruraluniv.ac.in/includes/manual/sanitation.pdf) | Verified |
+| 24 | **Dr.S.ARIPONNAMMAL** | [https://ruraluniv.ac.in/includes/academics/faculties/profile/184.pdf](https://ruraluniv.ac.in/includes/academics/faculties/profile/184.pdf) | Verified |
+| 25 | **Dr.S.BALASUNDARI** | [https://ruraluniv.ac.in/includes/academics/faculties/profile/205.pdf](https://ruraluniv.ac.in/includes/academics/faculties/profile/205.pdf) | Verified |
+| 26 | **Dr.R.KUMARAN** | [https://ruraluniv.ac.in/includes/academics/faculties/profile/223.pdf](https://ruraluniv.ac.in/includes/academics/faculties/profile/223.pdf) | Verified |
+| 27 | **Public Information Officer** | [https://ruraluniv.ac.in/includes/footer/pdf/PIO.pdf](https://ruraluniv.ac.in/includes/footer/pdf/PIO.pdf) | Verified |
+| 28 | **Dr.V.KIRUBAKARAN** | [https://ruraluniv.ac.in/includes/academics/faculties/profile/226.pdf](https://ruraluniv.ac.in/includes/academics/faculties/profile/226.pdf) | Verified |
+| 29 | **Perspective Plans & Strategic Plans of GRI** | [https://ruraluniv.ac.in/includes/ManDisc/6_2_1_B_Strategic_Plans.pdf](https://ruraluniv.ac.in/includes/ManDisc/6_2_1_B_Strategic_Plans.pdf) | Verified |
+| 30 | **UGC Regulations (Minimum Eligiblity for Appointments) 2010** | [https://ruraluniv.ac.in/includes/footer/pdf/UGCRegulations2010.pdf](https://ruraluniv.ac.in/includes/footer/pdf/UGCRegulations2010.pdf) | Verified |
+| 31 | **Examination Manual** | [https://ruraluniv.ac.in/includes/examination/pdf/ExaminationSystem.pdf](https://ruraluniv.ac.in/includes/examination/pdf/ExaminationSystem.pdf) | Verified |
+| 32 | **Finance and Accounts** | [https://ruraluniv.ac.in/includes/cetc/circular/pdf/Finance_Accounts_Manual170317.pdf](https://ruraluniv.ac.in/includes/cetc/circular/pdf/Finance_Accounts_Manual170317.pdf) | Verified |
+| 33 | **Dr.B.SANGEETHAVANI** | [https://ruraluniv.ac.in/includes/academics/faculties/profile/262.pdf](https://ruraluniv.ac.in/includes/academics/faculties/profile/262.pdf) | Verified |
+| 34 | **e-SANAD- Notification** | [https://ruraluniv.ac.in/includes/examination/pdf/e-sanad301221.pdf](https://ruraluniv.ac.in/includes/examination/pdf/e-sanad301221.pdf) | Verified |
+| 35 | **Prospectus
+							2026-27** | [https://ruraluniv.ac.in/includes/admissions/2026/pdf/Prospectus_202627.pdf](https://ruraluniv.ac.in/includes/admissions/2026/pdf/Prospectus_202627.pdf) | Verified |
+| 36 | **MANDATORY DISCLOSURES** | [https://ruraluniv.ac.in/includes/footer/pdf/GRIMandatoryDisclosure26.pdf](https://ruraluniv.ac.in/includes/footer/pdf/GRIMandatoryDisclosure26.pdf) | Verified |
+| 37 | **Dr.SONKHOGIN HAOKIP** | [https://ruraluniv.ac.in/includes/academics/faculties/profile/220.pdf](https://ruraluniv.ac.in/includes/academics/faculties/profile/220.pdf) | Verified |
+| 38 | **Dr.L.RATHAKRISHNAN** | [https://ruraluniv.ac.in/includes/academics/faculties/profile/208.pdf](https://ruraluniv.ac.in/includes/academics/faculties/profile/208.pdf) | Verified |
+| 39 | **Code of Conduct of Students** | [https://ruraluniv.ac.in/includes/footer/pdf/code_ofConduct_Of_Students.pdf](https://ruraluniv.ac.in/includes/footer/pdf/code_ofConduct_Of_Students.pdf) | Verified |
+| 40 | **NCTE** | [https://ruraluniv.ac.in/includes/ManDisc/MD202324.pdf](https://ruraluniv.ac.in/includes/ManDisc/MD202324.pdf) | Verified |
+| 41 | **Tatkal Scheme - Instructions** | [https://ruraluniv.ac.in/includes/examination/pdf/Tatkal_instruction.pdf](https://ruraluniv.ac.in/includes/examination/pdf/Tatkal_instruction.pdf) | Verified |
+| 42 | **12 B Status** | [https://ruraluniv.ac.in/includes/footer/pdf/12b_status.pdf](https://ruraluniv.ac.in/includes/footer/pdf/12b_status.pdf) | Verified |
+| 43 | **Dr.R.MANI** | [https://ruraluniv.ac.in/includes/academics/faculties/profile/182.pdf](https://ruraluniv.ac.in/includes/academics/faculties/profile/182.pdf) | Verified |
+| 44 | **Dr.K.K.SATHEESHKUMAR** | [https://ruraluniv.ac.in/includes/academics/faculties/profile/231.pdf](https://ruraluniv.ac.in/includes/academics/faculties/profile/231.pdf) | Verified |
+| 45 | **Dr.R.VENKATARAVI** | [https://ruraluniv.ac.in/includes/academics/faculties/profile/274.pdf](https://ruraluniv.ac.in/includes/academics/faculties/profile/274.pdf) | Verified |
+| 46 | **Dr.M.MUTHUKUMAR** | [https://ruraluniv.ac.in/includes/academics/faculties/profile/247.pdf](https://ruraluniv.ac.in/includes/academics/faculties/profile/247.pdf) | Verified |
+| 47 | **Dr.P.U.MAHALINGAM** | [https://ruraluniv.ac.in/includes/academics/faculties/profile/210.pdf](https://ruraluniv.ac.in/includes/academics/faculties/profile/210.pdf) | Verified |
+| 48 | **Dr. SREE DEVI.  P.S.** | [https://ruraluniv.ac.in/includes/academics/faculties/profile/233.pdf](https://ruraluniv.ac.in/includes/academics/faculties/profile/233.pdf) | Verified |
+| 49 | **CCS Rules** | [https://ruraluniv.ac.in/includes/footer/pdf/CCS_CCA_Rules.pdf](https://ruraluniv.ac.in/includes/footer/pdf/CCS_CCA_Rules.pdf) | Verified |
+| 50 | **Campus Security** | [https://ruraluniv.ac.in/includes/manual/CampusSecurity.pdf](https://ruraluniv.ac.in/includes/manual/CampusSecurity.pdf) | Verified |
+| 51 | **Dr.B.TAMILMANI** | [https://ruraluniv.ac.in/includes/academics/faculties/profile/42.pdf](https://ruraluniv.ac.in/includes/academics/faculties/profile/42.pdf) | Verified |
+| 52 | **VPP** | [https://ruraluniv.ac.in/includes/cetc/circular/pdf/vpp2032015.pdf](https://ruraluniv.ac.in/includes/cetc/circular/pdf/vpp2032015.pdf) | Verified |
+| 53 | **Dr.M.HILARIA SOUNDARI** | [https://ruraluniv.ac.in/includes/academics/faculties/profile/224.pdf](https://ruraluniv.ac.in/includes/academics/faculties/profile/224.pdf) | Verified |
+| 54 | **Code of Conduct of Teaching Staff** | [https://ruraluniv.ac.in/includes/footer/pdf/code_ofConduct_Of_TeachingStaff.pdf](https://ruraluniv.ac.in/includes/footer/pdf/code_ofConduct_Of_TeachingStaff.pdf) | Verified |
+| 55 | **Dr.P.ANANDAKUMAR** | [https://ruraluniv.ac.in/includes/academics/faculties/profile/139.pdf](https://ruraluniv.ac.in/includes/academics/faculties/profile/139.pdf) | Verified |
+| 56 | **Guest House** | [https://ruraluniv.ac.in/includes/infrastructure/guesthouse/pdf/FGH_operational_Manual.pdf](https://ruraluniv.ac.in/includes/infrastructure/guesthouse/pdf/FGH_operational_Manual.pdf) | Verified |
+| 57 | **Prospectus
+							2025-26** | [https://ruraluniv.ac.in/includes/admissions/2025/pdf/Prospectus_202526.pdf](https://ruraluniv.ac.in/includes/admissions/2025/pdf/Prospectus_202526.pdf) | Verified |
+| 58 | **Dr. KHANDARE CHANDU LAXMAN** | [https://ruraluniv.ac.in/includes/academics/faculties/profile/243.pdf](https://ruraluniv.ac.in/includes/academics/faculties/profile/243.pdf) | Verified |
+
