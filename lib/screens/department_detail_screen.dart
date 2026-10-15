@@ -56,18 +56,32 @@ class DepartmentDetailScreen extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    // Check for real departmental page data from SeedDataService
-    final deptData = SeedDataService.instance.getDepartmentById(departmentId) ??
-        SeedDataService.instance.getPageByIdOrUrl(sourceUrl);
+    // Check for real departmental page data and department item from SeedDataService
+    final departmentItem = SeedDataService.instance.getDepartmentById(departmentId);
+    final pageData = SeedDataService.instance.getPageByIdOrUrl(sourceUrl);
 
-    final summary = deptData != null && (deptData['clean_summary'] ?? '').isNotEmpty
-        ? deptData['clean_summary'] as String
-        : "Established as an integral academic department of The Gandhigram Rural Institute (Deemed to be University), the $departmentName integrates rigorous postgraduate instruction, advanced field-action research, and rural extension.";
+    final resolvedHod = (departmentItem != null && departmentItem.hod.isNotEmpty)
+        ? departmentItem.hod
+        : hodName;
+    final resolvedEmail = (departmentItem != null && departmentItem.hodEmail.isNotEmpty)
+        ? departmentItem.hodEmail
+        : (email ?? "hod.${departmentId.toLowerCase()}@ruraluniv.ac.in");
+    final resolvedPhone = (departmentItem != null && departmentItem.hodPhone.isNotEmpty)
+        ? departmentItem.hodPhone
+        : (phone ?? "0451-2452371 Ext. 2140");
+
+    final cleanSummary = pageData?['clean_summary'] as String?;
+    final summary = (cleanSummary != null && cleanSummary.isNotEmpty)
+        ? cleanSummary
+        : (departmentItem != null
+            ? "Established in ${departmentItem.establishedYear}, the ${departmentItem.name} specializes in ${departmentItem.researchAreas}, synthesizing rigorous academic inquiry with village placement immersion."
+            : "Established as an integral academic department of The Gandhigram Rural Institute (Deemed to be University), the $departmentName integrates rigorous postgraduate instruction, advanced field-action research, and rural extension.");
 
     // Collect attached syllabus/documents
     final List<Map<String, String>> docs = [];
-    if (deptData != null && deptData['resources'] != null) {
-      final docList = deptData['resources']['documents'] as List<dynamic>? ?? [];
+    final resources = pageData?['resources'];
+    if (resources is Map) {
+      final docList = resources['documents'] as List<dynamic>? ?? [];
       for (final d in docList) {
         if (d is Map && d['url'] != null) {
           docs.add({
@@ -117,9 +131,9 @@ class DepartmentDetailScreen extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            _buildProfileTab(context, isDark, summary),
+            _buildProfileTab(context, isDark, summary, resolvedHod, resolvedEmail, resolvedPhone),
             _buildProgrammesTab(context, isDark),
-            _buildFacultyTab(context, isDark),
+            _buildFacultyTab(context, isDark, resolvedHod),
             if (docs.isNotEmpty) _buildDocumentsTab(context, isDark, docs),
             _buildFacilitiesTab(context, isDark),
           ],
@@ -128,7 +142,14 @@ class DepartmentDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProfileTab(BuildContext context, bool isDark, String summary) {
+  Widget _buildProfileTab(
+    BuildContext context,
+    bool isDark,
+    String summary,
+    String curHod,
+    String curEmail,
+    String curPhone,
+  ) {
     return ListView(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       children: [
@@ -200,18 +221,18 @@ class DepartmentDetailScreen extends StatelessWidget {
                   color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
                 ),
                 const SizedBox(height: 12),
-                _buildInfoRow(isDark, Icons.person_outline, "Head of Dept", hodName),
+                _buildInfoRow(isDark, Icons.person_outline, "Head of Dept", curHod),
                 _buildInfoRow(
                   isDark,
                   Icons.email_outlined,
                   "Email",
-                  email ?? "hod.${departmentId.toLowerCase()}@ruraluniv.ac.in",
+                  curEmail,
                 ),
                 _buildInfoRow(
                   isDark,
                   Icons.phone_outlined,
                   "EPABX Extension",
-                  phone ?? "0451-2452371 Ext. 2140",
+                  curPhone,
                 ),
                 _buildInfoRow(isDark, Icons.public, "Source Portal", sourceUrl),
               ],
@@ -364,7 +385,7 @@ class DepartmentDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFacultyTab(BuildContext context, bool isDark) {
+  Widget _buildFacultyTab(BuildContext context, bool isDark, String curHod) {
     return ListView(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       children: [
@@ -387,7 +408,7 @@ class DepartmentDetailScreen extends StatelessWidget {
         _buildFacultyCard(
           context,
           isDark,
-          hodName,
+          curHod,
           "Professor & Head of Department",
           "Ph.D., Post-Doctoral Research",
           "Sustainable Systems, Rural Analytics & Applied Extension",

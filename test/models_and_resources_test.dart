@@ -152,9 +152,9 @@ void main() {
       }
     });
 
-    test('OfficialPortalsGatewayScreen indexes 10 official verified external portals', () {
+    test('OfficialPortalsGatewayScreen indexes official verified external portals from URL inventory', () {
       final portals = OfficialPortalsGatewayScreen.portals;
-      expect(portals.length, equals(10));
+      expect(portals.length, greaterThanOrEqualTo(10));
 
       // Key portals verification
       expect(portals.any((p) => p.id == 'portal_samarth'), isTrue);
@@ -162,6 +162,10 @@ void main() {
       expect(portals.any((p) => p.id == 'portal_esanad'), isTrue);
       expect(portals.any((p) => p.id == 'portal_webmail'), isTrue);
       expect(portals.any((p) => p.id == 'portal_apaar'), isTrue);
+      expect(portals.any((p) => p.id == 'portal_etrack'), isTrue);
+      expect(portals.any((p) => p.id == 'portal_hostel'), isTrue);
+      expect(portals.any((p) => p.id == 'portal_department'), isTrue);
+      expect(portals.any((p) => p.id == 'portal_lms'), isTrue);
 
       for (final p in portals) {
         expect(p.title.isNotEmpty, isTrue);
@@ -169,6 +173,12 @@ void main() {
         expect(p.authRequirement.isNotEmpty, isTrue);
         expect(p.authority.isNotEmpty, isTrue);
       }
+    });
+
+    test('OfficialResourceRegistry.getFullDocumentVault returns unified base documents', () {
+      final vault = OfficialResourceRegistry.getFullDocumentVault();
+      expect(vault.length, greaterThanOrEqualTo(12));
+      expect(vault.every((d) => d.type == ResourceType.DOCUMENT_PDF), isTrue);
     });
   });
 }

@@ -15,6 +15,7 @@ import 'department_detail_screen.dart';
 import 'institutional_article_screen.dart';
 import 'document_vault_screen.dart';
 import 'media_gallery_screen.dart';
+import '../services/seed_data_service.dart';
 
 class GlobalWebsiteSearchScreen extends StatefulWidget {
   const GlobalWebsiteSearchScreen({super.key});
