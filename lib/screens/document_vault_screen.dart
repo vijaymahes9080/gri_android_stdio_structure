@@ -264,7 +264,7 @@ class _DocumentVaultScreenState extends State<DocumentVaultScreen> {
                                 style: TextStyle(
                                   fontSize: 10.5,
                                   height: 1.3,
-                                  color: isDark ? GriColors.darkOnSurfaceVariant.withOpacity(0.85) : Colors.black54,
+                                  color: isDark ? GriColors.darkOnSurfaceVariant.withValues(alpha: 0.85) : Colors.black54,
                                 ),
                               ),
                             ],

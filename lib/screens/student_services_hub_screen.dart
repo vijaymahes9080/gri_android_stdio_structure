@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/gri_provider.dart';
+import '../services/official_resource_registry.dart';
 import '../utils/gri_colors.dart';
+import '../utils/gri_motion.dart';
 
 class StudentServicesHubScreen extends StatefulWidget {
   const StudentServicesHubScreen({super.key});
@@ -13,11 +15,15 @@ class StudentServicesHubScreen extends StatefulWidget {
 class _StudentServicesHubScreenState extends State<StudentServicesHubScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  // New Grievance Form Controllers
   final _subjectController = TextEditingController();
   final _descController = TextEditingController();
   String _selectedCategory = "Hostel Facility";
   bool _showGrievanceForm = false;
+
+  // Mess rebate controllers
+  final _fromDateController = TextEditingController();
+  final _toDateController = TextEditingController();
+  final _rebateReasonController = TextEditingController();
 
   @override
   void initState() {
@@ -30,29 +36,140 @@ class _StudentServicesHubScreenState extends State<StudentServicesHubScreen> wit
     _tabController.dispose();
     _subjectController.dispose();
     _descController.dispose();
+    _fromDateController.dispose();
+    _toDateController.dispose();
+    _rebateReasonController.dispose();
     super.dispose();
+  }
+
+  void _showRebateDialog(BuildContext context, bool isDark, Color cardBg, Color borderColor) {
+    showDialog(
+      context: context,
+      builder: (ctx) => Dialog(
+        backgroundColor: Colors.transparent,
+        insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: isDark ? GriColors.darkSurface1 : Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: borderColor, width: 0.8),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Apply for Hostel Mess Rebate",
+                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                "As per GRI Hostel Manual, rebate is sanctioned for continuous leave of 5 days or more with prior approval.",
+                style: TextStyle(
+                  fontSize: 11.5,
+                  color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                  height: 1.35,
+                ),
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: _fromDateController,
+                decoration: InputDecoration(
+                  labelText: "From Date (DD/MM/YYYY)",
+                  labelStyle: const TextStyle(fontSize: 12),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                ),
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                controller: _toDateController,
+                decoration: InputDecoration(
+                  labelText: "To Date (DD/MM/YYYY)",
+                  labelStyle: const TextStyle(fontSize: 12),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                ),
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                controller: _rebateReasonController,
+                maxLines: 2,
+                decoration: InputDecoration(
+                  labelText: "Reason (Study Tour / Vacation / Medical)",
+                  labelStyle: const TextStyle(fontSize: 12),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                ),
+              ),
+              const SizedBox(height: 14),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(ctx),
+                    child: Text(
+                      "Cancel",
+                      style: TextStyle(
+                        color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  GriPressable(
+                    onTap: () {
+                      Navigator.pop(ctx);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Mess rebate application recorded and forwarded to Chief Warden office."),
+                          backgroundColor: GriColors.forestPrimary,
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: GriColors.forestPrimary,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: const Text(
+                        "Submit Application",
+                        style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final provider = context.watch<GriProvider>();
+    final cardBg = isDark ? GriColors.darkSurface1 : Colors.white;
+    final borderColor = isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant;
 
     return Column(
       children: [
         Container(
-          color: Theme.of(context).brightness == Brightness.dark
-              ? GriColors.darkSurface1
-              : Colors.white,
+          color: isDark ? GriColors.darkSurface1 : Colors.white,
           child: TabBar(
             controller: _tabController,
             isScrollable: true,
             tabAlignment: TabAlignment.start,
-            labelColor: GriColors.forestPrimary,
-            unselectedLabelColor: Theme.of(context).brightness == Brightness.dark
-                ? GriColors.darkOnSurfaceVariant
-                : Colors.grey.shade600,
+            labelColor: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+            unselectedLabelColor: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
             indicatorColor: GriColors.forestPrimary,
-            labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+            indicatorWeight: 2.5,
+            labelStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
+            unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
             tabs: const [
               Tab(text: "Grievances"),
               Tab(text: "Bus Pass & Transport"),
@@ -66,7 +183,7 @@ class _StudentServicesHubScreenState extends State<StudentServicesHubScreen> wit
             children: [
               // 1. Grievance Redressal Tab
               ListView(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,170 +191,208 @@ class _StudentServicesHubScreenState extends State<StudentServicesHubScreen> wit
                       const Expanded(
                         child: Text(
                           "STUDENT GRIEVANCE REDRESSAL",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.5, color: GriColors.forestPrimary),
+                          style: TextStyle(fontWeight: FontWeight.w800, fontSize: 12, color: GriColors.forestPrimary, letterSpacing: 0.5),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       const SizedBox(width: 8),
-                      ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: GriColors.forestPrimary,
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                      GriPressable(
+                        onTap: () => setState(() => _showGrievanceForm = !_showGrievanceForm),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          decoration: BoxDecoration(
+                            color: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
+                            borderRadius: BorderRadius.circular(6),
+                            border: Border.all(color: borderColor, width: 0.8),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                _showGrievanceForm ? Icons.close : Icons.add,
+                                size: 14,
+                                color: GriColors.forestPrimary,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                _showGrievanceForm ? "Close Form" : "File Grievance",
+                                style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: GriColors.forestPrimary),
+                              ),
+                            ],
+                          ),
                         ),
-                        icon: const Icon(Icons.add, size: 15),
-                        label: Text(_showGrievanceForm ? "Close Form" : "File Grievance", style: const TextStyle(fontSize: 11.5)),
-                        onPressed: () => setState(() => _showGrievanceForm = !_showGrievanceForm),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 10),
 
                   // Grievance Submission Form
                   if (_showGrievanceForm) ...[
-                    Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text("Submit New Grievance", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                            const SizedBox(height: 12),
-                            DropdownButtonFormField<String>(
-                              value: _selectedCategory,
-                              decoration: InputDecoration(
-                                labelText: "Category",
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                              ),
-                              items: [
-                                "Hostel Facility",
-                                "Library Services",
-                                "Academic & Classes",
-                                "Examination & Marks",
-                                "Transport & Bus",
-                                "Campus Infrastructure",
-                              ].map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
-                              onChanged: (val) {
-                                if (val != null) setState(() => _selectedCategory = val);
-                              },
+                    Container(
+                      padding: const EdgeInsets.all(14),
+                      decoration: BoxDecoration(
+                        color: cardBg,
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(color: borderColor, width: 0.8),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Submit New Grievance Docket",
+                            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13.5),
+                          ),
+                          const SizedBox(height: 10),
+                          DropdownButtonFormField<String>(
+                            value: _selectedCategory,
+                            decoration: InputDecoration(
+                              labelText: "Category",
+                              labelStyle: const TextStyle(fontSize: 12),
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                             ),
-                            const SizedBox(height: 10),
-                            TextField(
-                              controller: _subjectController,
-                              decoration: InputDecoration(
-                                labelText: "Subject / Summary *",
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                              ),
+                            items: [
+                              "Hostel Facility",
+                              "Library Services",
+                              "Academic & Classes",
+                              "Examination & Marks",
+                              "Transport & Bus",
+                              "Campus Infrastructure",
+                            ].map((c) => DropdownMenuItem(value: c, child: Text(c, style: const TextStyle(fontSize: 12)))).toList(),
+                            onChanged: (val) {
+                              if (val != null) setState(() => _selectedCategory = val);
+                            },
+                          ),
+                          const SizedBox(height: 8),
+                          TextField(
+                            controller: _subjectController,
+                            decoration: InputDecoration(
+                              labelText: "Subject / Summary *",
+                              labelStyle: const TextStyle(fontSize: 12),
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                             ),
-                            const SizedBox(height: 10),
-                            TextField(
-                              controller: _descController,
-                              maxLines: 3,
-                              decoration: InputDecoration(
-                                labelText: "Detailed Description *",
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                              ),
+                          ),
+                          const SizedBox(height: 8),
+                          TextField(
+                            controller: _descController,
+                            maxLines: 3,
+                            decoration: InputDecoration(
+                              labelText: "Detailed Description *",
+                              labelStyle: const TextStyle(fontSize: 12),
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                             ),
-                            const SizedBox(height: 12),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                TextButton(
-                                  onPressed: () => setState(() => _showGrievanceForm = false),
-                                  child: const Text("Cancel"),
-                                ),
-                                const SizedBox(width: 8),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: GriColors.forestPrimary,
-                                    foregroundColor: Colors.white,
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              TextButton(
+                                onPressed: () => setState(() => _showGrievanceForm = false),
+                                child: Text("Cancel", style: TextStyle(color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant)),
+                              ),
+                              const SizedBox(width: 8),
+                              GriPressable(
+                                onTap: () {
+                                  if (_subjectController.text.trim().isNotEmpty && _descController.text.trim().isNotEmpty) {
+                                    provider.submitGrievance(
+                                      _selectedCategory,
+                                      _subjectController.text.trim(),
+                                      _descController.text.trim(),
+                                    );
+                                    _subjectController.clear();
+                                    _descController.clear();
+                                    setState(() => _showGrievanceForm = false);
+                                  }
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                                  decoration: BoxDecoration(
+                                    color: GriColors.forestPrimary,
+                                    borderRadius: BorderRadius.circular(6),
                                   ),
-                                  onPressed: () {
-                                    if (_subjectController.text.trim().isNotEmpty && _descController.text.trim().isNotEmpty) {
-                                      provider.submitGrievance(
-                                        _selectedCategory,
-                                        _subjectController.text.trim(),
-                                        _descController.text.trim(),
-                                      );
-                                      _subjectController.clear();
-                                      _descController.clear();
-                                      setState(() => _showGrievanceForm = false);
-                                    }
-                                  },
-                                  child: const Text("Submit Grievance"),
+                                  child: const Text(
+                                    "Submit Grievance",
+                                    style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w700),
+                                  ),
                                 ),
-                              ],
-                            ),
-                          ],
-                        ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 14),
+                    const SizedBox(height: 12),
                   ],
 
                   // Grievances List
                   ...provider.grievances.map((g) {
                     final isResolved = g.status == "RESOLVED";
-                    return Card(
-                      margin: const EdgeInsets.only(bottom: 12),
-                      child: Padding(
-                        padding: const EdgeInsets.all(14),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  g.ticketNumber,
-                                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: GriColors.forestPrimary),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                                  decoration: BoxDecoration(
-                                    color: isResolved ? Colors.green.shade100 : Colors.amber.shade100,
-                                    borderRadius: BorderRadius.circular(6),
-                                  ),
-                                  child: Text(
-                                    g.status,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 11,
-                                      color: isResolved ? Colors.green.shade800 : Colors.amber.shade900,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 6),
-                            Text(g.subject, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-                            const SizedBox(height: 4),
-                            Text(g.description, style: TextStyle(fontSize: 12, color: Colors.grey.shade700)),
-                            if (g.remarks.isNotEmpty) ...[
-                              const SizedBox(height: 8),
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 10),
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: cardBg,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: borderColor, width: 0.8),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                g.ticketNumber,
+                                style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 12.5, color: GriColors.forestPrimary),
+                              ),
                               Container(
-                                padding: const EdgeInsets.all(8),
+                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                                 decoration: BoxDecoration(
-                                  color: Theme.of(context).brightness == Brightness.dark
-                                      ? GriColors.darkSurface2
-                                      : Colors.grey.shade100,
-                                  borderRadius: BorderRadius.circular(6),
+                                  color: isResolved ? Colors.green.withValues(alpha: 0.12) : Colors.amber.withValues(alpha: 0.15),
+                                  borderRadius: BorderRadius.circular(4),
                                 ),
                                 child: Text(
-                                  "University Remark: ${g.remarks}",
+                                  g.status,
                                   style: TextStyle(
-                                    fontSize: 11.5,
-                                    fontStyle: FontStyle.italic,
-                                    color: Theme.of(context).brightness == Brightness.dark
-                                        ? GriColors.darkOnSurface
-                                        : Colors.black87,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 10,
+                                    color: isResolved ? Colors.green.shade800 : Colors.amber.shade900,
                                   ),
                                 ),
                               ),
                             ],
+                          ),
+                          const SizedBox(height: 4),
+                          Text(g.subject, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13)),
+                          const SizedBox(height: 3),
+                          Text(
+                            g.description,
+                            style: TextStyle(
+                              fontSize: 11.5,
+                              color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                            ),
+                          ),
+                          if (g.remarks.isNotEmpty) ...[
+                            const SizedBox(height: 8),
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant.withValues(alpha: 0.6),
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Text(
+                                "University Remark: ${g.remarks}",
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  fontStyle: FontStyle.italic,
+                                  color: isDark ? GriColors.darkOnSurface : Colors.black87,
+                                ),
+                              ),
+                            ),
                           ],
-                        ),
+                        ],
                       ),
                     );
                   }),
@@ -246,64 +401,129 @@ class _StudentServicesHubScreenState extends State<StudentServicesHubScreen> wit
 
               // 2. Bus Pass & Transport Tab
               ListView(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 children: [
-                  // Digital Bus Pass
-                  Card(
-                    color: GriColors.forestPrimary,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Row(
+                  // Digital Bus Pass Bento
+                  Container(
+                    decoration: BoxDecoration(
+                      color: isDark ? GriColors.darkSurface1 : Colors.white,
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(color: borderColor, width: 0.8),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                          decoration: BoxDecoration(
+                            color: GriColors.forestPrimary.withValues(alpha: 0.1),
+                            borderRadius: const BorderRadius.vertical(top: Radius.circular(13)),
+                          ),
+                          child: const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "GRI DIGITAL BUS PASS",
-                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                                "GRI DIGITAL TRANSIT PASS",
+                                style: TextStyle(
+                                  color: GriColors.forestPrimary,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 11.5,
+                                  letterSpacing: 0.5,
+                                ),
                               ),
-                              Icon(Icons.directions_bus, color: Colors.white),
+                              Icon(Icons.directions_bus_outlined, size: 16, color: GriColors.forestPrimary),
                             ],
                           ),
-                          const SizedBox(height: 12),
-                          Text(
-                            provider.currentUser?.name ?? "Vijay Pradhap",
-                            style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(14),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                provider.currentUser?.name ?? "Vijay Pradhap",
+                                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                "Pass No: BP-2026-NOV-812 • Roll: ${provider.currentUser?.rollNo ?? '2024-MS-4011'}",
+                                style: TextStyle(
+                                  fontSize: 11.5,
+                                  color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                                decoration: BoxDecoration(
+                                  color: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: const Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("Route: Dindigul / Chinnalapatti", style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600)),
+                                    Text("Valid Thru: 31 Dec 2026", style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: GriColors.forestPrimary)),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                          Text(
-                            "Pass No: BP-2026-NOV-812 • Roll: ${provider.currentUser?.rollNo ?? '2024-MS-4011'}",
-                            style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 12),
-                          ),
-                          const SizedBox(height: 10),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                            decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.15),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("Route: Batlagundu / Dindigul", style: TextStyle(color: Colors.white, fontSize: 11.5)),
-                                Text("Valid Thru: 31 Dec 2026", style: TextStyle(color: Colors.white, fontSize: 11.5, fontWeight: FontWeight.bold)),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  const Text("ACTIVE UNIVERSITY BUS ROUTES", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: GriColors.forestPrimary)),
+                  const SizedBox(height: 14),
+                  const Text(
+                    "ACTIVE UNIVERSITY BUS ROUTES",
+                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 11.5, color: GriColors.forestPrimary, letterSpacing: 0.5),
+                  ),
                   const SizedBox(height: 8),
-                  ...provider.transportRoutes.map((route) => Card(
-                        margin: const EdgeInsets.only(bottom: 10),
-                        child: ListTile(
-                          leading: const CircleAvatar(backgroundColor: GriColors.forestContainer, child: Icon(Icons.directions_bus, color: GriColors.forestPrimary)),
-                          title: Text("${route.routeNo}: ${route.routeName}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-                          subtitle: Text("Bus: ${route.busNumber} • Driver: ${route.driverName} (${route.driverPhone})\nDeparture: ${route.departureTime} • Return: ${route.returnTime}", style: const TextStyle(fontSize: 11.5)),
-                          isThreeLine: true,
+                  ...provider.transportRoutes.map((route) => Container(
+                        margin: const EdgeInsets.only(bottom: 8),
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: cardBg,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: borderColor, width: 0.8),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: GriColors.forestPrimary.withValues(alpha: 0.1),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: const Icon(Icons.directions_bus, size: 18, color: GriColors.forestPrimary),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "${route.routeNo}: ${route.routeName}",
+                                    style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 12.5),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    "Bus: ${route.busNumber} • Driver: ${route.driverName} (${route.driverPhone})",
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    "Departs: ${route.departureTime} • Returns: ${route.returnTime}",
+                                    style: const TextStyle(fontSize: 10.5, fontWeight: FontWeight.w600, color: GriColors.forestPrimary),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       )),
                 ],
@@ -311,37 +531,97 @@ class _StudentServicesHubScreenState extends State<StudentServicesHubScreen> wit
 
               // 3. Hostel & Mess Rebate Tab
               ListView(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 children: [
-                  Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Row(
-                            children: [
-                              Icon(Icons.hotel, color: GriColors.forestPrimary, size: 24),
-                              SizedBox(width: 8),
-                              Text("Residential Hostels & Mess", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                            ],
+                  Container(
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: cardBg,
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(color: borderColor, width: 0.8),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Row(
+                          children: [
+                            Icon(Icons.hotel_outlined, color: GriColors.forestPrimary, size: 20),
+                            SizedBox(width: 8),
+                            Text("Residential Hostels & Mess Allocation", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14)),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        const Text(
+                          "Allocated Accommodation: Block B, Room 204 (Kasturba Complex)",
+                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          "Mess Scheme: Vegetarian • Committee: Student Elected Mess Representatives",
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
                           ),
-                          const SizedBox(height: 10),
-                          const Text("Allocated Room: Block B, Room 204 (Kasturba Complex)", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
-                          const Text("Mess Type: Vegetarian • Committee: Student Elected", style: TextStyle(fontSize: 12, color: Colors.grey)),
-                          const SizedBox(height: 14),
-                          ElevatedButton.icon(
-                            style: ElevatedButton.styleFrom(backgroundColor: GriColors.forestPrimary, foregroundColor: Colors.white),
-                            icon: const Icon(Icons.event_busy, size: 16),
-                            label: const Text("Apply for Mess Rebate (Festival / Leave)"),
-                            onPressed: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text("Mess rebate application window opens on 15th of each month.")),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
+                        ),
+                        const SizedBox(height: 12),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: GriPressable(
+                                onTap: () => _showRebateDialog(context, isDark, cardBg, borderColor),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(vertical: 7),
+                                  decoration: BoxDecoration(
+                                    color: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
+                                    borderRadius: BorderRadius.circular(6),
+                                    border: Border.all(color: borderColor, width: 0.8),
+                                  ),
+                                  child: const Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.event_available, size: 13, color: GriColors.forestPrimary),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        "Apply for Mess Rebate",
+                                        style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: GriColors.forestPrimary),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: GriPressable(
+                                onTap: () => OfficialResourceRegistry.openDocument(
+                                  context,
+                                  "GRI Hostel Manual PDF",
+                                  "https://ruraluniv.ac.in/includes/infrastructure/hostel/HOSTEL_MANUAL.pdf",
+                                ),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(vertical: 7),
+                                  decoration: BoxDecoration(
+                                    color: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
+                                    borderRadius: BorderRadius.circular(6),
+                                    border: Border.all(color: borderColor, width: 0.8),
+                                  ),
+                                  child: const Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.picture_as_pdf_outlined, size: 13, color: GriColors.forestPrimary),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        "Hostel Manual",
+                                        style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: GriColors.forestPrimary),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ],

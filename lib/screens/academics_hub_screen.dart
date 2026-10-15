@@ -75,9 +75,9 @@ class _AcademicsHubScreenState extends State<AcademicsHubScreen> with SingleTick
                     child: Container(
                       padding: const EdgeInsets.all(14),
                       decoration: BoxDecoration(
-                        color: colorScheme.primaryContainer.withOpacity(0.4),
+                        color: colorScheme.primaryContainer.withValues(alpha: 0.4),
                         borderRadius: BorderRadius.circular(14),
-                        border: Border.all(color: colorScheme.primary.withOpacity(0.2), width: 0.8),
+                        border: Border.all(color: colorScheme.primary.withValues(alpha: 0.2), width: 0.8),
                       ),
                       child: Row(
                         children: [
@@ -180,7 +180,7 @@ class _AcademicsHubScreenState extends State<AcademicsHubScreen> with SingleTick
                                     child: Container(
                                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                                       decoration: BoxDecoration(
-                                        color: colorScheme.primaryContainer.withOpacity(0.5),
+                                        color: colorScheme.primaryContainer.withValues(alpha: 0.5),
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                       child: Row(
@@ -354,7 +354,7 @@ class _AcademicsHubScreenState extends State<AcademicsHubScreen> with SingleTick
                       decoration: BoxDecoration(
                         color: GriColors.ochreContainer,
                         borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: GriColors.ochrePrimary.withOpacity(0.3), width: 0.8),
+                        border: Border.all(color: GriColors.ochrePrimary.withValues(alpha: 0.3), width: 0.8),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

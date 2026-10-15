@@ -462,7 +462,12 @@ class OfficialResourceRegistry {
   }
 
   /// Open or download an official document with error recovery
-  static Future<void> openDocument(BuildContext context, String id) async {
+  static Future<void> openDocument(BuildContext context, String id, [String? url]) async {
+    if (url != null && (url.startsWith('http://') || url.startsWith('https://'))) {
+      await smartOpenDocument(context, url, title: id);
+      return;
+    }
+
     OfficialResource? resource = _registry[id];
     if (resource == null) {
       final vault = getFullDocumentVault();

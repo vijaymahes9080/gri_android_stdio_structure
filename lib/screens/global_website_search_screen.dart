@@ -282,7 +282,7 @@ class _GlobalWebsiteSearchScreenState extends State<GlobalWebsiteSearchScreen> {
                 ),
                 Text(
                   "Source: ruraluniv.ac.in",
-                  style: TextStyle(fontSize: 11, color: GriColors.forestPrimary.withOpacity(0.8)),
+                  style: TextStyle(fontSize: 11, color: GriColors.forestPrimary.withValues(alpha: 0.8)),
                 ),
               ],
             ),
@@ -320,7 +320,7 @@ class _GlobalWebsiteSearchScreenState extends State<GlobalWebsiteSearchScreen> {
                           return ListTile(
                             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                             leading: CircleAvatar(
-                              backgroundColor: _getCategoryColor(category).withOpacity(0.15),
+                              backgroundColor: _getCategoryColor(category).withValues(alpha: 0.15),
                               child: Icon(_getCategoryIcon(category), color: _getCategoryColor(category), size: 20),
                             ),
                             title: Text(
@@ -338,7 +338,7 @@ class _GlobalWebsiteSearchScreenState extends State<GlobalWebsiteSearchScreen> {
                                     Container(
                                       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                                       decoration: BoxDecoration(
-                                        color: _getCategoryColor(category).withOpacity(0.1),
+                                        color: _getCategoryColor(category).withValues(alpha: 0.1),
                                         borderRadius: BorderRadius.circular(4),
                                       ),
                                       child: Text(
@@ -351,7 +351,7 @@ class _GlobalWebsiteSearchScreenState extends State<GlobalWebsiteSearchScreen> {
                                       Container(
                                         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                                         decoration: BoxDecoration(
-                                          color: Colors.red.withOpacity(0.1),
+                                          color: Colors.red.withValues(alpha: 0.1),
                                           borderRadius: BorderRadius.circular(4),
                                         ),
                                         child: Text(

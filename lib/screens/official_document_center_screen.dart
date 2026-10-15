@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/gri_provider.dart';
+import '../services/official_resource_registry.dart';
 import '../utils/gri_colors.dart';
+import '../utils/gri_motion.dart';
 
 class OfficialDocumentCenterScreen extends StatefulWidget {
   const OfficialDocumentCenterScreen({super.key});
@@ -28,7 +30,7 @@ class _OfficialDocumentCenterScreenState extends State<OfficialDocumentCenterScr
       "date": "10 Aug 2026",
       "size": "240 KB",
       "cat": "Examinations",
-      "url": "http://ruraluniv.ac.in/includes/examination/pdf/Application_Transcript.pdf",
+      "url": "https://ruraluniv.ac.in/includes/examination/pdf/Application_Transcript.pdf",
     },
     {
       "title": "Application for Duplicate Degree / Diploma (Form COE-02)",
@@ -36,7 +38,7 @@ class _OfficialDocumentCenterScreenState extends State<OfficialDocumentCenterScr
       "date": "05 Jul 2026",
       "size": "190 KB",
       "cat": "Examinations",
-      "url": "http://ruraluniv.ac.in/includes/examination/pdf/DuplicateCertificate.pdf",
+      "url": "https://ruraluniv.ac.in/includes/examination/pdf/DuplicateCertificate.pdf",
     },
     {
       "title": "Certificate for Compliance of Ph.D. with UGC Regulations",
@@ -44,7 +46,7 @@ class _OfficialDocumentCenterScreenState extends State<OfficialDocumentCenterScr
       "date": "22 Dec 2025",
       "size": "320 KB",
       "cat": "Research",
-      "url": "http://ruraluniv.ac.in/includes/studcorner/pdf/ugc_cc221217.pdf",
+      "url": "https://ruraluniv.ac.in/includes/studcorner/pdf/ugc_cc221217.pdf",
     },
     {
       "title": "e-SANAD Digital Attestation Procedure & Guidelines",
@@ -52,7 +54,7 @@ class _OfficialDocumentCenterScreenState extends State<OfficialDocumentCenterScr
       "date": "30 Dec 2025",
       "size": "450 KB",
       "cat": "Attestation",
-      "url": "http://ruraluniv.ac.in/includes/examination/pdf/e-sanad301221.pdf",
+      "url": "https://ruraluniv.ac.in/includes/examination/pdf/e-sanad301221.pdf",
     },
     {
       "title": "Tatkal Scheme Instructions for Urgent Certificates",
@@ -60,7 +62,7 @@ class _OfficialDocumentCenterScreenState extends State<OfficialDocumentCenterScr
       "date": "15 May 2026",
       "size": "180 KB",
       "cat": "Examinations",
-      "url": "http://ruraluniv.ac.in/includes/examination/pdf/Tatkal_instruction.pdf",
+      "url": "https://ruraluniv.ac.in/includes/examination/pdf/Tatkal_instruction.pdf",
     },
     {
       "title": "Choice Based Credit System (CBCS) Academic Regulations",
@@ -68,31 +70,23 @@ class _OfficialDocumentCenterScreenState extends State<OfficialDocumentCenterScr
       "date": "10 Jul 2026",
       "size": "2.8 MB",
       "cat": "Academic",
-      "url": "https://ruraluniv.ac.in/academics?content=CBCSsystem",
+      "url": "https://ruraluniv.ac.in/academics?content=cbcssystem",
     },
     {
-      "title": "NAAC Self Study Report (SSR) — Cycle 4 Re-Accreditation",
-      "authority": "Internal Quality Assurance Cell (IQAC)",
-      "date": "02 May 2026",
-      "size": "12.5 MB",
-      "cat": "Accreditation",
-      "url": "https://ruraluniv.ac.in/iqac",
+      "title": "Hostel Manual & Residential Living Guidelines",
+      "authority": "Office of Chief Warden",
+      "date": "01 Jun 2026",
+      "size": "1.2 MB",
+      "cat": "Hostels",
+      "url": "https://ruraluniv.ac.in/includes/infrastructure/hostel/HOSTEL_MANUAL.pdf",
     },
     {
-      "title": "NIRF 2026 Institutional Data Disclosure Submission",
-      "authority": "Registrar's Office",
-      "date": "20 Jan 2026",
-      "size": "1.9 MB",
-      "cat": "Governance",
-      "url": "https://ruraluniv.ac.in/nirf",
-    },
-    {
-      "title": "Rules Governing Student Conduct, Discipline & Anti-Ragging",
-      "authority": "Proctorial Board & Dean of Student Welfare",
-      "date": "12 Jun 2026",
-      "size": "850 KB",
-      "cat": "Student Welfare",
-      "url": "https://ruraluniv.ac.in/antiragging",
+      "title": "Krishi Vigyan Kendra (KVK) Extension & Farmer Programmes",
+      "authority": "ICAR - GRI KVK",
+      "date": "20 Apr 2026",
+      "size": "1.5 MB",
+      "cat": "Extension",
+      "url": "https://ruraluniv.ac.in/includes/academics/pdf/KVK.pdf",
     },
   ];
 
@@ -104,33 +98,45 @@ class _OfficialDocumentCenterScreenState extends State<OfficialDocumentCenterScr
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final provider = context.watch<GriProvider>();
+    final cardBg = isDark ? GriColors.darkSurface1 : Colors.white;
+    final borderColor = isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant;
 
     return ListView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       children: [
-        // Verification Card
-        Card(
-          color: GriColors.forestContainer.withOpacity(0.5),
+        // Verification Bento Card
+        Container(
+          decoration: BoxDecoration(
+            color: cardBg,
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: borderColor, width: 0.8),
+          ),
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(14),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Row(
                   children: [
-                    Icon(Icons.verified_user, color: GriColors.forestPrimary, size: 24),
+                    Icon(Icons.verified_user_outlined, color: GriColors.forestPrimary, size: 20),
                     SizedBox(width: 8),
                     Text(
                       "e-SANAD Digital Document Verification",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: GriColors.forestOnContainer),
+                      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13.5),
                     ),
                   ],
                 ),
                 const SizedBox(height: 6),
-                const Text(
-                  "Verify authenticity of degree certificates, provisional awards, grade cards, and official circulars against the University Registry.",
-                  style: TextStyle(fontSize: 12),
+                Text(
+                  "Verify the canonical authenticity of degree certificates, provisional awards, grade cards, and official circulars against the University Registry.",
+                  style: TextStyle(
+                    fontSize: 11.5,
+                    color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                    height: 1.35,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 Row(
@@ -138,43 +144,51 @@ class _OfficialDocumentCenterScreenState extends State<OfficialDocumentCenterScr
                     Expanded(
                       child: TextField(
                         controller: _verifyController,
+                        style: TextStyle(fontSize: 12, color: isDark ? GriColors.darkOnSurface : GriColors.onSurface),
                         decoration: InputDecoration(
-                          hintText: "Enter Certificate No (e.g. GRI-CERT-2026-9042)",
-                          hintStyle: const TextStyle(fontSize: 11.5),
-                          fillColor: Colors.white,
+                          hintText: "Certificate No (e.g. GRI-CERT-2026-9042)",
+                          hintStyle: TextStyle(fontSize: 11.5, color: isDark ? GriColors.darkOnSurfaceVariant : Colors.grey),
                           filled: true,
+                          fillColor: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
                           contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide(color: borderColor, width: 0.8)),
+                          enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide(color: borderColor, width: 0.8)),
                         ),
                       ),
                     ),
                     const SizedBox(width: 8),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: GriColors.forestPrimary,
-                        foregroundColor: Colors.white,
-                      ),
-                      onPressed: () {
+                    GriPressable(
+                      onTap: () {
                         if (_verifyController.text.trim().isNotEmpty) {
                           provider.verifyDocumentAuthenticity(_verifyController.text.trim());
                         }
                       },
-                      child: const Text("Verify"),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: GriColors.forestPrimary,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: const Text(
+                          "Verify",
+                          style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w700),
+                        ),
+                      ),
                     ),
                   ],
                 ),
                 if (provider.verifiedDocumentStatus != null) ...[
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 10),
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: GriColors.forestPrimary.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: GriColors.forestPrimary),
+                      border: Border.all(color: GriColors.forestPrimary.withValues(alpha: 0.3)),
                     ),
                     child: Text(
                       provider.verifiedDocumentStatus!,
-                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: GriColors.forestPrimary),
+                      style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700, color: GriColors.forestPrimary),
                     ),
                   ),
                 ],
@@ -182,37 +196,55 @@ class _OfficialDocumentCenterScreenState extends State<OfficialDocumentCenterScr
             ),
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 14),
 
         // Official Publications List
         const Text(
           "OFFICIAL INSTITUTIONAL REPOSITORY",
-          style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: GriColors.forestPrimary),
+          style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w800, color: GriColors.forestPrimary, letterSpacing: 0.5),
         ),
-        const SizedBox(height: 10),
-        ..._officialDocuments.map((doc) => Card(
-              margin: const EdgeInsets.only(bottom: 10),
+        const SizedBox(height: 8),
+        ..._officialDocuments.map((doc) => Container(
+              margin: const EdgeInsets.only(bottom: 8),
+              decoration: BoxDecoration(
+                color: cardBg,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: borderColor, width: 0.8),
+              ),
               child: ListTile(
-                leading: const CircleAvatar(
-                  backgroundColor: GriColors.forestContainer,
-                  child: Icon(Icons.picture_as_pdf, color: GriColors.forestPrimary),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                leading: Container(
+                  width: 36,
+                  height: 36,
+                  decoration: BoxDecoration(
+                    color: GriColors.forestPrimary.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Icon(Icons.picture_as_pdf_outlined, color: GriColors.forestPrimary, size: 18),
                 ),
                 title: Text(
                   doc["title"]!,
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                  style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 12.5),
                 ),
                 subtitle: Text(
                   "${doc['authority']} • ${doc['date']} • ${doc['size']}",
-                  style: const TextStyle(fontSize: 11),
+                  style: TextStyle(
+                    fontSize: 10.5,
+                    color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                  ),
                 ),
-                trailing: IconButton(
-                  icon: const Icon(Icons.download, size: 20, color: GriColors.forestPrimary),
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Downloading ${doc['title']}...")),
-                    );
-                  },
+                trailing: GriPressable(
+                  onTap: () => OfficialResourceRegistry.openDocument(context, doc["title"]!, doc["url"]!),
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: const Icon(Icons.open_in_new, size: 16, color: GriColors.forestPrimary),
+                  ),
                 ),
+                onTap: () => OfficialResourceRegistry.openDocument(context, doc["title"]!, doc["url"]!),
               ),
             )),
       ],

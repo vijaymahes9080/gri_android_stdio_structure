@@ -1,109 +1,171 @@
 import 'package:flutter/material.dart';
-import '../utils/gri_colors.dart';
 import '../services/official_resource_registry.dart';
+import '../utils/gri_colors.dart';
+import '../utils/gri_motion.dart';
 
-class MediaGalleryScreen extends StatelessWidget {
+class MediaGalleryScreen extends StatefulWidget {
   const MediaGalleryScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Media & Video Galleries", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-          backgroundColor: GriColors.forestPrimary,
-          foregroundColor: Colors.white,
-          bottom: const TabBar(
-            labelColor: Colors.white,
-            unselectedLabelColor: Colors.white70,
-            indicatorColor: GriColors.ochrePrimary,
-            indicatorWeight: 3,
-            tabs: [
-              Tab(icon: Icon(Icons.video_library), text: "Official Videos"),
-              Tab(icon: Icon(Icons.photo_library), text: "Campus Photography"),
-            ],
-          ),
-        ),
-        body: TabBarView(
-          children: [
-            _buildVideosTab(context),
-            _buildPhotosTab(context),
-          ],
-        ),
-      ),
-    );
+  State<MediaGalleryScreen> createState() => _MediaGalleryScreenState();
+}
+
+class _MediaGalleryScreenState extends State<MediaGalleryScreen> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  final List<Map<String, dynamic>> _videos = [
+    {
+      "id": "VID_CAMPUS_TOUR",
+      "title": "GRI Campus Panoramic Video Tour",
+      "duration": "08:45 • Full HD",
+      "badge": "CAMPUS OVERVIEW",
+      "desc": "Walkthrough featuring the 300-acre Gandhigram campus, 8 academic schools, specialized research laboratories, and rural extensions.",
+      "image": "assets/official/images/gri_admin_block.png",
+    },
+    {
+      "id": "VID_YOUTUBE_CHANNEL",
+      "title": "Official GRI YouTube Channel & Convocation Archives",
+      "duration": "Official Channel",
+      "badge": "LIVESTREAM ARCHIVES",
+      "desc": "Official convocation ceremonies, Chancellor & Vice-Chancellor addresses, national seminars, and rural cultural festivals.",
+      "image": "assets/images/gri_emblem_3d.jpg",
+    },
+    {
+      "id": "VID_ANTI_RAGGING_FILM",
+      "title": "Statutory UGC Anti-Ragging Awareness Film",
+      "duration": "12:10 • Documentary",
+      "badge": "STATUTORY DIRECTIVE",
+      "desc": "National directive documentary on creating a safe, inclusive campus with 24x7 grievance escalation hotlines.",
+      "image": "assets/images/student_avatar.jpg",
+    },
+  ];
+
+  final List<Map<String, String>> _photos = [
+    {
+      "title": "Dr. Radhakrishnan Central Library",
+      "subtitle": "1,80,000+ volumes & digital archives",
+      "path": "assets/images/library_front.jpg",
+      "category": "Academic Infrastructure",
+    },
+    {
+      "title": "GRI Rural Health Centre",
+      "subtitle": "24x7 clinical care & outpatient dispensary",
+      "path": "assets/images/health_centre.jpg",
+      "category": "Healthcare & Welfare",
+    },
+    {
+      "title": "Administrative Heritage Block",
+      "subtitle": "Foundational 1956 facade & Secretariat",
+      "path": "assets/official/images/gri_admin_block.png",
+      "category": "Institutional Heritage",
+    },
+    {
+      "title": "Official University Crest",
+      "subtitle": "Charkha, rising sun & rural emblem",
+      "path": "assets/official/images/gri_official_crest.jpg",
+      "category": "Emblem & Insignia",
+    },
+    {
+      "title": "Dr. KM. Annamalai",
+      "subtitle": "Hon'ble Chancellor",
+      "path": "assets/official/images/chancellor_annamalai.jpg",
+      "category": "Leadership",
+    },
+    {
+      "title": "Prof. Dr. N. Panchanatham",
+      "subtitle": "Vice-Chancellor (Officiating)",
+      "path": "assets/official/images/vice_chancellor_panchanatham.jpg",
+      "category": "Leadership",
+    },
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
   }
 
-  Widget _buildVideosTab(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
-        // Featured Campus Video Tour
-        Card(
-          elevation: 2,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  void _showPhotoDialog(BuildContext context, Map<String, String> photo) {
+    showDialog(
+      context: context,
+      builder: (ctx) => Dialog(
+        backgroundColor: Colors.transparent,
+        insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(ctx).brightness == Brightness.dark ? GriColors.darkSurface1 : Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Theme.of(ctx).brightness == Brightness.dark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+              width: 0.8,
+            ),
+          ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-                    child: Container(
-                      height: 180,
-                      width: double.infinity,
-                      color: Colors.black87,
-                      child: OfficialResourceRegistry.buildImage(
-                        "IMG_ADMIN_BLOCK",
-                        fit: BoxFit.cover,
-                      ),
+              ClipRRect(
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                child: InteractiveViewer(
+                  maxScale: 3.5,
+                  child: Image.asset(
+                    photo["path"]!,
+                    fit: BoxFit.contain,
+                    height: 280,
+                    errorBuilder: (context, error, stackTrace) => Container(
+                      height: 280,
+                      color: Colors.grey.shade200,
+                      child: const Center(child: Icon(Icons.broken_image, size: 48, color: Colors.grey)),
                     ),
                   ),
-                  CircleAvatar(
-                    radius: 30,
-                    backgroundColor: GriColors.forestPrimary.withOpacity(0.9),
-                    child: IconButton(
-                      icon: const Icon(Icons.play_arrow, color: Colors.white, size: 36),
-                      onPressed: () => OfficialResourceRegistry.openVideo(context, "VID_CAMPUS_TOUR"),
-                    ),
-                  ),
-                ],
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                          decoration: BoxDecoration(color: Colors.red.withOpacity(0.12), borderRadius: BorderRadius.circular(4)),
-                          child: const Text("OFFICIAL STREAM", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.red)),
-                        ),
-                        const SizedBox(width: 8),
-                        Text("Duration: 08:45 • HD", style: TextStyle(fontSize: 11, color: Colors.grey.shade600)),
-                      ],
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: GriColors.forestPrimary.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        photo["category"]!,
+                        style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: GriColors.forestPrimary),
+                      ),
                     ),
                     const SizedBox(height: 8),
-                    const Text("GRI Campus Panoramic Video Tour", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: GriColors.forestPrimary)),
+                    Text(
+                      photo["title"]!,
+                      style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+                    ),
                     const SizedBox(height: 4),
                     Text(
-                      "Comprehensive video walkthrough featuring the 300-acre Gandhigram campus, academic schools, laboratories, library, and rural extension facilities.",
-                      style: TextStyle(fontSize: 12, color: Colors.grey.shade700, height: 1.35),
-                    ),
-                    const SizedBox(height: 12),
-                    ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: GriColors.forestPrimary,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      photo["subtitle"]!,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Theme.of(ctx).brightness == Brightness.dark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
                       ),
-                      onPressed: () => OfficialResourceRegistry.openVideo(context, "VID_CAMPUS_TOUR"),
-                      icon: const Icon(Icons.open_in_new, size: 16),
-                      label: const Text("Launch Video Tour Stream"),
+                    ),
+                    const SizedBox(height: 14),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () => Navigator.pop(ctx),
+                        style: TextButton.styleFrom(
+                          foregroundColor: GriColors.forestPrimary,
+                          textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+                        ),
+                        child: const Text("Close"),
+                      ),
                     ),
                   ],
                 ),
@@ -111,96 +173,262 @@ class MediaGalleryScreen extends StatelessWidget {
             ],
           ),
         ),
-
-        const SizedBox(height: 16),
-
-        // Official YouTube Channel Tile
-        Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          child: ListTile(
-            contentPadding: const EdgeInsets.all(14),
-            leading: const CircleAvatar(
-              backgroundColor: Colors.red,
-              child: Icon(Icons.play_circle_fill, color: Colors.white, size: 28),
-            ),
-            title: const Text("Official GRI YouTube Channel", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-            subtitle: Text("Official broadcasts, convocation ceremonies, seminars & cultural archives.", style: TextStyle(fontSize: 11, color: Colors.grey.shade600)),
-            trailing: const Icon(Icons.arrow_forward_ios, size: 14, color: Colors.grey),
-            onTap: () => OfficialResourceRegistry.openVideo(context, "VID_YOUTUBE_CHANNEL"),
-          ),
-        ),
-
-        const SizedBox(height: 10),
-
-        // Anti-Ragging UGC Documentary
-        Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          child: ListTile(
-            contentPadding: const EdgeInsets.all(14),
-            leading: CircleAvatar(
-              backgroundColor: GriColors.ochrePrimary.withOpacity(0.2),
-              child: const Icon(Icons.security, color: GriColors.ochrePrimary, size: 26),
-            ),
-            title: const Text("UGC Anti-Ragging Awareness Film", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-            subtitle: Text("Statutory national anti-ragging documentary & helpline directives.", style: TextStyle(fontSize: 11, color: Colors.grey.shade600)),
-            trailing: const Icon(Icons.arrow_forward_ios, size: 14, color: Colors.grey),
-            onTap: () => OfficialResourceRegistry.openVideo(context, "VID_ANTI_RAGGING_FILM"),
-          ),
-        ),
-      ],
+      ),
     );
   }
 
-  Widget _buildPhotosTab(BuildContext context) {
-    return GridView.count(
-      padding: const EdgeInsets.all(16),
-      crossAxisCount: 2,
-      crossAxisSpacing: 12,
-      mainAxisSpacing: 12,
-      childAspectRatio: 0.85,
-      children: [
-        _buildPhotoCard("IMG_OFFICIAL_CREST", "University Emblem", "Charkha & Rising Sun"),
-        _buildPhotoCard("IMG_ADMIN_BLOCK", "Administrative Block", "Historic 1956 Facade"),
-        _buildPhotoCard("IMG_CHANCELLOR_ANNAMALAI", "Chancellor", "Dr. KM. Annamalai"),
-        _buildPhotoCard("IMG_VC_PANCHANATHAM", "Vice-Chancellor", "Prof. Dr. N. Panchanatham"),
-        _buildPhotoCard("IMG_REGISTRAR_MARIMUTHU", "Registrar", "Dr. K. Marimuthu"),
-        _buildPhotoCard("IMG_PORTAL_BANNER", "Official Banner", "ruraluniv.ac.in"),
-      ],
-    );
-  }
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
-  Widget _buildPhotoCard(String resourceId, String title, String subtitle) {
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    return Scaffold(
+      backgroundColor: isDark ? GriColors.darkCanvas : GriColors.surfaceCanvas,
+      appBar: AppBar(
+        title: const Text(
+          "Media & Video Galleries",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+        ),
+        backgroundColor: isDark ? GriColors.darkSurface1 : Colors.white,
+        foregroundColor: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+        elevation: 0,
+        bottom: TabBar(
+          controller: _tabController,
+          indicatorColor: GriColors.forestPrimary,
+          indicatorWeight: 2.5,
+          labelColor: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+          unselectedLabelColor: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+          labelStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
+          unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
+          tabs: const [
+            Tab(text: "Official Videos"),
+            Tab(text: "Campus Photography"),
+          ],
+        ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
         children: [
-          Expanded(
-            child: ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
-              child: Container(
-                width: double.infinity,
-                color: Colors.grey.shade100,
-                child: OfficialResourceRegistry.buildImage(
-                  resourceId,
-                  fit: BoxFit.contain,
+          _buildVideosTab(context, isDark),
+          _buildPhotosTab(context, isDark),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildVideosTab(BuildContext context, bool isDark) {
+    final cardBg = isDark ? GriColors.darkSurface1 : Colors.white;
+    final borderColor = isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant;
+
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      itemCount: _videos.length,
+      itemBuilder: (context, index) {
+        final v = _videos[index];
+        return Container(
+          margin: const EdgeInsets.only(bottom: 14),
+          decoration: BoxDecoration(
+            color: cardBg,
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: borderColor, width: 0.8),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.vertical(top: Radius.circular(13)),
+                    child: Container(
+                      height: 170,
+                      width: double.infinity,
+                      color: isDark ? Colors.black45 : Colors.grey.shade100,
+                      child: Image.asset(
+                        v["image"],
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) => Container(
+                          color: GriColors.forestPrimary.withValues(alpha: 0.15),
+                          child: const Icon(Icons.video_collection_outlined, size: 48, color: GriColors.forestPrimary),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 170,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.transparent,
+                          Colors.black.withValues(alpha: 0.55),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GriPressable(
+                    onTap: () => OfficialResourceRegistry.openVideo(context, v["id"]),
+                    child: Container(
+                      width: 52,
+                      height: 52,
+                      decoration: BoxDecoration(
+                        color: Colors.black.withValues(alpha: 0.65),
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 1.5),
+                      ),
+                      child: const Icon(Icons.play_arrow_rounded, color: Colors.white, size: 34),
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(14),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: GriColors.forestPrimary.withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Text(
+                            v["badge"],
+                            style: const TextStyle(fontSize: 9.5, fontWeight: FontWeight.w700, color: GriColors.forestPrimary),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          v["duration"],
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      v["title"],
+                      style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      v["desc"],
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                        height: 1.4,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    GriPressable(
+                      onTap: () => OfficialResourceRegistry.openVideo(context, v["id"]),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: borderColor, width: 0.8),
+                        ),
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.open_in_new, size: 14, color: GriColors.forestPrimary),
+                            SizedBox(width: 6),
+                            Text(
+                              "Launch Official Stream",
+                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: GriColors.forestPrimary),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(8),
+        );
+      },
+    );
+  }
+
+  Widget _buildPhotosTab(BuildContext context, bool isDark) {
+    final cardBg = isDark ? GriColors.darkSurface1 : Colors.white;
+    final borderColor = isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant;
+
+    return GridView.builder(
+      padding: const EdgeInsets.all(14),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        childAspectRatio: 0.82,
+      ),
+      itemCount: _photos.length,
+      itemBuilder: (context, index) {
+        final p = _photos[index];
+        return GriPressable(
+          onTap: () => _showPhotoDialog(context, p),
+          child: Container(
+            decoration: BoxDecoration(
+              color: cardBg,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: borderColor, width: 0.8),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12), maxLines: 1, overflow: TextOverflow.ellipsis),
-                Text(subtitle, style: TextStyle(fontSize: 10, color: Colors.grey.shade600), maxLines: 1, overflow: TextOverflow.ellipsis),
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.vertical(top: Radius.circular(11)),
+                    child: Container(
+                      width: double.infinity,
+                      color: isDark ? Colors.black38 : Colors.grey.shade100,
+                      child: Image.asset(
+                        p["path"]!,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) => const Center(
+                          child: Icon(Icons.photo_outlined, size: 32, color: Colors.grey),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        p["title"]!,
+                        style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 11.5),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        p["subtitle"]!,
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
