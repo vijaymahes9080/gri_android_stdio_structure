@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../services/seed_data_service.dart';
 import '../utils/gri_colors.dart';
+import '../utils/gri_motion.dart';
+import 'department_detail_screen.dart';
 
 /// Production-Grade Schools & Academic Programmes Screen
 /// Covers the 8 statutory schools, degree browser with filters, specialized research centres, and CBCS framework.
@@ -123,90 +125,123 @@ class _SchoolsProgrammesHubScreenState extends State<SchoolsProgrammesHubScreen>
             itemCount: schools.length,
             itemBuilder: (context, index) {
               final sch = schools[index];
-              return Container(
-                margin: const EdgeInsets.only(bottom: 12),
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: isDark ? GriColors.darkSurface1 : Colors.white,
-                  borderRadius: BorderRadius.circular(14),
-                  border: Border.all(
-                    color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
-                    width: 1.0,
+              return GriPressable(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => DepartmentDetailScreen(
+                        departmentId: sch.id,
+                        departmentName: sch.name,
+                        schoolName: sch.name,
+                        hodName: sch.dean,
+                        email: sch.deanEmail,
+                        phone: sch.deanPhone,
+                        sourceUrl: "https://ruraluniv.ac.in/academics?content=faculties",
+                      ),
+                    ),
+                  );
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(bottom: 12),
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: isDark ? GriColors.darkSurface1 : Colors.white,
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(
+                      color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+                      width: 1.0,
+                    ),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0x06000000),
+                        blurRadius: 6,
+                        offset: Offset(0, 1),
+                      ),
+                    ],
                   ),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x06000000),
-                      blurRadius: 6,
-                      offset: Offset(0, 1),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            sch.name,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 13.5,
-                              color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              sch.name,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 13.5,
+                                color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+                              ),
                             ),
                           ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                          decoration: BoxDecoration(
-                            color: GriColors.ochrePrimary.withValues(alpha: isDark ? 0.25 : 0.1),
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          child: Text(
-                            "${sch.programmesCount} Progs",
-                            style: const TextStyle(
-                              fontSize: 10.5,
-                              fontWeight: FontWeight.w700,
-                              color: GriColors.ochrePrimary,
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                            decoration: BoxDecoration(
+                              color: GriColors.ochrePrimary.withValues(alpha: isDark ? 0.25 : 0.1),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Text(
+                              "${sch.programmesCount} Progs",
+                              style: const TextStyle(
+                                fontSize: 10.5,
+                                fontWeight: FontWeight.w700,
+                                color: GriColors.ochrePrimary,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      "Dean: ${sch.dean}",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12,
-                        color: isDark ? GriColors.darkOnSurface : Colors.black87,
+                        ],
                       ),
-                    ),
-                    Text(
-                      "Email: ${sch.deanEmail} • Phone: ${sch.deanPhone}",
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant.withValues(alpha: 0.5),
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: Text(
-                        "Key Highlights: ${sch.highlights}",
+                      const SizedBox(height: 6),
+                      Text(
+                        "Dean: ${sch.dean}",
                         style: TextStyle(
-                          fontSize: 11.5,
-                          height: 1.35,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                          color: isDark ? GriColors.darkOnSurface : Colors.black87,
+                        ),
+                      ),
+                      Text(
+                        "Email: ${sch.deanEmail} • Phone: ${sch.deanPhone}",
+                        style: TextStyle(
+                          fontSize: 11,
                           color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
                         ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 8),
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant.withValues(alpha: 0.5),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Text(
+                          "Key Highlights: ${sch.highlights}",
+                          style: TextStyle(
+                            fontSize: 11.5,
+                            height: 1.35,
+                            color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            "View School Departments & Labs",
+                            style: TextStyle(
+                              fontSize: 10.5,
+                              fontWeight: FontWeight.w700,
+                              color: GriColors.forestPrimary,
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          const Icon(Icons.arrow_forward_ios, size: 10, color: GriColors.forestPrimary),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               );
             },
