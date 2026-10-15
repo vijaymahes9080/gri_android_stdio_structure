@@ -223,7 +223,7 @@ class HomeDashboardScreen extends StatelessWidget {
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
-                        "Search 247 official pages, circulars, syllabi...",
+                        "Search 309 official pages, 602 documents, syllabi...",
                         style: TextStyle(
                           fontSize: 12.5,
                           color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
@@ -238,7 +238,7 @@ class HomeDashboardScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: const Text(
-                        "247 URLs",
+                        "309 URLs",
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w700,

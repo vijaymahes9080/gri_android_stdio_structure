@@ -25,6 +25,8 @@ class _DocumentVaultScreenState extends State<DocumentVaultScreen> {
     "Circulars",
     "Governance",
     "CBCS Syllabus",
+    "Welfare",
+    "General",
   ];
 
   @override
@@ -37,14 +39,25 @@ class _DocumentVaultScreenState extends State<DocumentVaultScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final allDocs = OfficialResourceRegistry.getDocuments();
+    final allDocs = OfficialResourceRegistry.getFullDocumentVault();
     final query = _searchController.text.trim().toLowerCase();
 
     final filtered = allDocs.where((doc) {
       final title = doc.title.toLowerCase();
       final cat = doc.category.toLowerCase();
-      final matchesQuery = query.isEmpty || title.contains(query) || cat.contains(query);
-      final matchesCat = _selectedCategory == "All" || cat == _selectedCategory.toLowerCase();
+      final module = doc.module.toLowerCase();
+      final summary = (doc.summary ?? '').toLowerCase();
+
+      final matchesQuery = query.isEmpty ||
+          title.contains(query) ||
+          cat.contains(query) ||
+          module.contains(query) ||
+          summary.contains(query);
+
+      final matchesCat = _selectedCategory == "All" ||
+          cat.contains(_selectedCategory.toLowerCase()) ||
+          module.contains(_selectedCategory.toLowerCase());
+
       return matchesQuery && matchesCat;
     }).toList();
 
@@ -242,7 +255,20 @@ class _DocumentVaultScreenState extends State<DocumentVaultScreen> {
                                 color: isDark ? GriColors.darkOnSurfaceVariant : Colors.grey.shade600,
                               ),
                             ),
-                            const SizedBox(height: 4),
+                            if (doc.summary != null && doc.summary!.isNotEmpty) ...[
+                              const SizedBox(height: 3),
+                              Text(
+                                doc.summary!,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 10.5,
+                                  height: 1.3,
+                                  color: isDark ? GriColors.darkOnSurfaceVariant.withOpacity(0.85) : Colors.black54,
+                                ),
+                              ),
+                            ],
+                            const SizedBox(height: 5),
                             Row(
                               children: [
                                 if (isBundled)

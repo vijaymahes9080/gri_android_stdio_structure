@@ -50,6 +50,14 @@ class _GlobalWebsiteSearchScreenState extends State<GlobalWebsiteSearchScreen> {
   }
 
   Future<void> _loadInventory() async {
+    if (SeedDataService.instance.allPages.isNotEmpty) {
+      setState(() {
+        _allPages = SeedDataService.instance.allPages;
+        _filteredPages = _allPages;
+        _isLoading = false;
+      });
+      return;
+    }
     try {
       final jsonStr = await rootBundle.loadString('assets/website_inventory.json');
       final data = json.decode(jsonStr) as Map<String, dynamic>;
@@ -61,7 +69,6 @@ class _GlobalWebsiteSearchScreenState extends State<GlobalWebsiteSearchScreen> {
         _isLoading = false;
       });
     } catch (e) {
-      // Fallback if asset load fails
       setState(() {
         _isLoading = false;
       });
@@ -143,11 +150,19 @@ class _GlobalWebsiteSearchScreenState extends State<GlobalWebsiteSearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Scaffold(
+      backgroundColor: isDark ? GriColors.darkCanvas : GriColors.surfaceCanvas,
       appBar: AppBar(
-        title: const Text("GRI Portal & Directory Search", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-        backgroundColor: GriColors.forestPrimary,
-        foregroundColor: Colors.white,
+        title: const Text(
+          "GRI Portal & Directory Search",
+          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+        ),
+        backgroundColor: isDark ? GriColors.darkSurface1 : Colors.white,
+        foregroundColor: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+        elevation: 0,
         actions: [
           IconButton(
             icon: const Icon(Icons.folder_shared, color: GriColors.ochrePrimary),
@@ -162,17 +177,29 @@ class _GlobalWebsiteSearchScreenState extends State<GlobalWebsiteSearchScreen> {
         children: [
           // Search Input Bar
           Container(
-            padding: const EdgeInsets.all(12),
-            color: GriColors.forestPrimary.withOpacity(0.06),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(
+              color: isDark ? GriColors.darkSurface1 : Colors.white,
+              border: Border(
+                bottom: BorderSide(
+                  color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+                  width: 1.0,
+                ),
+              ),
+            ),
             child: TextField(
               controller: _searchController,
               onChanged: (_) => _onFilterChanged(),
               decoration: InputDecoration(
-                hintText: "Search 247 official pages, courses, forms, policies...",
-                prefixIcon: const Icon(Icons.search, color: GriColors.forestPrimary),
+                hintText: "Search 309 official pages, 602 documents, policies...",
+                hintStyle: TextStyle(
+                  fontSize: 12.5,
+                  color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                ),
+                prefixIcon: const Icon(Icons.search, color: GriColors.forestPrimary, size: 20),
                 suffixIcon: _searchController.text.isNotEmpty
                     ? IconButton(
-                        icon: const Icon(Icons.clear),
+                        icon: const Icon(Icons.clear, size: 18),
                         onPressed: () {
                           _searchController.clear();
                           _onFilterChanged();
@@ -180,15 +207,25 @@ class _GlobalWebsiteSearchScreenState extends State<GlobalWebsiteSearchScreen> {
                       )
                     : null,
                 filled: true,
-                fillColor: Colors.white,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                fillColor: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant.withValues(alpha: 0.5),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(
+                    color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+                    width: 1.0,
+                  ),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(
+                    color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+                    width: 1.0,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(color: GriColors.forestPrimary, width: 1.5),
                 ),
               ),
             ),
@@ -204,10 +241,22 @@ class _GlobalWebsiteSearchScreenState extends State<GlobalWebsiteSearchScreen> {
                 return Padding(
                   padding: const EdgeInsets.only(right: 6),
                   child: FilterChip(
-                    label: Text(cat, style: TextStyle(fontSize: 11, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal)),
+                    label: Text(
+                      cat,
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                        color: isSelected ? Colors.white : (isDark ? GriColors.darkOnSurface : Colors.black87),
+                      ),
+                    ),
                     selected: isSelected,
-                    selectedColor: GriColors.forestPrimary.withOpacity(0.18),
-                    checkmarkColor: GriColors.forestPrimary,
+                    selectedColor: GriColors.forestPrimary,
+                    backgroundColor: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
+                    checkmarkColor: Colors.white,
+                    side: BorderSide(
+                      color: isSelected ? GriColors.forestPrimary : (isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant),
+                      width: 0.8,
+                    ),
                     onSelected: (val) {
                       setState(() {
                         _selectedCategory = cat;

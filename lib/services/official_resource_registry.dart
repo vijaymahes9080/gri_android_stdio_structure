@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../utils/gri_colors.dart';
+import 'seed_data_service.dart';
 
 enum ResourceType {
   IMAGE,
@@ -25,6 +26,7 @@ class OfficialResource {
   final String module;
   final bool isVerified;
   final String lastChecked;
+  final String? summary;
 
   const OfficialResource({
     required this.id,
@@ -37,6 +39,7 @@ class OfficialResource {
     required this.module,
     this.isVerified = true,
     this.lastChecked = "2026-10-11",
+    this.summary,
   });
 
   bool get isBundledLocally => localPath != null && localPath!.isNotEmpty;
@@ -314,9 +317,61 @@ class OfficialResourceRegistry {
   static List<OfficialResource> getResourcesByType(ResourceType type) =>
       _registry.values.where((r) => r.type == type).toList();
 
-  /// Get all registered official documents
+  /// Get all registered official documents (base entries)
   static List<OfficialResource> getDocuments() =>
       _registry.values.where((r) => r.type == ResourceType.DOCUMENT_PDF).toList();
+
+  static List<OfficialResource>? _cachedFullVault;
+
+  /// Get the complete unified document vault (base entries + 602 cataloged official documents)
+  static List<OfficialResource> getFullDocumentVault() {
+    if (_cachedFullVault != null && _cachedFullVault!.length > 100) {
+      return _cachedFullVault!;
+    }
+    final baseDocs = getDocuments();
+    final seenUrls = <String>{for (var d in baseDocs) d.sourceUrl.trim().toLowerCase()};
+    final seenIds = <String>{for (var d in baseDocs) d.id};
+    final unified = List<OfficialResource>.from(baseDocs);
+
+    for (final raw in SeedDataService.instance.allCatalogDocuments) {
+      final url = (raw['sourceUrl'] as String? ?? '').trim();
+      final urlLower = url.toLowerCase();
+      if (urlLower.isEmpty || seenUrls.contains(urlLower)) continue;
+      seenUrls.add(urlLower);
+
+      var id = (raw['id'] as String? ?? '').trim();
+      if (id.isEmpty || seenIds.contains(id)) {
+        id = 'DOC_CATALOG_${unified.length + 1}';
+      }
+      seenIds.add(id);
+
+      final title = (raw['title'] as String? ?? 'Official Document').trim();
+      final category = (raw['category'] as String? ?? 'General').trim();
+      final localPath = raw['localPath'] as String?;
+      final sizeBytes = raw['sizeBytes'] is int ? raw['sizeBytes'] as int : null;
+      final module = (raw['module'] as String? ?? 'Document Vault').trim();
+      final summary = raw['summary'] as String?;
+
+      unified.add(
+        OfficialResource(
+          id: id,
+          title: title,
+          category: category,
+          type: ResourceType.DOCUMENT_PDF,
+          sourceUrl: url,
+          localPath: localPath,
+          sizeBytes: sizeBytes,
+          module: module,
+          isVerified: true,
+          lastChecked: '2026-10-15',
+          summary: summary,
+        ),
+      );
+    }
+
+    _cachedFullVault = unified;
+    return unified;
+  }
 
   /// Get all registered official videos
   static List<OfficialResource> getVideos() =>
@@ -408,8 +463,24 @@ class OfficialResourceRegistry {
 
   /// Open or download an official document with error recovery
   static Future<void> openDocument(BuildContext context, String id) async {
-    final resource = _registry[id];
+    OfficialResource? resource = _registry[id];
     if (resource == null) {
+      final vault = getFullDocumentVault();
+      try {
+        resource = vault.firstWhere(
+          (d) => d.id == id || d.sourceUrl == id || d.title.toLowerCase() == id.toLowerCase(),
+        );
+      } catch (_) {
+        resource = null;
+      }
+    }
+
+    if (resource == null) {
+      // Fallback: Attempt smart direct URL launch if string appears to be a URI
+      if (id.startsWith('http://') || id.startsWith('https://')) {
+        await smartOpenDocument(context, id);
+        return;
+      }
       _showSnack(context, "Document not found in registry: $id", isError: true);
       return;
     }

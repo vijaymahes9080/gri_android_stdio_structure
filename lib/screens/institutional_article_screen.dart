@@ -289,19 +289,27 @@ class InstitutionalArticleScreen extends StatelessWidget {
           GriPressable(
             onTap: () => _launchUrl(context, sourceUrl),
             child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 14),
+              padding: const EdgeInsets.symmetric(vertical: 13),
               decoration: BoxDecoration(
-                color: GriColors.forestPrimary,
-                borderRadius: BorderRadius.circular(10),
+                color: isDark ? GriColors.darkSurface1 : Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: GriColors.forestPrimary.withValues(alpha: 0.35),
+                  width: 1.0,
+                ),
               ),
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.public, color: Colors.white, size: 18),
+                  Icon(Icons.public, color: GriColors.forestPrimary, size: 17),
                   SizedBox(width: 8),
                   Text(
-                    "Open Official Web Page on ruraluniv.ac.in",
-                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                    "View Canonical Web Page on ruraluniv.ac.in",
+                    style: TextStyle(
+                      color: GriColors.forestPrimary,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 12.5,
+                    ),
                   ),
                 ],
               ),
