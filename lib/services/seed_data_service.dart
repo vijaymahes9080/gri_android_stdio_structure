@@ -157,6 +157,9 @@ class SeedDataService {
   List<Map<String, dynamic>> documents = [];
   List<Map<String, dynamic>> contacts = [];
 
+  List<Map<String, dynamic>> allPages = [];
+  List<Map<String, dynamic>> allCatalogDocuments = [];
+
   Future<void> loadSeedData() async {
     if (_isLoaded) return;
     try {
@@ -199,11 +202,60 @@ class SeedDataService {
         contacts = List<Map<String, dynamic>>.from(_rawJson['contacts']);
       }
 
+      // Load unified website inventory
+      await loadWebsiteInventory();
+
       _isLoaded = true;
     } catch (e) {
       // Fallback in case of asset bundling issues during early test
       _initFallbacks();
+      await loadWebsiteInventory();
       _isLoaded = true;
+    }
+  }
+
+  Future<void> loadWebsiteInventory() async {
+    if (allPages.isNotEmpty) return;
+    try {
+      final invStr = await rootBundle.loadString('assets/website_inventory.json');
+      final invData = json.decode(invStr) as Map<String, dynamic>;
+      allPages = List<Map<String, dynamic>>.from(invData['pages'] ?? []);
+      allCatalogDocuments = List<Map<String, dynamic>>.from(invData['catalog_documents'] ?? []);
+    } catch (_) {
+      // Fallback resilience
+    }
+  }
+
+  Map<String, dynamic>? getPageByIdOrUrl(String identifier) {
+    if (identifier.isEmpty) return null;
+    final idLower = identifier.trim().toLowerCase();
+    for (final p in allPages) {
+      final u = (p['url'] ?? '').toString().toLowerCase();
+      final pid = (p['id'] ?? '').toString().toLowerCase();
+      if (u == idLower || pid == idLower || u.contains(idLower) || idLower.contains(u)) {
+        return p;
+      }
+    }
+    return null;
+  }
+
+  List<Map<String, dynamic>> getPagesByCategory(String category) {
+    if (category.toLowerCase() == "all") return allPages;
+    final catLower = category.toLowerCase();
+    return allPages.where((p) => (p['category'] ?? '').toString().toLowerCase().contains(catLower)).toList();
+  }
+
+  List<Map<String, dynamic>> getAllDocuments() {
+    if (allCatalogDocuments.isNotEmpty) return allCatalogDocuments;
+    return documents;
+  }
+
+  DepartmentItem? getDepartmentById(String deptId) {
+    final cleanId = deptId.toLowerCase().replaceAll('dept_', '').replaceAll('_profile', '').replaceAll('_programmes', '');
+    try {
+      return departments.firstWhere((d) => d.id.toLowerCase().contains(cleanId) || d.name.toLowerCase().contains(cleanId));
+    } catch (_) {
+      return null;
     }
   }
 
