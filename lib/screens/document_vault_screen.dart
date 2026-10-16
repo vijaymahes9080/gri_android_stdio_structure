@@ -206,16 +206,36 @@ class _DocumentVaultScreenState extends State<DocumentVaultScreen> {
           Expanded(
             child: filtered.isEmpty
                 ? Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.folder_off_outlined, size: 48, color: Colors.grey.shade400),
-                        const SizedBox(height: 10),
-                        const Text(
-                          "No documents match your query",
-                          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
-                        ),
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.folder_off_outlined, size: 48, color: Colors.grey.shade400),
+                          const SizedBox(height: 10),
+                          Text(
+                            _selectedCategory != "All"
+                                ? "No documents found under '$_selectedCategory'"
+                                : "No documents match your query",
+                            style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
+                          ),
+                          const SizedBox(height: 12),
+                          if (_selectedCategory != "All" || _searchController.text.isNotEmpty)
+                            OutlinedButton.icon(
+                              onPressed: () {
+                                setState(() {
+                                  _selectedCategory = "All";
+                                  _searchController.clear();
+                                });
+                              },
+                              icon: const Icon(Icons.refresh, size: 16),
+                              label: const Text("View All Cataloged Documents"),
+                              style: OutlinedButton.styleFrom(
+                                foregroundColor: GriColors.forestPrimary,
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
                   )
                 : ListView.separated(

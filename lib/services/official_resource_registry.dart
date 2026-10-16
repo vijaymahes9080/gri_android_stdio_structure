@@ -411,7 +411,9 @@ class OfficialResourceRegistry {
       );
     }
 
-    _cachedFullVault = unified;
+    if (unified.length > 50) {
+      _cachedFullVault = unified;
+    }
     return unified;
   }
 

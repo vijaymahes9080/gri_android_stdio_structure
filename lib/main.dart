@@ -22,9 +22,11 @@ import 'screens/official_document_center_screen.dart';
 import 'screens/faculty_staff_portal_screen.dart';
 
 import 'screens/gri_splash_screen.dart';
+import 'services/seed_data_service.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SeedDataService.instance.loadSeedData();
   runApp(
     ChangeNotifierProvider(
       create: (_) => GriProvider(),
