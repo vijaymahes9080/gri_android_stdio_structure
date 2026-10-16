@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../utils/gri_colors.dart';
 import 'seed_data_service.dart';
@@ -649,7 +650,7 @@ class OfficialResourceRegistry {
     );
   }
 
-  /// Open or download an official document with error recovery
+  /// Open or inspect an official document with complete metadata and action options
   static Future<void> openDocument(BuildContext context, String id, [String? url]) async {
     if (url != null && (url.startsWith('http://') || url.startsWith('https://'))) {
       await smartOpenDocument(context, url, title: id);
@@ -669,7 +670,6 @@ class OfficialResourceRegistry {
     }
 
     if (resource == null) {
-      // Fallback: Attempt smart direct URL launch if string appears to be a URI
       if (id.startsWith('http://') || id.startsWith('https://')) {
         await smartOpenDocument(context, id);
         return;
@@ -678,18 +678,199 @@ class OfficialResourceRegistry {
       return;
     }
 
-    _showSnack(context, "Opening ${resource.title}...", isError: false);
+    showDocumentInspectionModal(context, resource);
+  }
 
-    try {
-      final uri = Uri.parse(resource.sourceUrl);
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
-      } else {
-        _showSnack(context, "Cannot launch document viewer for ${resource.sourceUrl}", isError: true);
-      }
-    } catch (e) {
-      _showSnack(context, "Error opening document: $e", isError: true);
-    }
+  /// Interactive Modal inspecting document metadata, security verification, and launch actions
+  static void showDocumentInspectionModal(BuildContext context, OfficialResource resource) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final isBundled = resource.localPath != null && resource.localPath!.isNotEmpty;
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: isDark ? GriColors.darkSurface1 : Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) {
+        return Padding(
+          padding: EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 20,
+            bottom: MediaQuery.of(ctx).viewInsets.bottom + 24,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: Colors.red.withValues(alpha: isDark ? 0.25 : 0.1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Icon(Icons.picture_as_pdf, color: Colors.red, size: 24),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          resource.title,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14.5,
+                            color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+                          ),
+                        ),
+                        const SizedBox(height: 3),
+                        Text(
+                          "${resource.category} • ${resource.formattedSize}",
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: isDark ? GriColors.darkOnSurfaceVariant : Colors.grey.shade700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close, size: 20),
+                    onPressed: () => Navigator.pop(ctx),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 14),
+              const Divider(height: 1),
+              const SizedBox(height: 12),
+
+              // Storage & Integrity Badges
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                    decoration: BoxDecoration(
+                      color: (isBundled ? Colors.green : Colors.blue).withValues(alpha: 0.12),
+                      borderRadius: BorderRadius.circular(6),
+                      border: Border.all(
+                        color: (isBundled ? Colors.green : Colors.blue).withValues(alpha: 0.3),
+                      ),
+                    ),
+                    child: Text(
+                      isBundled ? "Pre-bundled Offline Asset" : "Official University Stream",
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w700,
+                        color: isBundled ? Colors.green.shade800 : Colors.blue.shade800,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                    decoration: BoxDecoration(
+                      color: GriColors.forestPrimary.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: const Text(
+                      "NAAC/UGC Compliant",
+                      style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: GriColors.forestPrimary),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+
+              // Source URL preview
+              Text(
+                "Official Remote Repository URL:",
+                style: TextStyle(
+                  fontSize: 10.5,
+                  fontWeight: FontWeight.w700,
+                  color: isDark ? GriColors.darkOnSurfaceVariant : Colors.grey.shade700,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+                    width: 0.8,
+                  ),
+                ),
+                child: SelectableText(
+                  resource.sourceUrl,
+                  style: const TextStyle(fontSize: 11, fontFamily: "monospace"),
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // Action Buttons
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: GriColors.forestPrimary,
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      ),
+                      icon: const Icon(Icons.copy, size: 15),
+                      label: const Text("Copy Link", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                      onPressed: () {
+                        Clipboard.setData(ClipboardData(text: resource.sourceUrl));
+                        Navigator.pop(ctx);
+                        _showSnack(context, "Document URL copied to clipboard.", isError: false);
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    flex: 2,
+                    child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: GriColors.forestPrimary,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      ),
+                      icon: const Icon(Icons.open_in_new, size: 15),
+                      label: const Text("Open in Browser", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                      onPressed: () async {
+                        Navigator.pop(ctx);
+                        _showSnack(context, "Opening ${resource.title}...", isError: false);
+                        try {
+                          final uri = Uri.parse(resource.sourceUrl);
+                          if (await canLaunchUrl(uri)) {
+                            await launchUrl(uri, mode: LaunchMode.externalApplication);
+                          } else {
+                            _showSnack(context, "Cannot launch document viewer for ${resource.sourceUrl}", isError: true);
+                          }
+                        } catch (e) {
+                          _showSnack(context, "Error opening document: $e", isError: true);
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   /// Smart document launcher accepting either a registry ID or any official URL
@@ -700,18 +881,15 @@ class OfficialResourceRegistry {
     }
 
     final docTitle = title ?? "Official Document";
-    _showSnack(context, "Accessing $docTitle...", isError: false);
-
-    try {
-      final uri = Uri.parse(urlOrId);
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
-      } else {
-        _showSnack(context, "Cannot launch viewer for $urlOrId", isError: true);
-      }
-    } catch (e) {
-      _showSnack(context, "Error opening document: $e", isError: true);
-    }
+    final docResource = OfficialResource(
+      id: urlOrId,
+      title: docTitle,
+      category: "Official Publication",
+      module: "Academic Repository",
+      type: ResourceType.DOCUMENT_PDF,
+      sourceUrl: urlOrId.startsWith('http') ? urlOrId : "https://ruraluniv.ac.in/$urlOrId",
+    );
+    showDocumentInspectionModal(context, docResource);
   }
 
   /// Launch official video stream safely

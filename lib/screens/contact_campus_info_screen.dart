@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../services/seed_data_service.dart';
 import '../utils/gri_colors.dart';
 import '../utils/gri_motion.dart';
@@ -208,9 +210,11 @@ class _ContactCampusInfoScreenState extends State<ContactCampusInfoScreen> with 
   }
 
   Widget _buildContactTile(bool isDark, String title, String detail, IconData icon, String subtitle) {
+    final isEmail = detail.contains('@');
+    final isPhone = RegExp(r'[0-9]').hasMatch(detail) && !isEmail;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
-      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: isDark ? GriColors.darkSurface1 : Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -219,52 +223,109 @@ class _ContactCampusInfoScreenState extends State<ContactCampusInfoScreen> with 
           width: 1.0,
         ),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 36,
-            height: 36,
-            decoration: BoxDecoration(
-              color: GriColors.forestPrimary.withValues(alpha: isDark ? 0.25 : 0.08),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Icon(icon, color: GriColors.forestPrimary, size: 18),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: () async {
+            if (isEmail) {
+              final uri = Uri.parse("mailto:$detail");
+              if (await canLaunchUrl(uri)) {
+                await launchUrl(uri);
+              } else {
+                Clipboard.setData(ClipboardData(text: detail));
+                if (mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Email copied to clipboard: $detail")),
+                  );
+                }
+              }
+            } else if (isPhone) {
+              // Extract first phone number if range like 2452371 to 2452376
+              final cleanPhone = detail.split(' ')[0].replaceAll(RegExp(r'[^0-9+]'), '');
+              final uri = Uri.parse("tel:$cleanPhone");
+              if (await canLaunchUrl(uri)) {
+                await launchUrl(uri);
+              } else {
+                Clipboard.setData(ClipboardData(text: detail));
+                if (mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Phone number copied: $detail")),
+                  );
+                }
+              }
+            } else {
+              Clipboard.setData(ClipboardData(text: detail));
+              if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("$title copied to clipboard.")),
+                );
+              }
+            }
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 12.5,
-                    color: isDark ? GriColors.darkOnSurface : GriColors.onSurface,
+                Container(
+                  width: 36,
+                  height: 36,
+                  decoration: BoxDecoration(
+                    color: GriColors.forestPrimary.withValues(alpha: isDark ? 0.25 : 0.08),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Icon(icon, color: GriColors.forestPrimary, size: 18),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 12.5,
+                          color: isDark ? GriColors.darkOnSurface : GriColors.onSurface,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        detail,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: GriColors.forestPrimary,
+                        ),
+                      ),
+                      const SizedBox(height: 1),
+                      Text(
+                        subtitle,
+                        style: TextStyle(
+                          fontSize: 10.5,
+                          color: isDark ? GriColors.darkOnSurfaceVariant : Colors.grey.shade600,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 2),
-                Text(
-                  detail,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Icon(
+                    isEmail ? Icons.email_outlined : (isPhone ? Icons.phone_forwarded : Icons.copy),
+                    size: 14,
                     color: GriColors.forestPrimary,
-                  ),
-                ),
-                const SizedBox(height: 1),
-                Text(
-                  subtitle,
-                  style: TextStyle(
-                    fontSize: 10.5,
-                    color: isDark ? GriColors.darkOnSurfaceVariant : Colors.grey.shade600,
                   ),
                 ),
               ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
@@ -314,9 +375,10 @@ class _ContactCampusInfoScreenState extends State<ContactCampusInfoScreen> with 
   }
 
   Widget _buildEmergencyCard(bool isDark, String title, String phone, String desc, Color color) {
+    final cleanPhone = phone.replaceAll(RegExp(r'[^0-9+]'), '');
+
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: isDark ? GriColors.darkSurface1 : Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -325,52 +387,96 @@ class _ContactCampusInfoScreenState extends State<ContactCampusInfoScreen> with 
           width: 1.0,
         ),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 36,
-            height: 36,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: isDark ? 0.25 : 0.1),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Icon(Icons.emergency_outlined, color: color, size: 20),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: () async {
+            final uri = Uri.parse("tel:$cleanPhone");
+            if (await canLaunchUrl(uri)) {
+              await launchUrl(uri);
+            } else {
+              Clipboard.setData(ClipboardData(text: cleanPhone));
+              if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Emergency hotline copied: $cleanPhone"),
+                    backgroundColor: color,
+                  ),
+                );
+              }
+            }
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(14),
+            child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 12.5,
-                    color: color,
+                Container(
+                  width: 38,
+                  height: 38,
+                  decoration: BoxDecoration(
+                    color: color.withValues(alpha: isDark ? 0.25 : 0.1),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Icon(Icons.emergency_outlined, color: color, size: 20),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 12.5,
+                          color: color,
+                        ),
+                      ),
+                      const SizedBox(height: 3),
+                      Text(
+                        phone,
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: isDark ? GriColors.darkOnSurface : Colors.black87,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        desc,
+                        style: TextStyle(
+                          fontSize: 10.5,
+                          color: isDark ? GriColors.darkOnSurfaceVariant : Colors.grey.shade600,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 3),
-                Text(
-                  phone,
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
-                    color: isDark ? GriColors.darkOnSurface : Colors.black87,
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: color.withValues(alpha: 0.12),
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(color: color.withValues(alpha: 0.3)),
                   ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  desc,
-                  style: TextStyle(
-                    fontSize: 10.5,
-                    color: isDark ? GriColors.darkOnSurfaceVariant : Colors.grey.shade600,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.call, size: 12, color: color),
+                      const SizedBox(width: 4),
+                      Text(
+                        "Call",
+                        style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: color),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }

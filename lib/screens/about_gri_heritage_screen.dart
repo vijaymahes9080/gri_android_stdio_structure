@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../utils/gri_colors.dart';
 import '../services/official_resource_registry.dart';
+import 'document_vault_screen.dart';
 
 /// Production-Grade Heritage & Institutional Dossier Screen
 /// Covers Vision & Mission, Genesis & Founders, Emblem Symbology, and Leadership Chronicle.
@@ -148,6 +149,67 @@ class _AboutGriHeritageScreenState extends State<AboutGriHeritageScreen> with Si
                       "Dr. G. Ramachandran",
                       "Co-Founder & Gandhian Ideologue",
                       "Close associate of Mahatma Gandhi, veteran freedom fighter, educationist, and Member of Parliament. Pioneer of Nai Talim village universities in India.",
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+              _buildContentCard(
+                context,
+                title: "OFFICIAL CHARTER & ARCHIVES",
+                icon: Icons.history_edu,
+                iconColor: GriColors.forestPrimary,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Explore official historical notifications, institutional charters, and archival records from the Gandhigram Rural Institute repository:",
+                      style: TextStyle(fontSize: 12, height: 1.4),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton.icon(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: GriColors.forestPrimary,
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 8),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            ),
+                            icon: const Icon(Icons.description, size: 14),
+                            label: const Text(
+                              "UGC Deemed MoA",
+                              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+                            ),
+                            onPressed: () {
+                              OfficialResourceRegistry.openDocument(context, "DOC_UGC_DEEMED_2023");
+                            },
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: OutlinedButton.icon(
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: GriColors.forestPrimary,
+                              padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 8),
+                              side: const BorderSide(color: GriColors.forestPrimary, width: 1.2),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            ),
+                            icon: const Icon(Icons.folder_shared, size: 14),
+                            label: const Text(
+                              "Document Vault",
+                              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (_) => const DocumentVaultScreen()),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

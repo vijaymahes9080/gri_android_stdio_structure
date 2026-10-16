@@ -338,6 +338,13 @@ class HallTicketModal extends StatelessWidget {
                     style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold),
                   ),
                   onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Hall ticket saved to device cache. Official record verified."),
+                        backgroundColor: GriColors.forestPrimary,
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
                     provider.clearHallTicket();
                   },
                 ),

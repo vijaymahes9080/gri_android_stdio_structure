@@ -170,10 +170,19 @@ class _FacultyStaffPortalScreenState extends State<FacultyStaffPortalScreen> {
                   "Batch: M.C.A. 2024-26 • Enrolled: 42 Students • Hall 204",
                   style: TextStyle(fontSize: 11, color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant),
                 ),
+                onTap: () => _openRollCallModal(
+                  context,
+                  "MCA-402",
+                  "Mobile Application Engineering & Flutter",
+                  "M.C.A. 2024-26 (Hall 204)",
+                ),
                 trailing: GriPressable(
-                  onTap: () {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Class Roll Register opened.")));
-                  },
+                  onTap: () => _openRollCallModal(
+                    context,
+                    "MCA-402",
+                    "Mobile Application Engineering & Flutter",
+                    "M.C.A. 2024-26 (Hall 204)",
+                  ),
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(
@@ -193,10 +202,19 @@ class _FacultyStaffPortalScreenState extends State<FacultyStaffPortalScreen> {
                   "Batch: M.C.A. 2024-26 • Enrolled: 42 Students • Lab 4",
                   style: TextStyle(fontSize: 11, color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant),
                 ),
+                onTap: () => _openRollCallModal(
+                  context,
+                  "MCA-401",
+                  "Cloud Native Microservices",
+                  "M.C.A. 2024-26 (Lab 4)",
+                ),
                 trailing: GriPressable(
-                  onTap: () {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Class Roll Register opened.")));
-                  },
+                  onTap: () => _openRollCallModal(
+                    context,
+                    "MCA-401",
+                    "Cloud Native Microservices",
+                    "M.C.A. 2024-26 (Lab 4)",
+                  ),
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(
@@ -295,11 +313,25 @@ class _FacultyStaffPortalScreenState extends State<FacultyStaffPortalScreen> {
                   children: [
                     GriPressable(
                       onTap: () {
-                        if (_reasonController.text.trim().isNotEmpty) {
-                          provider.applyStaffLeave(_selectedLeaveType, "Tomorrow", "Next Day", _reasonController.text.trim());
-                          _reasonController.clear();
-                          setState(() => _showApplyLeave = false);
+                        final reason = _reasonController.text.trim();
+                        if (reason.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Please enter a reason for the leave application."),
+                              backgroundColor: Colors.orange,
+                            ),
+                          );
+                          return;
                         }
+                        provider.applyStaffLeave(_selectedLeaveType, "Tomorrow", "Next Day", reason);
+                        _reasonController.clear();
+                        setState(() => _showApplyLeave = false);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Leave request for $_selectedLeaveType submitted to Dean."),
+                            backgroundColor: GriColors.forestPrimary,
+                          ),
+                        );
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
@@ -364,6 +396,197 @@ class _FacultyStaffPortalScreenState extends State<FacultyStaffPortalScreen> {
               ),
             )),
       ],
+    );
+  }
+
+  void _openRollCallModal(
+    BuildContext context,
+    String code,
+    String title,
+    String batch,
+  ) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final students = [
+      {"roll": "2440101", "name": "Ananya R.", "status": "Present"},
+      {"roll": "2440102", "name": "Karthik S.", "status": "Present"},
+      {"roll": "2440103", "name": "Priya M.", "status": "Present"},
+      {"roll": "2440104", "name": "Dinesh K.", "status": "Absent"},
+      {"roll": "2440105", "name": "Meena V.", "status": "Present"},
+      {"roll": "2440106", "name": "Vigneshwaran R.", "status": "Present"},
+      {"roll": "2440107", "name": "Sneha B.", "status": "OD"},
+      {"roll": "2440108", "name": "Mohammed Farhan", "status": "Present"},
+    ];
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (modalCtx, setModalState) {
+            final presentCount = students.where((s) => s["status"] == "Present").length;
+            final absentCount = students.where((s) => s["status"] == "Absent").length;
+            final odCount = students.where((s) => s["status"] == "OD").length;
+
+            return Container(
+              height: MediaQuery.of(context).size.height * 0.75,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              decoration: BoxDecoration(
+                color: isDark ? GriColors.darkSurface1 : Colors.white,
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Container(
+                      width: 40,
+                      height: 4,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.withValues(alpha: 0.4),
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "$code: $title",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 13.5,
+                                color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              "$batch • Attendance Register",
+                              style: TextStyle(
+                                fontSize: 11,
+                                color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.close, size: 20),
+                        onPressed: () => Navigator.pop(ctx),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text("Present: $presentCount", style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold, fontSize: 11.5)),
+                        Text("Absent: $absentCount", style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 11.5)),
+                        Text("On-Duty: $odCount", style: const TextStyle(color: GriColors.ochrePrimary, fontWeight: FontWeight.bold, fontSize: 11.5)),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  const Text("Tap status pill to cycle (Present -> Absent -> OD):", style: TextStyle(fontSize: 10.5, fontStyle: FontStyle.italic)),
+                  const SizedBox(height: 6),
+                  Expanded(
+                    child: ListView.separated(
+                      itemCount: students.length,
+                      separatorBuilder: (_, __) => const Divider(height: 1),
+                      itemBuilder: (c, idx) {
+                        final st = students[idx];
+                        final status = st["status"]!;
+                        Color color = Colors.green;
+                        if (status == "Absent") color = Colors.red;
+                        if (status == "OD") color = GriColors.ochrePrimary;
+
+                        return ListTile(
+                          dense: true,
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 4),
+                          leading: CircleAvatar(
+                            radius: 14,
+                            backgroundColor: GriColors.forestPrimary.withValues(alpha: 0.12),
+                            child: Text(
+                              st["name"]!.substring(0, 1),
+                              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: GriColors.forestPrimary),
+                            ),
+                          ),
+                          title: Text(st["name"]!, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
+                          subtitle: Text("Roll: ${st["roll"]}", style: const TextStyle(fontSize: 10)),
+                          trailing: InkWell(
+                            onTap: () {
+                              setModalState(() {
+                                if (status == "Present") {
+                                  st["status"] = "Absent";
+                                } else if (status == "Absent") {
+                                  st["status"] = "OD";
+                                } else {
+                                  st["status"] = "Present";
+                                }
+                              });
+                            },
+                            borderRadius: BorderRadius.circular(6),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                              decoration: BoxDecoration(
+                                color: color.withValues(alpha: 0.12),
+                                borderRadius: BorderRadius.circular(6),
+                                border: Border.all(color: color, width: 0.8),
+                              ),
+                              child: Text(
+                                status,
+                                style: TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 10.5),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: GriColors.forestPrimary,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 11),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      ),
+                      icon: const Icon(Icons.check_circle_outline, size: 16),
+                      label: const Text(
+                        "Submit & Sync to Samarth ERP",
+                        style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.bold),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(ctx);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Roll call for $code recorded: $presentCount Present, $absentCount Absent."),
+                            backgroundColor: GriColors.forestPrimary,
+                            duration: const Duration(seconds: 3),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../services/seed_data_service.dart';
 import '../utils/gri_colors.dart';
 
@@ -24,6 +26,44 @@ class _GovernanceLeadershipScreenState extends State<GovernanceLeadershipScreen>
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  Future<void> _launchEmail(BuildContext context, String? email) async {
+    if (email == null || email.trim().isEmpty) return;
+    final clean = email.trim();
+    final uri = Uri.parse("mailto:$clean");
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      await Clipboard.setData(ClipboardData(text: clean));
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Email copied to clipboard: $clean"),
+            backgroundColor: GriColors.forestPrimary,
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> _launchPhone(BuildContext context, String? phone) async {
+    if (phone == null || phone.trim().isEmpty) return;
+    final clean = phone.replaceAll(RegExp(r'[^0-9+]'), '');
+    final uri = Uri.parse("tel:$clean");
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      await Clipboard.setData(ClipboardData(text: phone));
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Phone copied to clipboard: $phone"),
+            backgroundColor: GriColors.forestPrimary,
+          ),
+        );
+      }
+    }
   }
 
   String? _getOfficerImage(String? designation) {
@@ -181,35 +221,56 @@ class _GovernanceLeadershipScreenState extends State<GovernanceLeadershipScreen>
                           const SizedBox(height: 8),
                           const Divider(height: 1),
                           const SizedBox(height: 8),
-                          Row(
-                            children: [
-                              Icon(Icons.email_outlined, size: 13, color: isDark ? GriColors.darkOnSurfaceVariant : Colors.grey),
-                              const SizedBox(width: 5),
-                              Expanded(
-                                child: Text(
-                                  o["email"] ?? "",
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    color: isDark ? GriColors.darkOnSurface : Colors.black87,
+                          InkWell(
+                            onTap: () => _launchEmail(context, o["email"]),
+                            borderRadius: BorderRadius.circular(4),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 2),
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.email_outlined, size: 13, color: GriColors.forestPrimary),
+                                  const SizedBox(width: 5),
+                                  Expanded(
+                                    child: Text(
+                                      o["email"] ?? "",
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w600,
+                                        color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
+                                  const Icon(Icons.arrow_forward_ios, size: 9, color: GriColors.forestPrimary),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
-                          const SizedBox(height: 3),
-                          Row(
-                            children: [
-                              Icon(Icons.phone_outlined, size: 13, color: isDark ? GriColors.darkOnSurfaceVariant : Colors.grey),
-                              const SizedBox(width: 5),
-                              Text(
-                                o["phone"] ?? "",
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  color: isDark ? GriColors.darkOnSurface : Colors.black87,
-                                ),
+                          const SizedBox(height: 2),
+                          InkWell(
+                            onTap: () => _launchPhone(context, o["phone"]),
+                            borderRadius: BorderRadius.circular(4),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 2),
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.phone_outlined, size: 13, color: GriColors.forestPrimary),
+                                  const SizedBox(width: 5),
+                                  Expanded(
+                                    child: Text(
+                                      o["phone"] ?? "",
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w600,
+                                        color: isDark ? GriColors.darkOnSurface : Colors.black87,
+                                      ),
+                                    ),
+                                  ),
+                                  const Icon(Icons.phone_forwarded, size: 10, color: GriColors.forestPrimary),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
                         ],
                       ),
@@ -257,12 +318,61 @@ class _GovernanceLeadershipScreenState extends State<GovernanceLeadershipScreen>
                         color: isDark ? GriColors.darkOnSurface : Colors.black87,
                       ),
                     ),
-                    Text(
-                      "Email: ${sch.deanEmail} • Phone: ${sch.deanPhone}",
-                      style: TextStyle(
-                        fontSize: 10.5,
-                        color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
-                      ),
+                    const SizedBox(height: 6),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: InkWell(
+                            onTap: () => _launchEmail(context, sch.deanEmail),
+                            borderRadius: BorderRadius.circular(6),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                              decoration: BoxDecoration(
+                                color: GriColors.forestPrimary.withValues(alpha: isDark ? 0.2 : 0.08),
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(Icons.email_outlined, size: 12, color: GriColors.forestPrimary),
+                                  const SizedBox(width: 4),
+                                  Expanded(
+                                    child: Text(
+                                      sch.deanEmail,
+                                      style: const TextStyle(fontSize: 10.5, fontWeight: FontWeight.bold, color: GriColors.forestPrimary),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 6),
+                        InkWell(
+                          onTap: () => _launchPhone(context, sch.deanPhone),
+                          borderRadius: BorderRadius.circular(6),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                            decoration: BoxDecoration(
+                              color: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
+                              borderRadius: BorderRadius.circular(6),
+                              border: Border.all(color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant, width: 0.8),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Icon(Icons.phone, size: 12, color: GriColors.forestPrimary),
+                                const SizedBox(width: 4),
+                                Text(
+                                  sch.deanPhone,
+                                  style: const TextStyle(fontSize: 10.5, fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 8),
                     Container(

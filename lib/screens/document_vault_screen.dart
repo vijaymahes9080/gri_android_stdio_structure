@@ -347,6 +347,7 @@ class _DocumentVaultScreenState extends State<DocumentVaultScreen> {
                           icon: Icon(isBundled ? Icons.visibility : Icons.download, size: 14),
                           label: Text(isBundled ? "Open" : "Download"),
                         ),
+                        onTap: () => OfficialResourceRegistry.openDocument(context, doc.id),
                       );
                     },
                   ),

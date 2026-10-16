@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../utils/gri_colors.dart';
 import '../utils/gri_motion.dart';
@@ -221,20 +222,22 @@ class DepartmentDetailScreen extends StatelessWidget {
                   color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
                 ),
                 const SizedBox(height: 12),
-                _buildInfoRow(isDark, Icons.person_outline, "Head of Dept", curHod),
+                _buildInfoRow(context, isDark, Icons.person_outline, "Head of Dept", curHod),
                 _buildInfoRow(
+                  context,
                   isDark,
                   Icons.email_outlined,
                   "Email",
                   curEmail,
                 ),
                 _buildInfoRow(
+                  context,
                   isDark,
                   Icons.phone_outlined,
                   "EPABX Extension",
                   curPhone,
                 ),
-                _buildInfoRow(isDark, Icons.public, "Source Portal", sourceUrl),
+                _buildInfoRow(context, isDark, Icons.public, "Source Portal", sourceUrl),
               ],
             ),
           ),
@@ -563,8 +566,53 @@ class DepartmentDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoRow(bool isDark, IconData icon, String label, String value) {
-    return Padding(
+  Widget _buildInfoRow(BuildContext context, bool isDark, IconData icon, String label, String value) {
+    final isEmail = label == "Email" && value.contains("@");
+    final isPhone = label.contains("EPABX") || label.contains("Phone");
+    final isUrl = label.contains("Portal") || value.startsWith("http");
+    final isInteractive = isEmail || isPhone || isUrl;
+
+    VoidCallback? onTap;
+    if (isEmail) {
+      onTap = () async {
+        final uri = Uri.parse("mailto:${value.trim()}");
+        if (await canLaunchUrl(uri)) {
+          await launchUrl(uri);
+        } else {
+          await Clipboard.setData(ClipboardData(text: value.trim()));
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text("Email copied: ${value.trim()}"),
+                backgroundColor: GriColors.forestPrimary,
+              ),
+            );
+          }
+        }
+      };
+    } else if (isPhone) {
+      onTap = () async {
+        final clean = value.replaceAll(RegExp(r'[^0-9+]'), '');
+        final uri = Uri.parse("tel:$clean");
+        if (await canLaunchUrl(uri)) {
+          await launchUrl(uri);
+        } else {
+          await Clipboard.setData(ClipboardData(text: value.trim()));
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text("Phone/Extension copied: ${value.trim()}"),
+                backgroundColor: GriColors.forestPrimary,
+              ),
+            );
+          }
+        }
+      };
+    } else if (isUrl) {
+      onTap = () => OfficialResourceRegistry.smartOpenDocument(context, value, title: "Department Source Portal");
+    }
+
+    Widget content = Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -583,17 +631,44 @@ class DepartmentDetailScreen extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Text(
-              value,
-              style: TextStyle(
-                fontSize: 11.5,
-                color: isDark ? GriColors.darkOnSurface : Colors.grey.shade800,
-              ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    value,
+                    style: TextStyle(
+                      fontSize: 11.5,
+                      fontWeight: isInteractive ? FontWeight.w600 : FontWeight.normal,
+                      color: isInteractive
+                          ? GriColors.forestPrimary
+                          : (isDark ? GriColors.darkOnSurface : Colors.grey.shade800),
+                      decoration: isInteractive ? TextDecoration.underline : TextDecoration.none,
+                    ),
+                  ),
+                ),
+                if (isInteractive) ...[
+                  const SizedBox(width: 4),
+                  Icon(
+                    isEmail ? Icons.email_outlined : (isPhone ? Icons.phone_forwarded : Icons.open_in_new),
+                    size: 12,
+                    color: GriColors.forestPrimary,
+                  ),
+                ],
+              ],
             ),
           ),
         ],
       ),
     );
+
+    if (isInteractive && onTap != null) {
+      return InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(4),
+        child: content,
+      );
+    }
+    return content;
   }
 
   Widget _buildBulletPoint(String text, bool isDark) {
