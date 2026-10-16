@@ -12,6 +12,8 @@ import 'package:gri_app/screens/global_website_search_screen.dart';
 import 'package:gri_app/screens/media_gallery_screen.dart';
 import 'package:gri_app/screens/official_portals_gateway_screen.dart';
 import 'package:gri_app/screens/gri_splash_screen.dart';
+import 'package:gri_app/screens/settings_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -164,5 +166,36 @@ void main() {
     // Settle timer transition to MainScaffold
     await tester.pump(const Duration(milliseconds: 2300));
     await tester.pumpAndSettle();
+  });
+
+  testWidgets('Settings Screen renders appearance, language, and cache sections', (WidgetTester tester) async {
+    tester.view.physicalSize = const Size(1080, 2400);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+
+    SharedPreferences.setMockInitialValues({});
+    await tester.pumpWidget(createTestApp(const SettingsScreen()));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Settings & Preferences'), findsOneWidget);
+    expect(find.text('APPEARANCE & DISPLAY'), findsOneWidget);
+    expect(find.text('LANGUAGE & ACCESSIBILITY'), findsOneWidget);
+    expect(find.text('NOTIFICATION PREFERENCES'), findsOneWidget);
+    expect(find.text('OFFLINE STORAGE & CACHE'), findsOneWidget);
+    expect(find.text('INSTITUTIONAL METADATA'), findsOneWidget);
+
+    // Verify Theme buttons exist
+    expect(find.text('System'), findsOneWidget);
+    expect(find.text('Light'), findsOneWidget);
+    expect(find.text('Dark'), findsOneWidget);
+
+    // Verify Language segment exists
+    expect(find.text('தமிழ்'), findsOneWidget);
+
+    // Verify Clear Cache button exists
+    expect(find.text('Clear Cache'), findsOneWidget);
   });
 }

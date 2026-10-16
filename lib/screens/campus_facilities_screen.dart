@@ -50,7 +50,7 @@ class _CampusFacilitiesScreenState extends State<CampusFacilitiesScreen> {
       "location": "East Residential Enclave",
       "inCharge": "Dr. P. Balasubramaniam (Chief Warden)",
       "timings": "Open 24/7 (Gate curfews: 08:30 PM)",
-      "image": "assets/images/student_avatar.jpg",
+      "image": null,
       "phone": "+914512452371",
       "docTitle": "Official Hostel Manual PDF",
       "docUrl": "https://ruraluniv.ac.in/includes/infrastructure/hostel/HOSTEL_MANUAL.pdf",
@@ -207,7 +207,7 @@ class _CampusFacilitiesScreenState extends State<CampusFacilitiesScreen> {
                 Stack(
                   children: [
                     Image.asset(
-                      'assets/images/library_front.jpg',
+                      'assets/official/images/gri_admin_block.png',
                       height: 160,
                       width: double.infinity,
                       fit: BoxFit.cover,
@@ -402,8 +402,18 @@ class _CampusFacilitiesScreenState extends State<CampusFacilitiesScreen> {
                       height: 125,
                       width: double.infinity,
                       fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                      errorBuilder: (_, __, ___) => OfficialResourceRegistry.buildThemedFacilityHero(
+                        fac["category"] as String,
+                        height: 120,
+                        isDark: isDark,
+                      ),
                     ),
+                  )
+                else
+                  OfficialResourceRegistry.buildThemedFacilityHero(
+                    fac["category"] as String,
+                    height: 120,
+                    isDark: isDark,
                   ),
                 Padding(
                   padding: const EdgeInsets.all(12),

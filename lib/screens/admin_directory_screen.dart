@@ -5,6 +5,7 @@ import '../providers/gri_provider.dart';
 import '../services/seed_data_service.dart';
 import '../utils/gri_colors.dart';
 import '../utils/gri_motion.dart';
+import 'settings_screen.dart';
 
 class AdminDirectoryScreen extends StatefulWidget {
   const AdminDirectoryScreen({super.key});
@@ -41,6 +42,58 @@ class _AdminDirectoryScreenState extends State<AdminDirectoryScreen> {
     return ListView(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       children: [
+        // Settings & Preferences Quick Action Banner
+        InkWell(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const SettingsScreen()),
+            );
+          },
+          borderRadius: BorderRadius.circular(14),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            decoration: BoxDecoration(
+              color: isDark ? GriColors.darkSurface2 : GriColors.forestPrimary.withValues(alpha: 0.08),
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(
+                color: GriColors.forestPrimary.withValues(alpha: isDark ? 0.3 : 0.2),
+                width: 1.0,
+              ),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: GriColors.forestPrimary,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Icon(Icons.settings, color: Colors.white, size: 20),
+                ),
+                const SizedBox(width: 12),
+                const Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Settings & Preferences",
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.5),
+                      ),
+                      SizedBox(height: 2),
+                      Text(
+                        "Theme mode, text size, bilingual toggle, offline cache",
+                        style: TextStyle(fontSize: 11, color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                ),
+                const Icon(Icons.arrow_forward_ios, size: 14, color: GriColors.forestPrimary),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 12),
+
         // Governance & Cloud Sync Bento Card
         Container(
           decoration: BoxDecoration(

@@ -15,6 +15,7 @@ import '../screens/institutional_article_screen.dart';
 import '../screens/document_vault_screen.dart';
 import '../screens/media_gallery_screen.dart';
 import '../screens/official_portals_gateway_screen.dart';
+import '../screens/settings_screen.dart';
 import '../services/official_resource_registry.dart';
 
 /// Pro-Level Institutional University Drawer
@@ -284,6 +285,17 @@ class GriUniversityDrawer extends StatelessWidget {
                   subtitle: const Text("Samarth, Webmail, e-SANAD & Portals", style: TextStyle(fontSize: 10.5)),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
                   onTap: () => _push(context, const OfficialPortalsGatewayScreen()),
+                ),
+
+                // SECTION 6: SYSTEM & PREFERENCES
+                const Divider(height: 16),
+                _buildSectionHeader("SYSTEM & PREFERENCES"),
+                ListTile(
+                  leading: const Icon(Icons.settings_outlined, color: GriColors.forestPrimary, size: 21),
+                  title: const Text("Settings & Preferences", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  subtitle: const Text("Theme, Text scale, Language & Storage", style: TextStyle(fontSize: 10.5)),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
+                  onTap: () => _push(context, const SettingsScreen()),
                 ),
               ],
             ),

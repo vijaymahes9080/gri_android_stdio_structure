@@ -17,7 +17,7 @@ class _SchoolsProgrammesHubScreenState extends State<SchoolsProgrammesHubScreen>
   late TabController _tabController;
   String _programmeFilter = "all";
 
-  final List<Map<String, dynamic>> _programmes = [
+  final List<Map<String, dynamic>> _baseProgrammes = [
     {"name": "B.Sc. (Hons.) Agriculture", "degree": "UG", "school": "Agriculture", "duration": "4 Years (8 Sem)", "intake": 60, "fee": "Rs. 24,500/Sem"},
     {"name": "M.Sc. Data Analytics", "degree": "PG", "school": "Computer Science", "duration": "2 Years (4 Sem)", "intake": 30, "fee": "Rs. 18,200/Sem"},
     {"name": "Master of Computer Applications (MCA)", "degree": "PG", "school": "Computer Science", "duration": "2 Years (4 Sem)", "intake": 60, "fee": "Rs. 19,500/Sem"},
@@ -31,6 +31,33 @@ class _SchoolsProgrammesHubScreenState extends State<SchoolsProgrammesHubScreen>
     {"name": "Ph.D. in Rural Development", "degree": "Doctoral", "school": "Social Sciences", "duration": "3-5 Years", "intake": 15, "fee": "Rs. 15,000/Yr"},
     {"name": "Ph.D. in Computer Science", "degree": "Doctoral", "school": "Computer Science", "duration": "3-5 Years", "intake": 12, "fee": "Rs. 16,000/Yr"},
   ];
+
+  List<Map<String, dynamic>> _getAllProgrammes(SeedDataService seed) {
+    final list = <Map<String, dynamic>>[];
+    if (seed.programmes.isNotEmpty) {
+      for (final p in seed.programmes) {
+        final dept = seed.getDepartmentById(p.departmentId);
+        final schoolName = dept != null && dept.schoolId.isNotEmpty
+            ? dept.schoolId.replaceAll('sch_', '').toUpperCase()
+            : "GRI Academic";
+        list.add({
+          "name": p.name,
+          "degree": p.degree.isNotEmpty ? p.degree : (p.name.startsWith("B.") ? "UG" : (p.name.startsWith("M.") ? "PG" : "General")),
+          "school": schoolName,
+          "duration": p.duration.isNotEmpty ? p.duration : "2-4 Years",
+          "intake": p.intake > 0 ? p.intake : 40,
+          "fee": p.feePerSemester.isNotEmpty ? "Rs. ${p.feePerSemester}/Sem" : "As per UGC Norms",
+        });
+      }
+    }
+    // Also merge base programmes ensuring no duplicate names
+    for (final base in _baseProgrammes) {
+      if (!list.any((item) => item["name"].toString().toLowerCase() == base["name"].toString().toLowerCase())) {
+        list.add(base);
+      }
+    }
+    return list;
+  }
 
   final List<Map<String, String>> _centres = [
     {
@@ -84,9 +111,12 @@ class _SchoolsProgrammesHubScreenState extends State<SchoolsProgrammesHubScreen>
     final seed = SeedDataService.instance;
     final schools = seed.schools;
 
-    final filteredProgs = _programmes.where((p) {
+    final allProgs = _getAllProgrammes(seed);
+    final filteredProgs = allProgs.where((p) {
       if (_programmeFilter == "all") return true;
-      return p["degree"].toString().toLowerCase() == _programmeFilter.toLowerCase();
+      final deg = (p["degree"] ?? "").toString().toLowerCase();
+      final filt = _programmeFilter.toLowerCase();
+      return deg == filt || deg.contains(filt) || filt.contains(deg);
     }).toList();
 
     return Scaffold(

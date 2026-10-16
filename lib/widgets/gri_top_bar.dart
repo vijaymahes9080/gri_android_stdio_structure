@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../providers/gri_provider.dart';
 import '../utils/gri_colors.dart';
 import '../screens/global_website_search_screen.dart';
+import '../screens/settings_screen.dart';
 import '../services/official_resource_registry.dart';
 
 /// Refined Pro-Level Institutional App Bar (58dp)
@@ -157,6 +158,23 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                 padding: const EdgeInsets.all(6),
                 constraints: const BoxConstraints(minWidth: 34, minHeight: 34),
                 onPressed: provider.isSyncing ? null : () => provider.triggerCloudSync(),
+              ),
+
+              // Settings Shortcut
+              IconButton(
+                icon: Icon(
+                  Icons.settings_outlined,
+                  color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+                  size: 20,
+                ),
+                tooltip: "Settings & Preferences",
+                padding: const EdgeInsets.all(6),
+                constraints: const BoxConstraints(minWidth: 34, minHeight: 34),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const SettingsScreen()),
+                  );
+                },
               ),
 
               // Active Role Status Badge Button

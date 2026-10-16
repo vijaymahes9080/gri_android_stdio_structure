@@ -13,6 +13,7 @@ import 'campus_facilities_screen.dart';
 import 'document_vault_screen.dart';
 import 'global_website_search_screen.dart';
 import 'official_portals_gateway_screen.dart';
+import 'settings_screen.dart';
 import '../services/official_resource_registry.dart';
 
 /// Production-Grade Home Dashboard for The Gandhigram Rural Institute
@@ -67,24 +68,32 @@ class HomeDashboardScreen extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Avatar with Institutional Border
-                        Container(
-                          width: 48,
-                          height: 48,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: GriColors.forestPrimary.withValues(alpha: 0.3),
-                              width: 1.5,
+                        // Avatar with Institutional Border (Opens Settings on Tap)
+                        InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(builder: (_) => const SettingsScreen()),
+                            );
+                          },
+                          borderRadius: BorderRadius.circular(24),
+                          child: Container(
+                            width: 48,
+                            height: 48,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: GriColors.forestPrimary.withValues(alpha: 0.3),
+                                width: 1.5,
+                              ),
                             ),
-                          ),
-                          child: ClipOval(
-                            child: Image.asset(
-                              'assets/images/student_avatar.jpg',
-                              fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) => CircleAvatar(
-                                backgroundColor: GriColors.forestContainer,
-                                child: Icon(Icons.person, color: colorScheme.primary, size: 24),
+                            child: ClipOval(
+                              child: Image.asset(
+                                'assets/images/student_avatar.jpg',
+                                fit: BoxFit.cover,
+                                errorBuilder: (_, __, ___) => CircleAvatar(
+                                  backgroundColor: GriColors.forestContainer,
+                                  child: Icon(Icons.person, color: colorScheme.primary, size: 24),
+                                ),
                               ),
                             ),
                           ),

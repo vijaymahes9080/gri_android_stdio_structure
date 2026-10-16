@@ -28,7 +28,7 @@ class _MediaGalleryScreenState extends State<MediaGalleryScreen> with SingleTick
       "duration": "Official Channel",
       "badge": "LIVESTREAM ARCHIVES",
       "desc": "Official convocation ceremonies, Chancellor & Vice-Chancellor addresses, national seminars, and rural cultural festivals.",
-      "image": "assets/images/gri_emblem_3d.jpg",
+      "image": "assets/official/images/gri_admin_block.png",
     },
     {
       "id": "VID_ANTI_RAGGING_FILM",
@@ -36,7 +36,7 @@ class _MediaGalleryScreenState extends State<MediaGalleryScreen> with SingleTick
       "duration": "12:10 • Documentary",
       "badge": "STATUTORY DIRECTIVE",
       "desc": "National directive documentary on creating a safe, inclusive campus with 24x7 grievance escalation hotlines.",
-      "image": "assets/images/student_avatar.jpg",
+      "image": "assets/official/images/gri_portal_banner.png",
     },
   ];
 

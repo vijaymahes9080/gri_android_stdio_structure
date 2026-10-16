@@ -40,12 +40,23 @@ class GriApplication extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<GriProvider>();
+
     return MaterialApp(
       title: 'The Gandhigram Rural Institute',
       debugShowCheckedModeBanner: false,
       theme: GriColors.lightTheme,
       darkTheme: GriColors.darkTheme,
-      themeMode: ThemeMode.system,
+      themeMode: provider.themeMode,
+      builder: (context, child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(
+            textScaler: TextScaler.linear(provider.textScaleFactor),
+            disableAnimations: provider.reduceMotion || MediaQuery.of(context).disableAnimations,
+          ),
+          child: child ?? const SizedBox.shrink(),
+        );
+      },
       home: home ?? const GriSplashScreen(),
     );
   }

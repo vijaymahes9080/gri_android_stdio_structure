@@ -120,6 +120,48 @@ class OfficialResourceRegistry {
       module: "Governance & Leadership",
     ),
 
+    // --- CANONICAL ASSET MAPPINGS (RESOLVED DEDUPLICATION) ---
+    "IMG_OFFICIAL_LOGO": const OfficialResource(
+      id: "IMG_OFFICIAL_LOGO",
+      title: "GRI Official University Logo",
+      category: "Branding",
+      type: ResourceType.IMAGE,
+      sourceUrl: "https://ruraluniv.ac.in/images/gri/gridtbu_logo.png",
+      localPath: "assets/images/gridtbu_logo.png",
+      sizeBytes: 222925,
+      module: "Global App Branding",
+    ),
+    "IMG_LIBRARY_FRONT": const OfficialResource(
+      id: "IMG_LIBRARY_FRONT",
+      title: "Dr. Radhakrishnan Central Library Facade",
+      category: "Campus Architecture",
+      type: ResourceType.IMAGE,
+      sourceUrl: "https://ruraluniv.ac.in/facilities?content=library",
+      localPath: "assets/images/library_front.jpg",
+      sizeBytes: 1193067,
+      module: "Campus Facilities",
+    ),
+    "IMG_HEALTH_CENTRE": const OfficialResource(
+      id: "IMG_HEALTH_CENTRE",
+      title: "GRI Rural Health Centre Clinic",
+      category: "Healthcare Infrastructure",
+      type: ResourceType.IMAGE,
+      sourceUrl: "https://ruraluniv.ac.in/facilities?content=servicess",
+      localPath: "assets/images/health_centre.jpg",
+      sizeBytes: 687645,
+      module: "Campus Facilities",
+    ),
+    "IMG_STUDENT_AVATAR": const OfficialResource(
+      id: "IMG_STUDENT_AVATAR",
+      title: "Student Profile Default Avatar",
+      category: "Identity",
+      type: ResourceType.IMAGE,
+      sourceUrl: "https://ruraluniv.ac.in/",
+      localPath: "assets/images/student_avatar.jpg",
+      sizeBytes: 688494,
+      module: "Student Desk & Identity",
+    ),
+
     // --- OFFICIAL STATUTORY DOCUMENTS & PDFS ---
     "DOC_PROSPECTUS_2026": const OfficialResource(
       id: "DOC_PROSPECTUS_2026",
@@ -383,15 +425,46 @@ class OfficialResourceRegistry {
 
   /// Build a robust, responsive Image widget with local-first fallback
   static Widget buildImage(
-    String id, {
+    String idOrPath, {
     double? width,
     double? height,
     BoxFit fit = BoxFit.contain,
     Widget? placeholder,
     Color? fallbackColor,
   }) {
-    final resource = _registry[id];
     final color = fallbackColor ?? GriColors.forestPrimary;
+
+    // Direct local asset path
+    if (idOrPath.startsWith('assets/')) {
+      return Image.asset(
+        idOrPath,
+        width: width,
+        height: height,
+        fit: fit,
+        errorBuilder: (_, __, ___) =>
+            placeholder ??
+            Container(
+              width: width,
+              height: height,
+              color: color.withOpacity(0.12),
+              child: Icon(Icons.broken_image, color: color, size: 24),
+            ),
+      );
+    }
+
+    // Direct web URL
+    if (idOrPath.startsWith('http://') || idOrPath.startsWith('https://')) {
+      return _buildNetworkOrFallback(
+        idOrPath,
+        width: width,
+        height: height,
+        fit: fit,
+        color: color,
+        placeholder: placeholder,
+      );
+    }
+
+    final resource = _registry[idOrPath];
 
     if (resource != null && resource.localPath != null) {
       return Image.asset(
@@ -405,6 +478,7 @@ class OfficialResourceRegistry {
           height: height,
           fit: fit,
           color: color,
+          placeholder: placeholder,
         ),
       );
     } else if (resource != null) {
@@ -414,8 +488,11 @@ class OfficialResourceRegistry {
         height: height,
         fit: fit,
         color: color,
+        placeholder: placeholder,
       );
     }
+
+    if (placeholder != null) return placeholder;
 
     return Container(
       width: width,
@@ -431,6 +508,7 @@ class OfficialResourceRegistry {
     double? height,
     BoxFit fit = BoxFit.contain,
     required Color color,
+    Widget? placeholder,
   }) {
     return Image.network(
       url,
@@ -452,11 +530,119 @@ class OfficialResourceRegistry {
           ),
         );
       },
-      errorBuilder: (_, __, ___) => Container(
-        width: width,
-        height: height,
-        color: color.withOpacity(0.12),
-        child: Icon(Icons.broken_image, color: color, size: 24),
+      errorBuilder: (_, __, ___) =>
+          placeholder ??
+          Container(
+            width: width,
+            height: height,
+            color: color.withOpacity(0.12),
+            child: Icon(Icons.broken_image, color: color, size: 24),
+          ),
+    );
+  }
+
+  /// Builds a high-contrast, themed institutional visual hero for campus facilities without photos
+  static Widget buildThemedFacilityHero(
+    String category, {
+    double height = 125,
+    double? width,
+    required bool isDark,
+  }) {
+    IconData icon;
+    Color color;
+    String badge;
+
+    final cat = category.toLowerCase();
+    if (cat.contains('health')) {
+      icon = Icons.local_hospital_outlined;
+      color = Colors.red.shade700;
+      badge = "HEALTHCARE & CLINICAL CARE";
+    } else if (cat.contains('agri')) {
+      icon = Icons.agriculture_outlined;
+      color = Colors.green.shade700;
+      badge = "DEMONSTRATION & EXTENSION";
+    } else if (cat.contains('hostel')) {
+      icon = Icons.home_work_outlined;
+      color = GriColors.ochrePrimary;
+      badge = "RESIDENTIAL ENCLAVE";
+    } else if (cat.contains('sports')) {
+      icon = Icons.fitness_center_outlined;
+      color = Colors.orange.shade800;
+      badge = "PHYSICAL EDUCATION & YOGA";
+    } else if (cat.contains('research')) {
+      icon = Icons.science_outlined;
+      color = Colors.indigo.shade700;
+      badge = "ADVANCED INSTRUMENTATION";
+    } else {
+      icon = Icons.computer_outlined;
+      color = Colors.teal.shade700;
+      badge = "CAMPUS INFRASTRUCTURE";
+    }
+
+    return Container(
+      height: height,
+      width: width ?? double.infinity,
+      decoration: BoxDecoration(
+        color: color.withOpacity(isDark ? 0.22 : 0.08),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(13)),
+        border: Border(
+          bottom: BorderSide(
+            color: color.withOpacity(0.2),
+            width: 1.0,
+          ),
+        ),
+      ),
+      child: Stack(
+        children: [
+          Positioned(
+            right: -15,
+            bottom: -15,
+            child: Icon(
+              icon,
+              size: 90,
+              color: color.withOpacity(0.12),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: color.withOpacity(0.15),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    badge,
+                    style: TextStyle(
+                      fontSize: 9.5,
+                      fontWeight: FontWeight.w800,
+                      color: color,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                ),
+                Row(
+                  children: [
+                    Icon(icon, color: color, size: 24),
+                    const SizedBox(width: 8),
+                    Text(
+                      category.toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: color,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

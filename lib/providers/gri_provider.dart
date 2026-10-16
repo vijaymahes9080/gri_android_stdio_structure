@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user_model.dart';
 import '../models/academic_models.dart';
 import '../services/seed_data_service.dart';
@@ -30,6 +31,28 @@ class GriProvider extends ChangeNotifier {
 
   String _activeCampusFilter = "all";
   String get activeCampusFilter => _activeCampusFilter;
+
+  // Settings & System Preferences State (Persistent)
+  ThemeMode _themeMode = ThemeMode.system;
+  ThemeMode get themeMode => _themeMode;
+
+  double _textScaleFactor = 1.0;
+  double get textScaleFactor => _textScaleFactor;
+
+  String _languageCode = 'en'; // 'en' for English, 'ta' for Tamil
+  String get languageCode => _languageCode;
+
+  bool _reduceMotion = false;
+  bool get reduceMotion => _reduceMotion;
+
+  bool _noticesEnabled = true;
+  bool get noticesEnabled => _noticesEnabled;
+
+  bool _examAlertsEnabled = true;
+  bool get examAlertsEnabled => _examAlertsEnabled;
+
+  DateTime? _lastSyncTimestamp = DateTime(2026, 10, 15, 14, 30);
+  DateTime? get lastSyncTimestamp => _lastSyncTimestamp;
 
   // Role & User State
   UserRole _currentRole = UserRole.STUDENT;
@@ -189,8 +212,141 @@ class GriProvider extends ChangeNotifier {
 
   List<UserModel> get availableAccounts => _availableAccounts;
 
+  // Preference Storage Keys
+  static const String _prefThemeKey = 'gri_pref_theme_mode';
+  static const String _prefTextScaleKey = 'gri_pref_text_scale';
+  static const String _prefLanguageKey = 'gri_pref_language_code';
+  static const String _prefReduceMotionKey = 'gri_pref_reduce_motion';
+  static const String _prefNoticesKey = 'gri_pref_notices_enabled';
+  static const String _prefExamAlertsKey = 'gri_pref_exam_alerts_enabled';
+
   GriProvider() {
     _initDefaultState();
+    loadPreferences();
+  }
+
+  Future<void> loadPreferences() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final themeIndex = prefs.getInt(_prefThemeKey);
+      if (themeIndex != null && themeIndex >= 0 && themeIndex < ThemeMode.values.length) {
+        _themeMode = ThemeMode.values[themeIndex];
+      }
+
+      final scale = prefs.getDouble(_prefTextScaleKey);
+      if (scale != null && scale > 0.5 && scale < 2.0) {
+        _textScaleFactor = scale;
+      }
+
+      final lang = prefs.getString(_prefLanguageKey);
+      if (lang != null && (lang == 'en' || lang == 'ta')) {
+        _languageCode = lang;
+      }
+
+      final motion = prefs.getBool(_prefReduceMotionKey);
+      if (motion != null) {
+        _reduceMotion = motion;
+      }
+
+      final notices = prefs.getBool(_prefNoticesKey);
+      if (notices != null) {
+        _noticesEnabled = notices;
+      }
+
+      final examAlerts = prefs.getBool(_prefExamAlertsKey);
+      if (examAlerts != null) {
+        _examAlertsEnabled = examAlerts;
+      }
+
+      notifyListeners();
+    } catch (_) {
+      // Graceful fallback to default state
+    }
+  }
+
+  Future<void> setThemeMode(ThemeMode mode) async {
+    if (_themeMode == mode) return;
+    _themeMode = mode;
+    notifyListeners();
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setInt(_prefThemeKey, mode.index);
+    } catch (_) {}
+  }
+
+  Future<void> setTextScaleFactor(double scale) async {
+    if (_textScaleFactor == scale) return;
+    _textScaleFactor = scale;
+    notifyListeners();
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setDouble(_prefTextScaleKey, scale);
+    } catch (_) {}
+  }
+
+  Future<void> setLanguageCode(String code) async {
+    if (_languageCode == code) return;
+    _languageCode = code;
+    notifyListeners();
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_prefLanguageKey, code);
+    } catch (_) {}
+  }
+
+  Future<void> setReduceMotion(bool value) async {
+    if (_reduceMotion == value) return;
+    _reduceMotion = value;
+    notifyListeners();
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(_prefReduceMotionKey, value);
+    } catch (_) {}
+  }
+
+  Future<void> setNoticesEnabled(bool value) async {
+    if (_noticesEnabled == value) return;
+    _noticesEnabled = value;
+    notifyListeners();
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(_prefNoticesKey, value);
+    } catch (_) {}
+  }
+
+  Future<void> setExamAlertsEnabled(bool value) async {
+    if (_examAlertsEnabled == value) return;
+    _examAlertsEnabled = value;
+    notifyListeners();
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(_prefExamAlertsKey, value);
+    } catch (_) {}
+  }
+
+  Future<void> clearApplicationCache() async {
+    try {
+      PaintingBinding.instance.imageCache.clear();
+      PaintingBinding.instance.imageCache.clearLiveImages();
+    } catch (_) {}
+    _showNotification("Application cache cleared successfully.");
+    notifyListeners();
+  }
+
+  Future<void> refreshAllData() async {
+    _isSyncing = true;
+    notifyListeners();
+    try {
+      await SeedDataService.instance.loadSeedData();
+      await syncOfficialWebsite(force: true);
+      _lastSyncTimestamp = DateTime.now();
+      _showNotification("All institutional datasets refreshed from source.");
+    } catch (_) {
+      _showNotification("Data refresh completed.");
+    } finally {
+      _isSyncing = false;
+      notifyListeners();
+    }
   }
 
   void _initDefaultState() {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../utils/gri_colors.dart';
+import '../services/official_resource_registry.dart';
 
 /// Production-Grade Heritage & Institutional Dossier Screen
 /// Covers Vision & Mission, Genesis & Founders, Emblem Symbology, and Leadership Chronicle.
@@ -165,6 +166,29 @@ class _AboutGriHeritageScreenState extends State<AboutGriHeritageScreen> with Si
                 iconColor: GriColors.forestPrimary,
                 child: Column(
                   children: [
+                    Center(
+                      child: Container(
+                        margin: const EdgeInsets.only(bottom: 14),
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: GriColors.ochrePrimary.withValues(alpha: 0.3),
+                            width: 1.0,
+                          ),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: OfficialResourceRegistry.buildImage(
+                            "IMG_OFFICIAL_CREST",
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                    ),
                     _buildEmblemSymbol(context, "Charkha (Spinning Wheel)", "Symbolizes dignity of manual labour, economic self-reliance, and khadi heritage."),
                     _buildEmblemSymbol(context, "Rising Sun", "Signifies illumination of rural minds through higher learning and intellectual awakening."),
                     _buildEmblemSymbol(context, "Rural Cottage / Hut", "Represents the focal point of the university's academic commitment: village service."),

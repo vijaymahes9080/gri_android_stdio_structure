@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:gri_app/providers/gri_provider.dart';
 import 'package:gri_app/services/official_resource_registry.dart';
 import 'package:gri_app/services/seed_data_service.dart';
 import 'package:gri_app/services/official_web_sync_service.dart';
@@ -179,6 +182,89 @@ void main() {
       final vault = OfficialResourceRegistry.getFullDocumentVault();
       expect(vault.length, greaterThanOrEqualTo(12));
       expect(vault.every((d) => d.type == ResourceType.DOCUMENT_PDF), isTrue);
+    });
+
+    test('OfficialResourceRegistry contains canonical and deduplicated branding images', () {
+      final registry = OfficialResourceRegistry.registry;
+      expect(registry.containsKey('IMG_OFFICIAL_LOGO'), isTrue);
+      expect(registry.containsKey('IMG_LIBRARY_FRONT'), isTrue);
+      expect(registry.containsKey('IMG_HEALTH_CENTRE'), isTrue);
+      expect(registry.containsKey('IMG_STUDENT_AVATAR'), isTrue);
+      expect(registry.containsKey('IMG_OFFICIAL_CREST'), isTrue);
+      expect(registry.containsKey('IMG_PORTAL_BANNER'), isTrue);
+      expect(registry.containsKey('IMG_ADMIN_BLOCK'), isTrue);
+    });
+
+    test('OfficialResourceRegistry.buildThemedFacilityHero renders non-null widget for all categories', () {
+      final categories = ['Academic', 'Health', 'Hostel', 'Agriculture', 'Sports', 'Research', 'Computing'];
+      for (final cat in categories) {
+        final heroLight = OfficialResourceRegistry.buildThemedFacilityHero(cat, isDark: false);
+        final heroDark = OfficialResourceRegistry.buildThemedFacilityHero(cat, isDark: true);
+        expect(heroLight, isNotNull);
+        expect(heroDark, isNotNull);
+      }
+    });
+  });
+
+  group('GriProvider Settings & Persistence Tests', () {
+    setUp(() {
+      SharedPreferences.setMockInitialValues({});
+    });
+
+    test('ThemeMode can be switched between system, light, and dark', () async {
+      final provider = GriProvider();
+      expect(provider.themeMode, ThemeMode.system);
+
+      await provider.setThemeMode(ThemeMode.dark);
+      expect(provider.themeMode, ThemeMode.dark);
+
+      await provider.setThemeMode(ThemeMode.light);
+      expect(provider.themeMode, ThemeMode.light);
+
+      await provider.setThemeMode(ThemeMode.system);
+      expect(provider.themeMode, ThemeMode.system);
+    });
+
+    test('Text scale factor can be adjusted', () async {
+      final provider = GriProvider();
+      expect(provider.textScaleFactor, 1.0);
+
+      await provider.setTextScaleFactor(1.15);
+      expect(provider.textScaleFactor, 1.15);
+
+      await provider.setTextScaleFactor(0.9);
+      expect(provider.textScaleFactor, 0.9);
+    });
+
+    test('Language preference can be toggled between English and Tamil', () async {
+      final provider = GriProvider();
+      expect(provider.languageCode, 'en');
+
+      await provider.setLanguageCode('ta');
+      expect(provider.languageCode, 'ta');
+
+      await provider.setLanguageCode('en');
+      expect(provider.languageCode, 'en');
+    });
+
+    test('Reduce motion and notification toggles update correctly', () async {
+      final provider = GriProvider();
+      expect(provider.reduceMotion, isFalse);
+
+      await provider.setReduceMotion(true);
+      expect(provider.reduceMotion, isTrue);
+
+      await provider.setNoticesEnabled(false);
+      expect(provider.noticesEnabled, isFalse);
+
+      await provider.setExamAlertsEnabled(false);
+      expect(provider.examAlertsEnabled, isFalse);
+    });
+
+    test('Cache clearing flushes image caches without throwing', () async {
+      final provider = GriProvider();
+      await provider.clearApplicationCache();
+      expect(provider.notificationMessage, contains('cleared'));
     });
   });
 }
