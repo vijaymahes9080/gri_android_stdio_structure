@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../services/official_resource_registry.dart';
 import '../services/seed_data_service.dart';
 import '../utils/gri_colors.dart';
 import '../utils/gri_motion.dart';
+import 'admissions_prospectus_screen.dart';
 import 'department_detail_screen.dart';
 
 /// Production-Grade Schools & Academic Programmes Screen
@@ -303,7 +307,6 @@ class _SchoolsProgrammesHubScreenState extends State<SchoolsProgrammesHubScreen>
                     final p = filteredProgs[index];
                     return Container(
                       margin: const EdgeInsets.only(bottom: 10),
-                      padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         color: isDark ? GriColors.darkSurface1 : Colors.white,
                         borderRadius: BorderRadius.circular(12),
@@ -312,70 +315,87 @@ class _SchoolsProgrammesHubScreenState extends State<SchoolsProgrammesHubScreen>
                           width: 1.0,
                         ),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  p["name"] as String,
+                      child: Material(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(12),
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(12),
+                          onTap: () => _showProgrammeModal(context, p, isDark),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        p["name"] as String,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 13,
+                                          color: isDark ? GriColors.darkOnSurface : GriColors.onSurface,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                      decoration: BoxDecoration(
+                                        color: GriColors.forestPrimary.withValues(alpha: isDark ? 0.25 : 0.08),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        p["degree"] as String,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 10,
+                                          color: GriColors.forestPrimary,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  "School: ${p['school']} • Duration: ${p['duration']}",
                                   style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 13,
-                                    color: isDark ? GriColors.darkOnSurface : GriColors.onSurface,
+                                    fontSize: 11,
+                                    color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
                                   ),
                                 ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                decoration: BoxDecoration(
-                                  color: GriColors.forestPrimary.withValues(alpha: isDark ? 0.25 : 0.08),
-                                  borderRadius: BorderRadius.circular(4),
+                                const SizedBox(height: 6),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Intake: ${p['intake']} Seats",
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w600,
+                                        color: isDark ? GriColors.darkOnSurface : Colors.black87,
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Fee: ${p['fee']}",
+                                          style: const TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.bold,
+                                            color: GriColors.ochrePrimary,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 4),
+                                        const Icon(Icons.arrow_forward_ios, size: 10, color: GriColors.ochrePrimary),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                                child: Text(
-                                  p["degree"] as String,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 10,
-                                    color: GriColors.forestPrimary,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            "School: ${p['school']} • Duration: ${p['duration']}",
-                            style: TextStyle(
-                              fontSize: 11,
-                              color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                              ],
                             ),
                           ),
-                          const SizedBox(height: 6),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Intake: ${p['intake']} Seats",
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w600,
-                                  color: isDark ? GriColors.darkOnSurface : Colors.black87,
-                                ),
-                              ),
-                              Text(
-                                "Fee: ${p['fee']}",
-                                style: const TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.bold,
-                                  color: GriColors.ochrePrimary,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                        ),
                       ),
                     );
                   },
@@ -435,14 +455,51 @@ class _SchoolsProgrammesHubScreenState extends State<SchoolsProgrammesHubScreen>
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        Icon(Icons.email_outlined, size: 13, color: isDark ? GriColors.darkOnSurfaceVariant : Colors.grey),
+                        const Icon(Icons.email_outlined, size: 14, color: GriColors.forestPrimary),
                         const SizedBox(width: 6),
-                        Text(
-                          c["contact"] ?? "",
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: isDark ? GriColors.darkOnSurface : Colors.black87,
+                        Expanded(
+                          child: InkWell(
+                            onTap: () async {
+                              final email = c["contact"] ?? "";
+                              if (email.isNotEmpty) {
+                                final uri = Uri.parse("mailto:$email");
+                                if (await canLaunchUrl(uri)) {
+                                  await launchUrl(uri);
+                                } else {
+                                  await Clipboard.setData(ClipboardData(text: email));
+                                  if (context.mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text("Email copied: $email")),
+                                    );
+                                  }
+                                }
+                              }
+                            },
+                            child: Text(
+                              c["contact"] ?? "",
+                              style: const TextStyle(
+                                fontSize: 11.5,
+                                color: GriColors.forestPrimary,
+                                fontWeight: FontWeight.w600,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
                           ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.copy, size: 14, color: GriColors.forestPrimary),
+                          tooltip: "Copy Email",
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(minWidth: 28, minHeight: 28),
+                          onPressed: () async {
+                            final email = c["contact"] ?? "";
+                            await Clipboard.setData(ClipboardData(text: email));
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Email copied: $email")),
+                              );
+                            }
+                          },
                         ),
                       ],
                     ),
@@ -520,7 +577,6 @@ class _SchoolsProgrammesHubScreenState extends State<SchoolsProgrammesHubScreen>
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
-      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: isDark ? GriColors.darkSurface1 : Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -529,24 +585,270 @@ class _SchoolsProgrammesHubScreenState extends State<SchoolsProgrammesHubScreen>
           width: 1.0,
         ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 13,
-              color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(12),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: () => _showCbcsModal(context, title, desc, isDark),
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        title,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 13,
+                          color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+                        ),
+                      ),
+                    ),
+                    const Icon(Icons.info_outline, size: 14, color: GriColors.forestPrimary),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  desc,
+                  style: TextStyle(
+                    fontSize: 11.5,
+                    height: 1.35,
+                    color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                  ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 4),
-          Text(
-            desc,
-            style: TextStyle(
-              fontSize: 11.5,
-              height: 1.35,
-              color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+        ),
+      ),
+    );
+  }
+
+  void _showProgrammeModal(BuildContext context, Map<String, dynamic> p, bool isDark) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) {
+        return Container(
+          decoration: BoxDecoration(
+            color: isDark ? GriColors.darkSurface1 : Colors.white,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withValues(alpha: 0.4),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Text(
+                      p["name"] as String,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: GriColors.forestPrimary.withValues(alpha: isDark ? 0.25 : 0.1),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Text(
+                      p["degree"] as String,
+                      style: const TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                        color: GriColors.forestPrimary,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 14),
+              _buildModalDetailRow("Statutory School", p["school"]?.toString() ?? "GRI Academic School", isDark),
+              _buildModalDetailRow("Duration / Semesters", p["duration"]?.toString() ?? "2-4 Semesters", isDark),
+              _buildModalDetailRow("Approved Intake", "${p['intake']} Seats (with reservation norms)", isDark),
+              _buildModalDetailRow("Semester Tuition Fee", p["fee"]?.toString() ?? "As per UGC Regulations", isDark),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: () {
+                        Navigator.pop(ctx);
+                        OfficialResourceRegistry.smartOpenDocument(
+                          context,
+                          "cbcs_curriculum",
+                          title: "${p['name']} Syllabus",
+                        );
+                      },
+                      icon: const Icon(Icons.menu_book, size: 16),
+                      label: const Text("View Syllabus"),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: GriColors.forestPrimary,
+                        side: const BorderSide(color: GriColors.forestPrimary),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: FilledButton.icon(
+                      onPressed: () {
+                        Navigator.pop(ctx);
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => const AdmissionsProspectusScreen()),
+                        );
+                      },
+                      icon: const Icon(Icons.school, size: 16),
+                      label: const Text("Admissions"),
+                      style: FilledButton.styleFrom(
+                        backgroundColor: GriColors.forestPrimary,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showCbcsModal(BuildContext context, String title, String desc, bool isDark) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) {
+        return Container(
+          decoration: BoxDecoration(
+            color: isDark ? GriColors.darkSurface1 : Colors.white,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withValues(alpha: 0.4),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  const Icon(Icons.verified_outlined, color: GriColors.forestPrimary, size: 22),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Text(
+                desc,
+                style: TextStyle(
+                  fontSize: 13,
+                  height: 1.4,
+                  color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                ),
+              ),
+              const SizedBox(height: 14),
+              _buildModalDetailRow("Academic Framework", "UGC Choice Based Credit System (CBCS)", isDark),
+              _buildModalDetailRow("Minimum Attendance", "75% Mandatory for End Semester Exams", isDark),
+              _buildModalDetailRow("Internal Weightage", "40% CIA + 60% End-Semester Examination", isDark),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton.icon(
+                  onPressed: () {
+                    Navigator.pop(ctx);
+                    OfficialResourceRegistry.smartOpenDocument(
+                      context,
+                      "cbcs_curriculum",
+                      title: "UGC CBCS Regulations",
+                    );
+                  },
+                  icon: const Icon(Icons.picture_as_pdf, size: 16),
+                  label: const Text("Open UGC CBCS Regulations Document"),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: GriColors.forestPrimary,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildModalDetailRow(String label, String value, bool isDark) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 140,
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 11.5,
+                fontWeight: FontWeight.w600,
+                color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              value,
+              style: TextStyle(
+                fontSize: 11.5,
+                fontWeight: FontWeight.w700,
+                color: isDark ? GriColors.darkOnSurface : Colors.black87,
+              ),
             ),
           ),
         ],

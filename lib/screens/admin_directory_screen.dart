@@ -6,6 +6,7 @@ import '../services/seed_data_service.dart';
 import '../utils/gri_colors.dart';
 import '../utils/gri_motion.dart';
 import 'settings_screen.dart';
+import 'department_detail_screen.dart';
 
 class AdminDirectoryScreen extends StatefulWidget {
   const AdminDirectoryScreen({super.key});
@@ -434,11 +435,20 @@ class _AdminDirectoryScreenState extends State<AdminDirectoryScreen> {
                   ),
                 ),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
-                onTap: () async {
-                  if (s.deanEmail.isNotEmpty) {
-                    final uri = Uri.parse("mailto:${s.deanEmail}");
-                    if (await canLaunchUrl(uri)) await launchUrl(uri);
-                  }
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => DepartmentDetailScreen(
+                        departmentId: s.id,
+                        departmentName: s.name,
+                        schoolName: s.name,
+                        hodName: s.dean,
+                        email: s.deanEmail,
+                        phone: s.deanPhone,
+                        sourceUrl: "https://ruraluniv.ac.in/academics?content=faculties",
+                      ),
+                    ),
+                  );
                 },
               ),
             )),

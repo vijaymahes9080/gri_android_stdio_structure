@@ -183,7 +183,10 @@ class SettingsScreen extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: OutlinedButton.icon(
-                    onPressed: () => provider.toggleRoleSwitcher(true),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      provider.toggleRoleSwitcher(true);
+                    },
                     icon: const Icon(Icons.swap_horiz, size: 16),
                     label: const Text("Switch Institutional Role"),
                     style: OutlinedButton.styleFrom(
