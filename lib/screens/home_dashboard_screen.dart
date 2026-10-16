@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/gri_provider.dart';
+import '../models/user_model.dart';
 import '../models/academic_models.dart';
 import '../utils/gri_colors.dart';
 import '../utils/gri_motion.dart';
@@ -182,19 +183,8 @@ class HomeDashboardScreen extends StatelessWidget {
                     const Divider(height: 1),
                     const SizedBox(height: 12),
 
-                    // Academic Metrics Bar
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        _buildMetric(context, "Semester", user?.semester ?? "Sem IV"),
-                        _buildMetricDivider(context),
-                        _buildMetric(context, "CGPA", user?.cgpa ?? "8.92"),
-                        _buildMetricDivider(context),
-                        _buildMetric(context, "Attendance", "87%", isHighlight: true),
-                        _buildMetricDivider(context),
-                        _buildMetric(context, "Hostel", user?.isHostelite == true ? "Kasturba" : "Day Scholar"),
-                      ],
-                    ),
+                    // Institutional Metrics Bar (Role-Aware & Responsive)
+                    _buildRoleMetricsBar(context, provider, user),
                   ],
                 ),
               ),
@@ -719,14 +709,75 @@ class HomeDashboardScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildRoleMetricsBar(BuildContext context, GriProvider provider, UserModel? user) {
+    final role = provider.currentRole;
+    final List<({String label, String value, bool isHighlight})> metrics;
+
+    if (role == UserRole.STUDENT) {
+      metrics = [
+        (label: "Semester", value: user?.semester ?? "Sem IV", isHighlight: false),
+        (label: "CGPA", value: user?.cgpa ?? "8.92", isHighlight: false),
+        (label: "Attendance", value: "87%", isHighlight: true),
+        (label: "Hostel", value: user?.isHostelite == true ? "Kasturba" : "Day Scholar", isHighlight: false),
+      ];
+    } else if (role == UserRole.FACULTY) {
+      metrics = [
+        (label: "Designation", value: user?.semester ?? "Faculty", isHighlight: false),
+        (label: "Degree", value: user?.cgpa ?? "Ph.D.", isHighlight: false),
+        (label: "Status", value: "Active Duty", isHighlight: true),
+        (label: "Workstation", value: "Staff Wing", isHighlight: false),
+      ];
+    } else if (role == UserRole.ADMIN || role == UserRole.SUPER_ADMIN) {
+      metrics = [
+        (label: "Directorate", value: user?.semester ?? "Administration", isHighlight: false),
+        (label: "Designation", value: user?.cgpa ?? "Registrar i/c", isHighlight: false),
+        (label: "Clearance", value: "Level 4", isHighlight: true),
+        (label: "Office", value: "Central Block", isHighlight: false),
+      ];
+    } else {
+      metrics = [
+        (label: "Role", value: role.name, isHighlight: false),
+        (label: "Status", value: user?.accountStatus ?? "Active", isHighlight: false),
+        (label: "Portal", value: "Verified", isHighlight: true),
+        (label: "Unit", value: "GRI Main", isHighlight: false),
+      ];
+    }
+
+    final children = <Widget>[];
+    for (int i = 0; i < metrics.length; i++) {
+      if (i > 0) {
+        children.add(_buildMetricDivider(context));
+      }
+      children.add(
+        Expanded(
+          child: _buildMetric(
+            context,
+            metrics[i].label,
+            metrics[i].value,
+            isHighlight: metrics[i].isHighlight,
+          ),
+        ),
+      );
+    }
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: children,
+    );
+  }
+
   Widget _buildMetric(BuildContext context, String label, String value, {bool isHighlight = false}) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Text(
           value,
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(
-            fontSize: 13,
+            fontSize: 12.5,
             fontWeight: FontWeight.w800,
             color: isHighlight
                 ? GriColors.forestPrimary
@@ -736,6 +787,9 @@ class HomeDashboardScreen extends StatelessWidget {
         const SizedBox(height: 2),
         Text(
           label,
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(
             fontSize: 10,
             color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
