@@ -164,6 +164,60 @@ class GriProvider extends ChangeNotifier {
   List<RollCallRecord> get rollCallRecords =>
       List.unmodifiable(_rollCallRecords);
 
+  /// Roster for a course code, or an empty list when none exists yet.
+  List<StudentRollEntry> rollCallRosterFor(String courseCode) =>
+      List.unmodifiable(_rollCallRosters[courseCode] ?? const []);
+
+  /// Cycles a student's roll status (Present -> Absent -> OD -> Present).
+  void setRollStatus(String courseCode, String roll) {
+    final roster = _rollCallRosters[courseCode];
+    if (roster == null) return;
+    final index = roster.indexWhere((e) => e.roll == roll);
+    if (index == -1) return;
+    final current = roster[index].status;
+    final next = current == "Present"
+        ? "Absent"
+        : (current == "Absent" ? "OD" : "Present");
+    _rollCallRosters[courseCode] = List.of(roster)
+      ..[index] = roster[index].copyWith(status: next);
+    LocalDataStoreService.instance.saveRollCallRosters(_rollCallRosters);
+    notifyListeners();
+  }
+
+  /// Submits the attendance register for a course session. Records an
+  /// immutable register entry (persisted + queued for the cloud ledger) and
+  /// returns the created record; refuses empty rosters honestly.
+  RollCallRecord? submitRollCall(String courseCode, String batch) {
+    final roster = _rollCallRosters[courseCode];
+    if (roster == null || roster.isEmpty) {
+      _showNotification(
+          "No roll register found for $courseCode — nothing was submitted.");
+      notifyListeners();
+      return null;
+    }
+    int count(String status) => roster.where((e) => e.status == status).length;
+    final record = RollCallRecord(
+      id: "rcl_${DateTime.now().millisecondsSinceEpoch}",
+      courseCode: courseCode,
+      batch: batch,
+      recordedBy: _currentUser?.name ?? "Faculty",
+      presentCount: count("Present"),
+      absentCount: count("Absent"),
+      odCount: count("OD"),
+      recordedAt: DateTime.now().millisecondsSinceEpoch,
+    );
+    _rollCallRecords.insert(0, record);
+    LocalDataStoreService.instance.saveRollCallRecords(_rollCallRecords);
+    LocalDataStoreService.instance.saveRollCallRosters(_rollCallRosters);
+    _queueCloudOp('attendance_registers', record.toMap());
+    _showNotification(
+      "Register for $courseCode recorded: ${record.presentCount} Present, "
+      "${record.absentCount} Absent, ${record.odCount} On-Duty.",
+    );
+    notifyListeners();
+    return record;
+  }
+
   // Simulated preset accounts for testing role workflows
   final List<UserModel> _availableAccounts = [
     UserModel(
@@ -1449,6 +1503,10 @@ class GriProvider extends ChangeNotifier {
           case 'faculty_leaves':
             ok = await SupabaseService.instance
                 .pushLeaveRecord(SupabaseService.cloudLeaveRow(payload));
+            break;
+          case 'attendance_registers':
+            ok = await SupabaseService.instance
+                .pushRollCallRecord(SupabaseService.cloudRollCallRow(payload));
             break;
           case 'student_courses':
             final id = payload['id'];

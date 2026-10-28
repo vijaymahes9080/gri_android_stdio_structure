@@ -68,6 +68,9 @@ Test suites:
 - `test/integrity_and_intelligence_test.dart` — serialization roundtrips, persistent
   vault restart-safety, hall-ticket eligibility, certificate verification honesty,
   GRI-Sahayak grounding, document-center verification UI
+- `test/rollcall_and_authorization_test.dart` — faculty roll-call register
+  (status cycling, submission counts, vault durability, cloud queue), hall-ticket
+  eligibility refusals, RBAC denial for unapproved role activation
 
 ## 4. Build & Deploy (Android)
 
@@ -94,8 +97,8 @@ plugins like `url_launcher` work, but the app is tuned for handheld form factors
 
 Migrations create: `user_profiles`, `audit_logs`, `circulars_notices`,
 `grievances`, `faculty_leaves`, `notifications`, `student_courses`,
-`document_certificates`, `registration_applications` — all with Row Level
-Security policies.
+`document_certificates`, `registration_applications`, `attendance_registers`
+— all with Row Level Security policies.
 
 **RLS hardening (20261028010000):** the original policies granted anonymous
 (anon-key) sessions *write* access to official circulars and attendance
@@ -146,6 +149,10 @@ lib/
   admin review; every admin decision appends to the immutable audit ledger.
 - Hall tickets are generated **only** for approved students/scholars meeting
   the 75% per-course attendance rule; refusals state the exact shortfall.
+- Faculty roll-call registers are recorded per course session (Present/Absent/OD
+  counts), stored append-only in the vault, and queued for the cloud
+  `attendance_registers` table; submissions are never fabricated when the
+  roster is empty.
 - Cloud side: RLS restricts profile updates to owners, review actions to
   admins, and the certificate register to read-only public access.
 - Demo/seed accounts exist for QA of each role; production deployments should
@@ -160,7 +167,9 @@ lib/
   but not yet wired into the login flow; the app boots into the last-selected
   local account. This is the largest remaining gap before multi-user cloud
   rollout. Related: the 20261028010000 RLS hardening makes grievance/leave/
-  attendance cloud tables fail closed without an Auth session (see §5).
+  attendance cloud tables fail closed without an Auth session (see §5), and
+  the `attendance_registers` mirror likewise requires an authenticated
+  approved-staff session.
 - Web notice scraping depends on the university site's HTML structure; if the
   markup changes, the verified seed fallback keeps the app accurate.
 - Certificate register ships a small development sample set; production must

@@ -75,38 +75,58 @@ class RoleSwitcherModal extends StatelessWidget {
               style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: GriColors.forestPrimary),
             ),
             const SizedBox(height: 8),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                UserRole.STUDENT,
-                UserRole.FACULTY,
-                UserRole.ADMIN,
-                UserRole.COE_STAFF,
-                UserRole.SCHOLAR,
-                UserRole.GUEST,
-              ].map((role) {
-                final isCurrent = provider.currentRole == role;
-                return ChoiceChip(
-                  label: Text(role.name),
-                  selected: isCurrent,
-                  selectedColor: GriColors.forestPrimary,
-                  backgroundColor: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
-                  labelStyle: TextStyle(
-                    color: isCurrent ? Colors.white : (isDark ? GriColors.darkOnSurface : Colors.black87),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 11.5,
-                  ),
-                  side: BorderSide(
-                    color: isCurrent ? GriColors.forestPrimary : (isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant),
-                    width: 0.8,
-                  ),
-                  onSelected: (_) {
-                    provider.switchAuthorizedRole(role);
-                    provider.toggleRoleSwitcher(false);
-                  },
+            Builder(
+              builder: (chipCtx) {
+                final approvedRoles = currentUser?.getApprovedRolesList() ??
+                    const <UserRole>[UserRole.STUDENT];
+                return Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    UserRole.STUDENT,
+                    UserRole.FACULTY,
+                    UserRole.ADMIN,
+                    UserRole.COE_STAFF,
+                    UserRole.SCHOLAR,
+                    UserRole.GUEST,
+                  ].map((role) {
+                    final isCurrent = provider.currentRole == role;
+                    final isApproved = approvedRoles.contains(role);
+                    return ChoiceChip(
+                      label: Text(
+                        isApproved ? role.name : "${role.name} 🔒",
+                      ),
+                      selected: isCurrent,
+                      selectedColor: GriColors.forestPrimary,
+                      backgroundColor: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
+                      labelStyle: TextStyle(
+                        color: isCurrent
+                            ? Colors.white
+                            : (isApproved
+                                ? (isDark ? GriColors.darkOnSurface : Colors.black87)
+                                : (isDark ? GriColors.darkOnSurfaceVariant : Colors.grey)),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11.5,
+                      ),
+                      side: BorderSide(
+                        color: isCurrent
+                            ? GriColors.forestPrimary
+                            : (isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant),
+                        width: 0.8,
+                      ),
+                      tooltip: isApproved
+                          ? "Approved on this account's dossier"
+                          : "Not approved for ${currentUser?.name ?? 'this account'} — submit a registration request instead",
+                      onSelected: isApproved
+                          ? (_) {
+                              provider.switchAuthorizedRole(role);
+                              provider.toggleRoleSwitcher(false);
+                            }
+                          : null,
+                    );
+                  }).toList(),
                 );
-              }).toList(),
+              },
             ),
 
             const SizedBox(height: 16),

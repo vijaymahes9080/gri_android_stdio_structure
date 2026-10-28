@@ -188,6 +188,24 @@ class SupabaseService {
     };
   }
 
+  /// Attendance registers table (append-only roll-call ledger): id TEXT PK,
+  /// course_code/batch/recorded_by NOT NULL, integer counts >= 0.
+  static Map<String, dynamic> cloudRollCallRow(Map<String, dynamic> local) {
+    final recordedAt = (local['recorded_at'] as num?)?.toInt();
+    return {
+      'id': local['id']?.toString() ?? 'rcl_${DateTime.now().millisecondsSinceEpoch}',
+      'course_code': local['course_code']?.toString() ?? 'UNKNOWN',
+      'batch': local['batch']?.toString() ?? 'Unspecified batch',
+      'recorded_by': local['recorded_by']?.toString() ?? 'GRI Faculty',
+      'present_count': (local['present_count'] as num?)?.toInt() ?? 0,
+      'absent_count': (local['absent_count'] as num?)?.toInt() ?? 0,
+      'od_count': (local['od_count'] as num?)?.toInt() ?? 0,
+      'recorded_at': recordedAt != null
+          ? DateTime.fromMillisecondsSinceEpoch(recordedAt).toIso8601String()
+          : DateTime.now().toIso8601String(),
+    };
+  }
+
   // ------------------------------------------------------------------
   // Typed institutional operations (mirror of the local vault)
   // ------------------------------------------------------------------
@@ -215,4 +233,8 @@ class SupabaseService {
   /// Pushes a faculty leave request.
   Future<bool> pushLeaveRecord(Map<String, dynamic> row) =>
       insertRecord('faculty_leaves', row);
+
+  /// Pushes a submitted attendance register (append-only roll-call ledger).
+  Future<bool> pushRollCallRecord(Map<String, dynamic> row) =>
+      insertRecord('attendance_registers', row);
 }

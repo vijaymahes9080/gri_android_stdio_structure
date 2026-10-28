@@ -24,8 +24,8 @@ class OfficialWebSyncService {
       return _cachedNotices;
     }
 
+    final client = http.Client();
     try {
-      final client = http.Client();
       final response = await client
           .get(Uri.parse(circularsUrl), headers: {
             'User-Agent': 'GRI-MobileApp/1.0 (Android; Institutional-Sync)',
@@ -43,6 +43,8 @@ class OfficialWebSyncService {
       }
     } catch (_) {
       // Gracefully fall through to verified institutional seed data on any network failure
+    } finally {
+      client.close();
     }
 
     // Fallback: Seed data

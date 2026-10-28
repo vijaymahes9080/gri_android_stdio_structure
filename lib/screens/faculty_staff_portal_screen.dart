@@ -406,16 +406,7 @@ class _FacultyStaffPortalScreenState extends State<FacultyStaffPortalScreen> {
     String batch,
   ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final students = [
-      {"roll": "2440101", "name": "Ananya R.", "status": "Present"},
-      {"roll": "2440102", "name": "Karthik S.", "status": "Present"},
-      {"roll": "2440103", "name": "Priya M.", "status": "Present"},
-      {"roll": "2440104", "name": "Dinesh K.", "status": "Absent"},
-      {"roll": "2440105", "name": "Meena V.", "status": "Present"},
-      {"roll": "2440106", "name": "Vigneshwaran R.", "status": "Present"},
-      {"roll": "2440107", "name": "Sneha B.", "status": "OD"},
-      {"roll": "2440108", "name": "Mohammed Farhan", "status": "Present"},
-    ];
+    final provider = context.read<GriProvider>();
 
     showModalBottomSheet(
       context: context,
@@ -424,9 +415,13 @@ class _FacultyStaffPortalScreenState extends State<FacultyStaffPortalScreen> {
       builder: (ctx) {
         return StatefulBuilder(
           builder: (modalCtx, setModalState) {
-            final presentCount = students.where((s) => s["status"] == "Present").length;
-            final absentCount = students.where((s) => s["status"] == "Absent").length;
-            final odCount = students.where((s) => s["status"] == "OD").length;
+            final students =
+                provider.rollCallRosterFor(code).map((e) => e).toList();
+            final presentCount =
+                students.where((s) => s.status == "Present").length;
+            final absentCount =
+                students.where((s) => s.status == "Absent").length;
+            final odCount = students.where((s) => s.status == "OD").length;
 
             return Container(
               height: MediaQuery.of(context).size.height * 0.75,
@@ -501,58 +496,63 @@ class _FacultyStaffPortalScreenState extends State<FacultyStaffPortalScreen> {
                   const Text("Tap status pill to cycle (Present -> Absent -> OD):", style: TextStyle(fontSize: 10.5, fontStyle: FontStyle.italic)),
                   const SizedBox(height: 6),
                   Expanded(
-                    child: ListView.separated(
-                      itemCount: students.length,
-                      separatorBuilder: (_, __) => const Divider(height: 1),
-                      itemBuilder: (c, idx) {
-                        final st = students[idx];
-                        final status = st["status"]!;
-                        Color color = Colors.green;
-                        if (status == "Absent") color = Colors.red;
-                        if (status == "OD") color = GriColors.ochrePrimary;
-
-                        return ListTile(
-                          dense: true,
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 4),
-                          leading: CircleAvatar(
-                            radius: 14,
-                            backgroundColor: GriColors.forestPrimary.withValues(alpha: 0.12),
+                    child: students.isEmpty
+                        ? Center(
                             child: Text(
-                              st["name"]!.substring(0, 1),
-                              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: GriColors.forestPrimary),
+                              "No roll register found for $code.",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: isDark
+                                    ? GriColors.darkOnSurfaceVariant
+                                    : GriColors.onSurfaceVariant,
+                              ),
                             ),
-                          ),
-                          title: Text(st["name"]!, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
-                          subtitle: Text("Roll: ${st["roll"]}", style: const TextStyle(fontSize: 10)),
-                          trailing: InkWell(
-                            onTap: () {
-                              setModalState(() {
-                                if (status == "Present") {
-                                  st["status"] = "Absent";
-                                } else if (status == "Absent") {
-                                  st["status"] = "OD";
-                                } else {
-                                  st["status"] = "Present";
-                                }
-                              });
+                          )
+                        : ListView.separated(
+                            itemCount: students.length,
+                            separatorBuilder: (_, __) => const Divider(height: 1),
+                            itemBuilder: (c, idx) {
+                              final st = students[idx];
+                              final status = st.status;
+                              Color color = Colors.green;
+                              if (status == "Absent") color = Colors.red;
+                              if (status == "OD") color = GriColors.ochrePrimary;
+
+                              return ListTile(
+                                dense: true,
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 4),
+                                leading: CircleAvatar(
+                                  radius: 14,
+                                  backgroundColor: GriColors.forestPrimary.withValues(alpha: 0.12),
+                                  child: Text(
+                                    st.name.substring(0, 1),
+                                    style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: GriColors.forestPrimary),
+                                  ),
+                                ),
+                                title: Text(st.name, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
+                                subtitle: Text("Roll: ${st.roll}", style: const TextStyle(fontSize: 10)),
+                                trailing: InkWell(
+                                  onTap: () {
+                                    provider.setRollStatus(code, st.roll);
+                                    setModalState(() {});
+                                  },
+                                  borderRadius: BorderRadius.circular(6),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                    decoration: BoxDecoration(
+                                      color: color.withValues(alpha: 0.12),
+                                      borderRadius: BorderRadius.circular(6),
+                                      border: Border.all(color: color, width: 0.8),
+                                    ),
+                                    child: Text(
+                                      status,
+                                      style: TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 10.5),
+                                    ),
+                                  ),
+                                ),
+                              );
                             },
-                            borderRadius: BorderRadius.circular(6),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                              decoration: BoxDecoration(
-                                color: color.withValues(alpha: 0.12),
-                                borderRadius: BorderRadius.circular(6),
-                                border: Border.all(color: color, width: 0.8),
-                              ),
-                              child: Text(
-                                status,
-                                style: TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 10.5),
-                              ),
-                            ),
                           ),
-                        );
-                      },
-                    ),
                   ),
                   const SizedBox(height: 8),
                   SizedBox(
@@ -569,16 +569,22 @@ class _FacultyStaffPortalScreenState extends State<FacultyStaffPortalScreen> {
                         "Submit & Sync to Samarth ERP",
                         style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.bold),
                       ),
-                      onPressed: () {
-                        Navigator.pop(ctx);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text("Roll call for $code recorded: $presentCount Present, $absentCount Absent."),
-                            backgroundColor: GriColors.forestPrimary,
-                            duration: const Duration(seconds: 3),
-                          ),
-                        );
-                      },
+                      onPressed: students.isEmpty
+                          ? null
+                          : () {
+                              final record = provider.submitRollCall(code, batch);
+                              if (record == null) return;
+                              Navigator.pop(ctx);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    "Register for $code recorded (${record.presentCount} Present, ${record.absentCount} Absent, ${record.odCount} OD) and queued for ERP sync.",
+                                  ),
+                                  backgroundColor: GriColors.forestPrimary,
+                                  duration: const Duration(seconds: 3),
+                                ),
+                              );
+                            },
                     ),
                   ),
                 ],
