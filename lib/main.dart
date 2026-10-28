@@ -23,9 +23,13 @@ import 'screens/faculty_staff_portal_screen.dart';
 
 import 'screens/gri_splash_screen.dart';
 import 'services/seed_data_service.dart';
+import 'services/supabase_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Cloud backend activates only when --dart-define credentials are supplied;
+  // otherwise the app runs on its persistent local vault (offline-first).
+  await SupabaseService.instance.initialize();
   await SeedDataService.instance.loadSeedData();
   runApp(
     ChangeNotifierProvider(

@@ -44,6 +44,30 @@ class CourseModel {
       attendedClasses: attendedClasses ?? this.attendedClasses,
     );
   }
+
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'code': code,
+        'title': title,
+        'credits': credits,
+        'instructor': instructor,
+        'schedule': schedule,
+        'attendance_percent': attendancePercent,
+        'total_classes': totalClasses,
+        'attended_classes': attendedClasses,
+      };
+
+  factory CourseModel.fromMap(Map<String, dynamic> map) => CourseModel(
+        id: map['id']?.toString() ?? '',
+        code: map['code']?.toString() ?? '',
+        title: map['title']?.toString() ?? '',
+        credits: (map['credits'] as num?)?.toInt() ?? 0,
+        instructor: map['instructor']?.toString() ?? '',
+        schedule: map['schedule']?.toString() ?? '',
+        attendancePercent: (map['attendance_percent'] as num?)?.toInt() ?? 0,
+        totalClasses: (map['total_classes'] as num?)?.toInt() ?? 0,
+        attendedClasses: (map['attended_classes'] as num?)?.toInt() ?? 0,
+      );
 }
 
 class CircularModel {
@@ -88,6 +112,28 @@ class CircularModel {
       isRead: isRead ?? this.isRead,
     );
   }
+
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'title': title,
+        'category': category,
+        'published_date': publishedDate,
+        'summary': summary,
+        'issued_by': issuedBy,
+        'is_urgent': isUrgent,
+        'is_read': isRead,
+      };
+
+  factory CircularModel.fromMap(Map<String, dynamic> map) => CircularModel(
+        id: map['id']?.toString() ?? '',
+        title: map['title']?.toString() ?? '',
+        category: map['category']?.toString() ?? '',
+        publishedDate: map['published_date']?.toString() ?? '',
+        summary: map['summary']?.toString() ?? '',
+        issuedBy: map['issued_by']?.toString() ?? '',
+        isUrgent: map['is_urgent'] as bool? ?? false,
+        isRead: map['is_read'] as bool? ?? false,
+      );
 }
 
 class GrievanceModel {
@@ -140,6 +186,32 @@ class GrievanceModel {
       remarks: remarks ?? this.remarks,
     );
   }
+
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'ticket_number': ticketNumber,
+        'category': category,
+        'subject': subject,
+        'description': description,
+        'status': status,
+        'student_roll_no': studentRollNo,
+        'created_at': createdAt,
+        'resolved_at': resolvedAt,
+        'remarks': remarks,
+      };
+
+  factory GrievanceModel.fromMap(Map<String, dynamic> map) => GrievanceModel(
+        id: (map['id'] as num?)?.toInt() ?? 0,
+        ticketNumber: map['ticket_number']?.toString() ?? '',
+        category: map['category']?.toString() ?? '',
+        subject: map['subject']?.toString() ?? '',
+        description: map['description']?.toString() ?? '',
+        status: map['status']?.toString() ?? 'SUBMITTED',
+        studentRollNo: map['student_roll_no']?.toString() ?? '',
+        createdAt: (map['created_at'] as num?)?.toInt() ?? 0,
+        resolvedAt: (map['resolved_at'] as num?)?.toInt(),
+        remarks: map['remarks']?.toString() ?? '',
+      );
 }
 
 class TransportRouteModel {
@@ -188,6 +260,26 @@ class StaffLeaveRecord {
     required this.status,
     required this.reason,
   });
+
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'leave_type': leaveType,
+        'days': days,
+        'from_date': fromDate,
+        'to_date': toDate,
+        'status': status,
+        'reason': reason,
+      };
+
+  factory StaffLeaveRecord.fromMap(Map<String, dynamic> map) => StaffLeaveRecord(
+        id: map['id']?.toString() ?? '',
+        leaveType: map['leave_type']?.toString() ?? '',
+        days: (map['days'] as num?)?.toInt() ?? 1,
+        fromDate: map['from_date']?.toString() ?? '',
+        toDate: map['to_date']?.toString() ?? '',
+        status: map['status']?.toString() ?? 'SUBMITTED',
+        reason: map['reason']?.toString() ?? '',
+      );
 }
 
 class PublishingAuditEntry {
@@ -284,6 +376,99 @@ class SahayakMessage {
     this.timestamp = "Just now",
     this.source,
   });
+
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'text': text,
+        'is_user': isUser,
+        'timestamp': timestamp,
+        'source': source,
+      };
+
+  factory SahayakMessage.fromMap(Map<String, dynamic> map) => SahayakMessage(
+        id: map['id']?.toString() ?? '',
+        text: map['text']?.toString() ?? '',
+        isUser: map['is_user'] as bool? ?? false,
+        timestamp: map['timestamp']?.toString() ?? 'Just now',
+        source: map['source']?.toString(),
+      );
+}
+
+class StudentRollEntry {
+  final String roll;
+  final String name;
+  final String status; // Present | Absent | OD
+
+  StudentRollEntry({
+    required this.roll,
+    required this.name,
+    this.status = "Present",
+  });
+
+  StudentRollEntry copyWith({String? status}) {
+    return StudentRollEntry(
+      roll: roll,
+      name: name,
+      status: status ?? this.status,
+    );
+  }
+
+  Map<String, dynamic> toMap() => {
+        'roll': roll,
+        'name': name,
+        'status': status,
+      };
+
+  factory StudentRollEntry.fromMap(Map<String, dynamic> map) =>
+      StudentRollEntry(
+        roll: map['roll']?.toString() ?? '',
+        name: map['name']?.toString() ?? '',
+        status: map['status']?.toString() ?? 'Present',
+      );
+}
+
+class RollCallRecord {
+  final String id;
+  final String courseCode;
+  final String batch;
+  final String recordedBy;
+  final int presentCount;
+  final int absentCount;
+  final int odCount;
+  final int recordedAt; // epoch milliseconds
+
+  RollCallRecord({
+    required this.id,
+    required this.courseCode,
+    required this.batch,
+    required this.recordedBy,
+    required this.presentCount,
+    required this.absentCount,
+    required this.odCount,
+    required this.recordedAt,
+  });
+
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'course_code': courseCode,
+        'batch': batch,
+        'recorded_by': recordedBy,
+        'present_count': presentCount,
+        'absent_count': absentCount,
+        'od_count': odCount,
+        'recorded_at': recordedAt,
+      };
+
+  factory RollCallRecord.fromMap(Map<String, dynamic> map) => RollCallRecord(
+        id: map['id']?.toString() ?? '',
+        courseCode: map['course_code']?.toString() ?? '',
+        batch: map['batch']?.toString() ?? '',
+        recordedBy: map['recorded_by']?.toString() ?? '',
+        presentCount: (map['present_count'] as num?)?.toInt() ?? 0,
+        absentCount: (map['absent_count'] as num?)?.toInt() ?? 0,
+        odCount: (map['od_count'] as num?)?.toInt() ?? 0,
+        recordedAt: (map['recorded_at'] as num?)?.toInt() ?? 0,
+      );
 }
 
 class SchoolModel {

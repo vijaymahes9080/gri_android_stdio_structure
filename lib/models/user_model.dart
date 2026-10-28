@@ -275,6 +275,21 @@ class ApplicationHistoryEntry {
     required this.actor,
     required this.details,
   });
+
+  Map<String, dynamic> toMap() => {
+        'timestamp': timestamp,
+        'action': action,
+        'actor': actor,
+        'details': details,
+      };
+
+  factory ApplicationHistoryEntry.fromMap(Map<String, dynamic> map) =>
+      ApplicationHistoryEntry(
+        timestamp: map['timestamp']?.toString() ?? '',
+        action: map['action']?.toString() ?? '',
+        actor: map['actor']?.toString() ?? '',
+        details: map['details']?.toString() ?? '',
+      );
 }
 
 class RegistrationApplication {
@@ -359,6 +374,65 @@ class RegistrationApplication {
       history: history ?? this.history,
     );
   }
+
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'user_id': userId,
+        'full_name': fullName,
+        'email': email,
+        'mobile': mobile,
+        'institutional_id': institutionalId,
+        'requested_role': requestedRole.name,
+        'department': department,
+        'programme': programme,
+        'year_semester': yearSemester,
+        'designation': designation,
+        'research_topic': researchTopic,
+        'status': status.name,
+        'submitted_date': submittedDate,
+        'admin_query': adminQuery,
+        'applicant_response': applicantResponse,
+        'rejection_reason': rejectionReason,
+        'history': history.map((h) => h.toMap()).toList(),
+      };
+
+  factory RegistrationApplication.fromMap(Map<String, dynamic> map) {
+    UserRole requestedRole;
+    try {
+      requestedRole = UserRole.values.byName(map['requested_role']?.toString() ?? 'STUDENT');
+    } catch (_) {
+      requestedRole = UserRole.STUDENT;
+    }
+    AccountStatus status;
+    try {
+      status = AccountStatus.values.byName(map['status']?.toString() ?? 'PENDING_APPROVAL');
+    } catch (_) {
+      status = AccountStatus.PENDING_APPROVAL;
+    }
+    return RegistrationApplication(
+      id: map['id']?.toString() ?? '',
+      userId: map['user_id']?.toString() ?? '',
+      fullName: map['full_name']?.toString() ?? '',
+      email: map['email']?.toString() ?? '',
+      mobile: map['mobile']?.toString() ?? '',
+      institutionalId: map['institutional_id']?.toString() ?? '',
+      requestedRole: requestedRole,
+      department: map['department']?.toString() ?? '',
+      programme: map['programme']?.toString() ?? '',
+      yearSemester: map['year_semester']?.toString() ?? '',
+      designation: map['designation']?.toString() ?? '',
+      researchTopic: map['research_topic']?.toString() ?? '',
+      status: status,
+      submittedDate: map['submitted_date']?.toString() ?? '',
+      adminQuery: map['admin_query']?.toString() ?? '',
+      applicantResponse: map['applicant_response']?.toString() ?? '',
+      rejectionReason: map['rejection_reason']?.toString() ?? '',
+      history: ((map['history'] as List<dynamic>?) ?? const [])
+          .whereType<Map<String, dynamic>>()
+          .map(ApplicationHistoryEntry.fromMap)
+          .toList(),
+    );
+  }
 }
 
 class InstitutionalAuditLog {
@@ -385,4 +459,31 @@ class InstitutionalAuditLog {
     required this.newState,
     required this.reasonOrNotes,
   });
+
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'timestamp': timestamp,
+        'admin_name': adminName,
+        'admin_role': adminRole,
+        'action': action,
+        'target_user': targetUser,
+        'target_role': targetRole,
+        'previous_state': previousState,
+        'new_state': newState,
+        'reason_or_notes': reasonOrNotes,
+      };
+
+  factory InstitutionalAuditLog.fromMap(Map<String, dynamic> map) =>
+      InstitutionalAuditLog(
+        id: map['id']?.toString() ?? '',
+        timestamp: map['timestamp']?.toString() ?? '',
+        adminName: map['admin_name']?.toString() ?? '',
+        adminRole: map['admin_role']?.toString() ?? '',
+        action: map['action']?.toString() ?? '',
+        targetUser: map['target_user']?.toString() ?? '',
+        targetRole: map['target_role']?.toString() ?? '',
+        previousState: map['previous_state']?.toString() ?? '',
+        newState: map['new_state']?.toString() ?? '',
+        reasonOrNotes: map['reason_or_notes']?.toString() ?? '',
+      );
 }

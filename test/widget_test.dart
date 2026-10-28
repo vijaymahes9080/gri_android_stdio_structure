@@ -134,8 +134,19 @@ void main() {
 
   test('GRI Provider switches authorized role correctly', () {
     final provider = GriProvider();
-    provider.switchAuthorizedRole(UserRole.FACULTY);
+    final accounts = provider.availableAccounts;
 
+    // Default account (student) may only activate roles on its approved
+    // dossier — an unauthorized switch must be denied with a notice.
+    provider.switchAuthorizedRole(UserRole.FACULTY);
+    expect(provider.currentRole, UserRole.STUDENT);
+    expect(provider.notificationMessage, contains('Not authorized'));
+
+    // Switching to an account holding an approved ADMIN/FACULTY dossier and
+    // activating an approved role must succeed.
+    provider.switchUserAccount(accounts[0]);
+    expect(provider.currentRole, UserRole.ADMIN);
+    provider.switchAuthorizedRole(UserRole.FACULTY);
     expect(provider.currentRole, UserRole.FACULTY);
   });
 

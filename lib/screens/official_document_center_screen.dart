@@ -146,7 +146,7 @@ class _OfficialDocumentCenterScreenState extends State<OfficialDocumentCenterScr
                         controller: _verifyController,
                         style: TextStyle(fontSize: 12, color: isDark ? GriColors.darkOnSurface : GriColors.onSurface),
                         decoration: InputDecoration(
-                          hintText: "Certificate No (e.g. GRI-CERT-2026-9042)",
+                          hintText: "Certificate No (e.g. GRI-CERT-2023-015468)",
                           hintStyle: TextStyle(fontSize: 11.5, color: isDark ? GriColors.darkOnSurfaceVariant : Colors.grey),
                           filled: true,
                           fillColor: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
@@ -179,19 +179,45 @@ class _OfficialDocumentCenterScreenState extends State<OfficialDocumentCenterScr
                 ),
                 if (provider.verifiedDocumentStatus != null) ...[
                   const SizedBox(height: 10),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: GriColors.forestPrimary.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: GriColors.forestPrimary.withValues(alpha: 0.3)),
-                    ),
-                    child: Text(
-                      provider.verifiedDocumentStatus!,
-                      style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700, color: GriColors.forestPrimary),
-                    ),
+                  Builder(
+                    builder: (context) {
+                      final authentic =
+                          provider.verifiedDocumentStatus!.startsWith('AUTHENTIC');
+                      final statusColor =
+                          authentic ? GriColors.success : GriColors.error;
+                      final statusBg = authentic
+                          ? GriColors.successContainer
+                          : GriColors.errorContainer;
+                      return Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: statusBg.withValues(alpha: 0.55),
+                          borderRadius: BorderRadius.circular(8),
+                          border:
+                              Border.all(color: statusColor.withValues(alpha: 0.4)),
+                        ),
+                        child: Text(
+                          provider.verifiedDocumentStatus!,
+                          style: TextStyle(
+                            fontSize: 11.5,
+                            fontWeight: FontWeight.w700,
+                            color: authentic ? GriColors.success : GriColors.errorOnContainer,
+                            height: 1.4,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ],
+                const SizedBox(height: 6),
+                Text(
+                  "Development register codes for QA: GRI-CERT-2023-015468 · GRI-MARK-2024-40118 · GRI-DEG-2022-022775 · GRI-TRAN-2026-009821. Cloud deployments verify against the live e-SANAD mirror instead.",
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                    height: 1.35,
+                  ),
+                ),
               ],
             ),
           ),
@@ -211,7 +237,9 @@ class _OfficialDocumentCenterScreenState extends State<OfficialDocumentCenterScr
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: borderColor, width: 0.8),
               ),
-              child: ListTile(
+              child: Material(
+                type: MaterialType.transparency,
+                child: ListTile(
                 contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
                 leading: Container(
                   width: 36,
@@ -245,6 +273,7 @@ class _OfficialDocumentCenterScreenState extends State<OfficialDocumentCenterScr
                   ),
                 ),
                 onTap: () => OfficialResourceRegistry.openDocument(context, doc["title"]!, doc["url"]!),
+                ),
               ),
             )),
       ],

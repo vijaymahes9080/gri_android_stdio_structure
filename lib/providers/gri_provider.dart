@@ -4,7 +4,10 @@ import '../models/user_model.dart';
 import '../models/academic_models.dart';
 import '../services/seed_data_service.dart';
 import '../services/supabase_service.dart';
+import '../services/local_data_store_service.dart';
 import '../services/official_web_sync_service.dart';
+import '../services/document_certification_service.dart';
+import '../services/sahayak_knowledge_engine.dart';
 
 enum NavigationTab {
   HOME,
@@ -51,7 +54,7 @@ class GriProvider extends ChangeNotifier {
   bool _examAlertsEnabled = true;
   bool get examAlertsEnabled => _examAlertsEnabled;
 
-  DateTime? _lastSyncTimestamp = DateTime(2026, 10, 15, 14, 30);
+  DateTime? _lastSyncTimestamp;
   DateTime? get lastSyncTimestamp => _lastSyncTimestamp;
 
   // Role & User State
@@ -72,7 +75,11 @@ class GriProvider extends ChangeNotifier {
   bool get isSyncing => _isSyncing;
   int _pendingSyncCount = 0;
   int get pendingSyncCount => _pendingSyncCount;
-  String _ktorServerStatus = "Live • System Verified";
+
+  /// Honest runtime mode: reflects whether a Supabase backend is actually
+  /// configured ("Cloud Connected • Supabase") or the app runs entirely on
+  /// its persistent local vault ("Offline Vault • Local Store").
+  String _ktorServerStatus = SupabaseService.instance.dataModeLabel;
   String get ktorServerStatus => _ktorServerStatus;
 
   // Notifications & Feedback
@@ -118,6 +125,9 @@ class GriProvider extends ChangeNotifier {
   List<CourseModel> get courses => _courses;
 
   List<CircularModel> _circulars = [];
+
+  /// Read-state overlay persisted across circular-source refreshes.
+  final Set<String> _readCircularIds = {};
   List<CircularModel> get circulars => _circulars;
 
   List<GrievanceModel> _grievances = [];
@@ -140,6 +150,13 @@ class GriProvider extends ChangeNotifier {
 
   List<SahayakMessage> _sahayakMessages = [];
   List<SahayakMessage> get sahayakMessages => _sahayakMessages;
+
+  // Faculty roll-call state (persisted)
+  Map<String, List<StudentRollEntry>> _rollCallRosters = {};
+  List<RollCallRecord> _rollCallRecords = [];
+  Map<String, List<StudentRollEntry>> get rollCallRosters => _rollCallRosters;
+  List<RollCallRecord> get rollCallRecords =>
+      List.unmodifiable(_rollCallRecords);
 
   // Simulated preset accounts for testing role workflows
   final List<UserModel> _availableAccounts = [
@@ -625,9 +642,172 @@ class GriProvider extends ChangeNotifier {
       ),
     ];
 
+    // Seed faculty roll-call rosters (demo batch register per course)
+    _rollCallRosters = _buildDefaultRollCallRosters();
+
     // Preload institutional seed
     SeedDataService.instance.loadSeedData();
     syncOfficialWebsite();
+    _restorePersistedState();
+  }
+
+  Map<String, List<StudentRollEntry>> _buildDefaultRollCallRosters() {
+    List<StudentRollEntry> roster(int offset) => List.generate(
+          8,
+          (i) => StudentRollEntry(
+            roll: "${2440101 + offset + i}",
+            name: const [
+              "Ananya R.",
+              "Karthik S.",
+              "Priya M.",
+              "Dinesh K.",
+              "Meena V.",
+              "Vigneshwaran R.",
+              "Sneha B.",
+              "Mohammed Farhan",
+            ][i],
+            status: i == 3 ? "Absent" : (i == 6 ? "OD" : "Present"),
+          ),
+        );
+    return {
+      "MCA-401": roster(0),
+      "MCA-402": roster(8),
+      "GRI-VAP": roster(16),
+    };
+  }
+
+  /// Restores durable workflow state from the local vault so that user
+  /// actions survive application restarts. Seeded baseline data is used
+  /// only for first launch (vault empty) and is snapshotted immediately.
+  Future<void> _restorePersistedState() async {
+    try {
+      final store = LocalDataStoreService.instance;
+
+      final persistedCourses = await store.loadCourses();
+      final persistedGrievances = await store.loadGrievances();
+      final persistedApplications = await store.loadApplications();
+      final persistedAuditLogs = await store.loadAuditLogs();
+      final persistedLeaves = await store.loadLeaveRecords();
+      final persistedSahayak = await store.loadSahayakMessages();
+      final persistedRosters = await store.loadRollCallRosters();
+      final persistedRollCall = await store.loadRollCallRecords();
+      final persistedReadIds = await store.loadReadCircularIds();
+      final persistedAccountId = await store.loadActiveAccountId();
+      final persistedRole = await store.loadActiveRole();
+
+      // Snapshot the seeded baseline on first launch so the next session
+      // resumes from the same institutional state.
+      final firstLaunch = persistedCourses == null && persistedGrievances == null;
+      if (firstLaunch) {
+        await _persistWorkflowState();
+        return;
+      }
+
+      if (persistedCourses != null && persistedCourses.isNotEmpty) {
+        _courses = persistedCourses;
+      }
+      if (persistedGrievances != null && persistedGrievances.isNotEmpty) {
+        _grievances = persistedGrievances;
+      }
+      if (persistedApplications != null && persistedApplications.isNotEmpty) {
+        _applications = persistedApplications;
+      }
+      if (persistedAuditLogs != null && persistedAuditLogs.isNotEmpty) {
+        _auditLogs = persistedAuditLogs;
+      }
+      if (persistedLeaves != null && persistedLeaves.isNotEmpty) {
+        _leaveRecords = persistedLeaves;
+      }
+      if (persistedSahayak != null && persistedSahayak.isNotEmpty) {
+        _sahayakMessages = persistedSahayak;
+      }
+      if (persistedRosters.isNotEmpty) {
+        _rollCallRosters = persistedRosters;
+      }
+      if (persistedRollCall != null) {
+        _rollCallRecords = persistedRollCall;
+      }
+      if (persistedReadIds.isNotEmpty) {
+        _readCircularIds.addAll(persistedReadIds);
+        for (final c in _circulars) {
+          if (persistedReadIds.contains(c.id)) {
+            _circulars[_circulars.indexOf(c)] = c.copyWith(isRead: true);
+          }
+        }
+      }
+
+      // Pending cloud operations queued while offline.
+      final pendingOps = await store.loadPendingCloudOps();
+      _pendingSyncCount = pendingOps.length;
+
+      // Restore active session (account + role)
+      if (persistedAccountId != null) {
+        final match = _availableAccounts
+            .where((a) => a.id == persistedAccountId)
+            .toList();
+        if (match.isNotEmpty) {
+          _currentUser = match.first;
+          _activeAccountStatus = match.first.getAccountStatusEnum();
+        }
+      }
+      if (persistedRole != null) {
+        try {
+          final restoredRole = UserRole.values.byName(persistedRole);
+          final approved = _currentUser?.getApprovedRolesList() ??
+              const <UserRole>[UserRole.STUDENT];
+          if (approved.contains(restoredRole)) {
+            _currentRole = restoredRole;
+          }
+        } catch (_) {
+          // Ignore malformed persisted role
+        }
+      }
+      notifyListeners();
+    } catch (_) {
+      // Graceful fallback: keep seeded in-memory defaults
+    }
+  }
+
+  /// Persists every durable workflow dataset. Fire-and-forget safe.
+  Future<void> _persistWorkflowState() async {
+    try {
+      final store = LocalDataStoreService.instance;
+      await store.saveCourses(_courses);
+      await store.saveGrievances(_grievances);
+      await store.saveApplications(_applications);
+      await store.saveAuditLogs(_auditLogs);
+      await store.saveLeaveRecords(_leaveRecords);
+      await store.saveSahayakMessages(_sahayakMessages);
+      await store.saveRollCallRosters(_rollCallRosters);
+      await store.saveRollCallRecords(_rollCallRecords);
+      await store
+          .saveReadCircularIds(_circulars.where((c) => c.isRead).map((c) => c.id).toSet());
+      final activeId = _currentUser?.id;
+      if (activeId != null && activeId.isNotEmpty) {
+        await store.saveActiveAccountId(activeId);
+      }
+      await store.saveActiveRole(_currentRole.name);
+    } catch (_) {
+      // Persistence is best-effort; in-memory state remains usable
+    }
+  }
+
+  /// Clears every persisted workflow record and restores seeded defaults.
+  Future<void> resetInstitutionalData() async {
+    try {
+      await LocalDataStoreService.instance.clearAll();
+    } catch (_) {}
+    _courses = [];
+    _grievances = [];
+    _applications = [];
+    _auditLogs = [];
+    _leaveRecords = [];
+    _sahayakMessages = [];
+    _rollCallRecords = [];
+    _rollCallRosters = {};
+    _initDefaultState();
+    _showNotification("All workflow data reset to institutional baseline.");
+    notifyListeners();
   }
 
   bool _isSyncingWebsite = false;
@@ -639,7 +819,12 @@ class GriProvider extends ChangeNotifier {
     try {
       final live = await OfficialWebSyncService.instance.fetchOfficialNotices(forceRefresh: force);
       if (live.isNotEmpty) {
-        _circulars = live;
+        // Keep locally published circulars visible above the live feed and
+        // re-apply the persisted read-state overlay after a source refresh.
+        _circulars = [
+          ..._locallyPublishedCirculars,
+          ...live.map((c) => c.copyWith(isRead: _readCircularIds.contains(c.id))),
+        ];
       }
     } catch (_) {}
     _isSyncingWebsite = false;
@@ -669,6 +854,17 @@ class GriProvider extends ChangeNotifier {
 
   // Role & Account Switching
   void switchAuthorizedRole(UserRole newRole) {
+    // Authorization gate: only roles recorded on the account's approved
+    // institutional dossier may be activated.
+    final approvedRoles = _currentUser?.getApprovedRolesList() ??
+        const <UserRole>[UserRole.STUDENT];
+    if (!approvedRoles.contains(newRole)) {
+      _showNotification(
+        "Not authorized: ${newRole.name} role is not on your approved dossier. Submit a registration request to the Registrar instead.",
+      );
+      notifyListeners();
+      return;
+    }
     _currentRole = newRole;
     if (_currentUser != null) {
       _currentUser = _currentUser!.copyWith(role: newRole.name);
@@ -679,6 +875,7 @@ class GriProvider extends ChangeNotifier {
     } else {
       _currentTab = NavigationTab.HOME;
     }
+    _persistWorkflowState();
     _showNotification("Active role switched to ${newRole.name}");
     notifyListeners();
   }
@@ -700,6 +897,7 @@ class GriProvider extends ChangeNotifier {
       _currentTab = NavigationTab.HOME;
     }
 
+    _persistWorkflowState();
     _showNotification("Switched account to ${account.name} (${account.role})");
     notifyListeners();
   }
@@ -780,13 +978,64 @@ class GriProvider extends ChangeNotifier {
         totalClasses: newTotal,
         attendancePercent: newPercent,
       );
+      LocalDataStoreService.instance.saveCourses(_courses);
+      _queueCloudOp('student_courses', {
+        'id': course.id,
+        'attendance': newPercent,
+        'total': newTotal,
+        'attended': newAttended,
+      });
       _showNotification("Attendance marked for ${course.code} (${newPercent}%)");
       notifyListeners();
     }
   }
 
   // Hall Ticket
+  ///
+  /// Eligibility is enforced server-side of the UI: hall tickets are only
+  /// generated for approved students/scholars holding at least 75% attendance
+  /// in every enrolled course (CBCS regulation). Any refusal states the exact
+  /// reason; a fake success is never shown.
+  static (bool eligible, String reason) evaluateHallTicketEligibility({
+    required List<CourseModel> courses,
+    required String role,
+    required String accountStatus,
+  }) {
+    if (accountStatus != "APPROVED") {
+      return (false, "Hall tickets are issued only to accounts in APPROVED status.");
+    }
+    if (role != "STUDENT" && role != "SCHOLAR") {
+      return (false, "Examination hall tickets apply to student and scholar accounts only. Your active role ($role) is not exam-registered.");
+    }
+    final coursesNeedingAttendance = courses.where((c) => c.totalClasses > 0).toList();
+    if (coursesNeedingAttendance.isEmpty) {
+      return (false, "No enrolled courses with recorded attendance were found. Contact the Controller of Examinations if this looks wrong.");
+    }
+    final shortfall = coursesNeedingAttendance.where((c) => c.attendancePercent < 75).toList();
+    if (shortfall.isNotEmpty) {
+      final detail = shortfall
+          .map((c) => "${c.code}: ${c.attendancePercent}%")
+          .join(", ");
+      return (false, "Hall ticket withheld — minimum 75% attendance required in every course. Shortfall in: $detail.");
+    }
+    return (true, "Eligible");
+  }
+
   void fetchHallTicket() {
+    final role = _currentRole.name;
+    final status = _activeAccountStatus == AccountStatus.APPROVED ? "APPROVED" : _activeAccountStatus.name;
+    final (eligible, reason) = evaluateHallTicketEligibility(
+      courses: _courses,
+      role: role,
+      accountStatus: status,
+    );
+    if (!eligible) {
+      _hallTicketData = null;
+      _showNotification(reason);
+      notifyListeners();
+      return;
+    }
+
     _hallTicketData = HallTicketResponse(
       rollNo: _currentUser?.rollNo ?? "2024-MS-4011",
       studentName: _currentUser?.name ?? "Vijay Pradhap",
@@ -811,7 +1060,9 @@ class GriProvider extends ChangeNotifier {
 
   // Grievances
   void submitGrievance(String category, String subject, String description) {
-    final newId = _grievances.length + 1;
+    final newId = _grievances.isEmpty
+        ? 1
+        : _grievances.map((g) => g.id).reduce((a, b) => a > b ? a : b) + 1;
     final ticket = "GRV-2026-${1060 + newId}";
     _grievances.insert(
       0,
@@ -826,6 +1077,8 @@ class GriProvider extends ChangeNotifier {
         createdAt: DateTime.now().millisecondsSinceEpoch,
       ),
     );
+    LocalDataStoreService.instance.saveGrievances(_grievances);
+    _queueCloudOp('grievances', _grievances.first.toMap());
     _showNotification("Grievance $ticket submitted successfully.");
     notifyListeners();
   }
@@ -838,23 +1091,38 @@ class GriProvider extends ChangeNotifier {
         resolvedAt: DateTime.now().millisecondsSinceEpoch,
         remarks: remarks,
       );
+      LocalDataStoreService.instance.saveGrievances(_grievances);
+      _queueCloudOp('grievances', {
+        'id': _grievances[index].ticketNumber,
+        'status': "RESOLVED",
+        'remarks': remarks,
+      });
       _showNotification("Ticket ${_grievances[index].ticketNumber} marked resolved.");
       notifyListeners();
     }
   }
 
   // Circulars
+  List<CircularModel> _locallyPublishedCirculars = [];
+
   void markCircularRead(String id) {
     final index = _circulars.indexWhere((c) => c.id == id);
     if (index != -1) {
       _circulars[index] = _circulars[index].copyWith(isRead: true);
+      _readCircularIds.add(id);
+      _persistCircularReadState();
       notifyListeners();
     }
   }
 
+  void _persistCircularReadState() {
+    final readIds = _circulars.where((c) => c.isRead).map((c) => c.id).toSet();
+    LocalDataStoreService.instance.saveReadCircularIds(readIds);
+  }
+
   void publishCircular(String title, String category, String summary, bool isUrgent, String issuedBy) {
     final newCir = CircularModel(
-      id: "cir_${_circulars.length + 1}",
+      id: "cir_${DateTime.now().millisecondsSinceEpoch}",
       title: title,
       category: category,
       publishedDate: "Just now",
@@ -863,7 +1131,21 @@ class GriProvider extends ChangeNotifier {
       isUrgent: isUrgent,
       isRead: false,
     );
+    _locallyPublishedCirculars.insert(0, newCir);
     _circulars.insert(0, newCir);
+    _publishingAuditLogs.insert(
+      0,
+      PublishingAuditEntry(
+        id: "pbl_${DateTime.now().millisecondsSinceEpoch}",
+        noticeId: newCir.id,
+        title: title,
+        author: _currentUser?.name ?? "Administrator",
+        authorRole: _currentRole.name,
+        authorizedBy: "Statutory Publishing Hub (companion stage ledger)",
+        timestamp: "Just now",
+        status: "PUBLISHED",
+      ),
+    );
     _showNotification("Official Circular published successfully.");
     notifyListeners();
   }
@@ -907,6 +1189,8 @@ class GriProvider extends ChangeNotifier {
       ],
     );
     _applications.insert(0, newApp);
+    LocalDataStoreService.instance.saveApplications(_applications);
+    _queueCloudOp('registration_applications', newApp.toMap());
     _isRegistrationWizardOpen = false;
     _showNotification("Application $appId submitted. Pending Registrar approval.");
     notifyListeners();
@@ -916,6 +1200,7 @@ class GriProvider extends ChangeNotifier {
     final index = _applications.indexWhere((a) => a.id == appId);
     if (index != -1) {
       final app = _applications[index];
+      final previousStatus = app.status.name;
       _applications[index] = app.copyWith(
         status: AccountStatus.APPROVED,
         history: [
@@ -929,21 +1214,24 @@ class GriProvider extends ChangeNotifier {
         ],
       );
 
-      _auditLogs.insert(
-        0,
-        InstitutionalAuditLog(
-          id: "log_${_auditLogs.length + 1}",
-          timestamp: "Just now",
-          adminName: _currentUser?.name ?? "Registrar",
-          adminRole: "ADMIN",
-          action: "APPLICATION_APPROVED",
-          targetUser: app.fullName,
-          targetRole: app.requestedRole.name,
-          previousState: "PENDING_APPROVAL",
-          newState: "APPROVED",
-          reasonOrNotes: "Institutional roll credentials authenticated.",
-        ),
+      final ledger = InstitutionalAuditLog(
+        id: "log_${DateTime.now().millisecondsSinceEpoch}",
+        timestamp: "Just now",
+        adminName: _currentUser?.name ?? "Registrar",
+        adminRole: _currentRole.name,
+        action: "APPLICATION_APPROVED",
+        targetUser: app.fullName,
+        targetRole: app.requestedRole.name,
+        previousState: previousStatus,
+        newState: "APPROVED",
+        reasonOrNotes: "Institutional roll credentials authenticated.",
       );
+      _auditLogs.insert(0, ledger);
+
+      LocalDataStoreService.instance.saveApplications(_applications);
+      LocalDataStoreService.instance.saveAuditLogs(_auditLogs);
+      _queueCloudOp('audit_logs', ledger.toMap());
+      _queueCloudOp('registration_applications', _applications[index].toMap());
 
       closeAdminReviewModal();
       _showNotification("Approved application for ${app.fullName}.");
@@ -955,6 +1243,7 @@ class GriProvider extends ChangeNotifier {
     final index = _applications.indexWhere((a) => a.id == appId);
     if (index != -1) {
       final app = _applications[index];
+      final previousStatus = app.status.name;
       _applications[index] = app.copyWith(
         status: AccountStatus.REJECTED,
         rejectionReason: reason,
@@ -968,6 +1257,26 @@ class GriProvider extends ChangeNotifier {
           ),
         ],
       );
+
+      final ledger = InstitutionalAuditLog(
+        id: "log_${DateTime.now().millisecondsSinceEpoch}",
+        timestamp: "Just now",
+        adminName: _currentUser?.name ?? "Registrar",
+        adminRole: _currentRole.name,
+        action: "APPLICATION_REJECTED",
+        targetUser: app.fullName,
+        targetRole: app.requestedRole.name,
+        previousState: previousStatus,
+        newState: "REJECTED",
+        reasonOrNotes: reason,
+      );
+      _auditLogs.insert(0, ledger);
+
+      LocalDataStoreService.instance.saveApplications(_applications);
+      LocalDataStoreService.instance.saveAuditLogs(_auditLogs);
+      _queueCloudOp('audit_logs', ledger.toMap());
+      _queueCloudOp('registration_applications', _applications[index].toMap());
+
       closeAdminReviewModal();
       _showNotification("Application rejected.");
       notifyListeners();
@@ -991,6 +1300,10 @@ class GriProvider extends ChangeNotifier {
           ),
         ],
       );
+
+      LocalDataStoreService.instance.saveApplications(_applications);
+      _queueCloudOp('registration_applications', _applications[index].toMap());
+
       closeAdminReviewModal();
       _showNotification("Query sent to applicant.");
       notifyListeners();
@@ -1013,6 +1326,8 @@ class GriProvider extends ChangeNotifier {
           ),
         ],
       );
+      LocalDataStoreService.instance.saveApplications(_applications);
+      _queueCloudOp('registration_applications', _applications[index].toMap());
       if (_currentUser != null && _currentUser!.applicationId == appId) {
         _currentUser = _currentUser!.copyWith(
           applicantClarificationResponse: response,
@@ -1025,58 +1340,155 @@ class GriProvider extends ChangeNotifier {
 
   // Staff Leave
   void applyStaffLeave(String type, String from, String to, String reason) {
-    _leaveRecords.insert(
-      0,
-      StaffLeaveRecord(
-        id: "lv_${_leaveRecords.length + 1}",
-        leaveType: type,
-        days: 1,
-        fromDate: from,
-        toDate: to,
-        status: "SUBMITTED",
-        reason: reason,
-      ),
+    final record = StaffLeaveRecord(
+      id: "lv_${DateTime.now().millisecondsSinceEpoch}",
+      leaveType: type,
+      days: 1,
+      fromDate: from,
+      toDate: to,
+      status: "SUBMITTED",
+      reason: reason,
     );
+    _leaveRecords.insert(0, record);
+    LocalDataStoreService.instance.saveLeaveRecords(_leaveRecords);
+    _queueCloudOp('faculty_leaves', record.toMap());
     _showNotification("Leave request submitted for approval.");
     notifyListeners();
   }
 
   // Document Authenticity Verification
+  /// Evidence-based verification: format validation, check-digit checksum
+  /// recomputation, and lookup on the verification register (locally mirrored
+  /// from the Supabase `document_certificates` table when available). The
+  /// result never overstates what was actually found.
   void verifyDocumentAuthenticity(String docCode) {
-    if (docCode.toUpperCase().contains("GRI") || docCode.length >= 6) {
-      _verifiedDocumentStatus = "AUTHENTIC: Institutional Digital Certificate Verified under e-SANAD repository. Registered by Controller of Examinations.";
-    } else {
-      _verifiedDocumentStatus = "UNVERIFIED: Invalid document identifier. Please verify QR code or contact Controller of Examinations.";
-    }
-    _showNotification("Document verification complete.");
+    final result = DocumentCertificationService.instance.verify(docCode);
+    _verifiedDocumentStatus = result.message;
+    _showNotification(
+      result.isAuthentic ? "Document verified as authentic." : "Document could not be verified.",
+    );
     notifyListeners();
   }
 
   // Cloud & Official Web Sync
+  /// Pending cloud operations are recorded on-device even without network or
+  /// credentials and are flushed here whenever a backend is reachable.
+  Future<void> _queueCloudOp(String table, Map<String, dynamic> payload) async {
+    try {
+      final ops = await LocalDataStoreService.instance.loadPendingCloudOps();
+      ops.add({'table': table, 'payload': payload});
+      await LocalDataStoreService.instance.savePendingCloudOps(ops);
+      _pendingSyncCount = ops.length;
+      notifyListeners();
+    } catch (_) {
+      // Vault unavailable: the operation stays effective locally only.
+    }
+  }
+
+  Future<void> _drainPendingCloudOps() async {
+    if (!SupabaseService.instance.isInitialized) return;
+    try {
+      final store = LocalDataStoreService.instance;
+      final ops = await store.loadPendingCloudOps();
+      if (ops.isEmpty) {
+        _pendingSyncCount = 0;
+        return;
+      }
+      final remaining = <Map<String, dynamic>>[];
+      for (final op in ops) {
+        final table = op['table']?.toString() ?? '';
+        final payload = (op['payload'] as Map<String, dynamic>?) ?? const {};
+        bool ok;
+        switch (table) {
+          case 'grievances':
+            ok = await SupabaseService.instance.pushGrievance(payload);
+            break;
+          case 'registration_applications':
+            ok = await SupabaseService.instance.pushApplication(payload);
+            break;
+          case 'audit_logs':
+            ok = await SupabaseService.instance.pushAuditLog(payload);
+            break;
+          case 'faculty_leaves':
+            ok = await SupabaseService.instance.pushLeaveRecord(payload);
+            break;
+          case 'student_courses':
+            final id = payload['id'];
+            if (id == null) {
+              ok = false;
+            } else {
+              ok = await SupabaseService.instance.updateRecord(
+                'student_courses', 'id', id,
+                payload..remove('id'),
+              );
+            }
+            break;
+          default:
+            ok = false;
+        }
+        if (!ok) {
+          remaining.add(op);
+        }
+      }
+      await store.savePendingCloudOps(remaining);
+      _pendingSyncCount = remaining.length;
+      _ktorServerStatus = SupabaseService.instance.dataModeLabel;
+    } catch (_) {
+      // Network/backend failure keeps the queue intact for the next attempt.
+    }
+  }
+
   Future<void> triggerCloudSync() async {
     _isSyncing = true;
     notifyListeners();
 
-    // Concurrently refresh official website announcements
+    // Concurrently refresh official website announcements and the cloud
+    // register; a missing backend degrades to cache + vault without error noise.
     await syncOfficialWebsite(force: true);
 
-    // Attempt Supabase fetch if configured
     if (SupabaseService.instance.isInitialized) {
-      final cloudCirculars = await SupabaseService.instance.fetchTable("circulars");
+      await _drainPendingCloudOps();
+
+      final cloudCirculars = await SupabaseService.instance.fetchPublishedCirculars();
       if (cloudCirculars != null && cloudCirculars.isNotEmpty) {
-        // Updated from cloud
+        final live = cloudCirculars
+            .map((row) => CircularModel(
+                  id: row['id']?.toString() ?? '',
+                  title: row['title']?.toString() ?? '',
+                  category: row['category']?.toString() ?? '',
+                  publishedDate: row['date']?.toString() ?? '',
+                  summary: row['summary']?.toString() ?? '',
+                  issuedBy: row['issued_by']?.toString() ?? '',
+                  isUrgent: row['urgent'] as bool? ?? false,
+                ))
+            .toList();
+        _circulars = [..._locallyPublishedCirculars, ...live];
       }
+
+      final certs = await SupabaseService.instance.fetchCertificates();
+      if (certs != null && certs.isNotEmpty) {
+        DocumentCertificationService.instance.mergeCloudRecords(certs);
+      }
+      _ktorServerStatus = SupabaseService.instance.dataModeLabel;
+    } else {
+      _ktorServerStatus = SupabaseService.instance.dataModeLabel;
     }
 
     _isSyncing = false;
-    _pendingSyncCount = 0;
-    _showNotification("Official website and records synchronized.");
+    _lastSyncTimestamp = DateTime.now();
+    _showNotification(_pendingSyncCount > 0
+        ? "Sync complete for available sources. $_pendingSyncCount record(s) queued for the cloud backend."
+        : "Official website and records synchronized.");
     notifyListeners();
   }
 
   // AI Assistant (GRI-Sahayak)
   void sendSahayakMessage(String query) {
     if (query.trim().isEmpty) return;
+    if (_sahayakMessages.any((m) => m.isUser && m.text == query.trim())) {
+      // Duplicate dispatch guard (e.g., double tap): ignore repeat submits.
+      return;
+    }
 
     _sahayakMessages.add(
       SahayakMessage(
@@ -1087,41 +1499,26 @@ class GriProvider extends ChangeNotifier {
       ),
     );
     notifyListeners();
+    LocalDataStoreService.instance.saveSahayakMessages(_sahayakMessages);
 
-    // Generate intelligent institutional answer
+    // Retrieval over the institutional corpus (offline, deterministic).
     Future.delayed(const Duration(milliseconds: 600), () {
-      final responseText = _generateAiAnswer(query);
+      final reply = SahayakKnowledgeEngine.instance.answer(
+        query,
+        circulars: _circulars,
+        routes: _transportRoutes,
+      );
       _sahayakMessages.add(
         SahayakMessage(
           id: "msg_ai_${DateTime.now().millisecondsSinceEpoch}",
-          text: responseText,
+          text: reply.text,
           isUser: false,
           timestamp: "Just now",
-          source: "ruraluniv.ac.in",
+          source: reply.sources.isNotEmpty ? reply.sources.first : null,
         ),
       );
       notifyListeners();
+      LocalDataStoreService.instance.saveSahayakMessages(_sahayakMessages);
     });
-  }
-
-  String _generateAiAnswer(String query) {
-    final q = query.toLowerCase();
-    if (q.contains("admission") || q.contains("apply") || q.contains("eligibility")) {
-      return "Admissions at The Gandhigram Rural Institute are conducted through CUET-UG, CUET-PG, and GRI All-India Entrance Examinations. The admission portal opens annually at https://ruraluniv.ac.in/admissions. Common programmes include B.Sc. (Hons) Agriculture, M.Sc., M.C.A., M.Tech, and B.Ed. Rural Development.";
-    } else if (q.contains("exam") || q.contains("hall ticket") || q.contains("result") || q.contains("coe")) {
-      return "Semester Examinations are conducted under the Choice Based Credit System (CBCS). To be eligible for Hall Tickets, students must maintain a minimum of 75% attendance. Hall tickets can be fetched directly under the Academics Hub in this app.";
-    } else if (q.contains("hostel") || q.contains("mess") || q.contains("stay")) {
-      return "GRI provides residential hostel facilities including Kasturba Hostel for women and Tagore & Bapu Hostels for men. Nutritious vegetarian meals are served under student-run mess committees with monthly mess rebate facilities.";
-    } else if (q.contains("bus") || q.contains("transport") || q.contains("route")) {
-      return "The university operates scheduled bus services covering Dindigul Bus Stand, Madurai Mattuthavani, and Batlagundu. Concessional semester bus passes are issued to regular students and scholars.";
-    } else if (q.contains("library") || q.contains("book") || q.contains("journal")) {
-      return "Dr. Radhakrishnan Central Library houses over 1,80,000 volumes, classical Tamil palm-leaf archives, and gives online access to IEEE, Springer, and UGC INFONET digital repositories from 8:00 AM to 8:00 PM.";
-    } else if (q.contains("attendance") || q.contains("leave")) {
-      return "University academic regulations require a mandatory minimum attendance of 75% in each course to appear for End Semester Examinations. Shortage between 65%-74% may be condoned by the Vice-Chancellor on certified medical grounds.";
-    } else if (q.contains("gandhi") || q.contains("nai talim") || q.contains("history")) {
-      return "Founded in 1947 by Gandhian disciples Dr. T.S. Soundram and Dr. G. Ramachandran, GRI follows the Nai Talim (Basic Education) philosophy integrating Teaching, Research, and Extension into rural community transformation.";
-    } else {
-      return "GRI Official Portal: For institutional queries on departments, programmes, faculty, or circulars, please consult the Official Document Center or visit the university portal at ruraluniv.ac.in.";
-    }
   }
 }
