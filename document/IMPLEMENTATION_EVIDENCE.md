@@ -17,7 +17,7 @@ This ledger establishes a 1-to-1 mapping between the architectural claims, use c
 - **Total Database Tables:** 25 Tables in PostgreSQL 16 schema (`supabase/migrations/`)
 - **Total Discovered Web Routes:** 309 Institutional Routes Mapped (`assets/website_inventory.json`)
 - **Total Physical Assets Cataloged:** 1,047 Assets with SHA-256 Hashes (`data/05_metadata/assets_manifest.csv`)
-- **Automated Test Suite Status:** 85 Tests Passing across Unit and Widget Layers (`flutter test`)
+- **Automated Test Suite Status:** 77 Tests Passing across Unit and Widget Layers (`flutter test`)
 
 ---
 
@@ -43,7 +43,7 @@ This ledger establishes a 1-to-1 mapping between the architectural claims, use c
 | **Immutable Audit Logging** | **VERIFIED** | `supabase/migrations/20261004000000_init_gri_cloud.sql`<br/>`lib/providers/gri_provider.dart` | `audit_logs` table, `logAction()` method | Records operator ID, actor name, target user ID, previous status, new status, timestamp, and justification. |
 | **National Enterprise Gateways** | **VERIFIED** | `lib/screens/official_portals_gateway_screen.dart` | `OfficialPortalsGatewayScreen`, `OfficialResourceRegistry` | Deep links to Samarth@GRI ERP, National Academic Depository (NAD), DigiLocker APAAR, and Webmail. |
 | **One-Click Mobile Device Launcher** | **VERIFIED** | `launch_app.bat` | Windows Batch Script | Automated verification of ADB phone connection, Flutter dependency resolution, build, and installation. |
-| **Automated Unit & Widget Testing** | **VERIFIED** | `test/widget_test.dart`<br/>`test/models_and_resources_test.dart` | 25 Automated Test Cases | Validates model serialization, navigation transitions, role switching, and resource resolution. |
+| **Automated Unit & Widget Testing** | **VERIFIED** | `test/widget_test.dart`<br/>`test/models_and_resources_test.dart`<br/>`test/integrity_and_intelligence_test.dart`<br/>`test/rollcall_and_authorization_test.dart` | 77 Automated Test Cases | Validates model serialization, navigation transitions, role switching, resource resolution, restart-safety, RBAC refusals, hall-ticket gates, roll-call durability, and cloud schema mappers. |
 
 ---
 
@@ -54,7 +54,7 @@ To uphold strict academic integrity, the following matrix distinguishes verified
 | System Dimension | Fully Implemented in Repository | Proposed for Future Phases | Implementation Evidence / Justification |
 | :--- | :--- | :--- | :--- |
 | **Authentication** | Local & Supabase role verification, registration wizard, admin dossier approval, and token storage in `SharedPreferences`. | Biometric hardware integration (TouchID / FaceID) at the native Android lockscreen level. | `lib/models/user_model.dart`, `lib/widgets/registration_wizard_modal.dart`. Biometric device APIs are currently mocked via aggregate course ledgers. |
-| **Database & Storage** | Dual-tier storage: In-memory cache + `SeedDataService` + 22 PostgreSQL tables with RLS in Supabase. | Peer-to-peer mesh sync between faculty and student devices during campus network outages. | `assets/data/gri_official_seed.json`, `supabase/migrations/`. P2P Bluetooth Low Energy (BLE) sync is proposed for future work. |
+| **Database & Storage** | Dual-tier storage: In-memory cache + `SeedDataService` + 25 PostgreSQL tables with RLS in Supabase. | Peer-to-peer mesh sync between faculty and student devices during campus network outages. | `assets/data/gri_official_seed.json`, `supabase/migrations/`. P2P Bluetooth Low Energy (BLE) sync is proposed for future work. |
 | **Examinations** | Hall ticket UI with student details, course roster, 75% attendance gate, and e-SANAD QR token string. | Direct cryptographic server-to-server webhook verification with MEA e-SANAD national servers. | `lib/widgets/hall_ticket_modal.dart`. QR string contains statutory token data; live MEA API integration is proposed. |
 | **Attendance** | Student attendance percentage display, course lecture breakdown, and faculty roll-call registers that persist and queue for cloud sync. | RFID / BLE automated turnstile hardware integration at physical campus lecture halls. | `lib/screens/academics_hub_screen.dart`, `lib/screens/faculty_staff_portal_screen.dart`. Physical turnstile communication is proposed. |
 | **AI Assistant** | Context-aware rule-based conversational assistant (`AskGriAiScreen`) with suggested quick prompts and local seed querying. | LLM server integration (Fine-tuned Llama-3 / Gemma-2 running on university servers). | `lib/screens/ask_gri_ai_screen.dart`. Rule-based conversational flow is active; remote LLM server endpoint is proposed. |
@@ -65,5 +65,5 @@ To uphold strict academic integrity, the following matrix distinguishes verified
 
 - **Source Code Alteration:** `0` application files were altered during documentation generation.
 - **Repository Cleanliness:** Flutter static analysis (`flutter analyze`) confirms `0 issues`.
-- **Test Integrity:** All 85 tests pass (`flutter test`), including restart-safety (persistent vault), authorization gates, hall-ticket eligibility refusals, certificate verification honesty, faculty roll-call durability, and cloud schema mappers.
-- **Build Readiness:** `flutter build apk --release` completed successfully generating `app-release.apk` (Kotlin plugin upgraded to 2.3.20 per Flutter toolchain guidance).
+- **Test Integrity:** All 77 tests pass (`flutter test`), including restart-safety (persistent vault), authorization gates, hall-ticket eligibility refusals, certificate verification honesty, faculty roll-call durability, and cloud schema mappers.
+- **Build Readiness:** `flutter build apk --release` completes successfully generating `app-release.apk`. Kotlin stays pinned at 2.2.20 — the 2.3.20 upgrade breaks release compilation on this cross-drive toolchain (pub cache on `C:\`, project on `D:\`; see README §8).

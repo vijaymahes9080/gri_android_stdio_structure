@@ -174,13 +174,19 @@ lib/
   markup changes, the verified seed fallback keeps the app accurate.
 - Certificate register ships a small development sample set; production must
   import the real CoE register into `document_certificates`.
+- Kotlin 2.3.20 is not usable on this machine: the pub cache
+  (`C:\Users\vijay\AppData\Local\Pub\Cache`) and the project (`D:\`) live on
+  different drives, which breaks the 2.3.x Kotlin incremental-cache
+  infrastructure even with `kotlin.incremental=false` ("Could not close
+  incremental caches"). The project therefore pins Kotlin 2.2.20 in
+  `android/settings.gradle`; upgrade only on a single-drive toolchain.
 
 ## 9. Troubleshooting
 
 | Symptom | Fix |
 |---|---|
 | `flutter doctor` Android licenses error | `flutter doctor --android-licenses` |
-| Build warns about Kotlin plugin version | harmless; Gradle resolves the pinned version in `gradle/libs.versions.toml` |
+| Build warns about Kotlin plugin version | harmless; Gradle resolves the pinned Kotlin version in `android/settings.gradle` |
 | Cloud shows `Offline Vault` despite credentials | ensure `--dart-define` flags were used at build/run time (they are compile-time constants) |
 | Cloud-mode grievances/leaves empty after sync | expected with hardening: these tables fail closed without a Supabase Auth session (see §5 RLS hardening) |
 | Tests hang briefly on first run | network probes to the official site use an 8 s timeout then fall back to seeds |
