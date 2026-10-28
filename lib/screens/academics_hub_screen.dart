@@ -292,6 +292,37 @@ class _AcademicsHubScreenState extends State<AcademicsHubScreen> with SingleTick
                       ),
                     ),
                   ),
+                  if (provider.hallTicketBlockReason != null) ...[
+                    const SizedBox(height: 12),
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.errorContainer.withValues(alpha: 0.6),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: Theme.of(context).colorScheme.error.withValues(alpha: 0.45),
+                        ),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(Icons.block, size: 16, color: colorScheme.error),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              provider.hallTicketBlockReason!,
+                              style: TextStyle(
+                                fontSize: 11.5,
+                                fontWeight: FontWeight.w700,
+                                color: Theme.of(context).colorScheme.onErrorContainer,
+                                height: 1.4,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                   const SizedBox(height: 18),
                   Text(
                     "EXAMINATION TIMETABLE PREVIEW",

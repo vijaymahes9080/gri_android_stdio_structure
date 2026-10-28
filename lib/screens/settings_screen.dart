@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../providers/gri_provider.dart';
+import '../services/seed_data_service.dart';
 import '../utils/gri_colors.dart';
 import '../services/official_resource_registry.dart';
 
@@ -428,9 +429,17 @@ class SettingsScreen extends StatelessWidget {
                   color: GriColors.forestPrimary,
                 ),
                 const SizedBox(height: 12),
-                _buildMetricRow("Indexed Web Routes", "309 Verified URLs", isDark),
+                _buildMetricRow(
+                  "Indexed Web Routes",
+                  "${SeedDataService.instance.allPages.length} Verified URLs",
+                  isDark,
+                ),
                 const SizedBox(height: 6),
-                _buildMetricRow("Cataloged Official PDFs", "602 Documents", isDark),
+                _buildMetricRow(
+                  "Cataloged Official PDFs",
+                  "${SeedDataService.instance.allCatalogDocuments.length} Documents",
+                  isDark,
+                ),
                 const SizedBox(height: 6),
                 _buildMetricRow("Bundled High-Res Media", "24 Physical Files", isDark),
                 const SizedBox(height: 6),

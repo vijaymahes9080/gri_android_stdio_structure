@@ -108,6 +108,87 @@ class SupabaseService {
   }
 
   // ------------------------------------------------------------------
+  // Local → cloud schema mapping
+  //
+  // The offline vault stores records in the app's model shape. Cloud tables
+  // define their own columns and CHECK constraints, so payloads must be
+  // translated before insertion or every queued op would be rejected.
+  // These mappers are pure and directly unit-testable.
+  // ------------------------------------------------------------------
+
+  /// Grievances table: id TEXT PK, user_id NOT NULL, date TEXT NOT NULL,
+  /// status CHECK IN ('SUBMITTED','IN_PROGRESS','RESOLVED').
+  static Map<String, dynamic> cloudGrievanceRow(Map<String, dynamic> local) {
+    final roll = local['student_roll_no']?.toString() ?? 'anonymous';
+    final ticket = local['ticket_number']?.toString() ??
+        (local['id']?.toString() ?? 'GRV-UNKNOWN');
+    final createdAt = (local['created_at'] as num?)?.toInt();
+    final created = createdAt != null
+        ? DateTime.fromMillisecondsSinceEpoch(createdAt).toIso8601String()
+        : DateTime.now().toIso8601String();
+    final localStatus = local['status']?.toString() ?? 'SUBMITTED';
+    // Local status vocabulary: SUBMITTED / IN_REVIEW / RESOLVED.
+    final cloudStatus = localStatus == 'IN_REVIEW' ? 'IN_PROGRESS' : localStatus;
+    return {
+      'id': '$roll|$ticket', // deterministic PK; per-user namespace prevents collisions
+      'user_id': roll,
+      'category': local['category']?.toString() ?? 'General',
+      'subject': local['subject']?.toString() ?? 'Untitled grievance',
+      'description': local['description']?.toString() ?? '',
+      'date': created,
+      'status': cloudStatus,
+      'remarks': local['remarks']?.toString() ?? '',
+    };
+  }
+
+  /// Audit logs table: actor_user_id/actor_name/target_user_id/action NOT NULL,
+  /// previous_status/new_status, remarks (no external id column).
+  static Map<String, dynamic> cloudAuditRow(Map<String, dynamic> local) {
+    final adminName = local['admin_name']?.toString() ?? 'System';
+    final adminRole = local['admin_role']?.toString() ?? 'ADMIN';
+    final targetUser = local['target_user']?.toString() ?? '';
+    final targetRole = local['target_role']?.toString() ?? '';
+    return {
+      'actor_user_id': 'admin|$targetUser|$targetRole',
+      'actor_name': '$adminName ($adminRole)',
+      'target_user_id': targetUser,
+      'action': local['action']?.toString() ?? 'UNKNOWN',
+      'previous_status': local['previous_state']?.toString(),
+      'new_status': local['new_state']?.toString(),
+      'remarks': local['reason_or_notes']?.toString(),
+    };
+  }
+
+  /// Faculty leaves table: user_id/faculty_name/type/dates/days/reason,
+  /// status CHECK IN ('PENDING_HOD','APPROVED','REJECTED').
+  static Map<String, dynamic> cloudLeaveRow(Map<String, dynamic> local) {
+    final owner = local['owner_id']?.toString().isNotEmpty == true
+        ? local['owner_id'].toString()
+        : 'unknown-staff';
+    final ownerName = local['owner_name']?.toString().isNotEmpty == true
+        ? local['owner_name'].toString()
+        : 'GRI Staff Member';
+    final fromDate = local['from_date']?.toString() ?? '';
+    final toDate = local['toDate']?.toString() ??
+        local['to_date']?.toString() ??
+        fromDate;
+    final localStatus = local['status']?.toString() ?? 'SUBMITTED';
+    final cloudStatus = localStatus == 'SUBMITTED' ? 'PENDING_HOD' : localStatus;
+    final days = (local['days'] as num?)?.toInt() ?? 1;
+    final dateRange = fromDate == toDate ? fromDate : '$fromDate — $toDate';
+    return {
+      'id': '$owner|$fromDate|$toDate|${local['leave_type'] ?? ''}',
+      'user_id': owner,
+      'faculty_name': ownerName,
+      'type': local['leave_type']?.toString() ?? 'Leave',
+      'dates': dateRange,
+      'days': days,
+      'reason': local['reason']?.toString() ?? '',
+      'status': cloudStatus,
+    };
+  }
+
+  // ------------------------------------------------------------------
   // Typed institutional operations (mirror of the local vault)
   // ------------------------------------------------------------------
 

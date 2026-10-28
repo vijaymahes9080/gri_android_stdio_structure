@@ -7,9 +7,11 @@ import 'package:gri_app/models/academic_models.dart';
 import 'package:gri_app/models/user_model.dart';
 import 'package:gri_app/providers/gri_provider.dart';
 import 'package:gri_app/screens/official_document_center_screen.dart';
+import 'package:gri_app/screens/settings_screen.dart';
 import 'package:gri_app/services/document_certification_service.dart';
 import 'package:gri_app/services/local_data_store_service.dart';
 import 'package:gri_app/services/sahayak_knowledge_engine.dart';
+import 'package:gri_app/services/supabase_service.dart';
 
 void main() {
   setUp(() {
@@ -405,6 +407,135 @@ void main() {
     });
   });
 
+  group('Supabase cloud-schema mappers (queue correctness)', () {
+    test('Grievance payload is translated to the cloud table shape', () {
+      final cloud = SupabaseService.cloudGrievanceRow(
+        GrievanceModel(
+          id: 9,
+          ticketNumber: 'GRV-2026-1069',
+          category: 'Library Services',
+          subject: 'Proxy access',
+          description: 'Details',
+          status: 'IN_REVIEW',
+          studentRollNo: '2024-MS-4011',
+          createdAt: 1728800000000,
+          remarks: '',
+        ).toMap(),
+      );
+      expect(cloud['id'], '2024-MS-4011|GRV-2026-1069');
+      expect(cloud['user_id'], '2024-MS-4011');
+      expect(cloud['status'], 'IN_PROGRESS'); // cloud CHECK constraint vocabulary
+      expect(cloud['date'], isA<String>());
+      // ISO-8601 date expected by the TEXT date column, not epoch millis.
+      expect(cloud['date'], contains('T'));
+      expect(cloud.containsKey('ticket_number'), isFalse);
+      expect(cloud.containsKey('created_at'), isFalse);
+    });
+
+    test('Audit ledger payload is translated to the cloud ledger shape', () {
+      final cloud = SupabaseService.cloudAuditRow(
+        InstitutionalAuditLog(
+          id: 'log_9',
+          timestamp: '10 Oct 2026',
+          adminName: 'Dr. M. Sundaramari',
+          adminRole: 'ADMIN',
+          action: 'APPLICATION_APPROVED',
+          targetUser: 'Kavitha Mohan',
+          targetRole: 'STUDENT',
+          previousState: 'PENDING_APPROVAL',
+          newState: 'APPROVED',
+          reasonOrNotes: 'Verified rolls',
+        ).toMap(),
+      );
+      expect(cloud['actor_name'], 'Dr. M. Sundaramari (ADMIN)');
+      expect(cloud['target_user_id'], 'Kavitha Mohan');
+      expect(cloud['previous_status'], 'PENDING_APPROVAL');
+      expect(cloud['new_status'], 'APPROVED');
+      expect(cloud['remarks'], 'Verified rolls');
+      // The cloud table has no local-shaped columns.
+      expect(cloud.containsKey('admin_name'), isFalse);
+      expect(cloud.containsKey('timestamp'), isFalse);
+    });
+
+    test('Leave payload is translated with owner attribution and status map',
+        () {
+      final cloud = SupabaseService.cloudLeaveRow({
+        ...StaffLeaveRecord(
+          id: 'lv_9',
+          leaveType: 'Casual Leave (CL)',
+          days: 2,
+          fromDate: '2026-11-12',
+          toDate: '2026-11-13',
+          status: 'SUBMITTED',
+          reason: 'Family function',
+        ).toMap(),
+        'owner_id': 'FAC-CS-108',
+        'owner_name': 'Dr. R. Subramanian',
+      });
+      expect(cloud['user_id'], 'FAC-CS-108');
+      expect(cloud['faculty_name'], 'Dr. R. Subramanian');
+      expect(cloud['type'], 'Casual Leave (CL)');
+      expect(cloud['dates'], '2026-11-12 — 2026-11-13');
+      expect(cloud['status'], 'PENDING_HOD'); // cloud CHECK constraint vocabulary
+      expect(cloud.containsKey('leave_type'), isFalse);
+      expect(cloud.containsKey('from_date'), isFalse);
+    });
+  });
+
+  group('Published circular persistence & hall-ticket block state', () {
+    test('Admin-published circulars survive an app restart', () async {
+      final first = GriProvider();
+      await Future<void>.delayed(const Duration(milliseconds: 150));
+      // Admin dossier may publish circulars.
+      first.switchUserAccount(first.availableAccounts[0]);
+      final before = first.circulars.length;
+      first.publishCircular(
+        'Restart Persistence Circular',
+        'Academic Event',
+        'Published then reloaded.',
+        false,
+        'Test Directorate',
+      );
+      expect(first.circulars.length, before + 1);
+      await Future<void>.delayed(const Duration(milliseconds: 120));
+
+      final second = GriProvider();
+      await Future<void>.delayed(const Duration(milliseconds: 220));
+      expect(
+        second.circulars.any((c) => c.title == 'Restart Persistence Circular'),
+        isTrue,
+      );
+      // Also restored into the published set so a live web re-sync keeps it.
+      await second.syncOfficialWebsite(force: false);
+      expect(
+        second.circulars.any((c) => c.title == 'Restart Persistence Circular'),
+        isTrue,
+      );
+    });
+
+    test('Hall-ticket refusal sets persistent inline state; role switch clears it',
+        () {
+      final provider = GriProvider();
+      // Default demo student (approved, >=75% every course) is eligible.
+      provider.fetchHallTicket();
+      expect(provider.hallTicketData, isNotNull);
+      expect(provider.hallTicketBlockReason, isNull);
+
+      // Switching to a non-exam role must record a persistent refusal reason.
+      provider.switchUserAccount(provider.availableAccounts[1]); // faculty
+      provider.fetchHallTicket();
+      expect(provider.hallTicketData, isNull);
+      expect(provider.hallTicketBlockReason, isNotNull);
+
+      // Switching accounts clears the stale refusal state.
+      provider.switchUserAccount(provider.availableAccounts[2]); // student
+      expect(provider.hallTicketBlockReason, isNull);
+      provider.fetchHallTicket();
+      expect(provider.hallTicketData, isNotNull);
+      expect(provider.hallTicketBlockReason, isNull);
+    });
+  });
+
   group('Official document center verification UI', () {
     Future<GriProvider> pumpVerification(
       WidgetTester tester,
@@ -446,6 +577,39 @@ void main() {
       await pumpVerification(tester, 'MAKE-IT-UP-99');
       expect(find.textContaining('INVALID FORMAT'), findsOneWidget);
       expect(find.textContaining('AUTHENTIC'), findsNothing);
+    });
+  });
+
+  group('Settings — institutional data reset journey', () {
+    testWidgets('Reset Vault Data requires confirmation and then restores baseline',
+        (tester) async {
+      tester.view.physicalSize = const Size(1080, 2400);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
+
+      final provider = GriProvider();
+      await Future<void>.delayed(const Duration(milliseconds: 150));
+      await tester.pumpWidget(
+        ChangeNotifierProvider<GriProvider>.value(
+          value: provider,
+          child: const MaterialApp(home: Scaffold(body: SettingsScreen())),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      // Guard: the action needs explicit confirmation before it runs.
+      final resetButton = find.text('Reset Vault Data');
+      await tester.scrollUntilVisible(resetButton, 400);
+      await tester.tap(resetButton);
+      await tester.pumpAndSettle();
+      expect(find.text('Reset Institutional Data?'), findsOneWidget);
+
+      await tester.tap(find.text('Reset Data'));
+      await tester.pumpAndSettle(const Duration(seconds: 2));
+      expect(
+        find.textContaining('reset to institutional baseline'),
+        findsOneWidget,
+      );
     });
   });
 }

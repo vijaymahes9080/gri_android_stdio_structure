@@ -291,7 +291,7 @@
     },
     {
       "name": "realtime_client",
-      "rootUri": "file:///C:/Users/vijay/AppData/Local/Pub/Cache/hosted/pub.dev/realtime_client-2.13.1",
+      "rootUri": "file:///C:/Users/vijay/AppData/Local/Pub/Cache/hosted/pub.dev/realtime_client-2.13.2",
       "packageUri": "lib/",
       "languageVersion": "3.9"
     },
@@ -375,7 +375,7 @@
     },
     {
       "name": "supabase",
-      "rootUri": "file:///C:/Users/vijay/AppData/Local/Pub/Cache/hosted/pub.dev/supabase-2.16.4",
+      "rootUri": "file:///C:/Users/vijay/AppData/Local/Pub/Cache/hosted/pub.dev/supabase-2.16.5",
       "packageUri": "lib/",
       "languageVersion": "3.9"
     },
@@ -387,7 +387,7 @@
     },
     {
       "name": "supabase_flutter",
-      "rootUri": "file:///C:/Users/vijay/AppData/Local/Pub/Cache/hosted/pub.dev/supabase_flutter-2.18.2",
+      "rootUri": "file:///C:/Users/vijay/AppData/Local/Pub/Cache/hosted/pub.dev/supabase_flutter-2.18.3",
       "packageUri": "lib/",
       "languageVersion": "3.9"
     },

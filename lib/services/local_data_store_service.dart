@@ -22,6 +22,7 @@ class LocalDataStoreService {
   static const String _kLeaveRecords = 'gri_vault_leave_records';
   static const String _kSahayakMessages = 'gri_vault_sahayak_messages';
   static const String _kReadCircularIds = 'gri_vault_read_circular_ids';
+  static const String _kPublishedCirculars = 'gri_vault_published_circulars';
   static const String _kActiveAccountId = 'gri_vault_active_account_id';
   static const String _kActiveRole = 'gri_vault_active_role';
   static const String _kRollCallRosters = 'gri_vault_roll_call_rosters';
@@ -204,6 +205,32 @@ class LocalDataStoreService {
     }
   }
 
+  // ------------------------------------------------------------------
+  // Locally published circulars (survive restarts + source refreshes)
+  // ------------------------------------------------------------------
+  Future<List<CircularModel>?> loadPublishedCirculars() async {
+    try {
+      final raw = (await _prefs).getString(_kPublishedCirculars);
+      if (raw == null) return null;
+      return (jsonDecode(raw) as List<dynamic>)
+          .whereType<Map<String, dynamic>>()
+          .map(CircularModel.fromMap)
+          .toList();
+    } catch (_) {
+      return null;
+    }
+  }
+
+  Future<void> savePublishedCirculars(List<CircularModel> items) async {
+    try {
+      final prefs = await _prefs;
+      await prefs.setString(
+        _kPublishedCirculars,
+        jsonEncode(items.map((c) => c.toMap()).toList()),
+      );
+    } catch (_) {}
+  }
+
   Future<void> saveReadCircularIds(Set<String> ids) async {
     try {
       final prefs = await _prefs;
@@ -338,6 +365,7 @@ class LocalDataStoreService {
       await prefs.remove(_kLeaveRecords);
       await prefs.remove(_kSahayakMessages);
       await prefs.remove(_kReadCircularIds);
+      await prefs.remove(_kPublishedCirculars);
       await prefs.remove(_kActiveAccountId);
       await prefs.remove(_kActiveRole);
       await prefs.remove(_kRollCallRosters);

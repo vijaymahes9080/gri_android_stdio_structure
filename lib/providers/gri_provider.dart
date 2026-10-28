@@ -117,6 +117,12 @@ class GriProvider extends ChangeNotifier {
   HallTicketResponse? _hallTicketData;
   HallTicketResponse? get hallTicketData => _hallTicketData;
 
+  /// Persistent inline refusal reason for examination eligibility; surfaced
+  /// directly in the Academics hub so the state is never only a transient
+  /// snackbar that disappears.
+  String? _hallTicketBlockReason;
+  String? get hallTicketBlockReason => _hallTicketBlockReason;
+
   String? _verifiedDocumentStatus;
   String? get verifiedDocumentStatus => _verifiedDocumentStatus;
 
@@ -359,7 +365,11 @@ class GriProvider extends ChangeNotifier {
       _lastSyncTimestamp = DateTime.now();
       _showNotification("All institutional datasets refreshed from source.");
     } catch (_) {
-      _showNotification("Data refresh completed.");
+      // Never claim success when the refresh actually failed; the existing
+      // persisted/seed state remains in effect.
+      _showNotification(
+        "Refresh could not reach all sources — previously loaded institutional data remains in use.",
+      );
     } finally {
       _isSyncing = false;
       notifyListeners();
@@ -736,6 +746,20 @@ class GriProvider extends ChangeNotifier {
         }
       }
 
+      // Locally published circulars must survive restarts as well; they are
+      // re-merged ahead of any live feed by the sync path.
+      final restoredPublished = await store.loadPublishedCirculars();
+      if (restoredPublished != null && restoredPublished.isNotEmpty) {
+        final knownIds = _circulars.map((c) => c.id).toSet();
+        final missing = restoredPublished
+            .where((c) => !knownIds.contains(c.id))
+            .toList();
+        _locallyPublishedCirculars = restoredPublished;
+        if (missing.isNotEmpty) {
+          _circulars = [...missing, ..._circulars];
+        }
+      }
+
       // Pending cloud operations queued while offline.
       final pendingOps = await store.loadPendingCloudOps();
       _pendingSyncCount = pendingOps.length;
@@ -869,6 +893,7 @@ class GriProvider extends ChangeNotifier {
     if (_currentUser != null) {
       _currentUser = _currentUser!.copyWith(role: newRole.name);
     }
+    _hallTicketBlockReason = null;
     // Dynamic default tab based on role
     if (newRole == UserRole.ADMIN || newRole == UserRole.SUPER_ADMIN) {
       _currentTab = NavigationTab.APPROVALS;
@@ -882,6 +907,7 @@ class GriProvider extends ChangeNotifier {
 
   void switchUserAccount(UserModel account) {
     _currentUser = account;
+    _hallTicketBlockReason = null;
     try {
       _currentRole = UserRole.values.byName(account.role);
     } catch (_) {
@@ -1031,11 +1057,13 @@ class GriProvider extends ChangeNotifier {
     );
     if (!eligible) {
       _hallTicketData = null;
+      _hallTicketBlockReason = reason;
       _showNotification(reason);
       notifyListeners();
       return;
     }
 
+    _hallTicketBlockReason = null;
     _hallTicketData = HallTicketResponse(
       rollNo: _currentUser?.rollNo ?? "2024-MS-4011",
       studentName: _currentUser?.name ?? "Vijay Pradhap",
@@ -1055,6 +1083,7 @@ class GriProvider extends ChangeNotifier {
 
   void clearHallTicket() {
     _hallTicketData = null;
+    _hallTicketBlockReason = null;
     notifyListeners();
   }
 
@@ -1133,6 +1162,8 @@ class GriProvider extends ChangeNotifier {
     );
     _locallyPublishedCirculars.insert(0, newCir);
     _circulars.insert(0, newCir);
+    LocalDataStoreService.instance
+        .savePublishedCirculars(_locallyPublishedCirculars);
     _publishingAuditLogs.insert(
       0,
       PublishingAuditEntry(
@@ -1351,7 +1382,11 @@ class GriProvider extends ChangeNotifier {
     );
     _leaveRecords.insert(0, record);
     LocalDataStoreService.instance.saveLeaveRecords(_leaveRecords);
-    _queueCloudOp('faculty_leaves', record.toMap());
+    _queueCloudOp('faculty_leaves', {
+      ...record.toMap(),
+      'owner_id': _currentUser?.rollNo ?? '',
+      'owner_name': _currentUser?.name ?? '',
+    });
     _showNotification("Leave request submitted for approval.");
     notifyListeners();
   }
@@ -1401,16 +1436,19 @@ class GriProvider extends ChangeNotifier {
         bool ok;
         switch (table) {
           case 'grievances':
-            ok = await SupabaseService.instance.pushGrievance(payload);
+            ok = await SupabaseService.instance
+                .pushGrievance(SupabaseService.cloudGrievanceRow(payload));
             break;
           case 'registration_applications':
             ok = await SupabaseService.instance.pushApplication(payload);
             break;
           case 'audit_logs':
-            ok = await SupabaseService.instance.pushAuditLog(payload);
+            ok = await SupabaseService.instance
+                .pushAuditLog(SupabaseService.cloudAuditRow(payload));
             break;
           case 'faculty_leaves':
-            ok = await SupabaseService.instance.pushLeaveRecord(payload);
+            ok = await SupabaseService.instance
+                .pushLeaveRecord(SupabaseService.cloudLeaveRow(payload));
             break;
           case 'student_courses':
             final id = payload['id'];
@@ -1460,6 +1498,7 @@ class GriProvider extends ChangeNotifier {
                   summary: row['summary']?.toString() ?? '',
                   issuedBy: row['issued_by']?.toString() ?? '',
                   isUrgent: row['urgent'] as bool? ?? false,
+                  isRead: _readCircularIds.contains(row['id']?.toString() ?? ''),
                 ))
             .toList();
         _circulars = [..._locallyPublishedCirculars, ...live];

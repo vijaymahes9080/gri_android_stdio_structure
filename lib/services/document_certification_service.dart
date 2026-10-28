@@ -1,5 +1,3 @@
-import '../models/academic_models.dart';
-
 enum DocumentVerificationStatus { authentic, notOnRegister, checksumFailed, invalidFormat }
 
 class DocumentVerificationResult {
@@ -198,9 +196,3 @@ const List<CertificateRecord> _baseRegister = [
     issuedOn: '12 Sep 2026',
   ),
 ];
-
-/// Convenience validator shared with exam eligibility checks.
-bool hasMinimumAttendance(List<CourseModel> courses, {int minimum = 75}) {
-  if (courses.isEmpty) return true;
-  return courses.every((c) => c.attendancePercent >= minimum);
-}
