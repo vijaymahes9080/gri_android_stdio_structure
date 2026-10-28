@@ -66,6 +66,35 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+  void _confirmResetVault(BuildContext context, GriProvider provider) {
+    showDialog(
+      context: context,
+      builder: (dialogCtx) => AlertDialog(
+        title: const Text("Reset Institutional Data?"),
+        content: const Text(
+          "This permanently clears your locally persisted workflow records — "
+          "grievances, applications, audit trail entries, attendance edits, "
+          "leave requests and assistant history — and restores the verified "
+          "institutional baseline. This action cannot be undone.",
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogCtx).pop(),
+            child: const Text("Cancel"),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: GriColors.error),
+            onPressed: () {
+              Navigator.of(dialogCtx).pop();
+              provider.resetInstitutionalData();
+            },
+            child: const Text("Reset Data"),
+          ),
+        ],
+      ),
+    );
+  }
+
   void _showDisclaimerDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -409,7 +438,7 @@ class SettingsScreen extends StatelessWidget {
                   "Last Source Synchronization",
                   provider.lastSyncTimestamp != null
                       ? "${provider.lastSyncTimestamp!.day}/${provider.lastSyncTimestamp!.month}/${provider.lastSyncTimestamp!.year} ${provider.lastSyncTimestamp!.hour}:${provider.lastSyncTimestamp!.minute.toString().padLeft(2, '0')}"
-                      : "2026-10-15 14:30",
+                      : "Not yet synchronized",
                   isDark,
                 ),
                 const SizedBox(height: 14),
@@ -446,6 +475,20 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     ),
                   ],
+                ),
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    onPressed: () => _confirmResetVault(context, provider),
+                    icon: const Icon(Icons.restart_alt, size: 16),
+                    label: const Text("Reset Vault Data"),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.red.shade700,
+                      side: BorderSide(color: Colors.red.shade200),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    ),
+                  ),
                 ),
               ],
             ),
