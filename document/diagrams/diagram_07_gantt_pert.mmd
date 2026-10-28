@@ -1,0 +1,41 @@
+%% =========================================================================
+%% Diagram 7: Project Timeline — Gantt Schedule & PERT Dependency Network
+%% System: The Gandhigram Rural Institute Official Mobile Portal (GRI App)
+%% =========================================================================
+
+gantt
+    title GRI Official Mobile Portal Project Schedule & Critical Path
+    dateFormat YYYY-MM-DD
+    axisFormat %d %b
+
+    section 1. Requirements & Audit (Critical Path)
+    Portal Web Crawling & Asset Manifesting   :crit, t1, 2026-06-01, 21d
+    Stakeholder Requirements & Scope Analysis :crit, t2, after t1, 14d
+    SRS Documentation & Signoff               :crit, m1, after t2, 5d
+
+    section 2. System Architecture & Models
+    Database Modeling & PostgreSQL RLS        :crit, t3, after m1, 15d
+    Design System Definition (GriColors)      :t4, after m1, 10d
+    Dual-Tier Data Sync Pipeline Design       :crit, t5, after t3, 12d
+    Architecture Design Document Signoff      :crit, m2, after t5, 4d
+
+    section 3. Native Flutter Engineering
+    SeedDataService & Asset Loader            :crit, t6, after m2, 10d
+    Supabase Cloud Integration Layer          :crit, t7, after t6, 12d
+    Core 25 Flutter Screens Development       :crit, t8, after t7, 24d
+    Multi-Role RBAC & Approval Engine         :t9, after t7, 14d
+    e-SANAD Attestation & QR Generator        :t10, after t8, 10d
+    GRI-Sahayak AI Conversational Engine      :t11, after t8, 12d
+    Core Code Freeze Milestone                :crit, m3, after t10, 3d
+
+    section 4. Verification, Security & Auditing
+    Automated Unit & Widget Testing           :crit, t12, after m3, 10d
+    Static Analysis & Lint Zero-Defect        :t13, after m3, 8d
+    Mobile Device Integration (Android SDK 36):crit, t14, after t12, 7d
+    OWASP Mobile Security Compliance          :crit, t15, after t14, 6d
+    Quality Assurance Certification           :crit, m4, after t15, 3d
+
+    section 5. Deployment & Institutional Pilot
+    Android APK Build Verification (`app-debug.apk`) :crit, t16, after m4, 4d
+    Postgraduate Student Pilot Deployment            :crit, t17, after t16, 18d
+    Final Institutional Handover                     :crit, m5, after t17, 5d

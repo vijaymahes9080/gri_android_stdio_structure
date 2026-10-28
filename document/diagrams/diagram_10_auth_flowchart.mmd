@@ -1,0 +1,53 @@
+%% =========================================================================
+%% Diagram 10: User Registration & Multi-Role Authentication Flowchart
+%% System: The Gandhigram Rural Institute Official Mobile Portal (GRI App)
+%% =========================================================================
+
+flowchart TD
+    Start([Application Launch]) --> Splash[GriSplashScreen Boot & State Hydration]
+    Splash --> ReadPrefs{SharedPreferences<br/>Session Found?}
+
+    %% Path A: Existing Session
+    ReadPrefs -- Yes --> ValidateToken{Verify Token &<br/>Profile Status}
+    ValidateToken -- Valid Session --> StatusCheck{Account Status?}
+    ValidateToken -- Corrupt / Expired --> ClearSession[Reset Session & Set Role: GUEST] --> GuestView[Render Public Campus View]
+
+    StatusCheck -- APPROVED --> LoadApproved[Load Approved Roles Array]
+    StatusCheck -- PENDING_APPROVAL --> PendingView[Redirect to ApplicationStatusScreen]
+    StatusCheck -- UNDER_REVIEW --> PendingView
+    StatusCheck -- REJECTED --> RejectionNotice[Display Rejection Reason & Re-apply Option]
+    StatusCheck -- SUSPENDED --> SuspendedNotice[Show Disciplinary Lock & Contact Registrar]
+
+    LoadApproved --> CheckRoleCount{Multiple Approved<br/>Roles?}
+    CheckRoleCount -- Single Role --> SetActiveRole[Set activeRole = approvedRoles[0]]
+    CheckRoleCount -- Multiple (e.g. Faculty + Scholar) --> RolePrompt[Show RoleSwitcherModal] --> SetActiveRole
+    SetActiveRole --> RenderMain[Render MainScaffold with Dynamic Navigation Tabs]
+
+    %% Path B: New User Registration Flow
+    ReadPrefs -- No --> GuestView
+    GuestView --> TapRegister[User Taps 'Register for Institutional Access']
+    TapRegister --> OpenWizard[Open RegistrationWizardModal]
+    OpenWizard --> Step1[Step 1: Identity & Credentials<br/>Full Name, Institutional Email, Mobile]
+    Step1 --> ValidateEmail{Regex Check<br/>Valid Format?}
+    ValidateEmail -- No --> ShowErr1[Show Inline Error: Invalid Format] --> Step1
+    ValidateEmail -- Yes --> Step2[Step 2: Role Selection & Academic Unit<br/>Role: STUDENT / FACULTY / SCHOLAR<br/>Select School & Department]
+    
+    Step2 --> Step3[Step 3: Identification Dossier<br/>Roll Number / Staff ID / Scholar Reg No<br/>Semester & Residential Status]
+    Step3 --> Step4[Step 4: Declarations & Code of Conduct<br/>Honor Pledge & Data Consent]
+    Step4 --> SubmitApp[Tap Submit Application]
+
+    SubmitApp --> SrvCall{Cloud Network<br/>Available?}
+    SrvCall -- Remote Online --> PostDB[Insert into user_profiles<br/>status='PENDING_APPROVAL'<br/>Generate App ID: APP-2026-XXXX]
+    SrvCall -- Offline --> CacheLocal[Save to Local Encrypted Queue<br/>Mark for Cloud Sync]
+
+    PostDB --> AuditLog[Write Action to audit_logs<br/>actor='SYSTEM', action='REGISTRATION_SUBMIT']
+    CacheLocal --> SetPendingState[Set activeAccountStatus = PENDING_APPROVAL]
+    AuditLog --> SetPendingState
+    SetPendingState --> PendingView
+
+    %% Administrative Action Loop
+    PendingView --> AdminReview{Statutory Admin<br/>Reviews Dossier}
+    AdminReview -- Requests Clarification --> SendQuery[Update status='UNDER_REVIEW'<br/>Store info_requested] --> PendingView
+    AdminReview -- Rejects Dossier --> SendReject[Update status='REJECTED'<br/>Store rejection_reason] --> RejectionNotice
+    AdminReview -- Approves Dossier --> SendApprove[Update status='APPROVED'<br/>Append to approved_roles] --> WriteApproveAudit[Log APPROVE_DOSSIER in audit_logs]
+    WriteApproveAudit --> LoadApproved

@@ -1,0 +1,74 @@
+%% =========================================================================
+%% Diagram 4: Level-1 Data Flow Diagram (Process Breakdown)
+%% System: The Gandhigram Rural Institute Official Mobile Portal (GRI App)
+%% =========================================================================
+
+graph TB
+    %% External Entities
+    E_Student["Student User"]
+    E_Faculty["Faculty Member"]
+    E_Admin["Administrator"]
+    E_COE["COE Staff"]
+    E_External["National Portals (e-SANAD/DigiLocker)"]
+
+    %% Data Stores
+    D1[("D1: User Profiles & Sessions<br/>(user_profiles)")]
+    D2[("D2: Academic & Course Ledger<br/>(student_courses, programmes)")]
+    D3[("D3: Examination & Circular Store<br/>(examinations, circulars_notices)")]
+    D4[("D4: Student Welfare & Leaves<br/>(grievances, faculty_leaves)")]
+    D5[("D5: Immutable Audit Ledger<br/>(audit_logs, notifications)")]
+    D6[("D6: Pre-Packaged Asset Vault<br/>(website_inventory.json, seed)")]
+
+    %% Process 1.0: Authentication & Role Verification
+    P1(("1.0<br/>Authentication &<br/>Role Validation"))
+    E_Student -->|Registration Form & Institutional ID| P1
+    E_Faculty -->|Faculty Credentials & Staff ID| P1
+    P1 -->|Store New Dossier (Pending)| D1
+    D1 -->|Validate Active Role & Status| P1
+    P1 -->|Session Token & Dynamic Nav Matrix| E_Student
+    P1 -->|Role Privileges & Access Profile| E_Faculty
+
+    %% Process 2.0: Academic Services & Attendance
+    P2(("2.0<br/>Academic Curricula &<br/>Attendance Tracking"))
+    E_Student -->|Course Progress & Timetable Query| P2
+    D2 -->|Fetch Enrolled Course Data| P2
+    D6 -->|Fetch Syllabus & Programme Structure| P2
+    P2 -->|Attendance Percentage & Course Details| E_Student
+    E_Faculty -->|Post Attendance Records| P2
+    P2 -->|Update Biometric & Class Ledger| D2
+
+    %% Process 3.0: Examination & e-SANAD Verification
+    P3(("3.0<br/>Examination &<br/>e-SANAD Certification"))
+    E_COE -->|Publish Timetable & Hall Ticket Release| P3
+    P3 -->|Store Statutory Circular & Exam Rules| D3
+    E_Student -->|Request Hall Ticket| P3
+    D1 -->|Check Clearance & Eligibility| P3
+    D3 -->|Generate QR-Encoded Hall Ticket| P3
+    P3 -->|Verify e-SANAD Cryptographic Token| E_External
+    E_External -->|Apostille Validation Confirm| P3
+    P3 -->|Deliver Digitally Signed Hall Ticket| E_Student
+
+    %% Process 4.0: Welfare, Grievance & Leaves
+    P4(("4.0<br/>Welfare, Grievance &<br/>Faculty Leaves"))
+    E_Student -->|Submit Grievance Petition| P4
+    P4 -->|Log Grievance Ticket| D4
+    E_Faculty -->|Submit Leave Request| P4
+    P4 -->|Log Leave Request (Pending HOD)| D4
+    D4 -->|Status Updates & Resolution Notes| P4
+    P4 -->|Grievance Status Feedback| E_Student
+    P4 -->|Leave Approval Notice| E_Faculty
+
+    %% Process 5.0: Administration & Governance Dossier Review
+    P5(("5.0<br/>Administrative Review &<br/>Audit Ledgering"))
+    E_Admin -->|Review Pending User Dossiers| P5
+    D1 -->|Load Dossiers (Pending / Review)| P5
+    P5 -->|Approve / Reject / Request Info| D1
+    P5 -->|Write Immutable Audit Action| D5
+    D5 -->|Audit Trail Logs & System Telemetry| E_Admin
+
+    %% Process 6.0: Cloud Sync & Document Resolution
+    P6(("6.0<br/>Cloud Sync & Official<br/>Resource Dispatch"))
+    D6 -->|Read Local Fallback Assets| P6
+    P6 -->|Query Live Supabase PostgreSQL| D3
+    P6 -->|Push Status / Pull Remote Delta| D5
+    P6 -->|Stream PDF & Canonical Portal Links| E_Student

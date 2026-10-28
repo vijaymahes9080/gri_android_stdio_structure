@@ -1,0 +1,59 @@
+%% =========================================================================
+%% Diagram 2: System Architecture Block Diagram
+%% System: The Gandhigram Rural Institute Official Mobile Portal (GRI App)
+%% =========================================================================
+
+graph TB
+    subgraph ClientLayer ["1. Mobile Client Presentation Tier (Flutter 3.x / Dart 3.5)"]
+        UI_Screens["<b>25 Native Screens</b><br/>• HomeDashboardScreen<br/>• AcademicsHubScreen<br/>• CampusFacilitiesScreen<br/>• StudentServicesHubScreen<br/>• ExaminationServicesScreen<br/>• AdminApprovalCenterScreen<br/>• AskGriAiScreen (GRI-Sahayak)<br/>• OfficialDocumentCenterScreen"]
+        UI_Widgets["<b>Institutional Widgets & Dialogs</b><br/>• GriTopBar & GriUniversityDrawer<br/>• RoleSwitcherModal<br/>• RegistrationWizardModal<br/>• AdminReviewModal<br/>• HallTicketModal (QR Render)"]
+        UI_Theme["<b>Gandhian Aesthetic System</b><br/>• GriColors (Forest Green #1B5E20, Khadi Gold #B8860B)<br/>• GriTypography & Noto Sans Tamil<br/>• GriMotion Dynamics"]
+    end
+
+    subgraph StateLayer ["2. Application State & Orchestration Tier"]
+        Provider["<b>GriProvider (ChangeNotifier)</b><br/>• Current Role State (Student, Faculty, Admin, COE, Scholar)<br/>• Account Approval Workflow Engine<br/>• Navigation Tab Indexing<br/>• Notification Dispatcher<br/>• Biometric Attendance & CGPA Cache"]
+    end
+
+    subgraph ServiceLayer ["3. Business Logic & Integration Services Tier"]
+        SeedService["<b>SeedDataService</b><br/>• In-Memory Fast Cache<br/>• 8 Schools & 30+ Departments<br/>• Programme & Course Deserialization"]
+        CloudService["<b>SupabaseService</b><br/>• Realtime Cloud Synchronization<br/>• Connection Health Monitoring<br/>• Transparent Offline Fallback"]
+        ResourceRegistry["<b>OfficialResourceRegistry</b><br/>• Canonical URL Resolution<br/>• Image & Media Lazy Loader<br/>• Document Deep Link Handler"]
+        SyncService["<b>OfficialWebSyncService</b><br/>• SHA-256 Content Validation<br/>• Delta Sync & Integrity Check"]
+    end
+
+    subgraph StorageLayer ["4. Data & Persistent Storage Tier"]
+        subgraph LocalStore ["Local Storage & Offline Bundle"]
+            LocalAssets["<b>Pre-packaged Asset Bundle</b><br/>• website_inventory.json (309 pages)<br/>• gri_official_seed.json (70 KB)<br/>• 7 Bundled Statutory PDFs<br/>• 17 High-Resolution Images"]
+            SharedPrefs["<b>SharedPreferences</b><br/>• Active Session Tokens<br/>• Theme & Motion Preferences<br/>• Cached User Dossier"]
+        end
+        subgraph RemoteCloud ["Supabase Cloud Backend (PostgreSQL 16)"]
+            CloudDB["<b>Relational Database (22 Tables)</b><br/>• user_profiles (RLS Enabled)<br/>• audit_logs (Immutable Ledger)<br/>• circulars_notices & notifications<br/>• student_courses & grievances<br/>• faculty_leaves & examinations"]
+            AuthEngine["<b>Supabase Auth & RLS</b><br/>• Role-Based Security Policies<br/>• pgcrypto Cryptographic Hashing"]
+        end
+    end
+
+    subgraph GatewayLayer ["5. External Institutional Gateways & Services"]
+        Samarth["<b>Samarth@GRI ERP Portal</b><br/>Student Lifecycle & Payroll"]
+        DigiLocker["<b>DigiLocker / APAAR ID</b><br/>National Academic Depository (NAD)"]
+        eSanad["<b>MEA e-SANAD Gateway</b><br/>Apostille & Degree Verification"]
+        TransitAPI["<b>Campus GPS & Transit</b><br/>Route Tracking (Madurai / Dindigul)"]
+    end
+
+    %% Inter-layer Communication Flows
+    UI_Screens --> UI_Widgets
+    UI_Widgets --> UI_Theme
+    UI_Screens --> Provider
+    Provider --> SeedService
+    Provider --> CloudService
+    Provider --> ResourceRegistry
+    CloudService --> SyncService
+
+    SeedService --> LocalAssets
+    Provider --> SharedPrefs
+    CloudService -->|HTTPS / WSS / REST| CloudDB
+    CloudService --> AuthEngine
+
+    ResourceRegistry -->|url_launcher| Samarth
+    ResourceRegistry -->|API / Web Launch| DigiLocker
+    ResourceRegistry -->|QR Verification| eSanad
+    UI_Screens -->|Direct Map Link| TransitAPI

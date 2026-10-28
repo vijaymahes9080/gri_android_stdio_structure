@@ -1,0 +1,85 @@
+%% =========================================================================
+%% Diagram 8: UML Use Case Diagram
+%% System: The Gandhigram Rural Institute Official Mobile Portal (GRI App)
+%% =========================================================================
+
+graph LR
+    %% Actors
+    subgraph PrimaryActors ["Institutional Actors"]
+        Student["Student User"]
+        Faculty["Faculty Member"]
+        COE["COE Staff"]
+        Scholar["Research Scholar"]
+        Admin["Administrator"]
+        Guest["Guest / Applicant"]
+    end
+
+    %% System Boundary
+    subgraph GRI_SystemBoundary ["System Boundary: The GRI Official Mobile Portal"]
+        UC_Register("UC01: Submit Registration Application")
+        UC_Auth("UC02: Authenticate & Switch Active Role")
+        UC_CheckSession("UC02.1: Verify JWT & Permissions")
+        
+        UC_Courses("UC03: Track Enrolled Courses & Attendance")
+        UC_HallTicket("UC04: Generate Verified Hall Ticket")
+        UC_Eligibility("UC04.1: Verify Attendance Threshold (>=75%)")
+        UC_eSanad("UC04.2: e-SANAD QR Token Attestation")
+        
+        UC_Grievance("UC05: File Grievance Petition (GRI-Care)")
+        UC_BusPass("UC06: View Digital Campus Transit Pass")
+        
+        UC_Leave("UC07: Apply for Faculty Leave")
+        UC_ClassRoll("UC08: Manage Class Roll & Attendance")
+        
+        UC_Exams("UC09: Publish Exam Timetable & Regulations")
+        UC_Research("UC10: Access Digital Research Repositories")
+        
+        UC_ReviewDossier("UC11: Review Pending User Dossiers")
+        UC_Clarify("UC11.1: Request Additional Documentation")
+        UC_Audit("UC11.2: Record Immutable Audit Action")
+        UC_Circular("UC12: Broadcast Official Statutory Circular")
+        
+        UC_AI("UC13: Consult GRI-Sahayak AI Assistant")
+        UC_Vault("UC14: Download Statutory Document Vault")
+        UC_Tracking("UC15: Track Application Status Stepper")
+    end
+
+    %% Actor Relationships
+    Guest --> UC_Register
+    Guest --> UC_Tracking
+    Guest --> UC_AI
+    Guest --> UC_Vault
+
+    Student --> UC_Auth
+    Student --> UC_Courses
+    Student --> UC_HallTicket
+    Student --> UC_Grievance
+    Student --> UC_BusPass
+    Student --> UC_AI
+    Student --> UC_Vault
+
+    Faculty --> UC_Auth
+    Faculty --> UC_Leave
+    Faculty --> UC_ClassRoll
+    Faculty --> UC_Vault
+    Faculty --> UC_AI
+
+    COE --> UC_Auth
+    COE --> UC_Exams
+    COE --> UC_HallTicket
+
+    Scholar --> UC_Auth
+    Scholar --> UC_Research
+    Scholar --> UC_Courses
+
+    Admin --> UC_Auth
+    Admin --> UC_ReviewDossier
+    Admin --> UC_Circular
+    Admin --> UC_Vault
+
+    %% Use Case Stereotypes (Include & Extend)
+    UC_Auth -.->|"<<include>>"| UC_CheckSession
+    UC_HallTicket -.->|"<<include>>"| UC_Eligibility
+    UC_HallTicket -.->|"<<extend>>"| UC_eSanad
+    UC_ReviewDossier -.->|"<<extend>>"| UC_Clarify
+    UC_ReviewDossier -.->|"<<include>>"| UC_Audit

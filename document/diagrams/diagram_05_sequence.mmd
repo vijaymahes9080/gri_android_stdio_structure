@@ -1,0 +1,58 @@
+%% =========================================================================
+%% Diagram 5: System Sequence Diagram
+%% Scenario: End-to-End Registration, Admin Dossier Approval, and Hall Ticket Issuance
+%% System: The Gandhigram Rural Institute Official Mobile Portal (GRI App)
+%% =========================================================================
+
+sequenceDiagram
+    autonumber
+    actor Stu as Student Applicant
+    participant UI as Flutter App (MainScaffold)
+    participant Prov as GriProvider (State Engine)
+    participant Srv as SupabaseService / Cache
+    participant DB as Cloud PostgreSQL (user_profiles, audit_logs)
+    actor Adm as Statutory Administrator
+    participant MEA as External e-SANAD / NAD Portal
+
+    Note over Stu,UI: Phase 1: Student Application Submission
+    Stu->>UI: Launch App & Tap "Register for Access"
+    UI->>UI: Open RegistrationWizardModal
+    Stu->>UI: Submit Name, Email, Reg. No. (23MCA042), Dept, Role: STUDENT
+    UI->>Prov: submitRegistration(applicationData)
+    Prov->>Srv: registerUserDossier(data)
+    Srv->>DB: INSERT INTO user_profiles (status='PENDING', requested_role='STUDENT')
+    DB-->>Srv: 201 Created (App_ID: APP-2026-9042)
+    Srv-->>Prov: Registration Success Event
+    Prov-->>UI: Set activeAccountStatus = PENDING_APPROVAL
+    UI-->>Stu: Display ApplicationStatusScreen with Step-Tracker (Under Review)
+
+    Note over Adm,DB: Phase 2: Administrative Review & Dossier Decision
+    Adm->>UI: Login as ADMIN & Open AdminApprovalCenterScreen
+    UI->>Prov: fetchPendingDossiers()
+    Prov->>Srv: queryPendingRegistrations()
+    Srv->>DB: SELECT * FROM user_profiles WHERE status IN ('PENDING', 'UNDER_REVIEW')
+    DB-->>Srv: Return List of Dossiers
+    Srv-->>Prov: Populate pendingDossiers List
+    Prov-->>UI: Render Pending Cards with Badges & Verification Controls
+    Adm->>UI: Select Dossier (23MCA042) & Open AdminReviewModal
+    Adm->>UI: Review Department & Verify Fee Clearance
+    Adm->>UI: Tap "Approve Application"
+    UI->>Prov: approveUserApplication(appId, approverRemarks)
+    Prov->>Srv: updateProfileStatus(appId, status='APPROVED', active_role='STUDENT')
+    Srv->>DB: UPDATE user_profiles SET status='APPROVED', active_role='STUDENT'
+    Srv->>DB: INSERT INTO audit_logs (actor='ADMIN', action='APPROVE_DOSSIER')
+    DB-->>Srv: Commit Transaction OK
+    Srv-->>Prov: Broadcast Status Update Notification
+    Prov-->>UI: Update Local Role Cache & Refresh Navigation Matrix
+
+    Note over Stu,MEA: Phase 3: Hall Ticket Generation & e-SANAD Verification
+    Stu->>UI: Navigate to Examination Tab (Now Unlocked)
+    UI->>Prov: requestHallTicket(studentId='23MCA042')
+    Prov->>Srv: checkExamEligibility(attendance, feeClearance)
+    Srv->>DB: SELECT attendance FROM student_courses WHERE user_id='23MCA042'
+    DB-->>Srv: Return Attendance = 88.5% (Threshold >= 75%)
+    Srv-->>Prov: Eligibility Confirmed (Eligible)
+    Prov->>MEA: Generate Cryptographic Verification Digest
+    MEA-->>Prov: Return e-SANAD Token String (e-SANAD-GRI-2026-NOV)
+    Prov-->>UI: Render HallTicketModal with QR Code, Subject Table & Center Info
+    UI-->>Stu: Display Verified Hall Ticket (Print / Save Digital Copy)

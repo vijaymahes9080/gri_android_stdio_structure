@@ -1,0 +1,40 @@
+%% =========================================================================
+%% Diagram 3: Level-0 Data Flow Diagram (Context Diagram)
+%% System: The Gandhigram Rural Institute Official Mobile Portal (GRI App)
+%% =========================================================================
+
+graph TD
+    %% External Entities
+    E_Student["<b>Student User</b><br/>Enrolled Undergrad / Postgrad"]
+    E_Faculty["<b>Faculty Member</b><br/>Teaching Staff & Research Guide"]
+    E_Admin["<b>University Administrator</b><br/>Registrar & Systems Officer"]
+    E_COE["<b>COE Staff</b><br/>Controller of Examinations"]
+    E_Scholar["<b>Research Scholar</b><br/>Ph.D. / JRF Scholar"]
+    E_External["<b>National Portals</b><br/>e-SANAD, Samarth, DigiLocker"]
+
+    %% Central Process
+    P_System(("<b>0.0<br/>GRI Official Mobile<br/>Portal System</b><br/>(com.aistudio.grist.kxmpzq)"))
+
+    %% Student Data Flows
+    E_Student -->|Registration Credentials, Grievance Reports, Course Queries| P_System
+    P_System -->|Verified Hall Tickets, Attendance Metrics, Circulars, Digital Bus Pass| E_Student
+
+    %% Faculty Data Flows
+    E_Faculty -->|Leave Applications, Class Roll Updates, Circular Submissions| P_System
+    P_System -->|Leave Approvals, Institutional Directories, Academic Schedules| E_Faculty
+
+    %% Administrator Data Flows
+    E_Admin -->|Profile Approvals, System Policies, Notice Broadcasts, Audit Reviews| P_System
+    P_System -->|Pending Dossiers, Immutable Audit Logs, Sync Telemetry| E_Admin
+
+    %% COE Staff Data Flows
+    E_COE -->|Timetable Uploads, Hall Ticket Release Orders, Tatkal Instructions| P_System
+    P_System -->|Candidate Roster, Exam Query Reports, Verification Tokens| E_COE
+
+    %% Research Scholar Data Flows
+    E_Scholar -->|Thesis Registration, Seminar Papers, E-Resource Access Requests| P_System
+    P_System -->|UGC PhD Compliance Status, Digital Library Access, Research Grants Info| E_Scholar
+
+    %% External Gateways Data Flows
+    P_System -->|QR Attestation Requests, APAAR Student Verification Tokens| E_External
+    E_External -->|Apostille Confirmations, DigiLocker Transcripts, ERP Records| P_System

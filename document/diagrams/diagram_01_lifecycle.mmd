@@ -1,0 +1,40 @@
+%% =========================================================================
+%% Diagram 1: Proposed Project Lifecycle and Milestones
+%% System: The Gandhigram Rural Institute Official Mobile Portal (GRI App)
+%% =========================================================================
+
+gantt
+    title GRI Official Mobile Portal — Development Lifecycle & Engineering Milestones
+    dateFormat YYYY-MM-DD
+    axisFormat %b %Y
+
+    section Phase 1: Institutional Requirements & Feasibility
+    Stakeholder Interviews & Policy Audit           :done, req1, 2026-06-01, 2026-06-20
+    309-Route Web Crawl & Content Inventory         :done, req2, 2026-06-15, 2026-07-05
+    Technical & Operational Feasibility Study       :done, req3, 2026-06-25, 2026-07-10
+    System Requirements Specification (SRS) Signoff :done, ms1, 2026-07-10, 2026-07-15
+
+    section Phase 2: Architecture & System Design
+    Clean Modular Architecture Specification       :done, des1, 2026-07-16, 2026-07-30
+    Database Schema & RLS Security Policy Modeling  :done, des2, 2026-07-25, 2026-08-10
+    Gandhian Design System (GriColors & Typography) :done, des3, 2026-08-01, 2026-08-15
+    Architecture Review & Baseline Approval        :done, ms2, 2026-08-15, 2026-08-20
+
+    section Phase 3: Core Implementation & Integration
+    Dual-Tier Data Layer (SeedData & Supabase)      :done, dev1, 2026-08-21, 2026-09-10
+    25 Native Flutter Application Screens           :done, dev2, 2026-08-28, 2026-09-25
+    Role-Based Access Control & Multi-Role Modal    :done, dev3, 2026-09-10, 2026-09-30
+    e-SANAD Attestation & QR Hall Ticket Generator  :done, dev4, 2026-09-20, 2026-10-05
+    GRI-Sahayak AI Conversational Hub               :done, dev5, 2026-09-25, 2026-10-10
+
+    section Phase 4: Verification, Security & Auditing
+    Automated Unit & Widget Testing (25 Tests)      :done, tst1, 2026-10-05, 2026-10-15
+    Static Analysis & Dart Linter Zero-Defect Gate  :done, tst2, 2026-10-10, 2026-10-18
+    Physical Device Testing (ADB & Android SDK 36)  :done, tst3, 2026-10-15, 2026-10-22
+    Security Audit & OWASP Mobile Verification      :done, tst4, 2026-10-18, 2026-10-25
+
+    section Phase 5: Deployment, Pilot & Evolution
+    Debug & Release APK Generation (`app-debug.apk`) :done, dep1, 2026-10-22, 2026-10-26
+    Campus Beta Rollout (Postgraduate Pilot Group)   :active, dep2, 2026-10-27, 2026-11-20
+    Full Institutional Commissioning                :crit, dep3, 2026-11-21, 2026-12-15
+    Post-Release Maintenance & Biometric Sync Gate  :dep4, 2026-12-16, 2027-02-28

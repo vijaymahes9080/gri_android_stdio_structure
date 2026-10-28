@@ -1,0 +1,80 @@
+%% =========================================================================
+%% Diagram 9: Screen Navigation Hierarchy & UI/UX Wireframe Flow
+%% System: The Gandhigram Rural Institute Official Mobile Portal (GRI App)
+%% =========================================================================
+
+graph TD
+    %% Root Launch
+    Splash["<b>GriSplashScreen</b><br/>• Crest Animation<br/>• Seed Data Bootstrap<br/>• Session Restore"]
+    
+    %% Main Shell
+    Scaffold["<b>MainScaffold & GriTopBar</b><br/>• Institutional Header & Logo<br/>• Dynamic Role Badge & Switcher<br/>• Notification Bell & Drawer Toggle"]
+    
+    Splash -->|Initialization Done| Scaffold
+
+    %% Bottom Navigation Tabs (Dynamic by Role)
+    subgraph BottomNavigationTabs ["Primary Scaffold Bottom Navigation Tabs"]
+        Tab_Home["<b>Tab 1: Home Dashboard</b><br/>(HomeDashboardScreen)"]
+        Tab_Academics["<b>Tab 2: Academics & Exams</b><br/>(AcademicsHubScreen)"]
+        Tab_Campus["<b>Tab 3: Campus & Facilities</b><br/>(CampusFacilitiesScreen)"]
+        Tab_Services["<b>Tab 4: Student Services</b><br/>(StudentServicesHubScreen)"]
+        Tab_Approvals["<b>Tab 2 (Admin): Approvals</b><br/>(AdminApprovalCenterScreen)"]
+        Tab_Status["<b>Tab 1 (Guest): Status</b><br/>(ApplicationStatusScreen)"]
+        Tab_More["<b>Tab 5: More Hub</b><br/>(AdminDirectoryScreen)"]
+    end
+
+    Scaffold -->|Default Tab| Tab_Home
+    Scaffold -->|Academic Context| Tab_Academics
+    Scaffold -->|Geographic Context| Tab_Campus
+    Scaffold -->|Welfare Context| Tab_Services
+    Scaffold -->|Admin Role Active| Tab_Approvals
+    Scaffold -->|Pending Status Active| Tab_Status
+    Scaffold -->|Directory & Links| Tab_More
+
+    %% Modal Dialogs & Sheets
+    subgraph InstitutionalModals ["Global Modals & Action Sheets"]
+        Modal_Role["<b>RoleSwitcherModal</b><br/>Switch Student/Faculty/Admin"]
+        Modal_Reg["<b>RegistrationWizardModal</b><br/>4-Step Institutional Enrollment"]
+        Modal_Review["<b>AdminReviewModal</b><br/>Dossier Verification & Action"]
+        Modal_HallTicket["<b>HallTicketModal</b><br/>QR Code & Exam Attestation"]
+    end
+
+    Scaffold -->|Tap Role Strip| Modal_Role
+    Scaffold -->|Tap Register Button| Modal_Reg
+    Tab_Approvals -->|Select Dossier| Modal_Review
+    Tab_Academics -->|Download Hall Ticket| Modal_HallTicket
+
+    %% University Drawer Navigation Routes
+    subgraph DrawerDestinations ["University Drawer Deep Navigation Routes"]
+        Scr_Heritage["<b>AboutGriHeritageScreen</b><br/>Vision, Mission & Founders"]
+        Scr_Governance["<b>GovernanceLeadershipScreen</b><br/>Executive & Academic Councils"]
+        Scr_Schools["<b>SchoolsProgrammesHubScreen</b><br/>8 Schools & 30+ Departments"]
+        Scr_DeptDetail["<b>DepartmentDetailScreen</b><br/>Faculty, HOD & Syllabus"]
+        Scr_Prospectus["<b>AdmissionsProspectusScreen</b><br/>Brochures, CUET & Eligibility"]
+        Scr_ExamServices["<b>ExaminationServicesScreen</b><br/>COE Forms, Tatkal & e-SANAD"]
+        Scr_Vault["<b>DocumentVaultScreen</b><br/>595 Statutory PDF Catalog"]
+        Scr_Portals["<b>OfficialPortalsGatewayScreen</b><br/>Samarth ERP, DigiLocker, APAAR"]
+        Scr_Media["<b>MediaGalleryScreen</b><br/>Campus Video Tour & Photos"]
+        Scr_Transit["<b>ContactCampusInfoScreen</b><br/>Bus Routes & EPABX Directory"]
+        Scr_Search["<b>GlobalWebsiteSearchScreen</b><br/>Universal 309-Route Catalog"]
+        Scr_AI["<b>AskGriAiScreen</b><br/>GRI-Sahayak AI Assistant"]
+        Scr_Faculty["<b>FacultyStaffPortalScreen</b><br/>Leave Management & Class Roll"]
+        Scr_DocCenter["<b>OfficialDocumentCenterScreen</b><br/>Institutional Attestation"]
+        Scr_Settings["<b>SettingsScreen</b><br/>Dark Mode & Motion Controls"]
+    end
+
+    Scaffold -->|Drawer Menu| Scr_Heritage
+    Scaffold -->|Drawer Menu| Scr_Governance
+    Scaffold -->|Drawer Menu| Scr_Schools
+    Scr_Schools -->|Select Dept| Scr_DeptDetail
+    Scaffold -->|Drawer Menu| Scr_Prospectus
+    Scaffold -->|Drawer Menu| Scr_ExamServices
+    Scaffold -->|Drawer Menu| Scr_Vault
+    Scaffold -->|Drawer Menu| Scr_Portals
+    Scaffold -->|Drawer Menu| Scr_Media
+    Scaffold -->|Drawer Menu| Scr_Transit
+    Scaffold -->|AppBar Action| Scr_Search
+    Scaffold -->|Floating FAB| Scr_AI
+    Scaffold -->|Faculty Context| Scr_Faculty
+    Scaffold -->|Drawer Menu| Scr_DocCenter
+    Scaffold -->|Drawer Menu| Scr_Settings

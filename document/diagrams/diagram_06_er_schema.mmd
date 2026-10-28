@@ -1,0 +1,172 @@
+%% =========================================================================
+%% Diagram 6: Entity-Relationship (ER) Database Schema
+%% System: The Gandhigram Rural Institute Official Mobile Portal (GRI App)
+%% Engine: PostgreSQL 16 (Supabase Cloud + RLS Enabled)
+%% =========================================================================
+
+erDiagram
+    user_profiles ||--o{ audit_logs : "records actions on"
+    user_profiles ||--o{ grievances : "submits"
+    user_profiles ||--o{ faculty_leaves : "applies for"
+    user_profiles ||--o{ notifications : "receives"
+    user_profiles ||--o{ student_courses : "enrolls in"
+
+    schools ||--o{ departments : "contains"
+    schools ||--o{ programmes : "administers"
+    departments ||--o{ programmes : "conducts"
+    departments ||--o{ documents_repository : "publishes"
+
+    user_profiles {
+        UUID id PK
+        UUID auth_user_id FK "References auth.users"
+        TEXT name "Full Student/Faculty Name"
+        TEXT email UK "Institutional Email"
+        TEXT mobile "Contact Number"
+        TEXT institutional_id "Roll No or Staff ID"
+        TEXT requested_role "Initial Application Role"
+        TEXT_ARRAY approved_roles "Granted Roles Array"
+        TEXT active_role "Current Active Session Role"
+        TEXT status "PENDING, UNDER_REVIEW, APPROVED, REJECTED"
+        TEXT department "Academic Dept Name"
+        TEXT programme "Enrolled Degree"
+        TEXT semester "Current Semester"
+        TEXT designation "Staff Designation"
+        TEXT application_id UK "Unique Dossier Tracking ID"
+        NUMERIC attendance "Aggregate Attendance %"
+        TEXT cgpa "Cumulative Grade Point Average"
+        BOOLEAN is_hostelite "Hostel Resident Flag"
+        TEXT hostel_name "Assigned Hostel Block"
+        TEXT bus_pass "Digital Transit Pass Number"
+        DATE valid_thru "ID Card Validity Period"
+        TEXT rejection_reason "Admin Review Notes"
+        TEXT info_requested "Clarification Query"
+        TEXT info_provided "Applicant Response"
+        TEXT approved_by "Statutory Officer Signoff"
+        TIMESTAMPTZ approved_at "Timestamp of Approval"
+        TIMESTAMPTZ created_at "Registration Timestamp"
+        TIMESTAMPTZ updated_at "Last Profile Update"
+    }
+
+    audit_logs {
+        UUID id PK
+        TEXT actor_user_id "Operator UUID or Email"
+        TEXT actor_name "Operator Name"
+        TEXT target_user_id "Subject User Profile ID"
+        TEXT action "APPROVE, REJECT, REQUEST_INFO, SYNC"
+        TEXT previous_status "Old Account State"
+        TEXT new_status "Updated Account State"
+        TEXT remarks "Statutory Audit Justification"
+        TIMESTAMPTZ created_at "Immutable Timestamp"
+    }
+
+    circulars_notices {
+        TEXT id PK "e.g. CIR-2026-NOV-01"
+        TEXT title "Notice Heading"
+        TEXT category "Examinations, Academics, Admin"
+        TEXT date "Publishing Date"
+        TEXT issued_by "Issuing Authority"
+        BOOLEAN urgent "High-Priority Banner Flag"
+        TEXT summary "Executive Summary Text"
+        TEXT stage "DRAFT, PUBLISHED, ARCHIVED"
+        TEXT audience "Target Group / ALL CAMPUS"
+        TEXT doc_url "PDF / Storage Link"
+        TIMESTAMPTZ created_at "Creation Date"
+        TIMESTAMPTZ updated_at "Update Date"
+    }
+
+    grievances {
+        TEXT id PK "e.g. GRV-2026-0042"
+        TEXT user_id FK "Filing Student Roll No"
+        TEXT user_name "Complainant Name"
+        TEXT category "Hostel, Academic, Transport, Exam"
+        TEXT subject "Grievance Title"
+        TEXT description "Detailed Incident Narrative"
+        TEXT date "Submission Date"
+        TEXT status "SUBMITTED, IN_PROGRESS, RESOLVED"
+        TEXT remarks "Redressal Committee Feedback"
+        TIMESTAMPTZ created_at "Logged Timestamp"
+    }
+
+    faculty_leaves {
+        TEXT id PK "e.g. LV-FAC-2026-012"
+        TEXT user_id FK "Faculty Staff ID"
+        TEXT faculty_name "Applicant Name"
+        TEXT type "Casual, Duty Leave, Medical, Sabbatical"
+        TEXT dates "Leave Date Span"
+        INTEGER days "Number of Duty Days"
+        TEXT reason "Official Justification"
+        TEXT status "PENDING_HOD, APPROVED, REJECTED"
+        TIMESTAMPTZ created_at "Submission Timestamp"
+    }
+
+    notifications {
+        TEXT id PK
+        TEXT user_id FK "Target User or NULL for Broadcast"
+        TEXT title "Banner Title"
+        TEXT text "Notification Body"
+        TEXT time "Relative Time Display"
+        BOOLEAN unread "Read / Unread State"
+        TEXT target_tab "Navigation Route Destination"
+        TEXT target_action "Action Trigger Identifier"
+        TIMESTAMPTZ created_at "Timestamp"
+    }
+
+    student_courses {
+        TEXT id PK "e.g. sc_1"
+        TEXT user_id FK "Student Identifier"
+        TEXT code "Course Code (CS501)"
+        TEXT title "Course Title"
+        INTEGER credits "Credit Hours"
+        TEXT instructor "Course Professor"
+        TEXT schedule "Lecture Days & Slot"
+        NUMERIC attendance "Attendance %"
+        INTEGER total "Total Sessions Held"
+        INTEGER attended "Attended Sessions"
+        TIMESTAMPTZ created_at "Enrollment Date"
+    }
+
+    schools {
+        TEXT id PK "e.g. SCH-01"
+        TEXT name "School of Sciences & Rural Tech"
+        TEXT dean "Dean Name"
+        TEXT dean_email "Official Email"
+        TEXT dean_phone "Direct Line"
+        INTEGER programmes_count "Total Offerings"
+        TEXT highlights "Centres of Excellence"
+        TEXT source_url "Canonical Web Route"
+    }
+
+    departments {
+        TEXT id PK "e.g. DEP-CS"
+        TEXT school_id FK "Parent School ID"
+        TEXT name "Dept of Computer Science"
+        TEXT hod_name "HOD Name"
+        TEXT hod_email "Official Contact"
+        TEXT contact_phone "Intercom Extension"
+        TEXT overview "Departmental Narrative"
+        TEXT source_url "Canonical Web Route"
+    }
+
+    programmes {
+        TEXT id PK "e.g. PRG-MCA"
+        TEXT name "Master of Computer Applications"
+        TEXT school_id FK
+        TEXT department_id FK
+        TEXT level "UG, PG, Doctoral, Diploma"
+        TEXT duration "2 Years / 4 Semesters"
+        TEXT eligibility "Entrance & Degree Criteria"
+        TEXT cuet_code "NTA CUET-PG Test Paper Code"
+        INTEGER intake "Sanctioned Seat Capacity"
+        TEXT source_url "Official Prospectus Link"
+    }
+
+    documents_repository {
+        TEXT id PK
+        TEXT title "Official Document Title"
+        TEXT category "Prospectus, Regulation, Circular"
+        TEXT file_path "Local / Cloud URI"
+        BIGINT file_size_bytes "Asset Size"
+        TEXT mime_type "application/pdf"
+        TEXT sha256_hash UK "Cryptographic Hash"
+        TEXT source_url "Source Portal Endpoint"
+    }
