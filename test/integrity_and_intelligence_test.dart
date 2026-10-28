@@ -587,15 +587,16 @@ void main() {
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.reset);
 
+      // Widget-test timers are fake: avoid real-duration awaits before any
+      // pump; give the constructor's async restore a frame instead.
       final provider = GriProvider();
-      await Future<void>.delayed(const Duration(milliseconds: 150));
       await tester.pumpWidget(
         ChangeNotifierProvider<GriProvider>.value(
           value: provider,
           child: const MaterialApp(home: Scaffold(body: SettingsScreen())),
         ),
       );
-      await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 250));
 
       // Guard: the action needs explicit confirmation before it runs.
       final resetButton = find.text('Reset Vault Data');
@@ -604,12 +605,24 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('Reset Institutional Data?'), findsOneWidget);
 
+      // Recording a mutation first proves baseline restoration afterwards.
+      provider.submitGrievance('Transport', 'Reset Probe', 'Market');
+      expect(provider.grievances.any((g) => g.subject == 'Reset Probe'), isTrue);
+
       await tester.tap(find.text('Reset Data'));
-      await tester.pumpAndSettle(const Duration(seconds: 2));
+      await tester.pumpAndSettle();
+
+      // Dialog is dismissed and the vault is restored to the seed baseline.
+      expect(find.text('Reset Institutional Data?'), findsNothing);
       expect(
-        find.textContaining('reset to institutional baseline'),
-        findsOneWidget,
+        provider.notificationMessage,
+        contains('reset to institutional baseline'),
       );
+      expect(
+        provider.grievances.any((g) => g.subject == 'Reset Probe'),
+        isFalse,
+      );
+      expect(provider.grievances.isNotEmpty, isTrue); // seeded baseline restored
     });
   });
 }

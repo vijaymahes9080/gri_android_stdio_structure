@@ -97,6 +97,15 @@ Migrations create: `user_profiles`, `audit_logs`, `circulars_notices`,
 `document_certificates`, `registration_applications` — all with Row Level
 Security policies.
 
+**RLS hardening (20261028010000):** the original policies granted anonymous
+(anon-key) sessions *write* access to official circulars and attendance
+records, and read access to grievances, audit logs and leave records. The
+hardening migration fails those closed: cloud reads/writes now require either
+the owning institutional profile or an approved admin/staff role. Consequence:
+an app session running **without a Supabase Auth identity** sees no cloud rows
+for these tables (local vault data is unaffected) — wire Supabase Auth before
+relying on cloud-mode data for these features.
+
 ## 6. Architecture overview
 
 ```
@@ -150,7 +159,8 @@ lib/
 - Full Supabase Auth (email/password, OTP) is scaffolded at the service layer
   but not yet wired into the login flow; the app boots into the last-selected
   local account. This is the largest remaining gap before multi-user cloud
-  rollout.
+  rollout. Related: the 20261028010000 RLS hardening makes grievance/leave/
+  attendance cloud tables fail closed without an Auth session (see §5).
 - Web notice scraping depends on the university site's HTML structure; if the
   markup changes, the verified seed fallback keeps the app accurate.
 - Certificate register ships a small development sample set; production must
@@ -163,5 +173,6 @@ lib/
 | `flutter doctor` Android licenses error | `flutter doctor --android-licenses` |
 | Build warns about Kotlin plugin version | harmless; Gradle resolves the pinned version in `gradle/libs.versions.toml` |
 | Cloud shows `Offline Vault` despite credentials | ensure `--dart-define` flags were used at build/run time (they are compile-time constants) |
+| Cloud-mode grievances/leaves empty after sync | expected with hardening: these tables fail closed without a Supabase Auth session (see §5 RLS hardening) |
 | Tests hang briefly on first run | network probes to the official site use an 8 s timeout then fall back to seeds |
 | Reset all local data | Settings → reset institutional data (or `LocalDataStoreService.clearAll()`) |
