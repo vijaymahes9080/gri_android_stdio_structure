@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'gri_metrics.dart';
 import 'gri_typography.dart';
 
 /// GRI Design Tokens & Theme System
@@ -62,6 +63,13 @@ class GriColors {
   static const Color infoContainer = Color(0xFFD2E4FF);
   static const Color infoOnContainer = Color(0xFF001C3B);
 
+  // Bright status inks for DARK surfaces (WCAG-tuned; consistent with the
+  // darkTheme primary/tertiary/error accents already used below).
+  static const Color successBright = Color(0xFF81C784);
+  static const Color warningBright = Color(0xFFFFB74D);
+  static const Color errorBright = Color(0xFFF2B8B5);
+  static const Color infoBright = Color(0xFF82B1FF);
+
   // Backward compatibility alias getters
   static Color get surface => surfaceCanvas;
 
@@ -79,15 +87,7 @@ class GriColors {
         color: borderColor ?? outlineVariant,
         width: 1.0,
       ),
-      boxShadow: elevated
-          ? const [
-              BoxShadow(
-                color: Color(0x08000000),
-                blurRadius: 8,
-                offset: Offset(0, 2),
-              ),
-            ]
-          : null,
+      boxShadow: elevated ? GriShadows.card : null,
     );
   }
 
@@ -142,21 +142,82 @@ class GriColors {
         thickness: 1.0,
         space: 1,
       ),
-      textTheme: const TextTheme(
-        displayLarge: GriTypography.displayLarge,
-        displayMedium: GriTypography.displayMedium,
-        headlineLarge: GriTypography.headlineLarge,
-        headlineMedium: GriTypography.headlineMedium,
-        headlineSmall: GriTypography.headlineSmall,
-        titleLarge: GriTypography.titleLarge,
-        titleMedium: GriTypography.titleMedium,
-        titleSmall: GriTypography.titleSmall,
-        bodyLarge: GriTypography.bodyLarge,
-        bodyMedium: GriTypography.bodyMedium,
-        bodySmall: GriTypography.bodySmall,
-        labelLarge: GriTypography.labelLarge,
-        labelMedium: GriTypography.labelMedium,
-        labelSmall: GriTypography.labelSmall,
+      textTheme: GriTypography.theme(Brightness.light),
+      snackBarTheme: const SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: forestPrimary,
+        contentTextStyle: TextStyle(
+          color: Colors.white,
+          fontSize: 13,
+          fontWeight: FontWeight.w600,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(GriRadii.md)),
+        ),
+      ),
+      dialogTheme: DialogThemeData(
+        backgroundColor: surfaceCard,
+        surfaceTintColor: Colors.transparent,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(GriRadii.xl)),
+        titleTextStyle: GriTypography.headlineMedium,
+        contentTextStyle: GriTypography.bodyLarge,
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: forestPrimary,
+          foregroundColor: Colors.white,
+          disabledBackgroundColor: onSurface.withValues(alpha: 0.12),
+          disabledForegroundColor: onSurface.withValues(alpha: 0.38),
+          minimumSize: const Size(88, 48), // 48 dp minimum touch target
+          textStyle: GriTypography.labelLarge,
+          elevation: 0,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(GriRadii.md)),
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: surfaceVariant,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(GriRadii.md),
+          borderSide: const BorderSide(color: outlineVariant),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(GriRadii.md),
+          borderSide: const BorderSide(color: outlineVariant),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(GriRadii.md),
+          borderSide: const BorderSide(color: forestPrimary, width: 1.6),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(GriRadii.md),
+          borderSide: const BorderSide(color: error),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(GriRadii.md),
+          borderSide: const BorderSide(color: error, width: 1.6),
+        ),
+      ),
+      bottomSheetTheme: const BottomSheetThemeData(
+        backgroundColor: surfaceCard,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(GriRadii.sheet)),
+        ),
+        showDragHandle: false,
+      ),
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: surfaceCard,
+        indicatorColor: forestPrimary.withValues(alpha: 0.14),
+        elevation: 1,
+        height: 64,
+        labelTextStyle: WidgetStateProperty.resolveWith((states) {
+          final selected = states.contains(WidgetState.selected);
+          return GriTypography.labelMedium.copyWith(
+            color: selected ? forestPrimary : onSurfaceVariant,
+            fontWeight: selected ? FontWeight.w700 : FontWeight.w600,
+          );
+        }),
       ),
     );
   }
@@ -209,6 +270,83 @@ class GriColors {
         color: darkOutlineVariant,
         thickness: 1.0,
         space: 1,
+      ),
+      textTheme: GriTypography.theme(Brightness.dark),
+      snackBarTheme: SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: darkSurface3,
+        contentTextStyle: const TextStyle(
+          color: darkOnSurface,
+          fontSize: 13,
+          fontWeight: FontWeight.w600,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(GriRadii.md),
+        ),
+      ),
+      dialogTheme: DialogThemeData(
+        backgroundColor: darkSurface3,
+        surfaceTintColor: Colors.transparent,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(GriRadii.xl)),
+        titleTextStyle: GriTypography.headlineMedium.copyWith(color: darkOnSurface),
+        contentTextStyle: GriTypography.bodyLarge.copyWith(color: darkOnSurface),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xFF81C784),
+          foregroundColor: const Color(0xFF003A08),
+          disabledBackgroundColor: darkOnSurface.withValues(alpha: 0.12),
+          disabledForegroundColor: darkOnSurface.withValues(alpha: 0.38),
+          minimumSize: const Size(88, 48),
+          textStyle: GriTypography.labelLarge,
+          elevation: 0,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(GriRadii.md)),
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: darkSurface2,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(GriRadii.md),
+          borderSide: const BorderSide(color: darkOutlineVariant),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(GriRadii.md),
+          borderSide: const BorderSide(color: darkOutlineVariant),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(GriRadii.md),
+          borderSide: const BorderSide(color: Color(0xFF81C784), width: 1.6),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(GriRadii.md),
+          borderSide: const BorderSide(color: errorBright),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(GriRadii.md),
+          borderSide: const BorderSide(color: errorBright, width: 1.6),
+        ),
+      ),
+      bottomSheetTheme: const BottomSheetThemeData(
+        backgroundColor: darkSurface1,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(GriRadii.sheet)),
+        ),
+        showDragHandle: false,
+      ),
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: darkSurface1,
+        indicatorColor: forestPrimary.withValues(alpha: 0.30),
+        elevation: 1,
+        height: 64,
+        labelTextStyle: WidgetStateProperty.resolveWith((states) {
+          final selected = states.contains(WidgetState.selected);
+          return GriTypography.labelMedium.copyWith(
+            color: selected ? const Color(0xFF81C784) : darkOnSurfaceVariant,
+            fontWeight: selected ? FontWeight.w700 : FontWeight.w600,
+          );
+        }),
       ),
     );
   }

@@ -99,7 +99,7 @@ class _ScholarshipsWelfareScreenState extends State<ScholarshipsWelfareScreen> w
                             ),
                             child: const Text(
                               "AY 2026-27",
-                              style: TextStyle(fontSize: 9.5, fontWeight: FontWeight.w700, color: GriColors.forestPrimary),
+                              style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: GriColors.forestPrimary),
                             ),
                           ),
                         ],
@@ -308,13 +308,17 @@ class _ScholarshipsWelfareScreenState extends State<ScholarshipsWelfareScreen> w
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Row(
+                      Row(
                         children: [
-                          Icon(Icons.gavel, color: Colors.red, size: 18),
-                          SizedBox(width: 8),
+                          Icon(Icons.gavel, color: isDark ? GriColors.errorBright : GriColors.error, size: 18),
+                          const SizedBox(width: 8),
                           Text(
                             "ZERO TOLERANCE TO RAGGING",
-                            style: TextStyle(fontWeight: FontWeight.w800, fontSize: 13, color: Colors.red),
+                            style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 13,
+                              color: isDark ? GriColors.errorBright : GriColors.error,
+                            ),
                           ),
                         ],
                       ),
@@ -323,7 +327,7 @@ class _ScholarshipsWelfareScreenState extends State<ScholarshipsWelfareScreen> w
                         "Ragging in any form is strictly banned inside and outside the GRI campus in accordance with Supreme Court and UGC directives. Any student found abetting or guilty will face immediate expulsion, filing of police FIR, and debarment.",
                         style: TextStyle(
                           fontSize: 12,
-                          color: isDark ? Colors.red.shade100 : Colors.red.shade900,
+                          color: isDark ? GriColors.errorBright : GriColors.error,
                           height: 1.35,
                         ),
                       ),
@@ -339,17 +343,21 @@ class _ScholarshipsWelfareScreenState extends State<ScholarshipsWelfareScreen> w
                               child: Container(
                                 padding: const EdgeInsets.symmetric(vertical: 8),
                                 decoration: BoxDecoration(
-                                  color: Colors.red.withValues(alpha: 0.12),
+                                  color: isDark ? GriColors.errorBright.withValues(alpha: 0.16) : GriColors.errorContainer,
                                   borderRadius: BorderRadius.circular(6),
                                 ),
-                                child: const Row(
+                                child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(Icons.call, size: 13, color: Colors.red),
-                                    SizedBox(width: 6),
+                                    Icon(Icons.call, size: 13, color: isDark ? GriColors.errorBright : GriColors.error),
+                                    const SizedBox(width: 6),
                                     Text(
                                       "Toll Free: 1800-180-5522",
-                                      style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Colors.red),
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w700,
+                                        color: isDark ? GriColors.errorBright : GriColors.error,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -366,17 +374,21 @@ class _ScholarshipsWelfareScreenState extends State<ScholarshipsWelfareScreen> w
                               child: Container(
                                 padding: const EdgeInsets.symmetric(vertical: 8),
                                 decoration: BoxDecoration(
-                                  color: Colors.red.withValues(alpha: 0.12),
+                                  color: isDark ? GriColors.errorBright.withValues(alpha: 0.16) : GriColors.errorContainer,
                                   borderRadius: BorderRadius.circular(6),
                                 ),
-                                child: const Row(
+                                child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(Icons.mail_outline, size: 13, color: Colors.red),
-                                    SizedBox(width: 6),
+                                    Icon(Icons.mail_outline, size: 13, color: isDark ? GriColors.errorBright : GriColors.error),
+                                    const SizedBox(width: 6),
                                     Text(
                                       "Email Cell",
-                                      style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Colors.red),
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w700,
+                                        color: isDark ? GriColors.errorBright : GriColors.error,
+                                      ),
                                     ),
                                   ],
                                 ),

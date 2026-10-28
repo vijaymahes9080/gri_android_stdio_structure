@@ -300,7 +300,7 @@ class HomeDashboardScreen extends StatelessWidget {
                                       "LIVE NOTICE",
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 9,
+                                        fontSize: 10,
                                         fontWeight: FontWeight.w800,
                                         letterSpacing: 0.4,
                                       ),
@@ -908,7 +908,7 @@ class HomeDashboardScreen extends StatelessWidget {
                   child: Text(
                     badge,
                     style: TextStyle(
-                      fontSize: 9,
+                      fontSize: 10,
                       fontWeight: FontWeight.w700,
                       color: badgeColor,
                     ),
@@ -985,7 +985,7 @@ class HomeDashboardScreen extends StatelessWidget {
                 Text(
                   isAboveThreshold ? "Eligible" : "Low",
                   style: TextStyle(
-                    fontSize: 8.5,
+                    fontSize: 10,
                     fontWeight: FontWeight.w700,
                     color: isAboveThreshold ? GriColors.forestPrimary : GriColors.warning,
                   ),

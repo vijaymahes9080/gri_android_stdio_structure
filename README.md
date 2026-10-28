@@ -71,6 +71,10 @@ Test suites:
 - `test/rollcall_and_authorization_test.dart` — faculty roll-call register
   (status cycling, submission counts, vault durability, cloud queue), hall-ticket
   eligibility refusals, RBAC denial for unapproved role activation
+- `test/design_system_test.dart` — typography parity across light/dark modes,
+  10px legibility floor, component themes (buttons/inputs/dialogs/sheets/nav),
+  shared primitives (empty state, section header, status badge tones),
+  reduced-motion compliance, metric token coherence
 
 ## 4. Build & Deploy (Android)
 
@@ -128,8 +132,27 @@ lib/
 │   └── seed_data_service.dart        # institutional seed datasets
 ├── screens/                  # 30+ feature screens (dashboard, academics, campus…)
 ├── widgets/                  # top bar, drawer, modals (wizard, review, ticket)
-└── utils/                    # design system: colors, typography, motion
+│                             # + shared primitives (GriEmptyState, GriSectionHeader,
+│                             #   GriStatusBadge — dark-mode aware, motion-respecting)
+└── utils/                    # design system: colors, typography, metrics
+                              # (spacing/radii/shadows), motion (reduced-motion
+                              # compliant), + full ThemeData component themes
 ```
+
+### Design system rules (enforced by `GriColors`/`GriTypography`/`GriMetrics`/`GriMotion`)
+- **Colors:** status/feedback uses the WCAG-tuned semantic tokens
+  (`success`/`warning`/`error`/`info` + containers); dark mode uses the
+  matching `*Bright` inks. Raw `Colors.green/red/...` must not be used for
+  status. Dark and light modes define **identical typographic geometry** —
+  only the ink differs (`GriTypography.theme(brightness)`).
+- **Typography:** the 10 px legibility floor is absolute; every tokenized
+  style is ≥ 10 px.
+- **Components:** buttons, inputs, dialogs, snackbars, bottom sheets and the
+  navigation bar are themed centrally — screens inherit consistent states
+  (incl. disabled) for free.
+- **Motion:** durations/curves come from `GriMotion`; entrance animations and
+  press feedback honor `MediaQuery.disableAnimations` (and the in-app
+  reduced-motion setting).
 
 ### Data flow rules
 - Every mutation writes the local vault **immediately**; if cloud credentials

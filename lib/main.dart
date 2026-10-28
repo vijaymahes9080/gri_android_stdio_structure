@@ -82,7 +82,6 @@ class MainScaffold extends StatelessWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(provider.notificationMessage!),
-            backgroundColor: GriColors.forestPrimary,
             duration: const Duration(seconds: 2),
           ),
         );
@@ -241,12 +240,6 @@ class MainScaffold extends StatelessWidget {
           ),
           bottomNavigationBar: NavigationBar(
             selectedIndex: selectedNavIndex,
-            backgroundColor: Theme.of(context).brightness == Brightness.dark
-                ? GriColors.darkSurface1
-                : Colors.white,
-            indicatorColor: GriColors.forestPrimary.withValues(alpha: 0.14),
-            elevation: 1,
-            height: 64,
             labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
             onDestinationSelected: (index) {
               provider.switchTab(navItems[index].tab);
@@ -254,7 +247,7 @@ class MainScaffold extends StatelessWidget {
             destinations: navItems
                 .map((item) => NavigationDestination(
                       icon: Icon(item.icon, size: 22),
-                      selectedIcon: Icon(item.icon, color: GriColors.forestPrimary, size: 22),
+                      selectedIcon: Icon(item.icon, color: Theme.of(context).colorScheme.primary, size: 22),
                       label: item.title,
                     ))
                 .toList(),
@@ -303,11 +296,15 @@ class MainScaffold extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 16),
                         child: Text(
                           "GRI-Sahayak AI Assistant",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                                fontSize: 16,
+                              ),
                         ),
                       ),
                       IconButton(
                         icon: const Icon(Icons.close),
+                        tooltip: 'Close assistant',
                         onPressed: () => provider.toggleAskAi(false),
                       ),
                     ],
@@ -332,15 +329,19 @@ class MainScaffold extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 16),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16),
                         child: Text(
                           "Official Document Center",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: GriColors.forestPrimary),
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                                fontSize: 16,
+                              ),
                         ),
                       ),
                       IconButton(
                         icon: const Icon(Icons.close),
+                        tooltip: 'Close document center',
                         onPressed: () => provider.toggleDocumentCenter(false),
                       ),
                     ],
@@ -365,15 +366,19 @@ class MainScaffold extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 16),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16),
                         child: Text(
                           "Faculty & Staff Academic Portal",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: GriColors.forestPrimary),
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                                fontSize: 16,
+                              ),
                         ),
                       ),
                       IconButton(
                         icon: const Icon(Icons.close),
+                        tooltip: 'Close faculty portal',
                         onPressed: () => provider.toggleFacultyPortal(false),
                       ),
                     ],

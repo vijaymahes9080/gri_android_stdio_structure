@@ -17,7 +17,7 @@ This ledger establishes a 1-to-1 mapping between the architectural claims, use c
 - **Total Database Tables:** 25 Tables in PostgreSQL 16 schema (`supabase/migrations/`)
 - **Total Discovered Web Routes:** 309 Institutional Routes Mapped (`assets/website_inventory.json`)
 - **Total Physical Assets Cataloged:** 1,047 Assets with SHA-256 Hashes (`data/05_metadata/assets_manifest.csv`)
-- **Automated Test Suite Status:** 77 Tests Passing across Unit and Widget Layers (`flutter test`)
+- **Automated Test Suite Status:** 88 Tests Passing across Unit and Widget Layers (`flutter test`)
 
 ---
 
@@ -43,7 +43,8 @@ This ledger establishes a 1-to-1 mapping between the architectural claims, use c
 | **Immutable Audit Logging** | **VERIFIED** | `supabase/migrations/20261004000000_init_gri_cloud.sql`<br/>`lib/providers/gri_provider.dart` | `audit_logs` table, `logAction()` method | Records operator ID, actor name, target user ID, previous status, new status, timestamp, and justification. |
 | **National Enterprise Gateways** | **VERIFIED** | `lib/screens/official_portals_gateway_screen.dart` | `OfficialPortalsGatewayScreen`, `OfficialResourceRegistry` | Deep links to Samarth@GRI ERP, National Academic Depository (NAD), DigiLocker APAAR, and Webmail. |
 | **One-Click Mobile Device Launcher** | **VERIFIED** | `launch_app.bat` | Windows Batch Script | Automated verification of ADB phone connection, Flutter dependency resolution, build, and installation. |
-| **Automated Unit & Widget Testing** | **VERIFIED** | `test/widget_test.dart`<br/>`test/models_and_resources_test.dart`<br/>`test/integrity_and_intelligence_test.dart`<br/>`test/rollcall_and_authorization_test.dart` | 77 Automated Test Cases | Validates model serialization, navigation transitions, role switching, resource resolution, restart-safety, RBAC refusals, hall-ticket gates, roll-call durability, and cloud schema mappers. |
+| **Automated Unit & Widget Testing** | **VERIFIED** | `test/widget_test.dart`<br/>`test/models_and_resources_test.dart`<br/>`test/integrity_and_intelligence_test.dart`<br/>`test/rollcall_and_authorization_test.dart`<br/>`test/design_system_test.dart` | 88 Automated Test Cases | Validates model serialization, navigation transitions, role switching, resource resolution, restart-safety, RBAC refusals, hall-ticket gates, roll-call durability, cloud schema mappers, and design-system invariants (typography parity, legibility floor, component themes, primitives, reduced motion). |
+| **Premium Design System Enforcement** | **VERIFIED** | `lib/utils/gri_colors.dart`<br/>`lib/utils/gri_typography.dart`<br/>`lib/utils/gri_metrics.dart`<br/>`lib/utils/gri_motion.dart`<br/>`lib/widgets/gri_primitives.dart` | `GriTypography.theme(Brightness)`, `GriSpacing`/`GriRadii`/`GriShadows`, `GriStatusTone`, `GriEmptyState`, `GriSectionHeader`, `GriStatusBadge` | Dark-mode typography parity (re-inked geometry), full component themes (elevated buttons with 48dp touch targets + disabled states, filled inputs, dialogs, floating snackbars, bottom sheets, nav bar), semantic status tokens with WCAG-tuned dark `*Bright` inks, and shared primitives honoring reduced motion. |
 
 ---
 
@@ -65,5 +66,6 @@ To uphold strict academic integrity, the following matrix distinguishes verified
 
 - **Source Code Alteration:** `0` application files were altered during documentation generation.
 - **Repository Cleanliness:** Flutter static analysis (`flutter analyze`) confirms `0 issues`.
-- **Test Integrity:** All 77 tests pass (`flutter test`), including restart-safety (persistent vault), authorization gates, hall-ticket eligibility refusals, certificate verification honesty, faculty roll-call durability, and cloud schema mappers.
+- **Test Integrity:** All 88 tests pass (`flutter test`), including restart-safety (persistent vault), authorization gates, hall-ticket eligibility refusals, certificate verification honesty, faculty roll-call durability, cloud schema mappers, and the design-system suite (typography parity across brightness, 10px legibility floor, component themes, shared primitives, reduced-motion compliance).
+- **Design System Enforcement:** `GriTypography` is now brightness-aware and wired into BOTH themes; buttons, inputs, dialogs, snackbars, bottom sheets and the navigation bar are theme-driven; shared primitives (`GriEmptyState`, `GriSectionHeader`, `GriStatusBadge`) encode status/empty-state language; raw status `Colors.green/red/orange/blue` in screens replaced by semantic tokens; sub-10px type eliminated (17 instances → 0); icon-only buttons carry tooltips.
 - **Build Readiness:** `flutter build apk --release` completes successfully generating `app-release.apk`. Kotlin stays pinned at 2.2.20 — the 2.3.20 upgrade breaks release compilation on this cross-drive toolchain (pub cache on `C:\`, project on `D:\`; see README §8).

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../utils/gri_colors.dart';
 import '../services/official_resource_registry.dart';
+import '../widgets/gri_primitives.dart';
 
 /// Production-Grade Official Document Vault Screen
 /// Instant indexing across 595 institutional PDFs, circulars, prospectuses, and statutory reports.
@@ -100,6 +101,7 @@ class _DocumentVaultScreenState extends State<DocumentVaultScreen> {
                     prefixIcon: const Icon(Icons.search, color: GriColors.forestPrimary, size: 20),
                     suffixIcon: _searchController.text.isNotEmpty
                         ? IconButton(
+                            tooltip: 'Clear search',
                             icon: const Icon(Icons.clear, size: 18),
                             onPressed: () {
                               _searchController.clear();
@@ -138,7 +140,7 @@ class _DocumentVaultScreenState extends State<DocumentVaultScreen> {
                       "Catalog: ${allDocs.length} Official Documents",
                       style: TextStyle(
                         fontSize: 11,
-                        color: isDark ? GriColors.darkOnSurfaceVariant : Colors.grey.shade700,
+                        color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -205,38 +207,26 @@ class _DocumentVaultScreenState extends State<DocumentVaultScreen> {
           // Document List
           Expanded(
             child: filtered.isEmpty
-                ? Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.folder_off_outlined, size: 48, color: Colors.grey.shade400),
-                          const SizedBox(height: 10),
-                          Text(
-                            _selectedCategory != "All"
-                                ? "No documents found under '$_selectedCategory'"
-                                : "No documents match your query",
-                            style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
-                          ),
-                          const SizedBox(height: 12),
-                          if (_selectedCategory != "All" || _searchController.text.isNotEmpty)
-                            OutlinedButton.icon(
-                              onPressed: () {
-                                setState(() {
-                                  _selectedCategory = "All";
-                                  _searchController.clear();
-                                });
-                              },
-                              icon: const Icon(Icons.refresh, size: 16),
-                              label: const Text("View All Cataloged Documents"),
-                              style: OutlinedButton.styleFrom(
-                                foregroundColor: GriColors.forestPrimary,
-                              ),
+                ? GriEmptyState(
+                    icon: Icons.folder_off_outlined,
+                    title: 'No documents found',
+                    hint:
+                        "Nothing in the vault matches '${_selectedCategory != "All" ? _selectedCategory : query}'. Try a different title or department.",
+                    action: (_selectedCategory != "All" || _searchController.text.isNotEmpty)
+                        ? OutlinedButton.icon(
+                            onPressed: () {
+                              setState(() {
+                                _selectedCategory = "All";
+                                _searchController.clear();
+                              });
+                            },
+                            icon: const Icon(Icons.refresh, size: 16),
+                            label: const Text("View All Cataloged Documents"),
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: GriColors.forestPrimary,
                             ),
-                        ],
-                      ),
-                    ),
+                          )
+                        : null,
                   )
                 : ListView.separated(
                     itemCount: filtered.length,
@@ -272,7 +262,7 @@ class _DocumentVaultScreenState extends State<DocumentVaultScreen> {
                               "${doc.module} • ${doc.formattedSize}",
                               style: TextStyle(
                                 fontSize: 11,
-                                color: isDark ? GriColors.darkOnSurfaceVariant : Colors.grey.shade600,
+                                color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
                               ),
                             ),
                             if (doc.summary != null && doc.summary!.isNotEmpty) ...[
@@ -292,28 +282,16 @@ class _DocumentVaultScreenState extends State<DocumentVaultScreen> {
                             Row(
                               children: [
                                 if (isBundled)
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                    decoration: BoxDecoration(
-                                      color: Colors.green.withValues(alpha: 0.12),
-                                      borderRadius: BorderRadius.circular(4),
-                                    ),
-                                    child: const Text(
-                                      "Pre-bundled Offline",
-                                      style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.green),
-                                    ),
+                                  const GriStatusBadge(
+                                    label: 'Pre-bundled Offline',
+                                    tone: GriStatusTone.success,
+                                    dense: true,
                                   )
                                 else
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                    decoration: BoxDecoration(
-                                      color: Colors.blue.withValues(alpha: 0.12),
-                                      borderRadius: BorderRadius.circular(4),
-                                    ),
-                                    child: const Text(
-                                      "Official Cloud Stream",
-                                      style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.blue),
-                                    ),
+                                  const GriStatusBadge(
+                                    label: 'Official Cloud Stream',
+                                    tone: GriStatusTone.info,
+                                    dense: true,
                                   ),
                                 const SizedBox(width: 6),
                                 Container(
@@ -325,7 +303,7 @@ class _DocumentVaultScreenState extends State<DocumentVaultScreen> {
                                   child: Text(
                                     doc.category,
                                     style: TextStyle(
-                                      fontSize: 9,
+                                      fontSize: 10,
                                       fontWeight: FontWeight.bold,
                                       color: isDark ? GriColors.darkOnSurfaceVariant : Colors.black87,
                                     ),

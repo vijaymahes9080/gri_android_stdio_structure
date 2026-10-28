@@ -5,6 +5,7 @@ import '../providers/gri_provider.dart';
 import '../services/seed_data_service.dart';
 import '../utils/gri_colors.dart';
 import '../utils/gri_motion.dart';
+import '../widgets/gri_primitives.dart';
 import 'settings_screen.dart';
 import 'department_detail_screen.dart';
 
@@ -72,18 +73,21 @@ class _AdminDirectoryScreenState extends State<AdminDirectoryScreen> {
                   child: const Icon(Icons.settings, color: Colors.white, size: 20),
                 ),
                 const SizedBox(width: 12),
-                const Expanded(
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         "Settings & Preferences",
                         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.5),
                       ),
-                      SizedBox(height: 2),
+                      const SizedBox(height: 2),
                       Text(
                         "Theme mode, text size, bilingual toggle, offline cache",
-                        style: TextStyle(fontSize: 11, color: Colors.grey),
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                        ),
                       ),
                     ],
                   ),
@@ -125,16 +129,10 @@ class _AdminDirectoryScreenState extends State<AdminDirectoryScreen> {
                         ),
                       ],
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                      decoration: BoxDecoration(
-                        color: Colors.green.withValues(alpha: 0.12),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Text(
-                        provider.ktorServerStatus,
-                        style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: Colors.green),
-                      ),
+                    GriStatusBadge(
+                      label: provider.ktorServerStatus,
+                      tone: GriStatusTone.success,
+                      dense: true,
                     ),
                   ],
                 ),
@@ -373,7 +371,13 @@ class _AdminDirectoryScreenState extends State<AdminDirectoryScreen> {
                                   style: const TextStyle(fontSize: 10.5, color: GriColors.forestPrimary, fontWeight: FontWeight.w600),
                                 ),
                               ),
-                              const Text(" • ", style: TextStyle(fontSize: 10.5, color: Colors.grey)),
+                              Text(
+                                " • ",
+                                style: TextStyle(
+                                  fontSize: 10.5,
+                                  color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                                ),
+                              ),
                             ],
                             if (officer['phone'] != null)
                               InkWell(
@@ -434,7 +438,11 @@ class _AdminDirectoryScreenState extends State<AdminDirectoryScreen> {
                     color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
                   ),
                 ),
-                trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  size: 12,
+                  color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                ),
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(

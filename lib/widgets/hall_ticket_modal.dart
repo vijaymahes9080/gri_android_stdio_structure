@@ -70,6 +70,7 @@ class HallTicketModal extends StatelessWidget {
                 ),
                 IconButton(
                   icon: const Icon(Icons.close),
+                  tooltip: "Close",
                   onPressed: () => provider.clearHallTicket(),
                 ),
               ],
@@ -252,7 +253,7 @@ class HallTicketModal extends StatelessWidget {
                                       child: Text(
                                         "${sub.date}\n${sub.session.split(' - ').first}",
                                         style: TextStyle(
-                                          fontSize: 9.5,
+                                          fontSize: 10,
                                           color: isDark ? GriColors.darkOnSurface : Colors.black87,
                                         ),
                                       ),

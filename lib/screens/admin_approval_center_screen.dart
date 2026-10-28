@@ -4,6 +4,7 @@ import '../models/user_model.dart';
 import '../providers/gri_provider.dart';
 import '../utils/gri_colors.dart';
 import '../utils/gri_motion.dart';
+import '../widgets/gri_primitives.dart';
 
 class AdminApprovalCenterScreen extends StatefulWidget {
   const AdminApprovalCenterScreen({super.key});
@@ -57,7 +58,7 @@ class _AdminApprovalCenterScreenState extends State<AdminApprovalCenterScreen> {
           style: TextStyle(fontSize: 12.5, color: isDark ? GriColors.darkOnSurface : GriColors.onSurface),
           decoration: InputDecoration(
             hintText: "Search applications by name, roll no, department...",
-            hintStyle: TextStyle(fontSize: 12, color: isDark ? GriColors.darkOnSurfaceVariant : Colors.grey),
+            hintStyle: TextStyle(fontSize: 12, color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant),
             prefixIcon: const Icon(Icons.search, size: 18),
             contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
             filled: true,
@@ -113,33 +114,26 @@ class _AdminApprovalCenterScreenState extends State<AdminApprovalCenterScreen> {
 
         // Applications List
         if (filtered.isEmpty) ...[
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.all(32),
-              child: Text(
-                "No applications matching current filter.",
-                style: TextStyle(
-                  fontSize: 12,
-                  color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
-                ),
-              ),
-            ),
+          const GriEmptyState(
+            icon: Icons.inbox_outlined,
+            title: 'No applications found',
+            hint: 'No dossiers match the current filter. Adjust the status filter to see more.',
           ),
         ] else ...[
           ...filtered.map((app) {
-            Color statusColor;
+            GriStatusTone statusTone;
             switch (app.status) {
               case AccountStatus.APPROVED:
-                statusColor = Colors.green;
+                statusTone = GriStatusTone.success;
                 break;
               case AccountStatus.UNDER_REVIEW:
-                statusColor = Colors.orange;
+                statusTone = GriStatusTone.warning;
                 break;
               case AccountStatus.REJECTED:
-                statusColor = Colors.red;
+                statusTone = GriStatusTone.error;
                 break;
               default:
-                statusColor = Colors.blue;
+                statusTone = GriStatusTone.info;
             }
 
             return Container(
@@ -160,17 +154,10 @@ class _AdminApprovalCenterScreenState extends State<AdminApprovalCenterScreen> {
                         app.fullName,
                         style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13.5),
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                        decoration: BoxDecoration(
-                          color: statusColor.withValues(alpha: 0.12),
-                          borderRadius: BorderRadius.circular(4),
-                          border: Border.all(color: statusColor.withValues(alpha: 0.3), width: 0.8),
-                        ),
-                        child: Text(
-                          app.status.name.replaceAll('_', ' '),
-                          style: TextStyle(color: statusColor, fontSize: 10, fontWeight: FontWeight.w700),
-                        ),
+                      GriStatusBadge(
+                        label: app.status.name.replaceAll('_', ' '),
+                        tone: statusTone,
+                        dense: true,
                       ),
                     ],
                   ),
@@ -194,7 +181,11 @@ class _AdminApprovalCenterScreenState extends State<AdminApprovalCenterScreen> {
                     const SizedBox(height: 4),
                     Text(
                       "Active Query: ${app.adminQuery}",
-                      style: const TextStyle(fontSize: 11, color: Colors.orange, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: isDark ? GriColors.warningBright : GriColors.warning,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ],
                   const SizedBox(height: 10),

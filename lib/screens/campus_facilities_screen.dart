@@ -439,7 +439,7 @@ class _CampusFacilitiesScreenState extends State<CampusFacilitiesScreen> {
                               (fac["category"] as String).toUpperCase(),
                               style: const TextStyle(
                                 color: GriColors.forestPrimary,
-                                fontSize: 9.5,
+                                fontSize: 10,
                                 fontWeight: FontWeight.w800,
                               ),
                             ),

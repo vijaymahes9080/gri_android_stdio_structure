@@ -298,7 +298,7 @@ class _MediaGalleryScreenState extends State<MediaGalleryScreen> with SingleTick
                           ),
                           child: Text(
                             v["badge"],
-                            style: const TextStyle(fontSize: 9.5, fontWeight: FontWeight.w700, color: GriColors.forestPrimary),
+                            style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: GriColors.forestPrimary),
                           ),
                         ),
                         const SizedBox(width: 8),

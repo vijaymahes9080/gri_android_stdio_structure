@@ -107,7 +107,7 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                         Text(
                           "Deemed to be University • NAAC 'A'",
                           style: TextStyle(
-                            fontSize: 9.5,
+                            fontSize: 10,
                             fontWeight: FontWeight.w500,
                             color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
                             letterSpacing: -0.1,
@@ -205,7 +205,7 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                         Text(
                           provider.currentRole.name,
                           style: const TextStyle(
-                            fontSize: 9.5,
+                            fontSize: 10,
                             fontWeight: FontWeight.w700,
                             color: GriColors.forestPrimary,
                             letterSpacing: 0.2,

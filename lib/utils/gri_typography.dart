@@ -139,4 +139,36 @@ class GriTypography {
     letterSpacing: 0.2,
     fontFamilyFallback: fontFamilyFallback,
   );
+
+  /// Brightness-aware TextTheme factory.
+  ///
+  /// The scale above is authored for light surfaces (dark ink). In dark mode
+  /// the same *geometry* must be re-inked with dark-surface colors — otherwise
+  /// dark mode would inherit light ink (or fall back to stock typography).
+  /// Use this in both `GriColors.lightTheme` and `GriColors.darkTheme`.
+  static TextTheme theme(Brightness brightness) {
+    final Color primary = brightness == Brightness.dark
+        ? GriColors.darkOnSurface
+        : GriColors.onSurface;
+    final Color secondary = brightness == Brightness.dark
+        ? GriColors.darkOnSurfaceVariant
+        : GriColors.onSurfaceVariant;
+
+    return TextTheme(
+      displayLarge: displayLarge.copyWith(color: primary),
+      displayMedium: displayMedium.copyWith(color: primary),
+      headlineLarge: headlineLarge.copyWith(color: primary),
+      headlineMedium: headlineMedium.copyWith(color: primary),
+      headlineSmall: headlineSmall.copyWith(color: primary),
+      titleLarge: titleLarge.copyWith(color: primary),
+      titleMedium: titleMedium.copyWith(color: primary),
+      titleSmall: titleSmall.copyWith(color: primary),
+      bodyLarge: bodyLarge.copyWith(color: primary),
+      bodyMedium: bodyMedium.copyWith(color: secondary),
+      bodySmall: bodySmall.copyWith(color: secondary),
+      labelLarge: labelLarge.copyWith(color: primary),
+      labelMedium: labelMedium.copyWith(color: secondary),
+      labelSmall: labelSmall.copyWith(color: secondary),
+    );
+  }
 }

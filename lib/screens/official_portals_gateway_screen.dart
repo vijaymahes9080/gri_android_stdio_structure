@@ -428,7 +428,7 @@ class OfficialPortalsGatewayScreen extends StatelessWidget {
                                           ),
                                           child: const Text(
                                             "Gov of India",
-                                            style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.indigo),
+                                            style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.indigo),
                                           ),
                                         ),
                                     ],

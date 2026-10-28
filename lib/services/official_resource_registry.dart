@@ -621,7 +621,7 @@ class OfficialResourceRegistry {
                   child: Text(
                     badge,
                     style: TextStyle(
-                      fontSize: 9.5,
+                      fontSize: 10,
                       fontWeight: FontWeight.w800,
                       color: color,
                       letterSpacing: 0.5,
@@ -744,6 +744,7 @@ class OfficialResourceRegistry {
                   ),
                   IconButton(
                     icon: const Icon(Icons.close, size: 20),
+                    tooltip: "Close",
                     onPressed: () => Navigator.pop(ctx),
                   ),
                 ],

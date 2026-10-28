@@ -201,7 +201,7 @@ class _GovernanceLeadershipScreenState extends State<GovernanceLeadershipScreen>
                                 child: Text(
                                   o["designation"] ?? "",
                                   style: const TextStyle(
-                                    fontSize: 9.5,
+                                    fontSize: 10,
                                     fontWeight: FontWeight.w700,
                                     color: GriColors.forestPrimary,
                                   ),

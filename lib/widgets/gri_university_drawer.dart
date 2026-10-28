@@ -113,7 +113,7 @@ class GriUniversityDrawer extends StatelessWidget {
                             "Deemed to be University • NAAC 'A' Grade • 1956",
                             style: TextStyle(
                               color: Colors.white70,
-                              fontSize: 9.5,
+                              fontSize: 10,
                               fontWeight: FontWeight.w500,
                             ),
                           ),

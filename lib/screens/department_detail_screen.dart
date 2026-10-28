@@ -850,7 +850,7 @@ class DepartmentDetailScreen extends StatelessWidget {
                           Text(
                             "View Official Faculty Roster",
                             style: TextStyle(
-                              fontSize: 9.5,
+                              fontSize: 10,
                               fontWeight: FontWeight.w700,
                               color: GriColors.ochrePrimary,
                             ),
