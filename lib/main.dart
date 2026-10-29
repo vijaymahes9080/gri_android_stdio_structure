@@ -49,7 +49,7 @@ class GriApplication extends StatelessWidget {
     final provider = context.watch<GriProvider>();
 
     return MaterialApp(
-      title: 'The Gandhigram Rural Institute',
+      title: 'gri-updated',
       debugShowCheckedModeBanner: false,
       theme: GriColors.lightTheme,
       darkTheme: GriColors.darkTheme,

@@ -1,12 +1,12 @@
 @echo off
 setlocal enabledelayedexpansion
 
-title GRI Official Mobile App - Phone Launcher
+title gri-updated - Phone Launcher
 color 0A
 
 echo =====================================================================
 echo          THE GANDHIGRAM RURAL INSTITUTE (DEEMED TO BE UNIVERSITY)
-echo                      Official Mobile Application Launcher
+echo                       gri-updated Mobile App Launcher
 echo =====================================================================
 echo.
 
@@ -62,7 +62,7 @@ if "!DEVICE_UNAUTH!"=="1" (
     echo     3. Check '[x] Always allow from this computer' and tap 'ALLOW'.
     echo     -------------------------------------------------------------------
     set /a RETRIES+=1
-    if !RETRIES! lss 20 (
+    if !RETRIES! lss 30 (
         timeout /t 2 /nobreak >nul
         goto :check_device
     )
@@ -87,40 +87,51 @@ echo.
 
 :: 3. Launch or Install Application
 set "PACKAGE=com.aistudio.grist.kxmpzq"
-set "ACTIVITY=com.example.MainActivity"
-set "APK_PATH=app\build\outputs\apk\debug\app-debug.apk"
+set "ACTIVITY=com.aistudio.grist.kxmpzq.MainActivity"
+set "APK_PATH=build\app\outputs\flutter-apk\app-release.apk"
 
-echo [2/3] Checking app installation on phone...
-adb -s !DEVICE_ID! shell pm list packages --user 0 2>nul | findstr /c:"!PACKAGE!" >nul 2>nul
-if %ERRORLEVEL% equ 0 (
-    echo [OK] App is already installed on your device.
-) else (
-    if exist "!APK_PATH!" (
-        echo [INFO] Installing APK onto your phone...
-        adb -s !DEVICE_ID! install -r "!APK_PATH!"
-        if %ERRORLEVEL% neq 0 (
-            echo Re-installing with clean signature...
-            adb -s !DEVICE_ID! uninstall !PACKAGE! >nul 2>nul
-            adb -s !DEVICE_ID! install "!APK_PATH!"
-        )
-    ) else (
-        echo [INFO] Building debug APK with Gradle wrapper...
-        call gradlew.bat assembleDebug
-        adb -s !DEVICE_ID! install -r "!APK_PATH!"
+if not exist "!APK_PATH!" (
+    if exist "build\app\outputs\apk\release\app-release.apk" (
+        set "APK_PATH=build\app\outputs\apk\release\app-release.apk"
+    ) else if exist "build\app\outputs\flutter-apk\app-debug.apk" (
+        set "APK_PATH=build\app\outputs\flutter-apk\app-debug.apk"
     )
 )
 
+if not exist "!APK_PATH!" (
+    echo [INFO] APK not found. Building gri-updated release APK...
+    call flutter build apk --release
+)
+
+if not exist "!APK_PATH!" (
+    echo [ERROR] Failed to locate or build APK at: !APK_PATH!
+    goto :failed
+)
+
+echo [2/3] Pushing and installing gri-updated onto phone (!DEVICE_ID!)...
+adb -s !DEVICE_ID! install -r -d "!APK_PATH!"
+if %ERRORLEVEL% neq 0 (
+    echo [!] In-place update failed (possible signature mismatch). Performing clean re-install...
+    adb -s !DEVICE_ID! uninstall !PACKAGE! >nul 2>nul
+    adb -s !DEVICE_ID! install "!APK_PATH!"
+    if !ERRORLEVEL! neq 0 (
+        echo [ERROR] Installation failed.
+        goto :failed
+    )
+)
+echo [OK] gri-updated installed successfully on phone.
+
 echo.
-echo [3/3] Launching GRI Mobile App on phone (!DEVICE_ID!)...
+echo [3/3] Launching gri-updated on phone (!DEVICE_ID!)...
 adb -s !DEVICE_ID! shell am start -n !PACKAGE!/!ACTIVITY!
 
 if %ERRORLEVEL% equ 0 (
     echo.
     echo =====================================================================
-    echo [SUCCESS] App is now running on your phone!
+    echo [SUCCESS] gri-updated is now running on your phone!
     echo =====================================================================
 ) else (
-    echo [WARNING] Could not start activity directly. Trying launcher...
+    echo [WARNING] Could not start activity directly. Trying launcher monkey...
     adb -s !DEVICE_ID! shell monkey -p !PACKAGE! -c android.intent.category.LAUNCHER 1 >nul 2>nul
 )
 
@@ -131,7 +142,7 @@ exit /b 0
 :failed
 echo.
 echo =====================================================================
-echo [FAILED] Unable to launch app on phone.
+echo [FAILED] Unable to push/launch gri-updated on phone.
 echo =====================================================================
 pause
 exit /b 1
