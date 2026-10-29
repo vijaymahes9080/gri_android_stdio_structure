@@ -55,7 +55,7 @@ if "!DEVICE_FOUND!"=="1" (
 
 if "!DEVICE_UNAUTH!"=="1" (
     echo.
-    echo [*] Phone detected (!DEVICE_ID!), waiting for USB Debugging permission...
+    echo [*] Phone detected [!DEVICE_ID!], waiting for USB Debugging permission...
     echo     -------------------------------------------------------------------
     echo     1. UNLOCK your phone screen right now.
     echo     2. Look for the prompt: 'Allow USB debugging?'
@@ -73,11 +73,11 @@ if "!DEVICE_FOUND!"=="0" (
     echo [ERROR] No authorized Android device detected!
     echo.
     echo Troubleshooting Steps:
-    echo   1. Connect your phone via USB cable (set USB mode to 'File Transfer' / 'MTP').
-    echo   2. Enable 'Developer Options' on your phone:
-    echo      Settings - About Phone - Tap 'Build Number' 7 times.
-    echo   3. Enable 'USB Debugging' in Settings - Developer Options.
-    echo   4. On your phone screen, check 'Always allow from this computer' and tap 'Allow'.
+    echo   1. Connect your phone via USB cable - set USB mode to File Transfer / MTP.
+    echo   2. Enable Developer Options on your phone:
+    echo      Settings - About Phone - Tap Build Number 7 times.
+    echo   3. Enable USB Debugging in Settings - Developer Options.
+    echo   4. On your phone screen, check Always allow from this computer and tap Allow.
     echo.
     goto :failed
 )
@@ -108,10 +108,10 @@ if not exist "!APK_PATH!" (
     goto :failed
 )
 
-echo [2/3] Pushing and installing gri-updated onto phone (!DEVICE_ID!)...
+echo [2/3] Pushing and installing gri-updated onto phone [!DEVICE_ID!]...
 adb -s !DEVICE_ID! install -r -d "!APK_PATH!"
 if %ERRORLEVEL% neq 0 (
-    echo [!] In-place update failed (possible signature mismatch). Performing clean re-install...
+    echo [INFO] Updating with clean re-install...
     adb -s !DEVICE_ID! uninstall !PACKAGE! >nul 2>nul
     adb -s !DEVICE_ID! install "!APK_PATH!"
     if !ERRORLEVEL! neq 0 (
@@ -122,7 +122,7 @@ if %ERRORLEVEL% neq 0 (
 echo [OK] gri-updated installed successfully on phone.
 
 echo.
-echo [3/3] Launching gri-updated on phone (!DEVICE_ID!)...
+echo [3/3] Launching gri-updated on phone [!DEVICE_ID!]...
 adb -s !DEVICE_ID! shell am start -n !PACKAGE!/!ACTIVITY!
 
 if %ERRORLEVEL% equ 0 (
