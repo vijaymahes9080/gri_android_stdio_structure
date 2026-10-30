@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../utils/gri_url_launcher.dart';
+import 'institutional_fee_payment_screen.dart';
 import '../utils/gri_colors.dart';
 
 class OfficialPortalItem {
@@ -34,6 +35,18 @@ class OfficialPortalsGatewayScreen extends StatelessWidget {
   const OfficialPortalsGatewayScreen({super.key});
 
   static const List<OfficialPortalItem> portals = [
+    OfficialPortalItem(
+      id: "portal_fees",
+      title: "GRI Institutional Fee & Bank E-Collection Portal",
+      subtitle: "Official SBI Collect / Canara Bank fee payment for tuition, hostels, tatkal certificates & admissions",
+      url: "https://ruraluniv.ac.in/fee_structure",
+      authority: "Directorate of Finance & Accounts (State Bank of India)",
+      audience: "All Students, Research Scholars & Candidates",
+      icon: Icons.payments_outlined,
+      color: GriColors.forestPrimary,
+      authRequirement: "Requires Student Roll No. or Application ID (Direct Bank Counter / Sandbox Mode)",
+      isExternalGov: false,
+    ),
     OfficialPortalItem(
       id: "portal_samarth",
       title: "Samarth@GRI Admission & Academic Engine",
@@ -350,6 +363,73 @@ class OfficialPortalsGatewayScreen extends StatelessWidget {
             ),
           ),
 
+          const SizedBox(height: 14),
+
+          // Dedicated Institutional Fee Gateway Card
+          Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              color: isDark ? GriColors.darkSurface1 : Colors.white,
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(
+                color: GriColors.forestPrimary.withValues(alpha: 0.4),
+                width: 1.2,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: GriColors.forestPrimary.withValues(alpha: 0.08),
+                  blurRadius: 8,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 44,
+                  height: 44,
+                  decoration: BoxDecoration(
+                    color: GriColors.forestPrimary.withValues(alpha: 0.12),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Icon(Icons.payment, color: GriColors.forestPrimary, size: 24),
+                ),
+                const SizedBox(width: 12),
+                const Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Pay University Fees",
+                        style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13.5),
+                      ),
+                      SizedBox(height: 2),
+                      Text(
+                        "Tuition, Hostels, COE Tatkal & Admissions counter with sandbox simulator",
+                        style: TextStyle(fontSize: 11, color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 8),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: GriColors.forestPrimary,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const InstitutionalFeePaymentScreen()),
+                    );
+                  },
+                  child: const Text("Pay Now", style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                ),
+              ],
+            ),
+          ),
           const SizedBox(height: 14),
 
           // Portals List
