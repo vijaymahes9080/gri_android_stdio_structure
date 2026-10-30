@@ -41,3 +41,4 @@ sequenceDiagram
 2. **Official Platform Handshake**: All genuine transactions occur directly on the bank's RBI-regulated PCI-DSS Level 1 gateway.
 3. **Sandbox Test Mode**: An offline sandbox payment simulation is provided for demonstration, testing, and UI preview without executing live financial debit or mocking fake bank approvals.
 4. **Idempotency & Re-entry**: Double submission prevention with unique client request identifiers (`TXN-GRI-XXXXXX`).
+

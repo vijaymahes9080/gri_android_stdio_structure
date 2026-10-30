@@ -41,3 +41,4 @@ graph TD
 2. **Authenticated Student/Faculty Portal**: Direct launch into official protected portals (`https://portal.ruraluniv.ac.in/`) preserving university security perimeter.
 3. **E-Governance & National Infrastructure**: First-class gateway to COE Tatkal Examination Services, MEA e-SANAD attestation, Samarth eGov, and National Digital Library (NDLI).
 4. **Institutional Fee Payment**: Safe multi-mode architecture with direct official bank counters and sandbox simulation receipt generator.
+

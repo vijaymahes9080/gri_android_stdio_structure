@@ -43,3 +43,4 @@ The application declares strictly bounded intents in `android/app/src/main/Andro
 </queries>
 ```
 This guarantees that external browser dispatch via `GriUrlLauncher` executes reliably across Android 11 through Android 15 without violating OS sandboxing.
+

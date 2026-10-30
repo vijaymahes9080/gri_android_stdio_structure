@@ -29,3 +29,4 @@
 - [x] **Top Bar Cleanliness**: Cloud sync icon removed from the top navigation bar per user specification.
 - [x] **Official Document Vault**: Pre-bundled and remote-streamed NAAC/UGC and COE PDFs with in-app preview and copy actions.
 - [x] **Institutional Fee Payment & Bank Counters**: Multi-category institutional fee payment portal with official SBI Collect and Canara Bank links alongside sandbox test mode.
+
