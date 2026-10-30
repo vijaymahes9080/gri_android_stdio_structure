@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../utils/gri_colors.dart';
+import '../utils/gri_url_launcher.dart';
 import 'seed_data_service.dart';
 
 enum ResourceType {
@@ -849,18 +850,12 @@ class OfficialResourceRegistry {
                       ),
                       icon: const Icon(Icons.open_in_new, size: 15),
                       label: const Text("Open in Browser", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
-                      onPressed: () async {
+onPressed: () async {
                         Navigator.pop(ctx);
                         _showSnack(context, "Opening ${resource.title}...", isError: false);
-                        try {
-                          final uri = Uri.parse(resource.sourceUrl);
-                          if (await canLaunchUrl(uri)) {
-                            await launchUrl(uri, mode: LaunchMode.externalApplication);
-                          } else {
-                            _showSnack(context, "Cannot launch document viewer for ${resource.sourceUrl}", isError: true);
-                          }
-                        } catch (e) {
-                          _showSnack(context, "Error opening document: $e", isError: true);
+                        final launched = await GriUrlLauncher.launch(context, resource.sourceUrl);
+                        if (!launched) {
+                          _showSnack(context, "Cannot launch document viewer for ${resource.sourceUrl}", isError: true);
                         }
                       },
                     ),
@@ -903,15 +898,9 @@ class OfficialResourceRegistry {
 
     _showSnack(context, "Launching ${resource.title}...", isError: false);
 
-    try {
-      final uri = Uri.parse(resource.sourceUrl);
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
-      } else {
-        _showSnack(context, "Cannot open video stream for ${resource.sourceUrl}", isError: true);
-      }
-    } catch (e) {
-      _showSnack(context, "Error launching video: $e", isError: true);
+    final launched = await GriUrlLauncher.launch(context, resource.sourceUrl);
+    if (!launched) {
+      _showSnack(context, "Cannot open video stream for ${resource.sourceUrl}", isError: true);
     }
   }
 
@@ -923,15 +912,9 @@ class OfficialResourceRegistry {
       return;
     }
 
-    try {
-      final uri = Uri.parse(resource.sourceUrl);
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
-      } else {
-        _showSnack(context, "Cannot open portal: ${resource.sourceUrl}", isError: true);
-      }
-    } catch (e) {
-      _showSnack(context, "Portal error: $e", isError: true);
+    final launched = await GriUrlLauncher.launch(context, resource.sourceUrl);
+    if (!launched) {
+      _showSnack(context, "Cannot open portal: ${resource.sourceUrl}", isError: true);
     }
   }
 

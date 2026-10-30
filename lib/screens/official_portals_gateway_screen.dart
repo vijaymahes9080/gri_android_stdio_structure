@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../utils/gri_url_launcher.dart';
 import '../utils/gri_colors.dart';
 
 class OfficialPortalItem {
@@ -283,19 +284,7 @@ class OfficialPortalsGatewayScreen extends StatelessWidget {
     );
 
     if (confirmed == true) {
-      final uri = Uri.parse(portal.url);
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
-      } else {
-        if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text("Cannot launch browser for ${portal.url}"),
-              backgroundColor: Colors.red.shade800,
-            ),
-          );
-        }
-      }
+      await GriUrlLauncher.launch(context, portal.url);
     }
   }
 

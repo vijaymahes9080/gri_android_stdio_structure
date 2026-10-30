@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../utils/gri_url_launcher.dart';
 import '../utils/gri_colors.dart';
 import '../utils/gri_motion.dart';
 import '../services/seed_data_service.dart';
@@ -26,12 +27,7 @@ class InstitutionalArticleScreen extends StatelessWidget {
     this.documents,
   });
 
-  Future<void> _launchUrl(BuildContext context, String url) async {
-    final uri = Uri.parse(url);
-    try {
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
-      } else {
+  Future<void> _launchUrl(BuildContext context, String url) async {`r`n    await GriUrlLauncher.launch(context, url);`r`n  } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text("Cannot open link: $url"),

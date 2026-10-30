@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../utils/gri_url_launcher.dart';
 import '../utils/gri_colors.dart';
 import '../screens/about_gri_heritage_screen.dart';
 import '../screens/governance_leadership_screen.dart';
@@ -23,11 +24,8 @@ import '../services/official_resource_registry.dart';
 class GriUniversityDrawer extends StatelessWidget {
   const GriUniversityDrawer({super.key});
 
-  Future<void> _launchUrl(String url) async {
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    }
+  Future<void> _launchUrl(BuildContext context, String url) async {
+    await GriUrlLauncher.launch(context, url);
   }
 
   void _push(BuildContext context, Widget screen) {
@@ -325,7 +323,7 @@ class GriUniversityDrawer extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-                  onTap: () => _launchUrl("https://ruraluniv.ac.in/"),
+                  onTap: () => _launchUrl(context, "https://ruraluniv.ac.in/"),
                   child: Text(
                     "ruraluniv.ac.in ↗",
                     style: TextStyle(
