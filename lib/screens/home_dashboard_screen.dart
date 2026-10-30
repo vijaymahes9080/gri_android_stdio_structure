@@ -644,6 +644,86 @@ class HomeDashboardScreen extends StatelessWidget {
           ),
           const SizedBox(height: 16),
 
+          // 6B. Campus Photo Showcase & Landmark Gallery
+          GriFadeSlideEntrance(
+            delay: const Duration(milliseconds: 190),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "CAMPUS PHOTO GALLERY & LANDMARKS",
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 0.6,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () => provider.switchTab(NavigationTab.CAMPUS),
+                      child: const Text(
+                        "Explore All Facilities →",
+                        style: TextStyle(
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.bold,
+                          color: GriColors.forestPrimary,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                SizedBox(
+                  height: 180,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      _buildCampusPhotoCard(
+                        context: context,
+                        imagePath: "assets/images/library_front.jpg",
+                        title: "Dr. Radhakrishnan Central Library",
+                        subtitle: "1,80,000+ volumes, rare palm-leaf archives & e-consortium",
+                        tag: "Academic Hub",
+                        onTap: () => provider.switchTab(NavigationTab.CAMPUS),
+                      ),
+                      const SizedBox(width: 12),
+                      _buildCampusPhotoCard(
+                        context: context,
+                        imagePath: "assets/official/images/gri_admin_block.png",
+                        title: "Dr. G. Ramachandran Administrative Block",
+                        subtitle: "Central University Secretariat & Chancellery",
+                        tag: "Heritage",
+                        onTap: () => provider.switchTab(NavigationTab.CAMPUS),
+                      ),
+                      const SizedBox(width: 12),
+                      _buildCampusPhotoCard(
+                        context: context,
+                        imagePath: "assets/images/health_centre.jpg",
+                        title: "GRI Rural Health Centre",
+                        subtitle: "24x7 community clinic, pharmacy & outpatient care",
+                        tag: "Healthcare",
+                        onTap: () => provider.switchTab(NavigationTab.CAMPUS),
+                      ),
+                      const SizedBox(width: 12),
+                      _buildCampusPhotoCard(
+                        context: context,
+                        imagePath: "assets/images/grilogotya.jpg",
+                        title: "Residential Halls & Dining Enclave",
+                        subtitle: "Kasturba & Tagore hostels with solar water & WiFi",
+                        tag: "Hostels",
+                        onTap: () => provider.switchTab(NavigationTab.CAMPUS),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
+
           // 7. Official Institutional Accreditation Footer Banner
           GriFadeSlideEntrance(
             delay: const Duration(milliseconds: 210),
@@ -940,6 +1020,108 @@ class HomeDashboardScreen extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCampusPhotoCard({
+    required BuildContext context,
+    required String imagePath,
+    required String title,
+    required String subtitle,
+    required String tag,
+    required VoidCallback onTap,
+  }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 250,
+        decoration: BoxDecoration(
+          color: isDark ? GriColors.darkSurface1 : Colors.white,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+            width: 0.8,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.04),
+              blurRadius: 8,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                Image.asset(
+                  imagePath,
+                  height: 105,
+                  width: 250,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) => Container(
+                    height: 105,
+                    color: GriColors.forestPrimary.withValues(alpha: 0.1),
+                    child: const Center(
+                      child: Icon(Icons.photo_library_outlined, color: GriColors.forestPrimary),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 8,
+                  left: 8,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withValues(alpha: 0.7),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Text(
+                      tag,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 12,
+                      color: isDark ? GriColors.darkOnSurface : GriColors.onSurface,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    subtitle,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

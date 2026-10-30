@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../services/official_resource_registry.dart';
 import '../utils/gri_colors.dart';
+import '../utils/gri_url_launcher.dart';
 import '../utils/gri_motion.dart';
 
 class CampusFacilitiesScreen extends StatefulWidget {
@@ -50,7 +50,7 @@ class _CampusFacilitiesScreenState extends State<CampusFacilitiesScreen> {
       "location": "East Residential Enclave",
       "inCharge": "Dr. P. Balasubramaniam (Chief Warden)",
       "timings": "Open 24/7 (Gate curfews: 08:30 PM)",
-      "image": null,
+      "image": "assets/images/grilogotya.jpg",
       "phone": "+914512452371",
       "docTitle": "Official Hostel Manual PDF",
       "docUrl": "https://ruraluniv.ac.in/includes/infrastructure/hostel/HOSTEL_MANUAL.pdf",
@@ -63,7 +63,7 @@ class _CampusFacilitiesScreenState extends State<CampusFacilitiesScreen> {
       "location": "South Agriculture Research Campus",
       "inCharge": "Dr. K. S. Pushpa (Dean, Agricultural Sciences)",
       "timings": "06:00 AM - 06:00 PM",
-      "image": null,
+      "image": "assets/official/images/gri_admin_block.png",
       "phone": "+914512452371",
       "docTitle": "KVK Operational Profile PDF",
       "docUrl": "https://ruraluniv.ac.in/includes/academics/pdf/KVK.pdf",
@@ -76,7 +76,7 @@ class _CampusFacilitiesScreenState extends State<CampusFacilitiesScreen> {
       "location": "Main Academic Quadrangle, Ground Floor",
       "inCharge": "Dr. V. Sivakumar (Director, CCC)",
       "timings": "08:30 AM - 07:30 PM (Mon-Fri)",
-      "image": null,
+      "image": "assets/images/library_front.jpg",
       "phone": "+914512452371",
       "docTitle": "IT & Wi-Fi Policy",
       "docUrl": "https://ruraluniv.ac.in/facilities?content=cedt",
@@ -89,7 +89,7 @@ class _CampusFacilitiesScreenState extends State<CampusFacilitiesScreen> {
       "location": "Adjacent to Main Entrance Boulevard",
       "inCharge": "Estate Officer / Caretaker",
       "timings": "Check-in: 12:00 PM • Check-out: 11:00 AM",
-      "image": null,
+      "image": "assets/images/health_centre.jpg",
       "phone": "+914512452371",
       "docTitle": "Guest House Manual PDF",
       "docUrl": "https://ruraluniv.ac.in/includes/infrastructure/guesthouse/pdf/FGH_operational_Manual.pdf",
@@ -102,7 +102,7 @@ class _CampusFacilitiesScreenState extends State<CampusFacilitiesScreen> {
       "location": "East Campus, Physical Education Wing",
       "inCharge": "Dr. P. U. Mahalingam (Director of Physical Education)",
       "timings": "05:30 AM - 07:30 PM",
-      "image": null,
+      "image": "assets/images/gri_sahayak_3d.jpg",
       "phone": "+914512452371",
       "docTitle": "Sports Directives",
       "docUrl": "https://ruraluniv.ac.in/facilities?content=phyedu",
@@ -115,7 +115,7 @@ class _CampusFacilitiesScreenState extends State<CampusFacilitiesScreen> {
       "location": "Science Complex, Ground Floor",
       "inCharge": "Dr. S. Meenakshi (Dean, School of Sciences)",
       "timings": "09:00 AM - 05:30 PM",
-      "image": null,
+      "image": "assets/images/gri_emblem_3d.jpg",
       "phone": "+914512452371",
       "docTitle": "CIF Instrumentation Guidelines",
       "docUrl": "https://ruraluniv.ac.in/facilities?content=central_i",
@@ -264,12 +264,7 @@ class _CampusFacilitiesScreenState extends State<CampusFacilitiesScreen> {
                         children: [
                           Expanded(
                             child: GriPressable(
-                              onTap: () async {
-                                final uri = Uri.parse("https://maps.google.com/?q=10.2798,77.9333");
-                                if (await canLaunchUrl(uri)) {
-                                  await launchUrl(uri, mode: LaunchMode.externalApplication);
-                                }
-                              },
+                              onTap: () => GriUrlLauncher.launch(context, "https://maps.google.com/?q=10.2798,77.9333"),
                               child: Container(
                                 padding: const EdgeInsets.symmetric(vertical: 7),
                                 decoration: BoxDecoration(
@@ -294,12 +289,7 @@ class _CampusFacilitiesScreenState extends State<CampusFacilitiesScreen> {
                           const SizedBox(width: 8),
                           Expanded(
                             child: GriPressable(
-                              onTap: () async {
-                                final uri = Uri.parse("tel:+914512452371");
-                                if (await canLaunchUrl(uri)) {
-                                  await launchUrl(uri);
-                                }
-                              },
+                              onTap: () => GriUrlLauncher.launch(context, "tel:+914512452371"),
                               child: Container(
                                 padding: const EdgeInsets.symmetric(vertical: 7),
                                 decoration: BoxDecoration(
@@ -521,10 +511,7 @@ class _CampusFacilitiesScreenState extends State<CampusFacilitiesScreen> {
                           if (fac["phone"] != null)
                             Expanded(
                               child: GriPressable(
-                                onTap: () async {
-                                  final uri = Uri.parse("tel:${fac["phone"]}");
-                                  if (await canLaunchUrl(uri)) await launchUrl(uri);
-                                },
+                                onTap: () => GriUrlLauncher.launch(context, "tel:${fac["phone"]}"),
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(vertical: 6),
                                   decoration: BoxDecoration(

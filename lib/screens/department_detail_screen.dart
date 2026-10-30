@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../utils/gri_colors.dart';
+import '../utils/gri_url_launcher.dart';
 import '../utils/gri_motion.dart';
 import '../services/seed_data_service.dart';
 import '../services/official_resource_registry.dart';
@@ -30,26 +30,7 @@ class DepartmentDetailScreen extends StatelessWidget {
   });
 
   Future<void> _launchUrl(BuildContext context, String url) async {
-    final uri = Uri.parse(url);
-    try {
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("Cannot open link: $url"),
-            backgroundColor: GriColors.error,
-          ),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Failed to launch: $e"),
-          backgroundColor: GriColors.error,
-        ),
-      );
-    }
+    await GriUrlLauncher.launch(context, url);
   }
 
   @override
@@ -575,10 +556,8 @@ class DepartmentDetailScreen extends StatelessWidget {
     VoidCallback? onTap;
     if (isEmail) {
       onTap = () async {
-        final uri = Uri.parse("mailto:${value.trim()}");
-        if (await canLaunchUrl(uri)) {
-          await launchUrl(uri);
-        } else {
+        final launched = await GriUrlLauncher.launch(context, "mailto:${value.trim()}");
+        if (!launched) {
           await Clipboard.setData(ClipboardData(text: value.trim()));
           if (context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -593,10 +572,8 @@ class DepartmentDetailScreen extends StatelessWidget {
     } else if (isPhone) {
       onTap = () async {
         final clean = value.replaceAll(RegExp(r'[^0-9+]'), '');
-        final uri = Uri.parse("tel:$clean");
-        if (await canLaunchUrl(uri)) {
-          await launchUrl(uri);
-        } else {
+        final launched = await GriUrlLauncher.launch(context, "tel:$clean");
+        if (!launched) {
           await Clipboard.setData(ClipboardData(text: value.trim()));
           if (context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(

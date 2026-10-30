@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../utils/gri_url_launcher.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../providers/gri_provider.dart';
 import '../services/seed_data_service.dart';
 import '../utils/gri_colors.dart';
