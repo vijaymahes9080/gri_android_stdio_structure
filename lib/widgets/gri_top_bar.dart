@@ -138,28 +138,6 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                 },
               ),
 
-              // Cloud Sync Status Indicator
-              IconButton(
-                icon: provider.isSyncing
-                    ? SizedBox(
-                        width: 14,
-                        height: 14,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
-                        ),
-                      )
-                    : Icon(
-                        Icons.cloud_done_outlined,
-                        color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
-                        size: 19,
-                      ),
-                tooltip: "Cloud Data Synchronized",
-                padding: const EdgeInsets.all(6),
-                constraints: const BoxConstraints(minWidth: 34, minHeight: 34),
-                onPressed: provider.isSyncing ? null : () => provider.triggerCloudSync(),
-              ),
-
               // Settings Shortcut
               IconButton(
                 icon: Icon(
