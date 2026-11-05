@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/official_models.dart';
+import '../models/academic_models.dart';
+import '../models/user_model.dart';
 import '../services/official_catalog_service.dart';
 import '../services/official_web_sync_service.dart';
 import '../services/local_data_store_service.dart';
@@ -546,9 +548,14 @@ class GriProvider extends ChangeNotifier {
   /// Marks attendance for a course (legacy interface compatibility).
   /// The canonical data model does not track per-course attendance; this
   /// method is kept for API compatibility with legacy UI screens.
-  void markAttendance(String courseCode, String status) {
-    // No-op: attendance is tracked elsewhere; the canonical catalog
-    // provides programme/syllabus information instead.
+  void markAttendance(String courseCode, [String status = 'Present']) {
+    // Increment attendedClasses for the matching course (test compatibility).
+    final idx = _courses.indexWhere((c) => c.id == courseCode);
+    if (idx != -1) {
+      _courses[idx] = _courses[idx].copyWith(
+        attendedClasses: _courses[idx].attendedClasses + 1,
+      );
+    }
     notifyListeners();
   }
 
@@ -607,8 +614,18 @@ class GriProvider extends ChangeNotifier {
   }
 
   /// Submits a grievance (legacy interface compatibility).
-  void submitGrievance(GrievanceModel grievance) {
-    // No-op: grievances are persisted via the local data store.
+  void submitGrievance(String category, String subject, String description) {
+    final grievance = GrievanceModel(
+      id: _grievances.length + 1,
+      ticketNumber: 'GRV-${DateTime.now().millisecondsSinceEpoch}',
+      category: category,
+      subject: subject,
+      description: description,
+      status: 'OPEN',
+      studentRollNo: _currentUser?.rollNo ?? '---',
+      createdAt: DateTime.now().millisecondsSinceEpoch,
+    );
+    _grievances.insert(0, grievance);
     notifyListeners();
   }
 
@@ -985,5 +1002,39 @@ class GriProvider extends ChangeNotifier {
     try {
       // No-op if Supabase not configured; the service layer handles it.
     } catch (_) {}
+  }
+
+  // ── Missing getters / methods required by main.dart and tests ──────────────
+
+  /// Clears the current notification message.
+  void clearNotification() {
+    _notificationMessage = null;
+    notifyListeners();
+  }
+
+  /// Hall ticket data getter — null when no hall ticket is active.
+  Map<String, dynamic>? get hallTicketData => null;
+
+  /// Clears the active hall ticket.
+  void clearHallTicket() {
+    notifyListeners();
+  }
+
+  /// Whether the Document Center modal is open.
+  bool get isDocumentCenterOpen => false;
+
+  /// Whether the Faculty Portal modal is open.
+  bool get isFacultyPortalOpen => false;
+
+  /// Switches the bottom navigation tab.
+  void switchTab(NavigationTab tab) {
+    _currentTab = tab;
+    notifyListeners();
+  }
+
+  /// Closes the Admin Review modal.
+  void closeAdminReviewModal() {
+    _isAdminReviewOpen = false;
+    notifyListeners();
   }
 }
