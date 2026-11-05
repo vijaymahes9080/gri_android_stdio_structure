@@ -3,7 +3,6 @@ import 'package:url_launcher/url_launcher.dart';
 import '../models/official_models.dart';
 import '../services/official_catalog_service.dart';
 import '../utils/gri_colors.dart';
-import '../utils/gri_motion.dart';
 
 /// Department / Unit detail screen backed exclusively by the verified
 /// official GRI canonical dataset. No invented emails, phones, fees or intakes.
@@ -398,6 +397,7 @@ class _DepartmentDetailScreenState extends State<DepartmentDetailScreen>
   }
 
   Widget _programmeCard(BuildContext context, bool isDark, OfficialProgramme p) {
+    final catalog = OfficialCatalogService.instance;
     final unit = catalog.unitById(p.unitId);
     final duration = p.duration.isNotEmpty ? p.duration : 'As published by GRI';
 
@@ -663,7 +663,7 @@ class _DepartmentDetailScreenState extends State<DepartmentDetailScreen>
       decoration: BoxDecoration(
         color: isDark ? GriColors.darkSurface1 : Colors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
+        border: Border(
           color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
           width: 1.0,
         ),

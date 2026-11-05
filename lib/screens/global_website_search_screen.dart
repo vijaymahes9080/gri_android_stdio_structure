@@ -3,7 +3,6 @@ import 'package:url_launcher/url_launcher.dart';
 import '../models/official_models.dart';
 import '../services/official_catalog_service.dart';
 import '../utils/gri_colors.dart';
-import '../utils/gri_motion.dart';
 
 /// Global website search screen that uses the verified OfficialCatalogService
 /// search index instead of the legacy static inventory.

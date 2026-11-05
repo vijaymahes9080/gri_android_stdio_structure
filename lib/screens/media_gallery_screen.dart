@@ -3,10 +3,9 @@ import 'package:url_launcher/url_launcher.dart';
 import '../models/official_models.dart';
 import '../services/official_catalog_service.dart';
 import '../utils/gri_colors.dart';
-import '../utils/gri_motion.dart';
 
-/// Official gallery screen displaying GRI's 28 verified gallery photographs and
-/// 4 official YouTube videos. All assets are sourced from the canonical dataset
+/// Official gallery screen displaying GRI's verified gallery photographs and
+/// official YouTube videos. All assets are sourced from the canonical dataset
 /// generated from https://www.ruraluniv.ac.in/.
 class MediaGalleryScreen extends StatefulWidget {
   const MediaGalleryScreen({super.key});
@@ -81,8 +80,8 @@ class _MediaGalleryScreenState extends State<MediaGalleryScreen>
           labelStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
           unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
           tabs: const [
-            Tab(text: 'Photos (${photos.length})'),
-            Tab(text: 'Videos (${videos.length})'),
+            Tab(text: 'Photos'),
+            Tab(text: 'Videos'),
           ],
         ),
       ),
@@ -109,11 +108,8 @@ class _MediaGalleryScreenState extends State<MediaGalleryScreen>
       itemBuilder: (context, index) {
         final p = photos[index];
         final thumbPath = p.thumbAssetPath;
-        return GriPressable(
-          onTap: () {
-            // Show full-size image in a dialog or navigator
-            _showFullImage(context, p.fullUrl, p.title);
-          },
+        return _GalleryPressable(
+          onTap: () => _showFullImage(context, p.fullUrl, p.title),
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
@@ -125,13 +121,13 @@ class _MediaGalleryScreenState extends State<MediaGalleryScreen>
                     fit: BoxFit.cover,
                     errorBuilder: (_, __, ___) => const Icon(
                       Icons.image_outlined,
-                      color: GriColors.muted,
+                      color: GriColors.forestPrimary,
                       size: 64,
                     ),
                   )
                 : const Icon(
                     Icons.image_outlined,
-                    color: GriColors.muted,
+                    color: GriColors.forestPrimary,
                     size: 64,
                   ),
           ),
@@ -140,21 +136,24 @@ class _MediaGalleryScreenState extends State<MediaGalleryScreen>
     );
   }
 
-  Widget _showFullImage(
+  void _showFullImage(
       BuildContext context, String fullUrl, String title) {
-    return Dialog(
-      child: GestureDetector(
-        onTap: () => Navigator.of(context).pop(),
-        child: InteractiveViewer(
-          minScale: 0.5,
-          maxScale: 3.0,
-          child: Image.network(
-            fullUrl,
-            fit: BoxFit.contain,
-            loadingBuilder: (context, child, loadingProgress) {
-              if (loadingProgress == null) return child;
-              return const Center(child: CircularProgressIndicator());
-            },
+    showDialog(
+      context: context,
+      builder: (_) => Dialog(
+        child: GestureDetector(
+          onTap: () => Navigator.of(context).pop(),
+          child: InteractiveViewer(
+            minScale: 0.5,
+            maxScale: 3.0,
+            child: Image.network(
+              fullUrl,
+              fit: BoxFit.contain,
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return const Center(child: CircularProgressIndicator());
+              },
+            ),
           ),
         ),
       ),
@@ -173,7 +172,7 @@ class _MediaGalleryScreenState extends State<MediaGalleryScreen>
       itemCount: videos.length,
       itemBuilder: (context, index) {
         final v = videos[index];
-        return GriPressable(
+        return _GalleryPressable(
           onTap: () => _launchUrl(v.watchUrl),
           child: Container(
             decoration: BoxDecoration(
@@ -204,7 +203,7 @@ class _MediaGalleryScreenState extends State<MediaGalleryScreen>
                   'Official YouTube video',
                   style: TextStyle(
                     fontSize: 8,
-                    color: GriColors.muted,
+                    color: GriColors.forestPrimary,
                   ),
                 ),
               ],
@@ -212,6 +211,22 @@ class _MediaGalleryScreenState extends State<MediaGalleryScreen>
           ),
         );
       },
+    );
+  }
+}
+
+class _GalleryPressable extends StatelessWidget {
+  final VoidCallback onTap;
+  final Widget child;
+
+  const _GalleryPressable({required this.onTap, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(8),
+      child: child,
     );
   }
 }

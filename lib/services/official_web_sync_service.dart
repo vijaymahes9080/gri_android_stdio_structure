@@ -80,10 +80,11 @@ class OfficialWebSyncService {
         d.downloadNote = 'robots-disallowed; link only';
         continue;
       }
-      // Perform HEAD request with retry logic
-      // ... (same 3-attempt retry with exponential back-off as the Python validator)
-      // Record http_status, valid flag, content_type, bytes
-      // On success: set local_path, bytes, sha256
+      // Perform HEAD request with retry logic (same as Python validator:
+      // 3 attempts with exponential back-off; 403/405/501 fall back to GET with
+      // Range:bytes=0-0; record status, content_type, bytes; set valid flag).
+      // For now, mark as pending - the full implementation mirrors
+      // data/tools/validate_and_download.py probe()/download().
     }
   }
 
@@ -98,22 +99,21 @@ class OfficialWebSyncService {
       final folder = _docFolder(d.category);
       final prefix = d.id.replace('doc_profile_', '').replace('doc_', '')[:12];
       final safeBase = _safeName(prefix + '__' + (d.filename ?? 'document.pdf'));
-      final dest = File('$folder/$safeBase');
+      final dest = File('${folder}/$safeBase');
 
       // Resume if already partially downloaded
       if (dest.exists() && dest.lengthSync() > 1000) {
         d.localPath = dest.relativeSync().replaceAll('\\', '/');
         d.bytes = dest.lengthSync();
-        d.sha256 = await _sha256File(dest);
+        d.sha256 = sha256.convert(dest.readAsBytesSync()).toString();
         d.downloadStatus = 'cached';
         continue;
       }
 
-      // Download with retry
-      // ... (GET with streaming, write to .part, then atomic rename,
-      //       tolerate .part unlink failures on Windows)
-      // On success: d.localPath, d.bytes, d.sha256, d.downloadStatus = 'downloaded'
-      // On failure: d.downloadStatus = 'failed', d.downloadError = error note
+      // Download with retry (GET with streaming, write to .part, then atomic rename,
+      // tolerate .part unlink failures on Windows). On success: d.localPath,
+      // d.bytes, d.sha256, d.downloadStatus = 'downloaded'. On failure:
+      // d.downloadStatus = 'failed', d.downloadError = error note.
     }
   }
 
@@ -166,15 +166,6 @@ class OfficialWebSyncService {
     return value;
   }
 
-  /// SHA-256 of a local file
-  Future<String> _sha256File(File file) async {
-    final bytes = await file.readAsBytes();
-    final converter = utf8.decodeConverter();
-    // Use a simple approach: compute sha256 from bytes
-    final digest = sha256.convert(bytes);
-    return digest.toString();
-  }
-
   /// Write the document manifest, media manifest and sync summary
   void _writeManifests(Map<String, dynamic>? mediaManifest) {
     // Collect document manifest entries
@@ -193,7 +184,8 @@ class OfficialWebSyncService {
           'source_url': d.sourceUrl,
         }).toList();
 
-    // Write manifests
+    // Write manifests (implementation deferred; mirrors python
+    // validate_and_download.py write_json / MAINFESTS path logic)
     // write_json(MANIFESTS / 'document_manifest.json', docManifest);
     // write_json(MANIFESTS / 'media_manifest.json', mediaManifest?.values.toList() ?? []);
     // write_json(MANIFESTS / 'failures.json', {
