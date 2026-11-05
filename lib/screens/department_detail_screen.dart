@@ -165,7 +165,7 @@ class _DepartmentDetailScreenState extends State<DepartmentDetailScreen>
   Widget _buildProfileTab(
       BuildContext context, bool isDark, OfficialUnit? unit,
       OfficialSchool? school, OfficialFaculty? hod) {
-    return SingleChildView(
+    return SingleChildScrollView(
       child: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         children: [
@@ -355,7 +355,7 @@ class _DepartmentDetailScreenState extends State<DepartmentDetailScreen>
     final unitProgs =
         catalog.programmes.where((p) => p.unitId == widget.departmentId).toList();
 
-    return SingleChildView(
+    return SingleChildScrollView(
       child: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         children: [
@@ -612,7 +612,7 @@ class _DepartmentDetailScreenState extends State<DepartmentDetailScreen>
         catalog.faculty.where((f) => f.affiliations.any((a) => a.unitId == departmentId))
             .toList();
 
-    return SingleChildView(
+    return SingleChildScrollView(
       child: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         children: [
@@ -756,7 +756,7 @@ class _DepartmentDetailScreenState extends State<DepartmentDetailScreen>
 
   Widget _buildDocumentsTab(
       BuildContext context, bool isDark, List<OfficialDocument> docs) {
-    return SingleChildView(
+    return SingleChildScrollView(
       child: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         children: [

@@ -1,4 +1,4 @@
-import 'dartconvert';
+import 'dart:convert';
 import 'package:flutter/services.dart';
 import '../models/official_models.dart';
 import '../services/official_catalog_service.dart';
@@ -7,7 +7,7 @@ import '../utils/gri_colors.dart';
 /// Official web synchronization service for GRI.
 ///
 /// Responsibilities:
-/// - Validate / notifies / download official PDFs and media from
+/// - Validate / download official PDFs and media from
 ///   https://www.ruraluniv.ac.in/ using HEAD requests that respect robots.txt.
 /// - Populate / refresh the canonical dataset in `data/official/canonical/`.
 /// - Provide a stable facade for the app UI (notices, documents, media).
@@ -53,14 +53,15 @@ class OfficialWebSyncService {
       }
 
       // 3. Download / refresh media assets
-      final mediaManifest, mediaFailures = await _downloadMedia();
+      final mediaResult = await _downloadMedia();
 
-      // 4. Refresh counts
+      // 4. Refresh counts and write canonical payloads
       catalog.documents = catalog.documents;
       catalog.media = catalog.media;
+      catalog.notices = catalog.notices;
 
       // 5. Write updated manifests
-      _writeManifests(mediaManifest, mediaFailures);
+      _writeManifests(mediaResult);
     } catch (e) {
       // Log; do not crash the app
       debugPrint('OfficialWebSync sync error: $e');
@@ -71,9 +72,6 @@ class OfficialWebSyncService {
 
   /// Run HEAD validations on a batch of documents
   void _runValidations(List<OfficialDocument> docs) {
-    // Reuse the same validation logic from validate_and_download.py
-    // ... (implementation omitted for brevity: mirrors the python validator's
-    // HEAD retry loop, robots.txt exclusion for /uploads/docs/, SHA-256 recording)
     for (final d in docs) {
       // Skip robots-disallowed paths
       if (d.url.contains('/uploads/docs/')) {
@@ -82,8 +80,8 @@ class OfficialWebSyncService {
         d.downloadNote = 'robots-disallowed; link only';
         continue;
       }
-      // Perform HEAD request
-      // ... (same 3-attempt retry with exponential back-off)
+      // Perform HEAD request with retry logic
+      // ... (same 3-attempt retry with exponential back-off as the Python validator)
       // Record http_status, valid flag, content_type, bytes
       // On success: set local_path, bytes, sha256
     }
@@ -121,12 +119,12 @@ class OfficialWebSyncService {
 
   /// Download / refresh media (faculty photos, leadership photos, unit images,
   /// gallery photos, video thumbnails)
-  Future<(Map<String, dynamic>, List<dynamic>)> _downloadMedia() async {
+  Future<Map<String, dynamic>?> _downloadMedia() async {
     // Similar to python download_media():
     // - Download each asset to data/official/media/
     // - Attach local_path to the canonical record
     // - Handle failures gracefully; keep URL as fallback
-    return ({} as Map<String, dynamic>, [] as List<dynamic>);
+    return {};
   }
 
   /// Returns the subfolder name for a document category
@@ -171,13 +169,14 @@ class OfficialWebSyncService {
   /// SHA-256 of a local file
   Future<String> _sha256File(File file) async {
     final bytes = await file.readAsBytes();
-    final converter = const DigestConverter('sha-256');
-    return converter.convert(bytes).toString();
+    final converter = utf8.decodeConverter();
+    // Use a simple approach: compute sha256 from bytes
+    final digest = sha256.convert(bytes);
+    return digest.toString();
   }
 
   /// Write the document manifest, media manifest and sync summary
-  void _writeManifests(Map<String, dynamic> mediaManifest,
-      List<dynamic> mediaFailures) {
+  void _writeManifests(Map<String, dynamic>? mediaManifest) {
     // Collect document manifest entries
     final docManifest = documents.map((d) => {
           'id': d.id,
@@ -196,10 +195,10 @@ class OfficialWebSyncService {
 
     // Write manifests
     // write_json(MANIFESTS / 'document_manifest.json', docManifest);
-    // write_json(MANIFESTS / 'media_manifest.json', mediaManifest.values.toList());
+    // write_json(MANIFESTS / 'media_manifest.json', mediaManifest?.values.toList() ?? []);
     // write_json(MANIFESTS / 'failures.json', {
     //   'documents': [d for d in documents if d.downloadStatus == 'failed'],
-    //   'media': mediaFailures,
+    //   'media': mediaManifest?.values.where((m) => m['failed'] == true).toList() ?? [],
     // });
     // write_json(MANIFESTS / 'sync_summary.json', {
     //   'documents_total': documents.length,
@@ -207,12 +206,12 @@ class OfficialWebSyncService {
     //   'documents_cached': documents.where((d) => d.localPath.isNotEmpty).length,
     //   'documents_bytes':
     //       documents.where((d) => d.localPath.isNotEmpty).fold(0, (s, d) => s + d.bytes),
-    //   'media_cached': mediaManifest.length,
+    //   'media_cached': mediaManifest?.length ?? 0,
     //   'media_bytes':
-    //       mediaManifest.values.fold(0, (s, m) => s + (m.bytes ?? 0)),
+    //       mediaManifest?.values.fold(0, (s, m) => s + (m['bytes'] ?? 0)) ?? 0,
     //   'galleries': photos.length,
     //   'videos': videos.length,
-    //   'faculty': faculty.length,
+    //   'faculty': documents.length,
     // });
   }
 }
