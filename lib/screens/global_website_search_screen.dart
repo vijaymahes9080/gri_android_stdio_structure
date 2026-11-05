@@ -276,9 +276,17 @@ class _GlobalWebsiteSearchScreenState extends State<GlobalWebsiteSearchScreen>
           ),
         ),
         const SizedBox(height: 8),
-        ..._hits.map((hit) => _buildResultTile(hit, isDark)).toList(),
+        ..._hits.map((hit) => _buildResultTile(hit, isDark)),
       ],
     );
+  }
+
+  Future<void> _launchUrl(String url) async {
+    if (url.isEmpty) return;
+    final uri = Uri.tryParse(url);
+    if (uri != null && await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
   }
 
   Widget _buildResultTile(OfficialSearchHit hit, bool isDark) {
@@ -337,7 +345,7 @@ class _GlobalWebsiteSearchScreenState extends State<GlobalWebsiteSearchScreen>
           Icon(
             Icons.search_outlined,
             size: 64,
-            color: isDark ? GriColors.darkSurfaceVariant : GriColors.outlineVariant,
+            color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
           ),
           const SizedBox(height: 12),
           Text(

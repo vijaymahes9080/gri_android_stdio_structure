@@ -18,6 +18,11 @@ class OfficialWebSyncService {
   List<CircularModel> _cachedNotices = [];
   List<CircularModel> get cachedNotices => List.unmodifiable(_cachedNotices);
 
+  /// Triggers a full synchronization pass with the official website.
+  Future<void> syncFull() async {
+    await fetchOfficialNotices(forceRefresh: true);
+  }
+
   /// Fetch live notices from official website with graceful fallback to seed data
   Future<List<CircularModel>> fetchOfficialNotices({bool forceRefresh = false}) async {
     if (!forceRefresh && _cachedNotices.isNotEmpty) {

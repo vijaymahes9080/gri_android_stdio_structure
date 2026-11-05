@@ -10,8 +10,8 @@
       "number": 1,
       "group": "Archive 1",
       "source_url": "https://ruraluniv.ac.in/photo-gallery",
-      "asset_path": "media/gallery/01.jpg",
-      "thumb_asset_path": "media/gallery/thumbs/01.webp"
+      "thumb_asset_path": "media/gallery/thumbs/01.webp",
+      "asset_path": "media/gallery/01.jpg"
     },
     {
       "id": "gallery_02",
@@ -75,8 +75,8 @@
       "number": 21,
       "group": "Archive 2",
       "source_url": "https://ruraluniv.ac.in/photo-gallery",
-      "asset_path": "media/gallery/21.jpg",
-      "thumb_asset_path": "media/gallery/thumbs/21.webp"
+      "thumb_asset_path": "media/gallery/thumbs/21.webp",
+      "asset_path": "media/gallery/21.jpg"
     },
     {
       "id": "gallery_22",
@@ -101,8 +101,8 @@
       "number": 23,
       "group": "Archive 2",
       "source_url": "https://ruraluniv.ac.in/photo-gallery",
-      "thumb_asset_path": "media/gallery/thumbs/23.webp",
-      "asset_path": "media/gallery/23.jpg"
+      "asset_path": "media/gallery/23.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/23.webp"
     },
     {
       "id": "gallery_24",
@@ -114,8 +114,8 @@
       "number": 24,
       "group": "Archive 2",
       "source_url": "https://ruraluniv.ac.in/photo-gallery",
-      "asset_path": "media/gallery/24.jpg",
-      "thumb_asset_path": "media/gallery/thumbs/24.webp"
+      "thumb_asset_path": "media/gallery/thumbs/24.webp",
+      "asset_path": "media/gallery/24.jpg"
     },
     {
       "id": "gallery_25",
@@ -127,8 +127,8 @@
       "number": 25,
       "group": "Archive 2",
       "source_url": "https://ruraluniv.ac.in/photo-gallery",
-      "thumb_asset_path": "media/gallery/thumbs/25.webp",
-      "asset_path": "media/gallery/25.jpg"
+      "asset_path": "media/gallery/25.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/25.webp"
     },
     {
       "id": "gallery_06",
@@ -166,8 +166,8 @@
       "number": 8,
       "group": "Archive 3",
       "source_url": "https://ruraluniv.ac.in/photo-gallery",
-      "asset_path": "media/gallery/08.jpg",
-      "thumb_asset_path": "media/gallery/thumbs/08.webp"
+      "thumb_asset_path": "media/gallery/thumbs/08.webp",
+      "asset_path": "media/gallery/08.jpg"
     },
     {
       "id": "gallery_09",
@@ -179,8 +179,8 @@
       "number": 9,
       "group": "Archive 3",
       "source_url": "https://ruraluniv.ac.in/photo-gallery",
-      "asset_path": "media/gallery/09.jpg",
-      "thumb_asset_path": "media/gallery/thumbs/09.webp"
+      "thumb_asset_path": "media/gallery/thumbs/09.webp",
+      "asset_path": "media/gallery/09.jpg"
     },
     {
       "id": "gallery_10",
@@ -205,8 +205,8 @@
       "number": 11,
       "group": "Archive 4",
       "source_url": "https://ruraluniv.ac.in/photo-gallery",
-      "thumb_asset_path": "media/gallery/thumbs/11.webp",
-      "asset_path": "media/gallery/11.jpg"
+      "asset_path": "media/gallery/11.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/11.webp"
     },
     {
       "id": "gallery_12",
@@ -257,8 +257,8 @@
       "number": 15,
       "group": "Archive 4",
       "source_url": "https://ruraluniv.ac.in/photo-gallery",
-      "asset_path": "media/gallery/15.jpg",
-      "thumb_asset_path": "media/gallery/thumbs/15.webp"
+      "thumb_asset_path": "media/gallery/thumbs/15.webp",
+      "asset_path": "media/gallery/15.jpg"
     },
     {
       "id": "gallery_16",
@@ -270,8 +270,8 @@
       "number": 16,
       "group": "Archive 5",
       "source_url": "https://ruraluniv.ac.in/photo-gallery",
-      "asset_path": "media/gallery/16.jpg",
-      "thumb_asset_path": "media/gallery/thumbs/16.webp"
+      "thumb_asset_path": "media/gallery/thumbs/16.webp",
+      "asset_path": "media/gallery/16.jpg"
     },
     {
       "id": "gallery_17",
@@ -322,8 +322,8 @@
       "number": 20,
       "group": "Archive 5",
       "source_url": "https://ruraluniv.ac.in/photo-gallery",
-      "asset_path": "media/gallery/20.jpg",
-      "thumb_asset_path": "media/gallery/thumbs/20.webp"
+      "thumb_asset_path": "media/gallery/thumbs/20.webp",
+      "asset_path": "media/gallery/20.jpg"
     },
     {
       "id": "gallery_26",

@@ -9,7 +9,7 @@
     "sha256": "a7f868171f265d0d114ece7ab993d851b6cb5196dd49ea084e31aabf9187a1b9",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/admissions"
   },
@@ -23,7 +23,7 @@
     "sha256": "84e25b98d502eba8db038de11a259ce4a35d62ae1188a61b80496194971e2289",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/admissions"
   },
@@ -37,7 +37,7 @@
     "sha256": "d03a4aa9ad078901780e4d2ac32566ab3d95870e184a58a2261ee3790cc8a444",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/academics"
   },
@@ -51,7 +51,7 @@
     "sha256": "431751ec23e18d0da0411c65977ad92e37e99e016cb2fc53c1ba6c5ab42e1f90",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/academics"
   },
@@ -65,7 +65,7 @@
     "sha256": "70285f3e76c8b716362a794f1f95df9051cf93f57ae91198a2b84054e85ebbcb",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/academics"
   },
@@ -79,7 +79,7 @@
     "sha256": "ff01cc5a86a54b1be14d08e9e7b49243b79b4d10f3c26d8a0ff1b5f1c5d5aa21",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/academics"
   },
@@ -93,7 +93,7 @@
     "sha256": "9ab83d0e5637bca9f9cfa91560922ca8bf223550cafba79e442c6d8037a6551b",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/academics"
   },
@@ -107,7 +107,7 @@
     "sha256": "c3e86621a41b0ea431bbe5ace732b3fd68ba42745173526f0e4c304cb66a4dae",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/examination"
   },
@@ -121,7 +121,7 @@
     "sha256": "63d3680c1323d11eea614355df62ca9c001ee654fc3c03868ec3ae141509a869",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/examination"
   },
@@ -135,7 +135,7 @@
     "sha256": "b0218145a49acacc19405e61b522126bce165026789a6e1692aaea37190a734f",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/examination"
   },
@@ -149,7 +149,7 @@
     "sha256": "668bd0ad38bc9ad1d836a4b77431295daf2b1045b1eca672d82df5768b226bd6",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/examination"
   },
@@ -163,7 +163,7 @@
     "sha256": "58d2bfc8ee3961ebd00c0d498e0066ad4b51d3b4472593ba92b4a30238d97a7d",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/examination"
   },
@@ -177,7 +177,7 @@
     "sha256": "a5418b3c9a9cc8c14ae8fae926c598a9015a346cc80947532e7d56212b2b1ae0",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -191,7 +191,7 @@
     "sha256": "41efde1ed311a3e2da194a8cef1b1cafeaf6887f122a1a4a867999fdbec3f752",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -205,7 +205,7 @@
     "sha256": "fd4716a0c9d78c7c52eaa7ee57d418572fe74422f41768ed6ddf1d3ce47c06b8",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -219,7 +219,7 @@
     "sha256": "1d4118b7db5e25e05cb434c53238725ae8aa93daa24b74e508d106326ef7aff7",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -233,7 +233,7 @@
     "sha256": "f90bfd3b55d2d8bff5ecb75012beae268470427e7e9e2ff60a6bb68d82db73c3",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -247,7 +247,7 @@
     "sha256": "e217de8a91aeaead0a8d8dc5c5e17a7d4b8b572b9b97009ac918c61e57508d73",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -261,7 +261,7 @@
     "sha256": "1e06817fe0aa72494a5825ca8718dce45ab514cb6e9125d97a97e0b4725e35dd",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -275,7 +275,7 @@
     "sha256": "e0035affaac01e867085ba17573f9f7f5a486e33bb3f8befad6af254908c731c",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -289,7 +289,7 @@
     "sha256": "4a5f9889025c24c83576941a3de134b2b1d3d8ec247b3a574852e200e67d92d4",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -303,7 +303,7 @@
     "sha256": "8270aa902f8ba59c931e30605f17cf98b613452ea254db1080cc3b279c7a0008",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -317,7 +317,7 @@
     "sha256": "74ce33ca76063f1b910042849eca5ceec0601d87da208336f1b2a653d90e568b",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -331,7 +331,7 @@
     "sha256": "5d37d99e45a7d22105086509d74ea764c54a6de892e78b452e1a8f1416372ed9",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -345,7 +345,7 @@
     "sha256": "73ff3b51eb77edee96576ad681c26d0a289eb47ae4501298b5ad2b396240372c",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -359,7 +359,7 @@
     "sha256": "74e3c84cc7798840afc571515e820a3a8ac89fbbc528de180292c62eb96cfc47",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -373,7 +373,7 @@
     "sha256": "488d19256699981e0c4649a4d57cf677ef75e688b843cf17e2804c5a7b1738bc",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -387,7 +387,7 @@
     "sha256": "7566b2ce1cc2c2b0632e949b5e9f041b8ae8146ae633a973ed0ec06731dba7a0",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -401,7 +401,7 @@
     "sha256": "4ca1e3aa62b8574e3ada88cc06df2413e7d622c2d464d6b79dd2159593c5356d",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -415,7 +415,7 @@
     "sha256": "a54e6fb331d3b5a322b200e422a3dc4a484647273486479a9b002e4685bc508b",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -429,7 +429,7 @@
     "sha256": "b2d083120349ebf8e75972291b047e70783093baf3540ed933191470a5a0f673",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -443,7 +443,7 @@
     "sha256": "11173c5d05c8706a5205cc0e5ab3fd92d2cfb98188e5529165428948c2085f98",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -457,7 +457,7 @@
     "sha256": "93b470e26f538d5dea7817c8f36fcab46b86d706b30f176040ed058a421fb024",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -471,7 +471,7 @@
     "sha256": "9e8e458fbffa399d2a8d194bcc540e89d417757ce241315380ee55b99e2a68a4",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -485,7 +485,7 @@
     "sha256": "3c8d8d21bb35bd26b4acf436d763e78b044eb6e7b7cdc2a1889bd7242fd3a556",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -499,7 +499,7 @@
     "sha256": "d1c2cac14adfbce9e2800920e900f7f72e669777a95b8844b338476d221cbe10",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -513,7 +513,7 @@
     "sha256": "a66c372aeb2be752af022cfeb41e714c4bbed0d6ecc15b46722bec1ecc55d05e",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -527,7 +527,7 @@
     "sha256": "5f43b854b271cafe38662127aebee47bbc6f5f9eb326ebea2b29d4d1debbf162",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -541,7 +541,7 @@
     "sha256": "d00534f0b3eacbc0451f70c3e58230ffbaabc01bb8b127f8b46839e5b42ea730",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -555,7 +555,7 @@
     "sha256": "24af9859b70390cb3815efbfe860c5f2de0440f88716b782c76882502234ec25",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -569,7 +569,7 @@
     "sha256": "f71f7c40a7169361a565ca282274343e11756a14bd8534eb6067b84afe0600a5",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -583,7 +583,7 @@
     "sha256": "6ba4ed30070b8f18d33eec39059ac0a57c71f9547a5ef6ce3a98a41805bb17e3",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -597,7 +597,7 @@
     "sha256": "58bb5763d6575250f60eb0a91180732123c1dec70aafd9ab886556e4ee7a461e",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -611,7 +611,7 @@
     "sha256": "8fa5af456cbf6ab29e246e7f3d45f8469be46b8d5db77cc5ec126f44cb9d2c6c",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -625,7 +625,7 @@
     "sha256": "4d7a45be87dab294118d29a67fc70e63450bb2f77ab7fdaa7c0044e1c3ce5416",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -639,7 +639,7 @@
     "sha256": "c71ed0e29e8db07a441b573809aebeb5d1f9e54de787eb90d0794d2142ee3154",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -653,7 +653,7 @@
     "sha256": "ce251678db429949112332f11b2855c7f4c9ce47c631cc31160decca5e80026b",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -667,7 +667,7 @@
     "sha256": "e93c673ee3f0c771327d31c49e2b43de8bcf2db453f037114a0776fc0e9cd15d",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -681,7 +681,7 @@
     "sha256": "7fda95746383f65f20c0f3e869f1a91fbbfd8eafade0862b2e47a5a93eedec09",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -695,7 +695,7 @@
     "sha256": "0d789dd7cc3741e5ec8d6facabd40aafdbd8ef835a7427f4627fd613d343faaf",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -709,7 +709,7 @@
     "sha256": "133323f19c24180247d73b01dd06de2b7f7d1f0004581209e8328e2e41e9dd68",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -723,7 +723,7 @@
     "sha256": "f336cabdda26608dfd70e1361338cda6e567caeb480364b3135b7a9ef35554b9",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -737,7 +737,7 @@
     "sha256": "529335d4e18e7bd085338eb41feab53d66cb4ad5fbe25bf12e7dbc643d64e77e",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -751,7 +751,7 @@
     "sha256": "f87f1147a0acf019222ceb897ddbd8d1ad69844fe5bd6f8e112d53c50cfb1786",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -765,7 +765,7 @@
     "sha256": "0585bf122aed57969fa3bc7d3e95ed5870799b73a232f017d3f1c98b1beb463a",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -779,7 +779,7 @@
     "sha256": "7329bf06d34c023bde48fd0767f742e9e345f6353e9bbbf75ea88f2c11865db1",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -793,7 +793,7 @@
     "sha256": "3ea8fe2b9f81016ce49ab41fcfb8275dc15d001901259a10e0ae6e8259e5f1dd",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -807,7 +807,7 @@
     "sha256": "e2a33b000294bd9f6dca3190d56c9b1d26bcd6dec5ec570c159ec798e74c3403",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -821,7 +821,7 @@
     "sha256": "d4f2300230f3ccac3a028fe2940a88b5eed42e0586503d77ce2b268bb05fc422",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -849,7 +849,7 @@
     "sha256": "3b6de85eb2703b436f6b2b2a0f72392aedd7932be7eafa27793da05f672c30a8",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -863,7 +863,7 @@
     "sha256": "1dcd4ff3d793bc44bfcf30c516710d409ce4b97efe4f847948b4aacc00c97f53",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -877,7 +877,7 @@
     "sha256": "4d528fe61c6867b4415feab72e297e9ea43e2d7fe4dae74e0244d103bb219370",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -891,7 +891,7 @@
     "sha256": "8e3dd3dcdbba550a4566804c3a9daccbc2ca78c804f844037f2a9a7d5000d37f",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -905,7 +905,7 @@
     "sha256": "3857401cf8fbb73e66cb1543baec2d9aa84c3fbd4515721c83714c1cf9a01f6b",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -919,7 +919,7 @@
     "sha256": "bd342b6de35af3c9ae9b6cfc33f65cff1a5741a5baa32050e9702842651ee350",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -933,7 +933,7 @@
     "sha256": "e086ceb55b156a5c4def21826a1e9f187d914ec6f3499d693c543f0e5fee3489",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -947,7 +947,7 @@
     "sha256": "4576b23b408affd657622373bd37778293f856ee8e8efa5c0e8595a61c4075f2",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -961,7 +961,7 @@
     "sha256": "30b9f70120c82af7c8a22975f9e581852c07bd89d11edb1da80cab1aab2119fe",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -975,7 +975,7 @@
     "sha256": "cd10479ff1dfb2f148d159300be77b96dd52dc7d1592db3345cb799499012893",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -989,7 +989,7 @@
     "sha256": "e01afb4ee60b619178b26a41cc34b4875df02dbc55780b7193e35752673394d6",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -1003,7 +1003,7 @@
     "sha256": "3c53fc67504cf4c6728d13357b361d7eb7f0ced9b2f7fbe159ac09dae40eb6b1",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -1017,7 +1017,7 @@
     "sha256": "896ff561dd53d34c4fd57af337947fa6b904ad5af0bb669fb9f2f0da04c2ee18",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -1031,7 +1031,7 @@
     "sha256": "c52b0b5de982350c02801ffbc3823435186de9c31e74d080a628df5e58c66ca5",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -1045,7 +1045,7 @@
     "sha256": "e88a22d37ede0d8a56e555e95559e1ba798829d450ecdf86f8f188fdcc1acc7a",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -1059,7 +1059,7 @@
     "sha256": "b1f24bbaf52d070a527024f0230702eb568fec02107486c8e4d8bd9634ff705f",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -1073,7 +1073,7 @@
     "sha256": "a3fdc55de5fc799a10aaac512b33839411e1a4d4de20b75a0bc6f4369dc443b9",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -1087,7 +1087,7 @@
     "sha256": "dbdae593a28f03c91c71d950fab0d0fa03887e40d8f8602fd8f5d230113d262d",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -1101,7 +1101,7 @@
     "sha256": "319e4c533d995439b4d020d6db1de28612363a17d1063f61a374923cb22ae3ab",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -1115,7 +1115,7 @@
     "sha256": "5f80d6fc609e524c55060cbd40e8c1cc56b1fad6a757ef6c933c73032b0ce05c",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -1129,7 +1129,7 @@
     "sha256": "426b41bab753e4e99d5b85793c131ac7e505e32df18951e9f11cb07b4de14440",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -1143,7 +1143,7 @@
     "sha256": "f94195a7fc9adf384371c9162d3323f66ae7d15fc397829ccb48db275592eb0d",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -1157,7 +1157,7 @@
     "sha256": "9c819ad283d8ff239cdc4b8074d997ee62ae08e01ba717421efce058c11e77a6",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -1171,7 +1171,7 @@
     "sha256": "9301e8833735d7093c7b8dc447948e0670379d02e61686b4d79bca27f52234b9",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -1185,7 +1185,7 @@
     "sha256": "993ed835a593060b0b865ed160ed79c06f2f87453df3185448063867c5b637d2",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -1199,7 +1199,7 @@
     "sha256": "bca89737f489f40c1bba3713d76cddff607f9971ba91343aa86e4815f09b2668",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -1213,7 +1213,7 @@
     "sha256": "fe9029b1fc656c04eaa4ab18161c69b22a947f2e9ed691f1a9f78efa967a9197",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -1227,7 +1227,7 @@
     "sha256": "bc8d29b1a2de93b93b4ed7f519d265ab8bdec977f1fd93251c123ae23c5093dc",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -1241,7 +1241,7 @@
     "sha256": "1224c05141ba848ade300b29532f4bf02130de6aedeafaac1dc37f340a715f86",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -1255,7 +1255,7 @@
     "sha256": "b9dd99e2ce24b847b634e3724ef1f9ccd03fdd1550959541f5ceeeb3b9590858",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -1269,7 +1269,7 @@
     "sha256": "5ac888b67504b9227476bc8791062b4d85eb4a90db8a2c05ae43fb1da3200c72",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/administration"
   },
@@ -1297,7 +1297,7 @@
     "sha256": "591323dfb0f1ffa3b2952deb489e5c67f7a99cd9ab6c99dc101b0e21c1202a09",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/infrastructure"
   },
@@ -1311,7 +1311,7 @@
     "sha256": "83e4c0d333244a088d8907fc45729833bf3dc67d07d4810f3bcc7d89d9b17756",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/school-of-agriculture-animal-sciences"
   },
@@ -1325,7 +1325,7 @@
     "sha256": "9be4fe01c25fab02cd14e0cfb43ee81836efb9764562e716f4c8eefbebd61ab4",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/academics"
   },
@@ -1339,7 +1339,7 @@
     "sha256": "82601950688571caa8b9debe35a53579d7aaae32eeec198c31142c857d6fc519",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/academics"
   },
@@ -1353,7 +1353,7 @@
     "sha256": "5e515705e2f3f76bc76212dfec966d97d04decdf93c2f6df47687a97f1fe0b26",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/academics"
   },
@@ -1367,7 +1367,7 @@
     "sha256": "dc4e9e81e2442d7dff4a296f5e3ec430408d69177c8f26b34ed998a7956527a4",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/academics"
   },
@@ -1381,7 +1381,7 @@
     "sha256": "2d68079c629fcdebb3180434e1b6c50aa8fdf04dc6e410c1e6a14337cf4bd24b",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/academics"
   },
@@ -1395,7 +1395,7 @@
     "sha256": "baeb37aa55ac9c4ad4cfa995a51ccf39a364c4aecc18a15cb0ac9bcac7d125a9",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/academics"
   },
@@ -1409,7 +1409,7 @@
     "sha256": "f9cc10c8a90d92b13e7b6b7551fe83f2e75bbcda40412d933a228c8ea97cd9a7",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/academics"
   },
@@ -1423,7 +1423,7 @@
     "sha256": "57814d7c1f7024e896a6fab7fe7d76b0eb94bda0e0f32272df872c771f747b19",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/academics"
   },
@@ -1437,7 +1437,7 @@
     "sha256": "cf00dbcc6c04b0d90ed077d0d943c7368fbf4aa996c46c88b0e0d787f68f8380",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/academics"
   },
@@ -1451,7 +1451,7 @@
     "sha256": "a707919141c48df69079eef97efcf4fd354b91235da8b800019e33324ec96d62",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/academics"
   },
@@ -1465,7 +1465,7 @@
     "sha256": "8df5386793a121f95e4a1f74fee17a4d2e8a812933fa72833e0b4abbf1e37ffc",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/school-of-agriculture-animal-sciences"
   },
@@ -1479,7 +1479,7 @@
     "sha256": "1a431f56ac2e6b1126f4a4ddc8e609b90801df903d2d6c7c34eb8feec3a4df0f",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/library"
   },
@@ -1493,7 +1493,7 @@
     "sha256": "6bae7f3d8bdb90200eb96d8023dce0a6b6d3028e3475037a65bcb10b53337e09",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-lifelong-learning-extension"
   },
@@ -1507,7 +1507,7 @@
     "sha256": "253fbd8a2b91fdfc5d2e42f4296138205d7bd12add3b3a47f3f2305554eec6de",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-lifelong-learning-extension"
   },
@@ -1521,7 +1521,7 @@
     "sha256": "d4898f068744e7f2999b6b539df645a5295158b72103cf18e4cec41f7003d018",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/academics"
   },
@@ -1549,7 +1549,7 @@
     "sha256": "e9f5cdea40bc22608b78a1465eb8c6f39a86ea5a06dac1eb781c175cd3f2261a",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/facilities"
   },
@@ -1563,7 +1563,7 @@
     "sha256": "8a527639bc824f7ee9a67011b4d3f1f8106ffd648351785859165b66cbf8ace2",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/facilities"
   },
@@ -1577,7 +1577,7 @@
     "sha256": "3afe4228056b68349fa6af3ba74eefb9202fd8f6f630a187330dcf88f2789549",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/facilities"
   },
@@ -1675,7 +1675,7 @@
     "sha256": "bbe89e6590fd1dd4107e0079dda42d4d3cddaa4a31a6e84a77476f61e7eda183",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/infrastructure"
   },
@@ -1689,7 +1689,7 @@
     "sha256": "9c9539e7af882f738c5071dd0939fde809efcf44c24fde35efe38a2ef25fc671",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/library"
   },
@@ -1703,7 +1703,7 @@
     "sha256": "890685a9a433f4dd5bc98b67eef5079749b9e240ae0a3946d77a6fe9994163fc",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-lifelong-learning-extension"
   },
@@ -1717,7 +1717,7 @@
     "sha256": "990ea29d5bc1b6ca5acc23c8f5db60a99e305abf06acd71b5b7b5be2cc21fdea",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-lifelong-learning-extension"
   },
@@ -1731,7 +1731,7 @@
     "sha256": "c0ffe2af334b387d0d9b53137c0b7ca71bedb772d749180d5232486e1082716f",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-lifelong-learning-extension"
   },
@@ -1745,7 +1745,7 @@
     "sha256": "d6608b23b21ce248a5c3349abb533d3d690a8605bc3178e12f4065ce5ae26cb0",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-lifelong-learning-extension"
   },
@@ -1759,7 +1759,7 @@
     "sha256": "f77d7f13f6c15a611298e835b6a5883dd33bb31124a00f9deef44b6802c096d2",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/school-of-agriculture-animal-sciences"
   },
@@ -1773,7 +1773,7 @@
     "sha256": "1dc59aba37c08081ddd8e8a3fda4661a179c701d6883721462e823eb7ec044ff",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/academics"
   },
@@ -1787,7 +1787,7 @@
     "sha256": "73f51f461fcb01e9748b2fd19b43c99da0f032818bb145d06210e359598076c3",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/academics"
   },
@@ -1801,7 +1801,7 @@
     "sha256": "e22d50d93b7b8843b53134adab20bf526de88f48dabb83bfcafac4002ac8a82b",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/academics"
   },
@@ -1815,7 +1815,7 @@
     "sha256": "a6e856c4eddb8dabdc662db22e43b710d380cb3ab54de84d491ec2a3368bfed1",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/academics"
   },
@@ -1829,7 +1829,7 @@
     "sha256": "a13faeec5a3216762e9f99e0d0963d7ec23a8c4ca759fa94f0672d1aea382bd3",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/academics"
   },
@@ -1843,7 +1843,7 @@
     "sha256": "fe7ce5a0a36bf47f6bff86c5c6b67bd55185d42baaa1b93a6ce77dde33d87f8a",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/academics"
   },
@@ -1857,7 +1857,7 @@
     "sha256": "f61f25f00d4d9f332fa05e224ebe858c274fbec5d10832fafec0af0a31c4aa57",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/academics"
   },
@@ -1871,7 +1871,7 @@
     "sha256": "b458658837912cad25f5c7acf9925513e2b726ebd98985272daa3f425e58709b",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/academics"
   },
@@ -1885,7 +1885,7 @@
     "sha256": "f5738b8752ed711a1b5c0fa744f4ecfc0100d01a9db80098527294581b5379d0",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/academics"
   },
@@ -1899,7 +1899,7 @@
     "sha256": "3be13a83cb7249ae9d8f39d93bb8f1d5eabc24049c010f99ba558d775ca38641",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/library"
   },
@@ -1913,7 +1913,7 @@
     "sha256": "4643b45255c8469e76356e0afa9768e646c76dedf18371d4d3ebf64af4ff4d0c",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/infrastructure"
   },
@@ -1941,7 +1941,7 @@
     "sha256": "b5e20a8a46ab046a9ae37d7ad179659ceec35de1b45c70eae81e46c786b96ab6",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk"
   },
@@ -1983,7 +1983,7 @@
     "sha256": "1a8a1dd674dc7393eec1cab21f5dcd2f130d763e55a24c0a5ca873ce0d0c3659",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/physical-education-and-yoga-centre"
   },
@@ -2011,7 +2011,7 @@
     "sha256": "36e3e69e9a4478ce3c999fb8a782f480f9771f09a5a7b1d84e6add5016ae2a7c",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/administration"
   },
@@ -2025,7 +2025,7 @@
     "sha256": "d006715b3f9b8a08d6843a873a5ca809fdbe3ae2e6fd4b08ff9a46f75538bf42",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/infrastructure"
   },
@@ -2039,7 +2039,7 @@
     "sha256": "f5595ca2961466731e7938fac1b53401623729f581727d934c7637db32711819",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/admissions"
   },
@@ -2053,7 +2053,7 @@
     "sha256": "5bb0ab2428c194f391908ed522881b0fcdd222c122f2e2d95f4906f90d190021",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/admissions"
   },
@@ -2067,7 +2067,7 @@
     "sha256": "71d1fb30fe61f548f1bd033803d2825e848360a7960b85abcbbc356889118ae4",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/admissions"
   },
@@ -2081,7 +2081,7 @@
     "sha256": "db0e474f08908505a37d3639748644319e13213486bbd86c3e880fdeb3d5e670",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/admissions"
   },
@@ -2095,7 +2095,7 @@
     "sha256": "1a0063fca9f1aef3f269d34b5febd2ce582e6e21d17f2f2c5832b298f7084aee",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/admissions"
   },
@@ -2109,7 +2109,7 @@
     "sha256": "281932ba7f181b9776e02a2c60b349879160821fac5a6373810a7fa05fb15fd1",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/admissions"
   },
@@ -2123,7 +2123,7 @@
     "sha256": "36891b5733cee7307a7bd18ba56d507d4ceca24f0ef1ae992f6c79760d1f98b2",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/admissions"
   },
@@ -2137,7 +2137,7 @@
     "sha256": "96ed512d08352f7c9bed2f2d37a4aced1cc8d0e60c92a4055ce4a40f7b917c24",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/admissions"
   },
@@ -2151,7 +2151,7 @@
     "sha256": "194876a0ac572ff7cdfe23f0af88b1c2ef2b13fcf4d927135ce3f25b51cb8495",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/admissions"
   },
@@ -2165,7 +2165,7 @@
     "sha256": "1a758fdc17675b2a8223bbd94013cada58355ee0b7a89ce553f37e3cd53f326c",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/admissions"
   },
@@ -2179,7 +2179,7 @@
     "sha256": "ec727a78f9edbf3288f8212c999355e804229a324c05d21a958123e9b25e938d",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/admissions"
   },
@@ -2193,7 +2193,7 @@
     "sha256": "3147897b442865b45d0b43037ce59ae71b706de589a9cf0170370762781296a7",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/admissions"
   },
@@ -2207,7 +2207,7 @@
     "sha256": "b481b822bbc0ddedfdc9565e67834ee28c6d46fc6a0d87bf3d03f8e0fc07a08a",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/admissions"
   },
@@ -2221,7 +2221,7 @@
     "sha256": "38f033f8632950a17a19e380f77bd619da6f5b2e6fae2b14014f221715635cad",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/admissions"
   },
@@ -2235,7 +2235,7 @@
     "sha256": "e4daf5b78824c5ae63cbdf3e4389142977d999d0699619fbeff73416a8fbf2c9",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/admissions"
   },
@@ -2249,7 +2249,7 @@
     "sha256": "68131472ec32be49b4079501fbefcfb8f0296b69cbd2b7a3c30c7b5ce9d81cd8",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/admissions"
   },
@@ -2263,7 +2263,7 @@
     "sha256": "eb8b987991efca1e3795da02ef01fa173a10029dd18a62f4e5228be38b910caf",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/examination"
   },
@@ -2277,7 +2277,7 @@
     "sha256": "419b04d15aad7d2dc04fb0ebeef546357319333ce115ffea873869b280864efd",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/admissions"
   },
@@ -2291,7 +2291,7 @@
     "sha256": "acb44b995778c2db89061160f0c16b2c3743f0fa447304718d2dbbd90d9b2306",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/admissions"
   },
@@ -2305,7 +2305,7 @@
     "sha256": "a30c0e2cd038c4840223d4ed8c0067091191a7f98afc67293a6b793c0e5b8fd2",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://ruraluniv.ac.in/page/admissions"
   },
@@ -2319,7 +2319,7 @@
     "sha256": "955b26036d6b4d54c0f387fac982d1292d0bdcf62d022329e3e60b9bba95640c",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-lifelong-learning-extension"
   },
@@ -2333,7 +2333,7 @@
     "sha256": "1361cc4f0df57c08703b29e4c2304f699e1d1ba8cdcc517bba86a0c15d219f9b",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-computer-science-applications"
   },
@@ -2347,7 +2347,7 @@
     "sha256": "fa50d7f7e2706ac17d8583c2a4cbbea1ae323b9a4e26efa41505394268d345a7",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-computer-science-applications"
   },
@@ -2361,7 +2361,7 @@
     "sha256": "dbb8e9287021ae41185f3044ecc5b0cd2477b6cacf20a7deea05cb9a4d34dec9",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-applied-research"
   },
@@ -2375,7 +2375,7 @@
     "sha256": "87c568945bb275df0b87057472b832624a69296c0da1cf8024176693b8e9449f",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-economics"
   },
@@ -2389,7 +2389,7 @@
     "sha256": "8e5fb33801e67c2df8d4caf91089f75d8b54647c973068942359bb88380470d5",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-economics"
   },
@@ -2403,7 +2403,7 @@
     "sha256": "61cd3450f7d84fa58475af2bde01c0f7a8f5131414760ba25bbfe9b07322385d",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-economics"
   },
@@ -2431,7 +2431,7 @@
     "sha256": "37cd1e1d232f0e71939e35569b9c751bd7c7444060c553451678514d44b702ab",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-cooperation"
   },
@@ -2445,7 +2445,7 @@
     "sha256": "33aca27cdf0b806901284e0a2dd936b32e1c168a48a7e03582729f69554b0bcd",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-cooperation"
   },
@@ -2459,7 +2459,7 @@
     "sha256": "548294ceefb38d396061018cac23d58cdd7c081236fe2f580f60ec65a2a09b45",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-cooperation"
   },
@@ -2473,7 +2473,7 @@
     "sha256": "b72fefed6f426ac6d49417f69970447d994d6d418faab035234e6b6dbf6158a6",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-education"
   },
@@ -2487,7 +2487,7 @@
     "sha256": "e28d12d3ce6ed6d74f661051431855f7aa530686a792b8051d44ccb81c88ba29",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-education"
   },
@@ -2501,7 +2501,7 @@
     "sha256": "d6804f00f34a8f3f68f04834e345d8e5162ad9bc0429ad33ca7454ad0d02ec36",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-education"
   },
@@ -2515,7 +2515,7 @@
     "sha256": "749b712a3ad6330908eecf9a3d03f399dbfbfed8a0150a4394f6db0ba6ca0065",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-biology"
   },
@@ -2529,7 +2529,7 @@
     "sha256": "e1b182400971e3a2e6479bbb770a7a654ea4230453889475b5b4d0bcfd42cd4d",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-biology"
   },
@@ -2543,7 +2543,7 @@
     "sha256": "d2da03caccba629788b4c2f91b42a16f89084eb38de71b9e3e2f072ab5238ec5",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-biology"
   },
@@ -2557,7 +2557,7 @@
     "sha256": "75b823b328271c5fc75a9852aa6f576a1de5c65150d4497fb104bc78e56eba10",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-biology"
   },
@@ -2571,7 +2571,7 @@
     "sha256": "ea7378a8da5f38ee8ac89d0088cb91b00960a7632b1dfd86400358191b5cfd4c",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/school-of-agriculture-animal-sciences"
   },
@@ -2585,7 +2585,7 @@
     "sha256": "9887d5bd10f65f5d6a079243dd6ad7efae658f99d603006e48349af7553ceeb2",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/school-of-agriculture-animal-sciences"
   },
@@ -2627,7 +2627,7 @@
     "sha256": "1d0d7ed27a7ec4e178a4998bfdad51ea4c119bda04ef0018d077f87b4a6cc858",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-chemistry"
   },
@@ -2641,7 +2641,7 @@
     "sha256": "1564a26841e40d04dd55a32b2e1ef2ffc594bc3c09ad2efa9b89ae9d87f009f1",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-chemistry"
   },
@@ -2655,7 +2655,7 @@
     "sha256": "6a867ea18f01c93115e99c8a7811d67ff2639f5ac900263e1ae8a03d21f21ac3",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-chemistry"
   },
@@ -2669,7 +2669,7 @@
     "sha256": "b0d5610da4fc141f7cf514508a44ff7c74074f1a893d21ec9dfdd67962cc0c2e",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-computer-science-applications"
   },
@@ -2683,7 +2683,7 @@
     "sha256": "91ad0c06c57a87eafae05f1b692f336e7ef24bbbc7e4f4fd41e72585e801e03e",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-computer-science-applications"
   },
@@ -2697,7 +2697,7 @@
     "sha256": "eb0e7fa0c615b16ede387c70fcd09e2998b86f8a6b803525cf2f9718ecd319b9",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-computer-science-applications"
   },
@@ -2711,7 +2711,7 @@
     "sha256": "5cae246af27526c61f5af1b42e9793fa4cfa06f628f702ffafc11a8d679c99fd",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-applied-geology"
   },
@@ -2725,7 +2725,7 @@
     "sha256": "dca4cfd122ac1a5c4f048078e5f4d3981950ac61527a17d1c6c8903ddbd8c9f6",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-applied-geology"
   },
@@ -2739,7 +2739,7 @@
     "sha256": "b68c6c09fe552a987d7d2fbd07453a5d25b22008b5dbfba15e9d4828bd4ca00e",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-applied-geology"
   },
@@ -2767,7 +2767,7 @@
     "sha256": "81b2bfb91567ad840d2ec0a7a1c3befda49547067637327d1db8b87aa7338c56",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-home-science"
   },
@@ -2781,7 +2781,7 @@
     "sha256": "f57bd7d7a5430437b75b61fba4ee3a85e97c0790bda0c5b36c7217c1846a7d75",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-home-science"
   },
@@ -2795,7 +2795,7 @@
     "sha256": "feee1f56f5c57cd7fe1b84029b354988ede4ab166ee4cfb1fd8e475e94afb300",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-home-science"
   },
@@ -2823,7 +2823,7 @@
     "sha256": "cc804ee0ebc1a02e81f5e893fc675bbf9217ef47b32b4a88839f259fa25371ce",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-mathematics"
   },
@@ -2837,7 +2837,7 @@
     "sha256": "a6eb593478ab6376e51dab5d9e2e4089f88478b90b87649ca0429c2599a1f6b9",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-mathematics"
   },
@@ -2851,7 +2851,7 @@
     "sha256": "6d93936ca9c5355c169cf857e63095e3451b107551823595a31dce48b1c00477",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-mathematics"
   },
@@ -2879,7 +2879,7 @@
     "sha256": "5c3a27426629904f8add6bb20f9cfc7e803d8648b8d6ff42cefaa636e7bd4876",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-physics"
   },
@@ -2893,7 +2893,7 @@
     "sha256": "c4ae3931526b2e6a6de55fd2e74ad19a18375ea3f9de2fec5bc913c6ee908578",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-physics"
   },
@@ -2907,7 +2907,7 @@
     "sha256": "f2a7e79daae9264cde0bfe0a60c262b687cf1c89af95f2c9d64b6cca2bd4158c",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-physics"
   },
@@ -2935,7 +2935,7 @@
     "sha256": "d1cbc6227c5ad3303cfbcc680b659ef6e88f8adf1b5c473432c1dbe9b2248990",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-home-science"
   },
@@ -2949,7 +2949,7 @@
     "sha256": "565b0355594c0e658c9caa2a5360e50c7dad4bc3a8e9b22ad54f2f47119d13e1",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-home-science"
   },
@@ -2963,7 +2963,7 @@
     "sha256": "e4ccad541f0436f85e3d97b35b7403c96e148f43caa1ed00f29dc57a79a5820d",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-home-science"
   },
@@ -2991,7 +2991,7 @@
     "sha256": "4624439bfd512551606e19946df226ff9c2943d5b172212afc5674ddeb71a10d",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-rural-technology"
   },
@@ -3005,7 +3005,7 @@
     "sha256": "f2b0c0cbda6902ab5b15799f8a7f770109e2438ac815a2ce9844efe4a01c3808",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-rural-technology"
   },
@@ -3019,7 +3019,7 @@
     "sha256": "90c4516e96ede74b5eb2861e30df54682556b84969febb7486b9b46ece8525f2",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-rural-technology"
   },
@@ -3033,7 +3033,7 @@
     "sha256": "f3ab5df58675b5fac311617329c7af7a2cd495c7dd9a4d625ad12990335433e7",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3047,7 +3047,7 @@
     "sha256": "5b2e09bffce49581948d37e0585e65a584ef596c8036c557b8367129c0352d76",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3061,7 +3061,7 @@
     "sha256": "654c48fa6492fe92de3cbb2166985f35cf42163337a71054f18e0f3592efee7a",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3075,7 +3075,7 @@
     "sha256": "320d89fd753552e8d9047e7ef9274156e4cf8ed64cdc5b758e6d09e21bed051a",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3089,7 +3089,7 @@
     "sha256": "6e5669dc3225511b29148231590e67c8518a9c29ed40340beba82e5cc2093368",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3103,7 +3103,7 @@
     "sha256": "69d4f1af56530d6bf85e061b233f184ecbb1ef12191f6b244fdd53176b70520d",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3117,7 +3117,7 @@
     "sha256": "d01fc61d4bd14fbdf4688c2c897a66f9505725bf53492dbab3a4f216afae12b5",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3131,7 +3131,7 @@
     "sha256": "14ff80b31f9becc44db1117c00cd39dc00a1b2479763eac352d67f755d64934f",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3145,7 +3145,7 @@
     "sha256": "b97920536b516a8fca17073b2f162b367da6215e6ebb0ab2eee9f62dc61d0d42",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3159,7 +3159,7 @@
     "sha256": "288d78ff9d8e8324a3a9853e851f88ce36e655a80d9f8499612f1159acf0d596",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3173,7 +3173,7 @@
     "sha256": "ca7c9085ab0fb257f068505047956a74bf02a55029e9b71a429dd3ce37843a34",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3187,7 +3187,7 @@
     "sha256": "c7ec779d12dba2193cb64cdbe1e9f91ad6f6c254aeeaf9528f066e7b1e470352",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3201,7 +3201,7 @@
     "sha256": "ca4fced8d4eb7825c4ff540e0df81b1a1c670f46695b1643ea6607176a8d04d6",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3215,7 +3215,7 @@
     "sha256": "92429b3e2030044440518fd7a9d086413c776bf8a2cc542176c6e14442a775ba",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3229,7 +3229,7 @@
     "sha256": "4ae6be7c7395bf017f0406dbd81416fec05e038c5ba9444094d8b97899c09ce7",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3243,7 +3243,7 @@
     "sha256": "f823fde359df6b71c9c2bf956c1afe42cae258695b919f0dd03275857ee457cd",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3257,7 +3257,7 @@
     "sha256": "f55391acf46481b7f908951dd947a45a8799ca16e91c3ccf86191d7f91389ed1",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3271,7 +3271,7 @@
     "sha256": "f5429aae843618c3a6f5ab307fe071c8d97a913bc26148132a6235fb7b35c2b0",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3285,7 +3285,7 @@
     "sha256": "3dd2bd81c92cbf08c26f07dd04ce6880c60f3ee849cce4f03e7c794812b9d332",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3299,7 +3299,7 @@
     "sha256": "15927d3fbb2fd91746aa938267d1c566368d1ba19a130bb62aeb4e03ba6442cd",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3313,7 +3313,7 @@
     "sha256": "56f9bbf239e0ea83d2bafe87a12d2477a01e5cbd8c004a1172474102f3b20c80",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3327,7 +3327,7 @@
     "sha256": "3dd2bd81c92cbf08c26f07dd04ce6880c60f3ee849cce4f03e7c794812b9d332",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-lifelong-learning-extension"
   },
@@ -3355,7 +3355,7 @@
     "sha256": "977caa70e7a3b9a2bf5cc13bc7334549b41b688942a7dc75ffafc5147981bcaf",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3369,7 +3369,7 @@
     "sha256": "2c8499e21bef26e54e37083b38854b5d3e2df30bd8526a90ebc9b6846d0d8884",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3383,7 +3383,7 @@
     "sha256": "a8b72f86920ba1ef959864675a40cbfb6215fe6205a0d63c0e09c6e8649c824f",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3397,7 +3397,7 @@
     "sha256": "9ed078d6ca4ee5834738c705c5cd862dcabfb8172b651d86c87a25a841975be2",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3411,7 +3411,7 @@
     "sha256": "c78b558a6fcfd0051f79ac95a63ffe8ccd765e1214ab510e49d64d4c98da4b71",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3425,7 +3425,7 @@
     "sha256": "28e697d5fef01e14f83278f574bab7f4ddfedc772280bbddc1221d315a6fc6f6",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3439,7 +3439,7 @@
     "sha256": "640df755c239f54b021fde7f5d20f23237d7455804fda64edfb4273b9b0fe806",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-rural-industries-management"
   },
@@ -3453,7 +3453,7 @@
     "sha256": "00e0f33bec96388e8740325850e7b07b8ab87d8096be5d054b6d7522d2180010",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-rural-industries-management"
   },
@@ -3467,7 +3467,7 @@
     "sha256": "2413d188c609a1e6c2c9b134629d15ca88f7375591d9ea946967ee8080cdbae0",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-rural-industries-management"
   },
@@ -3481,7 +3481,7 @@
     "sha256": "960a406da6083abb796078585084c44fdd7bcb5b43fa8ef39b21430167c95755",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-lifelong-learning-extension"
   },
@@ -3495,7 +3495,7 @@
     "sha256": "0da6967cd965ece8f323b9748c48d1d3cb7237194a4c2c94907987710f70c04b",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3509,7 +3509,7 @@
     "sha256": "73e0f248a2f1738e0a718b7d0f06136b019da6e47be3a3beae1f8d78327892bc",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3537,7 +3537,7 @@
     "sha256": "73e0f248a2f1738e0a718b7d0f06136b019da6e47be3a3beae1f8d78327892bc",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-lifelong-learning-extension"
   },
@@ -3565,7 +3565,7 @@
     "sha256": "c7fd2b3c3700181bb60416a1c42a95650c4779fe9188ae312861df3eae0670ba",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3579,7 +3579,7 @@
     "sha256": "e4ab5e26d1ef621a889703282384226503fb33c2946e5c270a4e05b1c496dd9e",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3593,7 +3593,7 @@
     "sha256": "c7fd2b3c3700181bb60416a1c42a95650c4779fe9188ae312861df3eae0670ba",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-lifelong-learning-extension"
   },
@@ -3607,7 +3607,7 @@
     "sha256": "e4ab5e26d1ef621a889703282384226503fb33c2946e5c270a4e05b1c496dd9e",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-lifelong-learning-extension"
   },
@@ -3621,7 +3621,7 @@
     "sha256": "8f5f218566adba4ac0ff628d439e6e201bf903ac1bb1e87c867af738160c01a0",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3635,7 +3635,7 @@
     "sha256": "3207d8f0c6224a43630ae85af2d17ee50dc4c958dfbe9f16e1d7a30e1bb2385c",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/computer-centre"
   },
@@ -3649,7 +3649,7 @@
     "sha256": "f3781036413678f3a2d755e5a1b3b7784edda03465d1558b3a8ee292bc8fd144",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-rural-industries-management"
   },
@@ -3663,7 +3663,7 @@
     "sha256": "635308f18fc99a82e81a3f76928f5bb711ea854b06404cc0ff05797913fe800f",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-rural-industries-management"
   },
@@ -3677,7 +3677,7 @@
     "sha256": "c3f5c514d5720e0d7f86e3bc79657e87d4b831a0b4f252db1048219f358274ba",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-rural-industries-management"
   },
@@ -3691,7 +3691,7 @@
     "sha256": "3ea41a3bceaa6ebfd99586512f59cfb5fa372e4964bddef8c7234cd1a1d219a6",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-computer-science-applications"
   },
@@ -3733,7 +3733,7 @@
     "sha256": "a923e9dc978fbcf8b739ded9bc0c48413e539f0247ed19a0749715034583ff76",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/school-of-agriculture-animal-sciences"
   },
@@ -3747,7 +3747,7 @@
     "sha256": "3e779fe7aa5d39958b9ae04a502b1624862025ea1adb451c2f7eef3be460f52c",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/school-of-agriculture-animal-sciences"
   },
@@ -3761,7 +3761,7 @@
     "sha256": "8ae247756b53831db8cf58a068c9b92a16ecdd8e0224e36691ff588d880b09bf",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-lifelong-learning-extension"
   },
@@ -3775,7 +3775,7 @@
     "sha256": "36132419e0dfe16f6c9498b31b85b8bc2af07e5abfc423966da9c44c475fd405",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3789,7 +3789,7 @@
     "sha256": "36132419e0dfe16f6c9498b31b85b8bc2af07e5abfc423966da9c44c475fd405",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3803,7 +3803,7 @@
     "sha256": "469ef0dd3561df3bbc534f31b919f7e6f86ce24c6d013c458d56367d044abf0c",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes"
   },
@@ -3817,7 +3817,7 @@
     "sha256": "36132419e0dfe16f6c9498b31b85b8bc2af07e5abfc423966da9c44c475fd405",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-lifelong-learning-extension"
   },
@@ -3831,7 +3831,7 @@
     "sha256": "36132419e0dfe16f6c9498b31b85b8bc2af07e5abfc423966da9c44c475fd405",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-lifelong-learning-extension"
   },
@@ -3859,7 +3859,7 @@
     "sha256": "d3fcdcc7b9c052c53b312a34c7ddced129ce6d033b8b40d263e2f4bece1c0bb6",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/physical-education-and-yoga-centre"
   },
@@ -3873,7 +3873,7 @@
     "sha256": "e6d397edae41221171127b0a36c97cc46237346620731310bec1d8a159bf4110",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/physical-education-and-yoga-centre"
   },
@@ -3887,7 +3887,7 @@
     "sha256": "a675e89e74f43c01dbaf7cd445025ce30d99154e8482679731cf04f39e779ef1",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/physical-education-and-yoga-centre"
   },
@@ -3901,7 +3901,7 @@
     "sha256": "c0050b5d37697ccbaba21e270f44cf45ed9b1518ae673bca02066bb54de5538b",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/school-of-english-foreign-languages"
   },
@@ -3915,7 +3915,7 @@
     "sha256": "123f1bb953d4b2a22e727dcb56d748e4d4160960e7b055ba2ad02b80f6cbca8b",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/school-of-english-foreign-languages"
   },
@@ -3929,7 +3929,7 @@
     "sha256": "bbbd571c52e60dc12fad63c47a6d515b4283d2f2900143655a9dee28c8df891d",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/school-of-english-foreign-languages"
   },
@@ -3943,7 +3943,7 @@
     "sha256": "e63bb20a8645f680dd6a21d06831e30f62e1507f7c25d62e1be49409fe2e4567",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/school-of-english-foreign-languages"
   },
@@ -3957,7 +3957,7 @@
     "sha256": "2b4a751e8239a072cf9fcf4b1291ec32fa5077f4a2bfccda51a3a385f0faae2c",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-futures-studies"
   },
@@ -3971,7 +3971,7 @@
     "sha256": "7d0f655df7f337c49820f650c997138976fba5b42be61a607cba0dcd55847f57",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-futures-studies"
   },
@@ -3985,7 +3985,7 @@
     "sha256": "ac0fd8ee2acd4b8c8d7812add6301760b7ec803139d4265932c799602636e4c7",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-lifelong-learning-extension"
   },
@@ -3999,7 +3999,7 @@
     "sha256": "e6f9666e4ada2228eb014d466ec56c798f20997d12291062f59e3e949e47257c",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-lifelong-learning-extension"
   },
@@ -4055,7 +4055,7 @@
     "sha256": "31b97beeb191349b88db3f9bb19253ea7f43dbcbb12025f16873d04696907761",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/school-of-english-foreign-languages"
   },
@@ -4069,7 +4069,7 @@
     "sha256": "ed2d9669977a621b9cb6ac54f1e158c1f3f6df4f1cf670bcb9456587f1a6bf5c",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/school-of-english-foreign-languages"
   },
@@ -4083,7 +4083,7 @@
     "sha256": "799ccdaa2d087169eb939ccb846544098139154a37fa4db6d1677ed6aef6a53a",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/school-of-english-foreign-languages"
   },
@@ -4097,7 +4097,7 @@
     "sha256": "2f54ad6f69f98b69f390ea3e29586269817d42f1b9d3a3c1c25286906b83f5fc",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/school-of-english-foreign-languages"
   },
@@ -4209,7 +4209,7 @@
     "sha256": "75431b4c7b63d216b53dd198981684746335196393d76f9701bd78aef1a0b88f",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/physical-education-and-yoga-centre"
   },
@@ -4223,7 +4223,7 @@
     "sha256": "98609afdf8a5862b8b32ea98fdb758e64818e595de4f467ac21a5c9927f4e2ba",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/physical-education-and-yoga-centre"
   },
@@ -4265,7 +4265,7 @@
     "sha256": "b824ff6229ae3b57b52a7510f3c3402ff78779d701f94d66d5aeb27831965fbf",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-education"
   },
@@ -4279,7 +4279,7 @@
     "sha256": "960a58ff860453583b3a7cb628131a6c71b8f02a211841336762e63c6dcd92f9",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-gandhian-thought-and-peace-science"
   },
@@ -4293,7 +4293,7 @@
     "sha256": "a762d34cb81eed49eb8870b04500cf6b00986c2438b53433dce1b63fabeb3274",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-gandhian-thought-and-peace-science"
   },
@@ -4307,7 +4307,7 @@
     "sha256": "72002032ec9073bd1aa1f396f0e798a8de3e60f9ce47837f64d402b3d114b353",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-gandhian-thought-and-peace-science"
   },
@@ -4321,7 +4321,7 @@
     "sha256": "03a9e08459e11b277a8ff6343ce92f6a7dd1597d31801d8f047bdd7cb8b89767",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-political-science-development-administration"
   },
@@ -4335,7 +4335,7 @@
     "sha256": "40234a963f63b41e894cb217b3affde3f1828509c6170c37acf9c0e021cf4d15",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-political-science-development-administration"
   },
@@ -4349,7 +4349,7 @@
     "sha256": "74e57e5d87d47a4e8de97204e8150ff8bb121e143e0655453714128b2ae19e2e",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-political-science-development-administration"
   },
@@ -4363,7 +4363,7 @@
     "sha256": "7abbbd2ee2327dbafb4e6a92d0eca2c2d043ae745442e52d86dd461816695696",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-political-science-development-administration"
   },
@@ -4391,7 +4391,7 @@
     "sha256": "2708baeb2d30876a9d668f7da9b8e24be745bce0dc2219c0cd743d5d4a61eb72",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-economics"
   },
@@ -4405,7 +4405,7 @@
     "sha256": "b1276b87fbd1cd30b16f641cbd28fd709b784bbc7add26ed9fc552079d1941f8",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-economics"
   },
@@ -4419,7 +4419,7 @@
     "sha256": "18b6ee5cdaa0e6223d21bbcde38d75f262a3e38d4c2f1ec5c9c9471ce5f1fa6d",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-economics"
   },
@@ -4433,7 +4433,7 @@
     "sha256": "beb33635bf94a750498ed749f0c1afca606a56f8f67265802c21095554af4969",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/school-of-english-foreign-languages"
   },
@@ -4447,7 +4447,7 @@
     "sha256": "f1d67c1f2c9161b4e60ea2a51c354f1ad2484a039fe6f391cadd47e18d39e158",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/school-of-english-foreign-languages"
   },
@@ -4461,7 +4461,7 @@
     "sha256": "7fd2e58fd53a4fadb1a77ef543ff72917debaf15ea31d4fade27390302bd5a5c",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/school-of-english-foreign-languages"
   },
@@ -4475,7 +4475,7 @@
     "sha256": "31368db56e77082eb454960b32bb0d06fe496f1c00dcbf2cfb99365783cf64e2",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/school-of-english-foreign-languages"
   },
@@ -4489,7 +4489,7 @@
     "sha256": "2a3e9a87a5cb32123e591826d7f3dc5a8452d3d1ef77c8cfb915765a47f8f3f7",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/school-of-english-foreign-languages"
   },
@@ -4517,7 +4517,7 @@
     "sha256": "46e6c1e69da38b0cb1478f9285e56a4cd4a90af21e1fa03781daf80eabc7e929",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-hindi"
   },
@@ -4531,7 +4531,7 @@
     "sha256": "dbe9897370524074d4eef2082886302817ef15bed7ab083f23353a84dd1e6a2c",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-hindi"
   },
@@ -4545,7 +4545,7 @@
     "sha256": "44e63ead0b1b2abb99dfac49990f8746039c886969976c9eff6a7c18e5113b20",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-hindi"
   },
@@ -4559,7 +4559,7 @@
     "sha256": "94c77b3cea57480e6727199b95887fb92e7e73f18cbc6e890e4f97ddfd50dbad",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-rural-development"
   },
@@ -4573,7 +4573,7 @@
     "sha256": "a5589a7fe5f79e4e2b6e2997b34fa8fea3ce7ae9821d029fa033dac3b1525276",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-rural-development"
   },
@@ -4587,7 +4587,7 @@
     "sha256": "4fefa43306feef720d329f00bfeeada03bd56d147f74d39a9b40874cec78a7a2",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-rural-development"
   },
@@ -4601,7 +4601,7 @@
     "sha256": "fa83b40e96b81f1cb199119f3d535bcf68111d8d274316d0f9e06944c4aad773",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-rural-development"
   },
@@ -4615,7 +4615,7 @@
     "sha256": "03d4ff4bb86d85383980fe53af401ac3402f58d349dbce4ffdf1389467353cde",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-sociology"
   },
@@ -4629,7 +4629,7 @@
     "sha256": "fac76b935e047e1979b5bcdeddaee13ee46cca4781e81b0aae14d6682cc9e9f3",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-sociology"
   },
@@ -4643,7 +4643,7 @@
     "sha256": "daeeb7a3acab617d9e7f1c2018bf4aa59ae5335e428b72779746586657ed7d89",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-sociology"
   },
@@ -4657,7 +4657,7 @@
     "sha256": "a93b6f1dbdcc404467e5351c20dd4210a6b377e765b8aa6f1d05eca0e9e5479f",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-sociology"
   },
@@ -4671,7 +4671,7 @@
     "sha256": "611286d8ebc076221d6a2699efd445ec036f53ac415aea69481e021b68531150",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-sociology"
   },
@@ -4699,7 +4699,7 @@
     "sha256": "177a1c63a9114ec4d002f91708f5ee526d8b7da3a2f11b41840197812018d61e",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-tamil"
   },
@@ -4713,7 +4713,7 @@
     "sha256": "fd88e188df06661040e2ae8f5d22ab05c342724a3e9f135c8f47c764bdb43d1b",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-tamil"
   },
@@ -4727,7 +4727,7 @@
     "sha256": "7238ce26e99b5de45c0f72c2ae0db5858c22288aa07dad4fb0cab9e8bc9f6843",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-tamil"
   },
@@ -4741,7 +4741,7 @@
     "sha256": "51d00fd8b16c06960264695a5fffb9a5c0ddd2ec376c84c247a60b91ede767e7",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-cooperation"
   },
@@ -4755,7 +4755,7 @@
     "sha256": "e243d24e512a464a941211c763c57956da6b24334e3190644929e4003fc43bea",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-cooperation"
   },
@@ -4769,7 +4769,7 @@
     "sha256": "8f924b558ca8aed20ffeac3db40b9896157658d852c004f5d0a3f7a308175fe4",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-cooperation"
   },
@@ -4797,7 +4797,7 @@
     "sha256": "a3b6b18e20f6231c80b360fd7140c062bb8bd8073cc0a7e58e84363dd39819a5",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-education"
   },
@@ -4811,7 +4811,7 @@
     "sha256": "5f371d125107aab83c7a489712383c2f34dce45495010b8560c8f19bb18ba38a",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-education"
   },
@@ -4825,7 +4825,7 @@
     "sha256": "168dfc2cd80761f70ccd0408c3bd8a29f4ae66c84a2fd8035769c175f6c24ff5",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/school-of-english-foreign-languages"
   },
@@ -4853,7 +4853,7 @@
     "sha256": "345b588d8c642715444412f2c6bdad048f96a2163ed04301639a31902539564a",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-biology"
   },
@@ -4867,7 +4867,7 @@
     "sha256": "34883a2fecd06d662600fced5dc61206efcb1f889dc730bd828e661d26967236",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-biology"
   },
@@ -4881,7 +4881,7 @@
     "sha256": "cc6b639f7726f58dd147a21094784acac09ebfffc4555e5947a2415e8e3f6a28",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-biology"
   },
@@ -4909,7 +4909,7 @@
     "sha256": "6ba46509aeb26bd04535b6a1f16e62d1442f49970f43991b79e777825e977d6f",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-biology"
   },
@@ -4923,7 +4923,7 @@
     "sha256": "27417abb9ed1ac8652f0f63fe2445051e60739db99d46b81ceaac7c15cab7bb8",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-biology"
   },
@@ -4937,7 +4937,7 @@
     "sha256": "bb3fd5bc450eeffca43284b9f85192488b1081ed033f9913391253e95fc46712",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-biology"
   },
@@ -4965,7 +4965,7 @@
     "sha256": "e4f3dc4abb8bb7eeb28350dd3c9e7d1daa365a67bdc4f018ec304b5c0a830033",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-biology"
   },
@@ -4979,7 +4979,7 @@
     "sha256": "8ebd462d4b876109e8397d316e4a3ecfb9e4b6bd365d176ff57865943f6839af",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-biology"
   },
@@ -4993,7 +4993,7 @@
     "sha256": "6d204bf3e151b5688327ec9d1d98e2157bce9a3b61cd373c9cbb00b8431c85c1",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-biology"
   },
@@ -5021,7 +5021,7 @@
     "sha256": "7c5f9922884873e9075d70c3f3b3bd973884503b0b4b30ef354b1d3fe71e1f2a",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-applied-geology"
   },
@@ -5035,7 +5035,7 @@
     "sha256": "4d3f1db8eaad8b0097ff099351ecb24aa018ff325f6451fbd97dc88996f797e0",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-applied-geology"
   },
@@ -5049,7 +5049,7 @@
     "sha256": "d6611854bb6d7f31c5a42211ca5a1a3058f2db12cdcb00ee49804d0114d70f9b",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-applied-geology"
   },
@@ -5077,7 +5077,7 @@
     "sha256": "eec4c65591f1a7995a2824af250439819caed6f516b411ded484e8a07d3a3c02",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-chemistry"
   },
@@ -5091,7 +5091,7 @@
     "sha256": "ccb5884f471036b3339e91abe08045c8be8383bfab7b4415a9f6666e693cedab",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-chemistry"
   },
@@ -5105,7 +5105,7 @@
     "sha256": "08b55294526719f25b81e5dc915cb3667c8c9548ddcbe7e4eeccaca2c5e99512",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-chemistry"
   },
@@ -5133,7 +5133,7 @@
     "sha256": "0c15a90e3afd0b7ce3d234497b409996324573022be35afbabd41d07632c6791",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-home-science"
   },
@@ -5147,7 +5147,7 @@
     "sha256": "06264de30ecdc76c7c9e7c64029b53525f2f9d3126ba8578a5ee70589196ef45",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-home-science"
   },
@@ -5161,7 +5161,7 @@
     "sha256": "d7389d827ad566186ea1a2bed6323e42c47646f70e2a7199c088a1afcb16dcdb",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-home-science"
   },
@@ -5175,7 +5175,7 @@
     "sha256": "422ede8c4b1d687d2806a30e6f3c5bc831792b0abb733dcd0419bdb649c90018",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-home-science"
   },
@@ -5189,7 +5189,7 @@
     "sha256": "3368f32c568a841f5b01051e8bce52bfce4d69b154ed59c5dc86f466b0d9367d",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-home-science"
   },
@@ -5203,7 +5203,7 @@
     "sha256": "489d92d219f507332068726951c56eb6a8a1660191695c986ee566392aeb6c2f",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-home-science"
   },
@@ -5231,7 +5231,7 @@
     "sha256": "02a800d1318b58f4b7cc01c6f735f46e04bac12529de8a597ffd101feec11d0a",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-geoinformatics"
   },
@@ -5245,7 +5245,7 @@
     "sha256": "17e0eeed392caf85c23c2c39bcee489458ab89a29aa76c971b5024f0e8b1c96d",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-geoinformatics"
   },
@@ -5259,7 +5259,7 @@
     "sha256": "d9ca8b7563aa0af1ea0f9742fd039aabbef19c07974574565ce1047a642bca85",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-geoinformatics"
   },
@@ -5287,7 +5287,7 @@
     "sha256": "b670a4e291b27bc8a2ec3d0a57856fadd333d84079663742065d2d4d388af11b",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-mathematics"
   },
@@ -5301,7 +5301,7 @@
     "sha256": "58a1f97a8f8e3a6a3d9b5d3edeb29d2615fbdf53add324c3c34dfeedae858030",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-mathematics"
   },
@@ -5315,7 +5315,7 @@
     "sha256": "dad9239c1bdfdde283ed601139e75ec6c555e9b352c7a759c59e5aec28e1c5fe",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-mathematics"
   },
@@ -5343,7 +5343,7 @@
     "sha256": "084bf2166b69fd0ae90a6fbfd098e3b43fb5759c26a1f84804ff49432c5a2727",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-physics"
   },
@@ -5357,7 +5357,7 @@
     "sha256": "83c6889ff55d6e9d7ea01d6123c4e0b43a4f347eb3ddb4ccb7d8b049320102d2",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-physics"
   },
@@ -5371,7 +5371,7 @@
     "sha256": "aa577bde2ae760e592fb263853bccf2d7c00624b881b2ff9b04aae14d78dd9b4",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-physics"
   },
@@ -5385,7 +5385,7 @@
     "sha256": "5d9249ccc7777b4b615dcd5d45d2886ba737583dad28e3deff1323c2a78750e5",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-home-science"
   },
@@ -5399,7 +5399,7 @@
     "sha256": "8f96d0a02880423fd457372a2132170896db2a359e32a51cdd525164017835cb",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-home-science"
   },
@@ -5413,7 +5413,7 @@
     "sha256": "4eb3f98049b16a942c0675b1a1ceb2db9b111a9053dc0ce92cd68d30fb32587a",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-home-science"
   },
@@ -5441,7 +5441,7 @@
     "sha256": "41fb665c50dc5a204498644e8ab5d1ee03a23baeb4fcb0bc42e8560ca3a8df25",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-rural-energy"
   },
@@ -5455,7 +5455,7 @@
     "sha256": "4f296217171be260c929a2a960c8811f75cf1c36c826f5bfe9c5fb753bcc3f4a",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-rural-energy"
   },
@@ -5469,7 +5469,7 @@
     "sha256": "49778bc0317a59524d843b70d20ee4d3caed617c55e5eb85bf630f62765d2279",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-rural-energy"
   },
@@ -5511,7 +5511,7 @@
     "sha256": "42fbf05441ce18f6b64e550b35f94a7c0f14ee90b82b9c65575d375b5cc462f1",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-computer-science-applications"
   },
@@ -5525,7 +5525,7 @@
     "sha256": "cccf9f9dcd7bbd5707f36de6633644dc552322c5a239bec894549070a77e685b",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-computer-science-applications"
   },
@@ -5539,7 +5539,7 @@
     "sha256": "43fe392ba661905fdd83b4adcdb9d2cc9717e4605385e5d7ba1dcdc3fbb221f8",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-computer-science-applications"
   },
@@ -5553,7 +5553,7 @@
     "sha256": "8a4b4f34186a73782aae629b0832132a76f51656a6b85675d5bef9a24d8d72fd",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-computer-science-applications"
   },
@@ -5567,7 +5567,7 @@
     "sha256": "fadbf3e0f2b3ab6a2368900a6500dc1686ff82ae609dd7f425bc93b9603b4519",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-rural-industries-management"
   },
@@ -5581,7 +5581,7 @@
     "sha256": "df4781a7a27c64c815c33751bfa57cb80f078fff9b4af83dc3b427efc69a9677",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-rural-industries-management"
   },
@@ -5595,7 +5595,7 @@
     "sha256": "5acbb0776fb1033922fbd3a4e01797fd681285b18862d00ccf67c0a19bb0f640",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-rural-industries-management"
   },
@@ -5609,7 +5609,7 @@
     "sha256": "b815f1f00e9bf9b53bc842a57bdad80e8ad3fcc28748828265751325ed08404f",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-lifelong-learning-extension"
   },
@@ -5623,7 +5623,7 @@
     "sha256": "fdbf87b26afd7f838d5b1d6aa03f6c18a261d621b12d5aa2c83f6b8a381700fc",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-applied-research"
   },
@@ -5637,7 +5637,7 @@
     "sha256": "128777410845edc9f515a7a004b6aef656bf300195be558c42ea47ee66229edc",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-applied-research"
   },
@@ -5665,7 +5665,7 @@
     "sha256": "9942a086cb9d6fae292f96da3f1ed67b3374daaf2e1049fc86e59018ffbbfdbd",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-rural-health-and-sanitation"
   },
@@ -5679,7 +5679,7 @@
     "sha256": "44fe5bcab39c425316b6851533e43e773903e4b19a06746a98d69d1125e6e1c8",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-rural-health-and-sanitation"
   },
@@ -5693,7 +5693,7 @@
     "sha256": "e187424bbbce26d13cd72166373d5140ded1e9aa96b547ea876828eab845eab5",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-rural-health-and-sanitation"
   },
@@ -5707,7 +5707,7 @@
     "sha256": "1f3133ae760d1e972a2a363933186948651c24ce2f290ca0228386f5e19ef932",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-applied-research"
   },
@@ -5735,7 +5735,7 @@
     "sha256": "c05191a26c63b04439bf4d7938f87f8e81e01755edf708ed227a18b302eddc75",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-geoinformatics"
   },
@@ -5749,7 +5749,7 @@
     "sha256": "e75d9977106d9fb663067ef8ffc5b7a732f34b4269c8b44182fb0c7eb75752a8",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-geoinformatics"
   },
@@ -5763,7 +5763,7 @@
     "sha256": "56640146e504382beccf19ebc15a93632855a00aa492459b66d926967e67af7c",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-geoinformatics"
   },
@@ -5777,7 +5777,7 @@
     "sha256": "ff763d54f4d10ecfa8f32d4a4b7d849aaade41b19b06f4a3dbc89539fdb02fde",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/physical-education-and-yoga-centre"
   },
@@ -5791,7 +5791,7 @@
     "sha256": "ffdd5206e4a7345c142074d75aec2bc49200a128b75e456eed300349f3c88b3f",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/physical-education-and-yoga-centre"
   },
@@ -5805,7 +5805,7 @@
     "sha256": "bdb7cd849863eb8b06f0a48495ea87e1975dcf1c2ebd8dfd4796153fe8c1d1f3",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/physical-education-and-yoga-centre"
   },
@@ -5819,7 +5819,7 @@
     "sha256": "191a7da9c0525103de6bf48b8515149ed40e62c40217685d740d62525818fe31",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/physical-education-and-yoga-centre"
   },
@@ -5833,7 +5833,7 @@
     "sha256": "0787f2205e03e4f95822b48c5722901ccefcf4b5222ccfe3e7b9d4f2ad456d44",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/physical-education-and-yoga-centre"
   },
@@ -5847,7 +5847,7 @@
     "sha256": "d1add224a4fb0406512a3e38650feeae36e0e0daea0c19c6e2440041eee0870e",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-computer-science-applications"
   },
@@ -5861,7 +5861,7 @@
     "sha256": "a168527e5972b109d0f8dbc2c9624c3922997fa0cc968068dcf54cb5b94cde5a",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-chemistry"
   },
@@ -5889,7 +5889,7 @@
     "sha256": "062910ced1dd22da9475733589064945d8fe1845cd0e568fc569c90f1747cd74",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-physics"
   },
@@ -5903,7 +5903,7 @@
     "sha256": "fdfee95ebfac11437183bc109cb618a043cf19d25274c1972d72340a9a84d2f5",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-mathematics"
   },
@@ -5917,7 +5917,7 @@
     "sha256": "736650dd167dd82639a457f37f5b763c525693c773eba55a1e0f5989a12accff",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-physics"
   },
@@ -5931,7 +5931,7 @@
     "sha256": "f0fdc474b7f7805a208b843e08becc86b929f7fcd5c4eb25b5a53108489fe7c9",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-physics"
   },
@@ -5945,7 +5945,7 @@
     "sha256": "bdf35a077c4208a618b419f200879340b1081ba76e6a60026dd79a6c53f0d65c",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-applied-research"
   },
@@ -5973,7 +5973,7 @@
     "sha256": "bfe4f8751fc281a3bea4fda8c1df71337c2adffb39cdcb2ad8e590c5f420df43",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-biology"
   },
@@ -5987,7 +5987,7 @@
     "sha256": "1a136c2292160ddd9eae63a4a80cad1d94fa4c9c9c4fb5874b2544851e4cd095",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-malayalam"
   },
@@ -6015,7 +6015,7 @@
     "sha256": "db0a9c1dc398fbdcd943557234a3336c71f310d4300de0c4e3cf1ebd5c31053e",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-sociology"
   },
@@ -6029,7 +6029,7 @@
     "sha256": "f17092ed1aabde5f03c54866d91f8c2bfc9abc165bac890dfaa09cbcae5c6bb6",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-political-science-development-administration"
   },
@@ -6043,7 +6043,7 @@
     "sha256": "334fed9c3e79d407c575140c1ff38be366314a542e9184041102cae68bfaa387",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-economics"
   },
@@ -6057,7 +6057,7 @@
     "sha256": "7fbbea57aff0c877300524bde5fbe88377233c40b018154a5beef93e5d944b98",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-cooperation"
   },
@@ -6071,7 +6071,7 @@
     "sha256": "def0891ebfddd05919413ccf5c52ae8e10deef4923527b93d3510603b442065b",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-futures-studies"
   },
@@ -6085,7 +6085,7 @@
     "sha256": "27fa3ee7f863525638b2fb75bbc26b4730d5bb700b661438914347a7098784e5",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-hindi"
   },
@@ -6099,7 +6099,7 @@
     "sha256": "b8315613129bf694b1a9eb82b6d7b0fd5059b47275ceb47c2da9f7a28d2dc15d",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/school-of-english-foreign-languages"
   },
@@ -6113,7 +6113,7 @@
     "sha256": "d332d5163bc8574cb6e85b865e4ec5d2c4920e3565a1c71a7a32a23521af4806",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-geoinformatics"
   },
@@ -6141,7 +6141,7 @@
     "sha256": "7c6651a7b3c0fa89a187b0ad0d1c16e19b619dd89de549e38a023e14ec1929f9",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-lifelong-learning-extension"
   },
@@ -6169,7 +6169,7 @@
     "sha256": "2d7624066d67adf392b77ff9ae3424f6ab1bcb77a227473c0756455a5793214d",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-computer-science-applications"
   },
@@ -6183,7 +6183,7 @@
     "sha256": "6e487e2de28fbca0a065d3b96ebb30fac92ab6a7ee14914e6f05d479bb321a2b",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-rural-technology"
   },
@@ -6197,7 +6197,7 @@
     "sha256": "580ea9f32824e36df41c57025398ada200ee06fccb6bb28fbcb4664c7a09c4be",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-rural-energy"
   },
@@ -6211,7 +6211,7 @@
     "sha256": "3cd13a7aecee39277f53bf6f321d2439bb38691a7da5b1022f0368a7da92f230",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/physical-education-and-yoga-centre"
   },
@@ -6225,7 +6225,7 @@
     "sha256": "bd9b48495b4015b401ce3243273b6e8f36fe0d42e058ede1e0b5ebd354f9a1f2",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-malayalam"
   },
@@ -6239,7 +6239,7 @@
     "sha256": "b89385096277524593bc2644324b1168c2df780ec45e4de7c322d5be3168fb7d",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-applied-research"
   },
@@ -6253,7 +6253,7 @@
     "sha256": "7ae896d96fab0dea5694915654fa9d94bed20d384a5491d2ea11adcb47248530",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-malayalam"
   },
@@ -6267,7 +6267,7 @@
     "sha256": "5347d96c46c0e069bfe4c2b679bfaf8703e35080844984d34c09716046f1ee26",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-futures-studies"
   },
@@ -6281,7 +6281,7 @@
     "sha256": "0c0b31dc49986508408fff5e8280702805f5a69a2da7aef92d94ee83c99061b6",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/physical-education-and-yoga-centre"
   },
@@ -6295,7 +6295,7 @@
     "sha256": "b94a5d8d7ed73bf71671e5a2acf6629799596074beef0843b6b03a16e42ededa",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-malayalam"
   },
@@ -6309,7 +6309,7 @@
     "sha256": "ba6a2d9323bd11f9bcc4094f106d7937cb6e923ee74f00da5584bd7b749b2a4e",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-geoinformatics"
   },
@@ -6323,7 +6323,7 @@
     "sha256": "1abae5f3fa9c7b84ef6756f1824dc72bee9c20c14f6f8c11333c06412b001990",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-computer-science-applications"
   },
@@ -6337,7 +6337,7 @@
     "sha256": "0092ebedc214791e164bf27482cc5596a8f26256513b1fd73b55ea8c99876ab0",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-applied-geology"
   },
@@ -6351,7 +6351,7 @@
     "sha256": "711ff651d07056dea3e6df6241df07e1f495602938faad642f15242f5780ccc2",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-applied-research"
   },
@@ -6365,7 +6365,7 @@
     "sha256": "dc39cdd9461e2a93b656df18a1163bddff98f24b27d401706cdfa6ced86be0e1",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-biology"
   },
@@ -6379,7 +6379,7 @@
     "sha256": "9db3d5bde9469c1664aaa06d7a9f831c238499316095a129e5d1e935c3a1d98b",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-biology"
   },
@@ -6393,7 +6393,7 @@
     "sha256": "62732ea52bde09ee6f885db5880cc9b5f8b2277ebe86cbf77d1e6e0c265a6111",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-education"
   },
@@ -6407,7 +6407,7 @@
     "sha256": "87e7c06d450412fa70c3deb81d56542c2d3eb2804c8689acef063aed7d0de14d",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-biology"
   },
@@ -6421,7 +6421,7 @@
     "sha256": "0f3b1f84594f6baa10e0ff381fa0327fd21c04553fd5b44303680e822edd492a",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-biology"
   },
@@ -6435,7 +6435,7 @@
     "sha256": "2aefe36ce69471e40edfd649c2daef6547ae9ed6d32ebcd10fc98ef4bee2f5ef",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/physical-education-and-yoga-centre"
   },
@@ -6449,7 +6449,7 @@
     "sha256": "71f72f74fddbd20ef7dc34ce9d7dd4b6ee5faf3daf58e407f3e3dad7a18d6790",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-futures-studies"
   },
@@ -6463,7 +6463,7 @@
     "sha256": "25e95bf65277715a6c35503485bcfc26fdae32149cd560995aa81a1b8c440be8",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-futures-studies"
   },
@@ -6491,7 +6491,7 @@
     "sha256": "c284ccd16aa66618dc38e84abb86a8a180ac4b5dc2eab62fd1b8ad9653c20523",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/school-of-english-foreign-languages"
   },
@@ -6589,7 +6589,7 @@
     "sha256": "a7f8313f35b015ae2bc15fc7a4faa75ce9485e97290920b51abfbbf2a9909ade",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-mathematics"
   },
@@ -6603,7 +6603,7 @@
     "sha256": "b979d3c473a096a8b5ef7999c1ebf5c01f52315ed370ad86dc94ef1b08379718",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-computer-science-applications"
   },
@@ -6617,7 +6617,7 @@
     "sha256": "c2b8b9f6161f801b26291efa10931d268ac8e8f05b1c2d44e687cdbb694e3bd4",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/centre-for-futures-studies"
   },
@@ -6631,7 +6631,7 @@
     "sha256": "c8dd67042176db8778571bd89b9cbdfe3391806ef50deba838cb0fb24d359f38",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-applied-research"
   },
@@ -6645,7 +6645,7 @@
     "sha256": "fdabd01b4ec2907648629980304ba022eb1e47c07acd930297002cd2e24f238b",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-computer-science-applications"
   },
@@ -6659,7 +6659,7 @@
     "sha256": "8ca7232a841d2530c911ee0322d86bb0f994d2ba7d18369d72d3c38d6a6377cf",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/department-of-computer-science-applications"
   },
@@ -6673,7 +6673,7 @@
     "sha256": "9540f7b26606e885b8a10bc62ee427027d6eec699f85db790c6064533ed11db2",
     "http_status": 200,
     "valid": true,
-    "download_status": "downloaded",
+    "download_status": "cached",
     "download_allowed": true,
     "source_url": "https://www.ruraluniv.ac.in/page/physical-education-and-yoga-centre"
   },
