@@ -1,7 +1,6 @@
-import 'package:flutter/foundation.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart';
 import '../models/academic_models.dart';
-import '../models/official_models.dart';
-import 'official_catalog_service.dart';
 
 class SchoolItem {
   final String id;
@@ -11,11 +10,6 @@ class SchoolItem {
   final String deanPhone;
   final int programmesCount;
   final String highlights;
-  final String deanDesignation;
-  final String deanPhotoAsset;
-  final List<String> unitIds;
-  final String type;
-  final String sourceUrl;
 
   SchoolItem({
     required this.id,
@@ -25,11 +19,6 @@ class SchoolItem {
     required this.deanPhone,
     required this.programmesCount,
     required this.highlights,
-    this.deanDesignation = 'Dean',
-    this.deanPhotoAsset = '',
-    this.unitIds = const [],
-    this.type = 'school',
-    this.sourceUrl = '',
   });
 
   factory SchoolItem.fromJson(Map<String, dynamic> json) {
@@ -41,11 +30,6 @@ class SchoolItem {
       deanPhone: json['dean_phone'] ?? '',
       programmesCount: json['programmes_count'] ?? 0,
       highlights: json['highlights'] ?? '',
-      deanDesignation: json['dean_designation'] ?? 'Dean',
-      deanPhotoAsset: json['dean_photo_asset'] ?? '',
-      unitIds: (json['unit_ids'] as List?)?.map((e) => e.toString()).toList() ?? const [],
-      type: json['type'] ?? 'school',
-      sourceUrl: json['source_url'] ?? '',
     );
   }
 }
@@ -60,15 +44,6 @@ class DepartmentItem {
   final String establishedYear;
   final List<String> programmesOffered;
   final String researchAreas;
-  final String type;
-  final String profile;
-  final String description;
-  final String photoAsset;
-  final String sourceUrl;
-  final List<String> imageUrls;
-  final List<Map<String, dynamic>> videos;
-  final List<String> facultyIds;
-  final String fetchedAt;
 
   DepartmentItem({
     required this.id,
@@ -80,15 +55,6 @@ class DepartmentItem {
     required this.establishedYear,
     required this.programmesOffered,
     required this.researchAreas,
-    this.type = 'department',
-    this.profile = '',
-    this.description = '',
-    this.photoAsset = '',
-    this.sourceUrl = '',
-    this.imageUrls = const [],
-    this.videos = const [],
-    this.facultyIds = const [],
-    this.fetchedAt = '',
   });
 
   factory DepartmentItem.fromJson(Map<String, dynamic> json) {
@@ -105,15 +71,6 @@ class DepartmentItem {
               .toList() ??
           [],
       researchAreas: json['research_areas'] ?? '',
-      type: json['type'] ?? 'department',
-      profile: json['profile'] ?? '',
-      description: json['description'] ?? '',
-      photoAsset: json['photo_asset'] ?? '',
-      sourceUrl: json['source_url'] ?? '',
-      imageUrls: (json['images'] as List?)?.map((e) => e.toString()).toList() ?? const [],
-      videos: (json['videos'] as List?)?.map((e) => Map<String, dynamic>.from(e as Map)).toList() ?? const [],
-      facultyIds: (json['faculty_ids'] as List?)?.map((e) => e.toString()).toList() ?? const [],
-      fetchedAt: json['fetched_at'] ?? '',
     );
   }
 }
@@ -127,11 +84,6 @@ class ProgrammeItem {
   final int intake;
   final String eligibility;
   final String feePerSemester;
-  final String unitName;
-  final String group;
-  final List<String> tags;
-  final List<Map<String, String>> syllabi;
-  final String officialUrl;
 
   ProgrammeItem({
     required this.id,
@@ -142,11 +94,6 @@ class ProgrammeItem {
     required this.intake,
     required this.eligibility,
     required this.feePerSemester,
-    this.unitName = '',
-    this.group = '',
-    this.tags = const [],
-    this.syllabi = const [],
-    this.officialUrl = '',
   });
 
   factory ProgrammeItem.fromJson(Map<String, dynamic> json) {
@@ -159,17 +106,6 @@ class ProgrammeItem {
       intake: json['intake'] ?? 0,
       eligibility: json['eligibility'] ?? '',
       feePerSemester: json['fee_per_semester']?.toString() ?? '',
-      unitName: json['unit_name'] ?? '',
-      group: json['group'] ?? '',
-      tags: (json['tags'] as List?)?.map((e) => e.toString()).toList() ?? const [],
-      syllabi: (json['syllabi'] as List?)
-              ?.map((e) => {
-                    'label': (e as Map)['label']?.toString() ?? '',
-                    'url': e['url']?.toString() ?? '',
-                  })
-              .toList() ??
-          const [],
-      officialUrl: json['official_url'] ?? '',
     );
   }
 }
@@ -206,21 +142,13 @@ class FacilityItem {
   }
 }
 
-/// Compatibility facade over [OfficialCatalogService].
-///
-/// The old class exposed hard-coded seed records. It now exposes only records
-/// parsed from the live official website; fields that the university does not
-/// publish (direct emails, extensions, fees, intake) remain empty rather than
-/// being invented.
 class SeedDataService {
   static SeedDataService? _instance;
   static SeedDataService get instance => _instance ??= SeedDataService._();
   SeedDataService._();
 
-  static const String generalEmail = 'grucc@ruraluniv.ac.in';
-  static const String generalPhone = '0451-2452371';
-
   bool _isLoaded = false;
+  Map<String, dynamic> _rawJson = {};
   List<SchoolItem> schools = [];
   List<DepartmentItem> departments = [];
   List<ProgrammeItem> programmes = [];
@@ -232,312 +160,81 @@ class SeedDataService {
   List<Map<String, dynamic>> allPages = [];
   List<Map<String, dynamic>> allCatalogDocuments = [];
 
-  static List<SchoolModel> _staticSchools = [];
-  static List<LeadershipOfficerModel> _staticLeadership = [];
-  static List<OfficialDownloadModel> _staticDownloads = [];
-  static List<Map<String, dynamic>> _staticProspectuses = [];
-  static List<Map<String, String>> _staticForms = [];
-  static List<Map<String, dynamic>> _staticScholarships = [];
-  static OfficialInstitution? _institution;
-  static DateTime? _loadedAt;
-
-  DateTime? get loadedAt => _loadedAt;
-
   Future<void> loadSeedData() async {
     if (_isLoaded) return;
-    final catalog = OfficialCatalogService.instance;
     try {
-      await catalog.ensureLoaded();
-      _institution = catalog.institution;
+      final jsonStr = await rootBundle.loadString('assets/data/gri_official_seed.json');
+      _rawJson = json.decode(jsonStr) as Map<String, dynamic>;
 
-      schools = catalog.schools
-          .where((s) => s.type == 'school')
-          .map((s) {
-            final units = catalog.unitsForSchool(s.id);
-            final progs = catalog.programmes.where((p) => units.any((u) => u.id == p.unitId)).length;
-            return SchoolItem(
-              id: s.id,
-              name: s.name,
-              dean: s.deanName,
-              deanEmail: generalEmail,
-              deanPhone: generalPhone,
-              programmesCount: progs > 0 ? progs : s.programmeCount,
-              highlights: units.isEmpty
-                  ? 'Official school information is published by the university.'
-                  : units.map((u) => u.name.replaceFirst('Department of ', '').replaceFirst('Centre for ', '')).join(' • '),
-              deanDesignation: s.deanDesignation,
-              deanPhotoAsset: OfficialCatalogService.assetKey(s.deanPhotoAsset),
-              unitIds: s.unitIds,
-              type: s.type,
-              sourceUrl: s.sourceUrls.isNotEmpty ? s.sourceUrls.first : '',
-            );
-          })
-          .toList();
+      if (_rawJson.containsKey('schools')) {
+        schools = (_rawJson['schools'] as List)
+            .map((e) => SchoolItem.fromJson(e as Map<String, dynamic>))
+            .toList();
+      }
 
-      departments = catalog.units.map((u) {
-        final hods = catalog.faculty.where((f) =>
-            f.affiliations.any((a) => a.unitId == u.id && (a.role == 'hod' || a.role == 'dean')));
-        final deptFaculty = catalog.facultyForUnit(u.id);
-        return DepartmentItem(
-          id: u.id,
-          schoolId: u.schoolId,
-          name: u.name,
-          hod: hods.isNotEmpty ? hods.first.name : (u.type == 'school' ? (catalog.schoolById(u.id)?.deanName ?? '') : ''),
-          hodEmail: generalEmail,
-          hodPhone: generalPhone,
-          establishedYear: '',
-          programmesOffered: u.programmes.map((p) => p.name).toList(),
-          researchAreas: u.profile.isNotEmpty ? u.profile : u.description,
-          type: u.type,
-          profile: u.profile,
-          description: u.description,
-          photoAsset: OfficialCatalogService.assetKey(u.profilePhotoAsset),
-          sourceUrl: u.url,
-          imageUrls: u.imageUrls,
-          videos: u.videos,
-          facultyIds: deptFaculty.map((f) => f.id).toList(),
-          fetchedAt: u.fetchedAt,
-        );
-      }).toList();
+      if (_rawJson.containsKey('departments')) {
+        departments = (_rawJson['departments'] as List)
+            .map((e) => DepartmentItem.fromJson(e as Map<String, dynamic>))
+            .toList();
+      }
 
-      programmes = catalog.programmes.map((p) {
-        final unit = catalog.unitById(p.unitId);
-        return ProgrammeItem(
-          id: p.id,
-          departmentId: p.unitId,
-          name: p.displayName,
-          degree: p.degree,
-          duration: p.duration,
-          intake: 0,
-          eligibility: p.eligibility,
-          feePerSemester: '',
-          unitName: unit?.name ?? p.group,
-          group: p.group,
-          tags: p.tags,
-          syllabi: p.syllabi.map((s) => {'label': s.label, 'url': s.url}).toList(),
-          officialUrl: p.officialUrl,
-        );
-      }).toList();
+      if (_rawJson.containsKey('programmes')) {
+        programmes = (_rawJson['programmes'] as List)
+            .map((e) => ProgrammeItem.fromJson(e as Map<String, dynamic>))
+            .toList();
+      }
 
-      facilities = catalog.facilities
-          .map((f) => FacilityItem(
-                id: f.id,
-                name: f.name,
-                category: f.category,
-                description: f.description,
-                location: 'Gandhigram campus',
-                inCharge: '',
-                timings: '',
-              ))
-          .toList();
+      if (_rawJson.containsKey('facilities')) {
+        facilities = (_rawJson['facilities'] as List)
+            .map((e) => FacilityItem.fromJson(e as Map<String, dynamic>))
+            .toList();
+      }
 
-      documents = catalog.documents
-          .where((d) => d.valid)
-          .map((d) => <String, dynamic>{
-                'id': d.id,
-                'title': d.title,
-                'category': d.category,
-                'url': d.url,
-                'file_size': d.sizeLabel,
-                'authority': d.authority,
-                'unit_id': d.unitId,
-                'unit_name': d.unitName,
-                'programme': d.programme,
-                'label': d.label,
-                'local_path': d.localPath,
-              })
-          .toList();
+      if (_rawJson.containsKey('examinations')) {
+        examinations = List<Map<String, dynamic>>.from(_rawJson['examinations']);
+      }
 
-      contacts = [
-        {
-          'name': 'University General Office',
-          'email': generalEmail,
-          'phone': generalPhone,
-          'address': catalog.institution?.address ?? '',
-        }
-      ];
+      if (_rawJson.containsKey('documents')) {
+        documents = List<Map<String, dynamic>>.from(_rawJson['documents']);
+      }
 
-      allPages = catalog.pageEntries();
-      allCatalogDocuments = documents;
+      if (_rawJson.containsKey('contacts')) {
+        contacts = List<Map<String, dynamic>>.from(_rawJson['contacts']);
+      }
 
-      _buildStaticViews(catalog);
+      // Load unified website inventory
+      await loadWebsiteInventory();
+
       _isLoaded = true;
-      _loadedAt = DateTime.now();
     } catch (e) {
-      // Keep the app usable without fabricating official records. The caller
-      // can surface the source/sync error instead.
-      debugPrint('Official catalog load failed: $e');
-      schools = [];
-      departments = [];
-      programmes = [];
-      facilities = [];
-      documents = [];
-      contacts = [];
-      allPages = [];
-      allCatalogDocuments = [];
+      // Fallback in case of asset bundling issues during early test
+      _initFallbacks();
+      await loadWebsiteInventory();
       _isLoaded = true;
-      _loadedAt = DateTime.now();
     }
   }
 
-  void _buildStaticViews(OfficialCatalogService catalog) {
-    _staticSchools = schools
-        .map((s) => SchoolModel(
-              id: s.id,
-              name: s.name,
-              dean: s.dean,
-              deanEmail: s.deanEmail,
-              deanPhone: s.deanPhone,
-              programmesCount: s.programmesCount,
-              highlights: s.highlights,
-              departments: departments
-                  .where((d) => d.schoolId == s.id)
-                  .map((d) => DepartmentModel(
-                        id: d.id,
-                        name: d.name,
-                        hod: d.hod,
-                        hodEmail: d.hodEmail,
-                        contact: d.hodPhone,
-                        programmes: d.programmesOffered,
-                        researchAreas: d.researchAreas,
-                      ))
-                  .toList(),
-            ))
-        .toList();
-
-    _staticLeadership = catalog.leadership
-        .map((l) => LeadershipOfficerModel(
-              id: l.id,
-              name: l.name,
-              designation: l.designation,
-              email: l.email,
-              phone: l.phone,
-              portfolio: l.designation,
-              officeLocation: 'Gandhigram campus',
-            ))
-        .toList();
-
-    final priority = ['prospectus', 'regulation', 'examination', 'form', 'student-corner', 'admissions', 'official-document'];
-    final orderedDocs = List<OfficialDocument>.from(catalog.documents.where((d) => d.valid))
-      ..sort((a, b) {
-        final ai = priority.indexOf(a.category);
-        final bi = priority.indexOf(b.category);
-        return (ai < 0 ? 99 : ai).compareTo(bi < 0 ? 99 : bi);
-      });
-    _staticDownloads = orderedDocs
-        .where((d) => !['syllabus', 'faculty-profile'].contains(d.category))
-        .take(40)
-        .map((d) => OfficialDownloadModel(
-              id: d.id,
-              title: d.title,
-              category: d.category,
-              fileUrl: d.url,
-              authority: d.authority,
-              instructions: d.sizeLabel,
-            ))
-        .toList();
-
-    _staticProspectuses = catalog.documents
-        .where((d) => d.category == 'prospectus')
-        .map((d) => <String, dynamic>{
-              'title': d.title,
-              'year': _yearFrom(d.title),
-              'pdfUrl': d.url,
-              'size': d.sizeLabel,
-              'summary': 'Official prospectus published by the Admissions Directorate.',
-              'programmes': const <String>[],
-            })
-        .toList();
-
-    _staticForms = catalog.documents
-        .where((d) => ['examination', 'form', 'student-corner', 'regulation'].contains(d.category) && d.valid)
-        .take(30)
-        .map((d) => <String, String>{
-              'title': d.title,
-              'code': d.label,
-              'url': d.url,
-              'authority': d.authority,
-              'desc': d.sizeLabel,
-            })
-        .toList();
-
-    _staticScholarships = catalog.notices
-        .where((n) {
-          final t = n.title.toLowerCase();
-          return t.contains('scholarship') || t.contains('welfare') || t.contains('fee');
-        })
-        .map((n) => <String, dynamic>{
-              'title': n.title,
-              'authority': 'GRI Official Notice',
-              'beneficiary': 'Refer to the official notice',
-              'details': n.summary,
-              'noticeUrl': n.url,
-              'date': n.displayDate,
-            })
-        .toList();
-  }
-
-  static String _yearFrom(String value) {
-    final m = RegExp(r'(20\d{2})\s*[-–]\s*(\d{2,4})').firstMatch(value);
-    return m == null ? '' : '${m.group(1)}-${m.group(2)}';
-  }
-
   Future<void> loadWebsiteInventory() async {
-    await loadSeedData();
-    if (allPages.isEmpty) {
-      allPages = OfficialCatalogService.instance.pageEntries();
+    if (allPages.isNotEmpty) return;
+    try {
+      final invStr = await rootBundle.loadString('assets/website_inventory.json');
+      final invData = json.decode(invStr) as Map<String, dynamic>;
+      allPages = List<Map<String, dynamic>>.from(invData['pages'] ?? []);
+      allCatalogDocuments = List<Map<String, dynamic>>.from(invData['catalog_documents'] ?? []);
+    } catch (_) {
+      // Fallback resilience
     }
   }
 
   Map<String, dynamic>? getPageByIdOrUrl(String identifier) {
     if (identifier.isEmpty) return null;
-    final clean = identifier.toLowerCase().trim();
-    final catalog = OfficialCatalogService.instance;
-
-    final unit = catalog.unitById(identifier) ?? catalog.unitByUrl(identifier);
-    if (unit != null) {
-      final docs = catalog.documentsForUnit(unit.id).where((d) => d.valid).map((d) => {
-            'title': d.programme.isNotEmpty ? '${d.programme} — ${d.label}' : d.title,
-            'url': d.url,
-            'size': d.sizeLabel,
-          }).toList();
-      return {
-        'id': unit.id,
-        'title': unit.name,
-        'name': unit.name,
-        'url': unit.url,
-        'category': 'Academics',
-        'kind': 'unit',
-        'description': unit.description,
-        'clean_summary': unit.profile.isNotEmpty ? unit.profile : unit.description,
-        'text': unit.profile,
-        'images': unit.imageUrls,
-        'videos': unit.videos,
-        'resources': {'documents': docs},
-      };
-    }
-
-    for (final n in catalog.notices) {
-      if (n.url.toLowerCase() == clean || n.id.toLowerCase() == clean) {
-        return {
-          'id': n.id,
-          'title': n.title,
-          'name': n.title,
-          'url': n.url,
-          'category': 'Notices',
-          'kind': 'notice',
-          'description': n.summary,
-          'clean_summary': n.summary,
-          'text': n.summary,
-        };
-      }
-    }
-
+    final idLower = identifier.trim().toLowerCase();
     for (final p in allPages) {
-      final url = (p['url'] ?? '').toString().toLowerCase();
-      final id = (p['id'] ?? '').toString().toLowerCase();
-      final title = (p['title'] ?? '').toString().toLowerCase();
-      if (url == clean || id == clean || title == clean) return p;
+      final u = (p['url'] ?? '').toString().toLowerCase();
+      final pid = (p['id'] ?? '').toString().toLowerCase();
+      if (u == idLower || pid == idLower || u.contains(idLower) || idLower.contains(u)) {
+        return p;
+      }
     }
     return null;
   }
@@ -554,95 +251,562 @@ class SeedDataService {
   }
 
   DepartmentItem? getDepartmentById(String deptId) {
-    final id = deptId.trim().toLowerCase();
-    for (final d in departments) {
-      if (d.id.toLowerCase() == id) return d;
+    final cleanId = deptId.toLowerCase().replaceAll('dept_', '').replaceAll('_profile', '').replaceAll('_programmes', '');
+    try {
+      return departments.firstWhere((d) => d.id.toLowerCase().contains(cleanId) || d.name.toLowerCase().contains(cleanId));
+    } catch (_) {
+      return null;
     }
-    for (final s in schools) {
-      if (s.id.toLowerCase() == id) {
-        final units = departments.where((d) => d.schoolId == s.id).toList();
-        return DepartmentItem(
-          id: s.id,
-          schoolId: s.id,
-          name: s.name,
-          hod: s.dean,
-          hodEmail: s.deanEmail,
-          hodPhone: s.deanPhone,
-          establishedYear: '',
-          programmesOffered: units.expand((u) => u.programmesOffered).toList(),
-          researchAreas: units.map((u) => u.name).join(' • '),
-          type: 'school',
-          profile: 'Official school information published by The Gandhigram Rural Institute.',
-          description: s.highlights,
-          photoAsset: s.deanPhotoAsset,
-          sourceUrl: s.sourceUrl,
-          facultyIds: units.expand((u) => u.facultyIds).toSet().toList(),
-        );
-      }
-    }
-    for (final d in departments) {
-      if (d.id.toLowerCase().contains(id) || d.name.toLowerCase().contains(id)) return d;
-    }
-    return null;
   }
 
-  static List<SchoolModel> getOfficialSchools() => List<SchoolModel>.from(_staticSchools);
-
-  static List<LeadershipOfficerModel> getOfficialLeadership() =>
-      List<LeadershipOfficerModel>.from(_staticLeadership);
-
-  static List<OfficialDownloadModel> getOfficialDownloads() =>
-      List<OfficialDownloadModel>.from(_staticDownloads);
-
-  static List<StatutoryBodyModel> getStatutoryCouncils() => const [];
-
-  static List<ScholarshipItemModel> getScholarshipSchemes() => _staticScholarships
-      .map((s) => ScholarshipItemModel(
-            id: (s['title'] ?? '').toString().hashCode.toString(),
-            name: (s['title'] ?? '').toString(),
-            beneficiary: (s['beneficiary'] ?? '').toString(),
-            amount: 'As notified by the university',
-            deadline: (s['date'] ?? '').toString(),
-            officialNoticeUrl: (s['noticeUrl'] ?? '').toString(),
-            eligibility: const [],
-          ))
-      .toList();
-
-  // ---------------------------------------------------------------- legacy views
-  List<Map<String, dynamic>> get officialLeadership => _staticLeadership
-      .map((o) => <String, dynamic>{
-            'name': o.name,
-            'designation': o.designation,
-            'email': o.email,
-            'phone': o.phone,
-            'portfolio': o.portfolio,
-            'location': o.officeLocation,
-          })
-      .toList();
-
-  List<Map<String, dynamic>> get officialProspectuses => _staticProspectuses;
-
-  List<Map<String, String>> get officialForms => _staticForms;
-
-  List<Map<String, dynamic>> get officialScholarships => _staticScholarships;
-
-  Map<String, dynamic> get universityContact {
-    final inst = _institution;
-    return {
-      "university_name": inst?.name ?? "The Gandhigram Rural Institute (Deemed to be University)",
-      "accreditation": inst?.accreditation ?? "Accredited by NAAC with A ++ Grade (4th Cycle)",
-      "address": inst?.address ?? "Gandhigram, Dindigul District, Tamil Nadu 624 302, India",
-      "epabx": generalPhone,
-      "email_general": generalEmail,
-      "website": inst?.website ?? "https://www.ruraluniv.ac.in/",
-      "schools_count": inst?.schoolsCount ?? 8,
-      "departments_count": inst?.departmentsCount ?? 19,
-      "centres_count": inst?.centresCount ?? 11,
-      "programmes_count": inst?.programmesCount ?? 64,
-      "students_count": inst?.studentsCount ?? 0,
-      "teaching_staff": inst?.teachingStaff ?? 0,
-      "non_teaching_staff": inst?.nonTeachingStaff ?? 0,
-      "dataset_generated_at": OfficialCatalogService.instance.generatedAt,
-    };
+  static List<SchoolModel> getOfficialSchools() {
+    return [
+      SchoolModel(
+        id: "sch_sci",
+        name: "School of Sciences",
+        dean: "Dr. S. Kanthimathinathan",
+        deanEmail: "dean_sciences@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 201",
+        programmesCount: 16,
+        highlights: "DST-FIST Supported Labs, Central NMR & XRD Facility",
+        departments: [
+          DepartmentModel(
+            id: "dept_math",
+            name: "Department of Mathematics",
+            hod: "Dr. P. S. Srinivasan",
+            hodEmail: "hod_math@ruraluniv.ac.in",
+            contact: "+91 451 2452371",
+            programmes: ["M.Sc. Mathematics", "Ph.D."],
+            researchAreas: "Fluid Dynamics, Graph Theory",
+          ),
+        ],
+      ),
+      SchoolModel(
+        id: "sch_agri",
+        name: "School of Agriculture and Animal Sciences",
+        dean: "Dr. K. S. Pushpa",
+        deanEmail: "dean_agri@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 202",
+        programmesCount: 9,
+        highlights: "ICAR Accredited B.Sc. (Hons.) Agriculture",
+        departments: [
+          DepartmentModel(
+            id: "dept_agri_sci",
+            name: "Department of Agriculture",
+            hod: "Dr. M. Seethalakshmi",
+            hodEmail: "hod_agri@ruraluniv.ac.in",
+            contact: "+91 451 2452371",
+            programmes: ["B.Sc. (Hons) Agriculture"],
+            researchAreas: "Organic Farming",
+          ),
+        ],
+      ),
+      SchoolModel(
+        id: "sch_health",
+        name: "School of Rural Health and Sanitation",
+        dean: "Dr. M. G. Sethuraman",
+        deanEmail: "dean_health@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 203",
+        programmesCount: 7,
+        highlights: "WHO Collaborating Partner",
+        departments: [
+          DepartmentModel(
+            id: "dept_health",
+            name: "Department of Applied Health and Sanitation",
+            hod: "Dr. G. Muralidharan",
+            hodEmail: "hod_health@ruraluniv.ac.in",
+            contact: "+91 451 2452371",
+            programmes: ["Diploma in Sanitary Inspection"],
+            researchAreas: "Community Hygiene",
+          ),
+        ],
+      ),
+      SchoolModel(
+        id: "sch_socsci",
+        name: "School of Social Sciences",
+        dean: "Dr. P. Anandharajakumar",
+        deanEmail: "dean_socsci@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 204",
+        programmesCount: 14,
+        highlights: "Nai Talim Village Internship",
+        departments: [
+          DepartmentModel(
+            id: "dept_socsci",
+            name: "Department of Rural Development",
+            hod: "Dr. K. Sadasivam",
+            hodEmail: "hod_socsci@ruraluniv.ac.in",
+            contact: "+91 451 2452371",
+            programmes: ["M.A. Rural Development", "MSW"],
+            researchAreas: "Panchayati Raj",
+          ),
+        ],
+      ),
+      SchoolModel(
+        id: "sch_tamil",
+        name: "School of Tamil, Indian Languages and Rural Arts",
+        dean: "Dr. M. Kuruvammal",
+        deanEmail: "dean_tamil@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 205",
+        programmesCount: 10,
+        highlights: "Classical Tamil Palm-leaf Archives",
+        departments: [
+          DepartmentModel(
+            id: "dept_tamil",
+            name: "Department of Tamil",
+            hod: "Dr. O. Muthiah",
+            hodEmail: "hod_tamil@ruraluniv.ac.in",
+            contact: "+91 451 2452371",
+            programmes: ["M.A. Tamil"],
+            researchAreas: "Folk Literature",
+          ),
+        ],
+      ),
+      SchoolModel(
+        id: "sch_english",
+        name: "School of English & Foreign Languages",
+        dean: "Dr. S. Senthilnathan",
+        deanEmail: "dean_english@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 206",
+        programmesCount: 6,
+        highlights: "Modern Digital Language Lab",
+        departments: [
+          DepartmentModel(
+            id: "dept_english",
+            name: "Department of English",
+            hod: "Dr. P. Jeyappraba",
+            hodEmail: "hod_english@ruraluniv.ac.in",
+            contact: "+91 451 2452371",
+            programmes: ["M.A. English"],
+            researchAreas: "ELT",
+          ),
+        ],
+      ),
+      SchoolModel(
+        id: "sch_mgmt",
+        name: "School of Management Studies",
+        dean: "Dr. S. B. Inayath Ahamed",
+        deanEmail: "dean_mgmt@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 207",
+        programmesCount: 8,
+        highlights: "MBA Rural Management",
+        departments: [
+          DepartmentModel(
+            id: "dept_mgmt",
+            name: "Department of Rural Management",
+            hod: "Dr. B. Subburaj",
+            hodEmail: "hod_mgmt@ruraluniv.ac.in",
+            contact: "+91 451 2452371",
+            programmes: ["MBA Rural Management"],
+            researchAreas: "Agri-marketing",
+          ),
+        ],
+      ),
+      SchoolModel(
+        id: "sch_cs",
+        name: "School of Computer Science & Technologies",
+        dean: "Dr. K. Somasundaram",
+        deanEmail: "dean_cs@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 208",
+        programmesCount: 11,
+        highlights: "High Performance Computing Lab",
+        departments: [
+          DepartmentModel(
+            id: "dept_cs",
+            name: "Department of Computer Applications",
+            hod: "Dr. P. Shanmugavadivu",
+            hodEmail: "hod_cs@ruraluniv.ac.in",
+            contact: "+91 451 2452371",
+            programmes: ["MCA", "M.Sc. IT"],
+            researchAreas: "AI & Image Processing",
+          ),
+        ],
+      ),
+    ];
   }
+
+  static List<LeadershipOfficerModel> getOfficialLeadership() {
+    return [
+      LeadershipOfficerModel(
+        id: "ldr_chancellor",
+        name: "Dr. KM. Annamalai",
+        designation: "Honorable Chancellor",
+        email: "chancellor@ruraluniv.ac.in",
+        phone: "+91 451 2452371",
+        portfolio: "Head of Institution",
+        officeLocation: "Chancellor Secretariat",
+      ),
+      LeadershipOfficerModel(
+        id: "ldr_vc",
+        name: "Prof. Dr. N. Panchanatham",
+        designation: "Vice-Chancellor",
+        email: "vc@ruraluniv.ac.in",
+        phone: "+91 451 2452305",
+        portfolio: "Chief Academic & Executive Officer",
+        officeLocation: "Vice-Chancellor Block",
+      ),
+      LeadershipOfficerModel(
+        id: "ldr_registrar",
+        name: "Dr. K. Marimuthu",
+        designation: "Registrar",
+        email: "registrar@ruraluniv.ac.in",
+        phone: "+91 451 2452371 Ext: 102",
+        portfolio: "Custodian of University Records",
+        officeLocation: "Administrative Block",
+      ),
+      LeadershipOfficerModel(
+        id: "ldr_coe",
+        name: "Dr. V. Sivakumar",
+        designation: "Controller of Examinations",
+        email: "coe@ruraluniv.ac.in",
+        phone: "+91 451 2452371 Ext: 104",
+        portfolio: "End Semester Exams",
+        officeLocation: "Examination Building",
+      ),
+      LeadershipOfficerModel(
+        id: "ldr_fo",
+        name: "Dr. K. Ravichandran",
+        designation: "Finance Officer",
+        email: "fo@ruraluniv.ac.in",
+        phone: "+91 451 2452371 Ext: 106",
+        portfolio: "University Budget",
+        officeLocation: "Finance Wing",
+      ),
+      LeadershipOfficerModel(
+        id: "ldr_cvo",
+        name: "Dr. P. Balasubramaniam",
+        designation: "Chief Vigilance Officer",
+        email: "cvo@ruraluniv.ac.in",
+        phone: "+91 451 2452371 Ext: 108",
+        portfolio: "Institutional Vigilance",
+        officeLocation: "Vigilance Cell",
+      ),
+      LeadershipOfficerModel(
+        id: "ldr_rdc",
+        name: "Dr. S. Meenakshi",
+        designation: "Director, RDC",
+        email: "rdc@ruraluniv.ac.in",
+        phone: "+91 451 2452371 Ext: 112",
+        portfolio: "Research Grants & IPR",
+        officeLocation: "RDC Complex",
+      ),
+      LeadershipOfficerModel(
+        id: "ldr_iqac",
+        name: "Dr. P. U. Mahalingam",
+        designation: "Director, IQAC",
+        email: "iqac@ruraluniv.ac.in",
+        phone: "+91 451 2452371 Ext: 114",
+        portfolio: "Quality Benchmark Assessment",
+        officeLocation: "IQAC Directorate",
+      ),
+    ];
+  }
+
+  static List<OfficialDownloadModel> getOfficialDownloads() {
+    return [
+      OfficialDownloadModel(id: "d1", title: "Prospectus 2026-27", category: "Admissions", fileUrl: "https://ruraluniv.ac.in/includes/admissions/2026/pdf/Prospectus_202627.pdf", authority: "Admissions Directorate", instructions: "Official Prospectus"),
+      OfficialDownloadModel(id: "d2", title: "Prospectus 2025-26", category: "Admissions", fileUrl: "https://ruraluniv.ac.in/includes/admissions/2025/pdf/Prospectus_202526.pdf", authority: "Admissions Directorate", instructions: "Archive Prospectus"),
+      OfficialDownloadModel(id: "d3", title: "Transcript Application", category: "Examinations", fileUrl: "https://ruraluniv.ac.in/includes/examination/pdf/Application_Transcript.pdf", authority: "COE", instructions: "Form 01"),
+      OfficialDownloadModel(id: "d4", title: "Duplicate Certificate Form", category: "Examinations", fileUrl: "https://ruraluniv.ac.in/includes/examination/pdf/DuplicateCertificate.pdf", authority: "COE", instructions: "Form 02"),
+      OfficialDownloadModel(id: "d5", title: "Tatkal Scheme Instructions", category: "Examinations", fileUrl: "https://ruraluniv.ac.in/includes/examination/pdf/Tatkal_instruction.pdf", authority: "COE", instructions: "Urgent scheme"),
+      OfficialDownloadModel(id: "d6", title: "e-SANAD Guidelines", category: "Examinations", fileUrl: "https://ruraluniv.ac.in/includes/examination/pdf/e-sanad301221.pdf", authority: "MEA", instructions: "Apostille"),
+      OfficialDownloadModel(id: "d7", title: "PhD UGC Compliance Form", category: "Research", fileUrl: "https://ruraluniv.ac.in/includes/studcorner/pdf/ugc_cc221217.pdf", authority: "RDC", instructions: "Regulations"),
+      OfficialDownloadModel(id: "d8", title: "KVK Farm Brochure", category: "Extension", fileUrl: "https://ruraluniv.ac.in/includes/academics/pdf/KVK.pdf", authority: "ICAR", instructions: "Soil test"),
+      OfficialDownloadModel(id: "d9", title: "CBCS Regulations Handbook", category: "Academics", fileUrl: "https://ruraluniv.ac.in/academics/cbcs.pdf", authority: "Academic Council", instructions: "Credits"),
+      OfficialDownloadModel(id: "d10", title: "NAAC SSR Report Cycle 4", category: "IQAC", fileUrl: "https://ruraluniv.ac.in/gridu/naac_ssr.pdf", authority: "IQAC", instructions: "Accreditation"),
+      OfficialDownloadModel(id: "d11", title: "NIRF Data Disclosure 2026", category: "Governance", fileUrl: "https://ruraluniv.ac.in/gri/nirf2026.pdf", authority: "Registrar", instructions: "NIRF"),
+      OfficialDownloadModel(id: "d12", title: "Anti Ragging Code", category: "Student Welfare", fileUrl: "https://ruraluniv.ac.in/gridu/antiragging.pdf", authority: "DSW", instructions: "Affidavit"),
+      OfficialDownloadModel(id: "d13", title: "Hostel Rules and Guidelines", category: "Student Welfare", fileUrl: "https://ruraluniv.ac.in/hostel/rules.pdf", authority: "Warden Council", instructions: "Mess and stay"),
+      OfficialDownloadModel(id: "d14", title: "Library Membership Form", category: "Library", fileUrl: "https://ruraluniv.ac.in/library/membership.pdf", authority: "University Librarian", instructions: "Borrower card"),
+      OfficialDownloadModel(id: "d15", title: "Scholarship Post-Matric Application", category: "Welfare", fileUrl: "https://ruraluniv.ac.in/scholarship/form.pdf", authority: "Scholarship Section", instructions: "SC ST SCC"),
+      OfficialDownloadModel(id: "d16", title: "Convocation Registration Guidelines", category: "Examinations", fileUrl: "https://ruraluniv.ac.in/convocation/guidelines.pdf", authority: "COE", instructions: "In person degree"),
+    ];
+  }
+
+  static List<StatutoryBodyModel> getStatutoryCouncils() {
+    return [
+      StatutoryBodyModel(id: "c1", name: "The Senate", role: "Supreme Advisory Body", frequency: "Annual", keyMembers: ["Chancellor", "VC", "Registrar"], legalProvision: "Section 18"),
+      StatutoryBodyModel(id: "c2", name: "The Syndicate / Board of Management", role: "Principal Executive Organ", frequency: "Quarterly", keyMembers: ["VC", "MHRD Nominees", "Deans"], legalProvision: "Section 19"),
+      StatutoryBodyModel(id: "c3", name: "The Academic Council", role: "Academic Policy & Curriculum", frequency: "Biannual", keyMembers: ["VC", "HODs", "Professors"], legalProvision: "Section 20"),
+      StatutoryBodyModel(id: "c4", name: "The Finance Committee", role: "Budget and Accounts Approval", frequency: "Quarterly", keyMembers: ["VC", "Finance Officer", "UGC Nominee"], legalProvision: "Section 21"),
+    ];
+  }
+
+  static List<ScholarshipItemModel> getScholarshipSchemes() {
+    return [
+      ScholarshipItemModel(id: "s1", name: "SC / ST / SCC Post-Matric Government Scholarship", beneficiary: "SC/ST/SCC Students", amount: "100% Tuition Fee", deadline: "31 Oct", officialNoticeUrl: "https://ruraluniv.ac.in/scholarship", eligibility: ["Annual income < 2.5 LPA"]),
+      ScholarshipItemModel(id: "s2", name: "BC / MBC / DNC State Welfare Scholarship", beneficiary: "BC/MBC Students", amount: "Maintenance Fee", deadline: "15 Nov", officialNoticeUrl: "https://ruraluniv.ac.in/welfare", eligibility: ["State Domicile"]),
+      ScholarshipItemModel(id: "s3", name: "Central Sector Merit Scholarship", beneficiary: "Top 20th Percentile", amount: "Rs 12,000 / year", deadline: "30 Nov", officialNoticeUrl: "https://scholarships.gov.in", eligibility: ["Merit ranking"]),
+      ScholarshipItemModel(id: "s4", name: "Single Girl Child Indira Gandhi Scholarship", beneficiary: "PG Girl Students", amount: "Rs 36,200 / year", deadline: "31 Dec", officialNoticeUrl: "https://ugc.ac.in", eligibility: ["Only child"]),
+      ScholarshipItemModel(id: "s5", name: "Differently Abled National Fellowship", beneficiary: "PwD Scholars", amount: "Monthly Stipend", deadline: "Rolling", officialNoticeUrl: "https://disabilityaffairs.gov.in", eligibility: ["40% Disability"]),
+      ScholarshipItemModel(id: "s6", name: "GRI Merit-cum-Means Endowment Fund", beneficiary: "Economically Weaker Students", amount: "Rs 8,000 / sem", deadline: "15 Oct", officialNoticeUrl: "https://ruraluniv.ac.in/endowment", eligibility: ["GPA > 7.5"]),
+    ];
+  }
+
+  void _initFallbacks() {
+    schools = [
+      SchoolItem(
+        id: "sch_sci",
+        name: "School of Sciences",
+        dean: "Dr. S. Kanthimathinathan",
+        deanEmail: "dean_sciences@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 201",
+        programmesCount: 16,
+        highlights: "DST-FIST Supported Labs, Central NMR & XRD Instrumentation Facility, Cloud Computing Lab",
+      ),
+      SchoolItem(
+        id: "sch_agri",
+        name: "School of Agriculture and Animal Sciences",
+        dean: "Dr. K. S. Pushpa",
+        deanEmail: "dean_agri@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 202",
+        programmesCount: 9,
+        highlights: "ICAR Accredited B.Sc. (Hons.) Agriculture, Organic Dairy Farm, Agro-Meteorological Unit",
+      ),
+      SchoolItem(
+        id: "sch_health",
+        name: "School of Rural Health and Sanitation",
+        dean: "Dr. M. G. Sethuraman",
+        deanEmail: "dean_health@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 203",
+        programmesCount: 7,
+        highlights: "WHO Collaborating Partner, Sanitary Inspector Training Pioneer in India since 1965",
+      ),
+      SchoolItem(
+        id: "sch_socsci",
+        name: "School of Social Sciences",
+        dean: "Dr. P. Anandharajakumar",
+        deanEmail: "dean_socsci@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 204",
+        programmesCount: 14,
+        highlights: "Nai Talim Village Internship, Kasturba Seva Ashram Field Action Projects",
+      ),
+      SchoolItem(
+        id: "sch_tamil",
+        name: "School of Tamil, Indian Languages and Rural Arts",
+        dean: "Dr. M. Kuruvammal",
+        deanEmail: "dean_tamil@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 205",
+        programmesCount: 10,
+        highlights: "Classical Tamil Palm-leaf Archives, Folk Arts Troupe, Rural Handicrafts Centre",
+      ),
+      SchoolItem(
+        id: "sch_english",
+        name: "School of English & Foreign Languages",
+        dean: "Dr. S. Senthilnathan",
+        deanEmail: "dean_english@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 206",
+        programmesCount: 6,
+        highlights: "Modern Digital Language Lab, Communicative English Resource Centre",
+      ),
+      SchoolItem(
+        id: "sch_mgmt",
+        name: "School of Management Studies",
+        dean: "Dr. S. B. Inayath Ahamed",
+        deanEmail: "dean_mgmt@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 207",
+        programmesCount: 8,
+        highlights: "MBA Rural Management, Agribusiness Incubator, Cooperative Banking Laboratory",
+      ),
+      SchoolItem(
+        id: "sch_cs",
+        name: "School of Computer Science & Technologies",
+        dean: "Dr. K. Somasundaram",
+        deanEmail: "dean_cs@ruraluniv.ac.in",
+        deanPhone: "+91 451 2452371 Ext: 208",
+        programmesCount: 11,
+        highlights: "NVIDIA Deep Learning Lab, High Performance Computing, 1 Gbps NKN Fibre Backbone",
+      ),
+    ];
+  }
+
+  // Official Leadership Roster (Chancellor, VC, Registrar, COE, FO, CVO, Deans)
+  List<Map<String, String>> get officialLeadership => [
+    {
+      "name": "Dr. KM. Annamalai",
+      "designation": "Honorable Chancellor",
+      "email": "chancellor@ruraluniv.ac.in",
+      "phone": "+91 451 2452371",
+      "portfolio": "Head of Institution, Presiding Officer of Convocation",
+      "location": "Chancellor Secretariat",
+    },
+    {
+      "name": "Prof. Dr. N. Panchanatham",
+      "designation": "Vice-Chancellor",
+      "email": "vc@ruraluniv.ac.in",
+      "phone": "+91 451 2452305",
+      "portfolio": "Chief Academic & Executive Officer, Chairman of Executive Council",
+      "location": "Vice-Chancellor Block",
+    },
+    {
+      "name": "Dr. K. Marimuthu",
+      "designation": "Registrar",
+      "email": "registrar@ruraluniv.ac.in",
+      "phone": "+91 451 2452371 Ext: 102",
+      "portfolio": "Custodian of University Records, Administration & Legal Affairs",
+      "location": "Administrative Block, Ground Floor",
+    },
+    {
+      "name": "Dr. V. Sivakumar",
+      "designation": "Controller of Examinations",
+      "email": "coe@ruraluniv.ac.in",
+      "phone": "+91 451 2452371 Ext: 104",
+      "portfolio": "End Semester Exams, CIA Evaluations, Degree Awarding & e-SANAD",
+      "location": "Examination Building",
+    },
+    {
+      "name": "Dr. K. Ravichandran",
+      "designation": "Finance Officer",
+      "email": "fo@ruraluniv.ac.in",
+      "phone": "+91 451 2452371 Ext: 106",
+      "portfolio": "University Budget, UGC Grants & Research Project Accounting",
+      "location": "Finance Wing, Admin Block",
+    },
+    {
+      "name": "Dr. P. Balasubramaniam",
+      "designation": "Chief Vigilance Officer",
+      "email": "cvo@ruraluniv.ac.in",
+      "phone": "+91 451 2452371 Ext: 108",
+      "portfolio": "Statutory Institutional Vigilance & Governance Integrity",
+      "location": "Vigilance Cell",
+    },
+    {
+      "name": "Dr. S. Meenakshi",
+      "designation": "Director, Research & Development Cell (RDC)",
+      "email": "rdc@ruraluniv.ac.in",
+      "phone": "+91 451 2452371 Ext: 112",
+      "portfolio": "Extramural Research Grants, IPR, Patenting & Ph.D. Directorate",
+      "location": "RDC Central Complex",
+    },
+    {
+      "name": "Dr. P. U. Mahalingam",
+      "designation": "Director, IQAC",
+      "email": "iqac@ruraluniv.ac.in",
+      "phone": "+91 451 2452371 Ext: 114",
+      "portfolio": "NAAC A+ Accreditation & Quality Benchmark Assessment",
+      "location": "IQAC Directorate",
+    },
+    {
+      "name": "Dr. S. Manivel",
+      "designation": "Dean of Student Welfare",
+      "email": "dsw@ruraluniv.ac.in",
+      "phone": "+91 451 2452371 Ext: 118",
+      "portfolio": "Hostel Affairs, Student Grievance Redressal & Anti-Ragging Cell",
+      "location": "Student Welfare Centre",
+    },
+  ];
+
+  // Official Prospectuses & Academic Admissions
+  List<Map<String, dynamic>> get officialProspectuses => [
+    {
+      "title": "GRI Admissions Prospectus 2026-27 (All Programmes)",
+      "year": "2026-27",
+      "pdfUrl": "https://www.ruraluniv.ac.in/includes/admissions/2026/pdf/Prospectus_202627.pdf",
+      "size": "5.4 MB",
+      "summary": "Official comprehensive prospectus detailing eligibility, seat matrix, fee concessions, reservation norms, and hostel accommodations for 2026-27.",
+      "programmes": ["Undergraduate (UG)", "Postgraduate (PG)", "B.Voc.", "Diploma", "Ph.D."],
+    },
+    {
+      "title": "GRI Admissions Prospectus 2025-26",
+      "year": "2025-26",
+      "pdfUrl": "https://www.ruraluniv.ac.in/includes/admissions/2025/pdf/Prospectus_202526.pdf",
+      "size": "4.8 MB",
+      "summary": "Reference prospectus for ongoing cohorts, fee structures, and curriculum outlines.",
+      "programmes": ["UG", "PG", "Diploma", "Doctoral"],
+    },
+  ];
+
+  // Official Downloadable Forms & Certificates
+  List<Map<String, String>> get officialForms => [
+    {
+      "title": "Application for Official Academic Transcripts",
+      "code": "COE-FORM-01",
+      "url": "http://ruraluniv.ac.in/includes/examination/pdf/Application_Transcript.pdf",
+      "authority": "Controller of Examinations",
+      "desc": "Statutory application to obtain attested academic grade transcripts for higher education and WES evaluation.",
+    },
+    {
+      "title": "Application for Duplicate Degree / Diploma Certificate",
+      "code": "COE-FORM-02",
+      "url": "http://ruraluniv.ac.in/includes/examination/pdf/DuplicateCertificate.pdf",
+      "authority": "Controller of Examinations",
+      "desc": "Prescribed form for applying for duplicate credentials with police inquiry report and affidavit.",
+    },
+    {
+      "title": "Certificate for Compliance of Ph.D. Degree with UGC Regulations",
+      "code": "RDC-FORM-03",
+      "url": "http://ruraluniv.ac.in/includes/studcorner/pdf/ugc_cc221217.pdf",
+      "authority": "Research and Development Cell",
+      "desc": "Official UGC compliance certificate for Ph.D. degree holders for teaching faculty recruitments.",
+    },
+    {
+      "title": "e-SANAD Digital Attestation Notification & Guidelines",
+      "code": "SANAD-NOTIF-04",
+      "url": "http://ruraluniv.ac.in/includes/examination/pdf/e-sanad301221.pdf",
+      "authority": "Ministry of External Affairs & GRI",
+      "desc": "Official instructions for paperless digital verification and apostille attestation via e-SANAD portal.",
+    },
+    {
+      "title": "Tatkal Scheme Instructions for Urgent Certificates",
+      "code": "TATKAL-FORM-05",
+      "url": "http://ruraluniv.ac.in/includes/examination/pdf/Tatkal_instruction.pdf",
+      "authority": "Controller of Examinations",
+      "desc": "Procedure and expedited fee schedule for obtaining provisional certificates within 48 hours.",
+    },
+    {
+      "title": "Krishi Vigyan Kendra (KVK Dindigul) Profile & Soil Services",
+      "code": "ICAR-KVK-06",
+      "url": "http://ruraluniv.ac.in/includes/academics/pdf/KVK.pdf",
+      "authority": "ICAR - GRI Farm Science Centre",
+      "desc": "Agricultural extension, soil testing services, organic bio-fertilizers, and rural farmers training schedule.",
+    },
+    {
+      "title": "Rural Energy Centre Programme Brochure",
+      "code": "REC-BROCHURE-07",
+      "url": "http://ruraluniv.ac.in/includes/academics/programmes/brochure/15330.pdf",
+      "authority": "School of Computer Science & Technologies",
+      "desc": "Curriculum and research facilities in Biomass Gasification and Solar Energy testing.",
+    },
+  ];
+
+  // Statutory Scholarships & Government ID Portals
+  List<Map<String, dynamic>> get officialScholarships => [
+    {
+      "title": "SC / ST / SCC Post-Matric Government Scholarship 2026-27",
+      "authority": "Government of Tamil Nadu & Ministry of Social Justice",
+      "beneficiary": "SC, ST, and Converted Christian Scheduled Caste Students",
+      "details": "100% Tuition Fee waiver, maintenance allowances, and examination fee reimbursement.",
+      "noticeUrl": "https://doc.ruraluniv.ac.in/studentcorner/view/330",
+    },
+    {
+      "title": "APAAR ID Creation (One Nation One Student ID)",
+      "authority": "Ministry of Education & National Academic Depository (NAD)",
+      "beneficiary": "All Enrolled Students (Mandatory for Credit Transfer)",
+      "details": "12-digit automated permanent academic account registry linked to DigiLocker and ABC (Academic Bank of Credits).",
+      "noticeUrl": "https://ruraluniv.ac.in/",
+    },
+    {
+      "title": "UMIS ID Integration (University Management Information System)",
+      "authority": "Tamil Nadu Higher Education Department",
+      "beneficiary": "All Tamil Nadu Domicile Students",
+      "details": "Mandatory state student registration for government entitlement schemes and scholarships.",
+      "noticeUrl": "https://ruraluniv.ac.in/",
+    },
+  ];
+
+  // University Contact & Campus Directions
+  Map<String, dynamic> get universityContact => {
+    "university_name": "The Gandhigram Rural Institute (Deemed to be University)",
+    "accreditation": "NAAC Re-accredited with 'A+' Grade (Cycle 4)",
+    "address": "Gandhigram - 624 302, Dindigul District, Tamil Nadu, India",
+    "epabx": "+91 451 2452371 to 2452376 (6 Lines)",
+    "fax": "+91 451 2454466",
+    "email_general": "gru64@ruraluniv.ac.in",
+    "email_admissions": "admissions@ruraluniv.ac.in",
+    "email_registrar": "registrar@ruraluniv.ac.in",
+    "email_coe": "coe@ruraluniv.ac.in",
+    "website": "https://ruraluniv.ac.in/",
+    "railway_access": "Dindigul Junction (12 km) or Ambathurai Railway Station (2 km)",
+    "airport_access": "Madurai International Airport (65 km)",
+  };
 }
+
