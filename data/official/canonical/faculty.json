@@ -25,7 +25,8 @@
     "roles": [
       "officer"
     ],
-    "primary_role": "officer"
+    "primary_role": "officer",
+    "photo_asset": "media/faculty/15.jpg"
   },
   {
     "id": "fac_40",
@@ -53,7 +54,8 @@
     "roles": [
       "officer"
     ],
-    "primary_role": "officer"
+    "primary_role": "officer",
+    "photo_asset": "media/faculty/40.jpg"
   },
   {
     "id": "fac_96",
@@ -101,7 +103,8 @@
       "hod",
       "unit"
     ],
-    "primary_role": "officer"
+    "primary_role": "officer",
+    "photo_asset": "media/faculty/96.jpg"
   },
   {
     "id": "fac_estate-officer",
@@ -129,7 +132,8 @@
     "roles": [
       "officer"
     ],
-    "primary_role": "officer"
+    "primary_role": "officer",
+    "photo_asset": "media/faculty/estate-officer.jpg"
   },
   {
     "id": "fac_4",
@@ -157,7 +161,8 @@
     "roles": [
       "officer"
     ],
-    "primary_role": "officer"
+    "primary_role": "officer",
+    "photo_asset": "media/faculty/4.jpg"
   },
   {
     "id": "fac_71",
@@ -205,7 +210,8 @@
       "dean",
       "unit"
     ],
-    "primary_role": "officer"
+    "primary_role": "officer",
+    "photo_asset": "media/faculty/71.jpg"
   },
   {
     "id": "fac_17",
@@ -252,7 +258,8 @@
       "officer",
       "hod"
     ],
-    "primary_role": "officer"
+    "primary_role": "officer",
+    "photo_asset": "media/faculty/17.jpg"
   },
   {
     "id": "fac_44",
@@ -280,7 +287,8 @@
     "roles": [
       "officer"
     ],
-    "primary_role": "officer"
+    "primary_role": "officer",
+    "photo_asset": "media/faculty/44.jpg"
   },
   {
     "id": "fac_7",
@@ -328,7 +336,8 @@
       "dean",
       "hod"
     ],
-    "primary_role": "officer"
+    "primary_role": "officer",
+    "photo_asset": "media/faculty/7.jpg"
   },
   {
     "id": "fac_55",
@@ -356,7 +365,8 @@
     "roles": [
       "officer"
     ],
-    "primary_role": "officer"
+    "primary_role": "officer",
+    "photo_asset": "media/faculty/55.jpg"
   },
   {
     "id": "fac_74",
@@ -384,7 +394,8 @@
     "roles": [
       "officer"
     ],
-    "primary_role": "officer"
+    "primary_role": "officer",
+    "photo_asset": "media/faculty/74.jpg"
   },
   {
     "id": "fac_83",
@@ -422,7 +433,8 @@
       "dean",
       "hod"
     ],
-    "primary_role": "dean"
+    "primary_role": "dean",
+    "photo_asset": "media/faculty/83.jpg"
   },
   {
     "id": "fac_37",
@@ -450,7 +462,8 @@
     "roles": [
       "dean"
     ],
-    "primary_role": "dean"
+    "primary_role": "dean",
+    "photo_asset": "media/faculty/37.jpg"
   },
   {
     "id": "fac_1",
@@ -488,7 +501,8 @@
       "dean",
       "hod"
     ],
-    "primary_role": "dean"
+    "primary_role": "dean",
+    "photo_asset": "media/faculty/1.jpg"
   },
   {
     "id": "fac_43",
@@ -516,7 +530,8 @@
     "roles": [
       "dean"
     ],
-    "primary_role": "dean"
+    "primary_role": "dean",
+    "photo_asset": "media/faculty/43.jpg"
   },
   {
     "id": "fac_20",
@@ -554,7 +569,8 @@
       "dean",
       "hod"
     ],
-    "primary_role": "dean"
+    "primary_role": "dean",
+    "photo_asset": "media/faculty/20.jpg"
   },
   {
     "id": "fac_19",
@@ -582,7 +598,8 @@
     "roles": [
       "dean"
     ],
-    "primary_role": "dean"
+    "primary_role": "dean",
+    "photo_asset": "media/faculty/19.jpg"
   },
   {
     "id": "fac_39",
@@ -610,7 +627,8 @@
     "roles": [
       "dean"
     ],
-    "primary_role": "dean"
+    "primary_role": "dean",
+    "photo_asset": "media/faculty/39.jpg"
   },
   {
     "id": "fac_79",
@@ -638,7 +656,8 @@
     "roles": [
       "hod"
     ],
-    "primary_role": "hod"
+    "primary_role": "hod",
+    "photo_asset": "media/faculty/79.jpg"
   },
   {
     "id": "fac_76",
@@ -666,7 +685,8 @@
     "roles": [
       "hod"
     ],
-    "primary_role": "hod"
+    "primary_role": "hod",
+    "photo_asset": "media/faculty/76.jpg"
   },
   {
     "id": "fac_45",
@@ -694,7 +714,8 @@
     "roles": [
       "hod"
     ],
-    "primary_role": "hod"
+    "primary_role": "hod",
+    "photo_asset": "media/faculty/45.jpg"
   },
   {
     "id": "fac_58",
@@ -722,7 +743,8 @@
     "roles": [
       "hod"
     ],
-    "primary_role": "hod"
+    "primary_role": "hod",
+    "photo_asset": "media/faculty/58.jpg"
   },
   {
     "id": "fac_35",
@@ -750,7 +772,8 @@
     "roles": [
       "hod"
     ],
-    "primary_role": "hod"
+    "primary_role": "hod",
+    "photo_asset": "media/faculty/35.jpg"
   },
   {
     "id": "fac_38",
@@ -778,7 +801,8 @@
     "roles": [
       "hod"
     ],
-    "primary_role": "hod"
+    "primary_role": "hod",
+    "photo_asset": "media/faculty/38.jpg"
   },
   {
     "id": "fac_6",
@@ -806,7 +830,8 @@
     "roles": [
       "hod"
     ],
-    "primary_role": "hod"
+    "primary_role": "hod",
+    "photo_asset": "media/faculty/6.jpg"
   },
   {
     "id": "fac_16",
@@ -834,7 +859,8 @@
     "roles": [
       "hod"
     ],
-    "primary_role": "hod"
+    "primary_role": "hod",
+    "photo_asset": "media/faculty/16.jpg"
   },
   {
     "id": "fac_72",
@@ -862,7 +888,8 @@
     "roles": [
       "hod"
     ],
-    "primary_role": "hod"
+    "primary_role": "hod",
+    "photo_asset": "media/faculty/72.jpg"
   },
   {
     "id": "fac_14",
@@ -890,7 +917,8 @@
     "roles": [
       "hod"
     ],
-    "primary_role": "hod"
+    "primary_role": "hod",
+    "photo_asset": "media/faculty/14.jpg"
   },
   {
     "id": "fac_25",
@@ -918,7 +946,8 @@
     "roles": [
       "hod"
     ],
-    "primary_role": "hod"
+    "primary_role": "hod",
+    "photo_asset": "media/faculty/25.jpg"
   },
   {
     "id": "fac_65",
@@ -946,7 +975,8 @@
     "roles": [
       "hod"
     ],
-    "primary_role": "hod"
+    "primary_role": "hod",
+    "photo_asset": "media/faculty/65.jpg"
   },
   {
     "id": "fac_21",
@@ -974,7 +1004,8 @@
     "roles": [
       "hod"
     ],
-    "primary_role": "hod"
+    "primary_role": "hod",
+    "photo_asset": "media/faculty/21.jpg"
   },
   {
     "id": "fac_12",
@@ -1020,7 +1051,8 @@
     "roles": [
       "hod"
     ],
-    "primary_role": "hod"
+    "primary_role": "hod",
+    "photo_asset": "media/faculty/12.jpg"
   },
   {
     "id": "fac_51",
@@ -1048,7 +1080,8 @@
     "roles": [
       "hod"
     ],
-    "primary_role": "hod"
+    "primary_role": "hod",
+    "photo_asset": "media/faculty/51.jpg"
   },
   {
     "id": "fac_23",
@@ -1076,7 +1109,8 @@
     "roles": [
       "hod"
     ],
-    "primary_role": "hod"
+    "primary_role": "hod",
+    "photo_asset": "media/faculty/23.jpg"
   },
   {
     "id": "fac_24",
@@ -1104,7 +1138,8 @@
     "roles": [
       "hod"
     ],
-    "primary_role": "hod"
+    "primary_role": "hod",
+    "photo_asset": "media/faculty/24.jpg"
   },
   {
     "id": "fac_78",
@@ -1132,7 +1167,8 @@
     "roles": [
       "hod"
     ],
-    "primary_role": "hod"
+    "primary_role": "hod",
+    "photo_asset": "media/faculty/78.jpg"
   },
   {
     "id": "fac_31",
@@ -1160,7 +1196,8 @@
     "roles": [
       "hod"
     ],
-    "primary_role": "hod"
+    "primary_role": "hod",
+    "photo_asset": "media/faculty/31.jpg"
   },
   {
     "id": "fac_145",
@@ -1188,7 +1225,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/145.jpg"
   },
   {
     "id": "fac_167",
@@ -1216,7 +1254,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/167.jpg"
   },
   {
     "id": "fac_238",
@@ -1244,7 +1283,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/238.jpg"
   },
   {
     "id": "fac_221",
@@ -1272,7 +1312,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/221.jpg"
   },
   {
     "id": "fac_275",
@@ -1300,7 +1341,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/275.jpg"
   },
   {
     "id": "fac_262",
@@ -1328,7 +1370,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/262.jpg"
   },
   {
     "id": "fac_256",
@@ -1356,7 +1399,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/256.jpg"
   },
   {
     "id": "fac_42",
@@ -1384,7 +1428,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/42.jpg"
   },
   {
     "id": "fac_276",
@@ -1412,7 +1457,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/276.jpg"
   },
   {
     "id": "fac_609",
@@ -1440,7 +1486,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/609.jpg"
   },
   {
     "id": "fac_232",
@@ -1468,7 +1515,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/232.jpg"
   },
   {
     "id": "fac_257",
@@ -1496,7 +1544,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/257.jpg"
   },
   {
     "id": "fac_87",
@@ -1524,7 +1573,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/87.jpg"
   },
   {
     "id": "fac_265",
@@ -1552,7 +1602,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/265.jpg"
   },
   {
     "id": "fac_241",
@@ -1580,7 +1631,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/241.jpg"
   },
   {
     "id": "fac_240",
@@ -1608,7 +1660,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/240.jpg"
   },
   {
     "id": "fac_231",
@@ -1636,7 +1689,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/231.jpg"
   },
   {
     "id": "fac_268",
@@ -1664,7 +1718,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/268.jpg"
   },
   {
     "id": "fac_234",
@@ -1692,7 +1747,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/234.jpg"
   },
   {
     "id": "fac_225",
@@ -1720,7 +1776,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/225.jpg"
   },
   {
     "id": "fac_128",
@@ -1748,7 +1805,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/128.jpg"
   },
   {
     "id": "fac_160",
@@ -1776,7 +1834,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/160.jpg"
   },
   {
     "id": "fac_162",
@@ -1804,7 +1863,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/162.jpg"
   },
   {
     "id": "fac_75",
@@ -1832,7 +1892,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/75.jpg"
   },
   {
     "id": "fac_99",
@@ -1860,7 +1921,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/99.jpg"
   },
   {
     "id": "fac_243",
@@ -1888,7 +1950,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/243.jpg"
   },
   {
     "id": "fac_208",
@@ -1916,7 +1979,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/208.jpg"
   },
   {
     "id": "fac_280",
@@ -1944,7 +2008,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/280.jpg"
   },
   {
     "id": "fac_224",
@@ -1972,7 +2037,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/224.jpg"
   },
   {
     "id": "fac_124",
@@ -2000,7 +2066,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/124.jpg"
   },
   {
     "id": "fac_247",
@@ -2028,7 +2095,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/247.jpg"
   },
   {
     "id": "fac_258",
@@ -2056,7 +2124,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/258.jpg"
   },
   {
     "id": "fac_88",
@@ -2084,7 +2153,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/88.jpg"
   },
   {
     "id": "fac_285",
@@ -2112,7 +2182,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/285.jpg"
   },
   {
     "id": "fac_165",
@@ -2140,7 +2211,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/165.jpg"
   },
   {
     "id": "fac_252",
@@ -2177,7 +2249,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/252.jpg"
   },
   {
     "id": "fac_287",
@@ -2205,7 +2278,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/287.jpg"
   },
   {
     "id": "fac_272",
@@ -2233,7 +2307,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/272.jpg"
   },
   {
     "id": "fac_206",
@@ -2261,7 +2336,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/206.jpg"
   },
   {
     "id": "fac_179",
@@ -2289,7 +2365,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/179.jpg"
   },
   {
     "id": "fac_139",
@@ -2317,7 +2394,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/139.jpg"
   },
   {
     "id": "fac_173",
@@ -2345,7 +2423,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/173.jpg"
   },
   {
     "id": "fac_140",
@@ -2373,7 +2452,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/140.jpg"
   },
   {
     "id": "fac_172",
@@ -2401,7 +2481,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/172.jpg"
   },
   {
     "id": "fac_207",
@@ -2429,7 +2510,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/207.jpg"
   },
   {
     "id": "fac_251",
@@ -2457,7 +2539,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/251.jpg"
   },
   {
     "id": "fac_235",
@@ -2485,7 +2568,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/235.jpg"
   },
   {
     "id": "fac_237",
@@ -2513,7 +2597,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/237.jpg"
   },
   {
     "id": "fac_289",
@@ -2541,7 +2626,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/289.jpg"
   },
   {
     "id": "fac_121",
@@ -2569,7 +2655,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/121.jpg"
   },
   {
     "id": "fac_210",
@@ -2606,7 +2693,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/210.jpg"
   },
   {
     "id": "fac_81",
@@ -2634,7 +2722,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/81.jpg"
   },
   {
     "id": "fac_288",
@@ -2662,7 +2751,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/288.jpg"
   },
   {
     "id": "fac_176",
@@ -2690,7 +2780,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/176.jpg"
   },
   {
     "id": "fac_223",
@@ -2718,7 +2809,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/223.jpg"
   },
   {
     "id": "fac_182",
@@ -2746,7 +2838,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/182.jpg"
   },
   {
     "id": "fac_236",
@@ -2774,7 +2867,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/236.jpg"
   },
   {
     "id": "fac_269",
@@ -2802,7 +2896,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/269.jpg"
   },
   {
     "id": "fac_260",
@@ -2830,7 +2925,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/260.jpg"
   },
   {
     "id": "fac_261",
@@ -2858,7 +2954,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/261.jpg"
   },
   {
     "id": "fac_180",
@@ -2886,7 +2983,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/180.jpg"
   },
   {
     "id": "fac_274",
@@ -2941,7 +3039,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/274.jpg"
   },
   {
     "id": "fac_184",
@@ -2969,7 +3068,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/184.jpg"
   },
   {
     "id": "fac_281",
@@ -2997,7 +3097,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/281.jpg"
   },
   {
     "id": "fac_205",
@@ -3025,7 +3126,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/205.jpg"
   },
   {
     "id": "fac_271",
@@ -3053,7 +3155,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/271.jpg"
   },
   {
     "id": "fac_217",
@@ -3081,7 +3184,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/217.jpg"
   },
   {
     "id": "fac_174",
@@ -3109,7 +3213,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/174.jpg"
   },
   {
     "id": "fac_127",
@@ -3137,7 +3242,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/127.jpg"
   },
   {
     "id": "fac_181",
@@ -3165,7 +3271,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/181.jpg"
   },
   {
     "id": "fac_186",
@@ -3193,7 +3300,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/186.jpg"
   },
   {
     "id": "fac_98",
@@ -3221,7 +3329,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/98.jpg"
   },
   {
     "id": "fac_255",
@@ -3249,7 +3358,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/255.jpg"
   },
   {
     "id": "fac_73",
@@ -3277,7 +3387,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/73.jpg"
   },
   {
     "id": "fac_220",
@@ -3305,7 +3416,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/220.jpg"
   },
   {
     "id": "fac_233",
@@ -3333,7 +3445,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/233.jpg"
   },
   {
     "id": "fac_592",
@@ -3361,7 +3474,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/592.jpg"
   },
   {
     "id": "fac_263",
@@ -3389,7 +3503,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/263.jpg"
   },
   {
     "id": "fac_254",
@@ -3417,7 +3532,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/254.jpg"
   },
   {
     "id": "fac_226",
@@ -3445,7 +3561,8 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/226.jpg"
   },
   {
     "id": "fac_222",
@@ -3473,6 +3590,7 @@
     "roles": [
       "unit"
     ],
-    "primary_role": "unit"
+    "primary_role": "unit",
+    "photo_asset": "media/faculty/222.jpg"
   }
 ]

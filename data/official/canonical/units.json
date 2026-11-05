@@ -348,7 +348,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:19Z",
-    "school_id": "sch_tamil"
+    "school_id": "sch_tamil",
+    "profile_photo_asset": "media/units/department-of-tamil__profile.jpg"
   },
   {
     "id": "department-of-hindi",
@@ -400,7 +401,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:21Z",
-    "school_id": "sch_tamil"
+    "school_id": "sch_tamil",
+    "profile_photo_asset": "media/units/department-of-hindi__profile.jpg"
   },
   {
     "id": "centre-for-malayalam",
@@ -443,7 +445,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:22Z",
-    "school_id": "sch_tamil"
+    "school_id": "sch_tamil",
+    "profile_photo_asset": "media/units/centre-for-malayalam__profile.jpg"
   },
   {
     "id": "school-of-english-foreign-languages",
@@ -559,7 +562,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:23Z",
-    "school_id": "sch_english"
+    "school_id": "sch_english",
+    "profile_photo_asset": "media/units/school-of-english-foreign-languages__profile.jpg"
   },
   {
     "id": "department-of-rural-development",
@@ -611,7 +615,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:25Z",
-    "school_id": "sch_health"
+    "school_id": "sch_health",
+    "profile_photo_asset": "media/units/department-of-rural-development__profile.jpg"
   },
   {
     "id": "centre-for-geoinformatics",
@@ -688,7 +693,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:26Z",
-    "school_id": "sch_health"
+    "school_id": "sch_health",
+    "profile_photo_asset": "media/units/centre-for-geoinformatics__profile.jpg"
   },
   {
     "id": "department-of-applied-research",
@@ -776,7 +782,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:28Z",
-    "school_id": "sch_health"
+    "school_id": "sch_health",
+    "profile_photo_asset": "media/units/department-of-applied-research__profile.jpg"
   },
   {
     "id": "department-of-rural-health-and-sanitation",
@@ -823,7 +830,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:29Z",
-    "school_id": "sch_health"
+    "school_id": "sch_health",
+    "profile_photo_asset": "media/units/department-of-rural-health-and-sanitation__profile.jpg"
   },
   {
     "id": "department-of-lifelong-learning-extension",
@@ -974,7 +982,8 @@
     "videos": [],
     "programmes": [],
     "fetched_at": "2026-11-05T12:45:32Z",
-    "school_id": "sch_health"
+    "school_id": "sch_health",
+    "profile_photo_asset": "media/units/centre-for-extension__profile.jpg"
   },
   {
     "id": "centre-for-lifelong-learning",
@@ -995,7 +1004,8 @@
     "videos": [],
     "programmes": [],
     "fetched_at": "2026-11-05T12:45:33Z",
-    "school_id": "sch_health"
+    "school_id": "sch_health",
+    "profile_photo_asset": "media/units/centre-for-lifelong-learning__profile.jpg"
   },
   {
     "id": "department-of-gandhian-thought-and-peace-science",
@@ -1047,7 +1057,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:34Z",
-    "school_id": "sch_social"
+    "school_id": "sch_social",
+    "profile_photo_asset": "media/units/department-of-gandhian-thought-and-peace-science__profile.jpg"
   },
   {
     "id": "department-of-sociology",
@@ -1103,7 +1114,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:36Z",
-    "school_id": "sch_social"
+    "school_id": "sch_social",
+    "profile_photo_asset": "media/units/department-of-sociology__profile.jpg"
   },
   {
     "id": "department-of-political-science-development-administration",
@@ -1155,7 +1167,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:38Z",
-    "school_id": "sch_social"
+    "school_id": "sch_social",
+    "profile_photo_asset": "media/units/department-of-political-science-development-administration__profile.jpg"
   },
   {
     "id": "department-of-education",
@@ -1229,7 +1242,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:39Z",
-    "school_id": "sch_social"
+    "school_id": "sch_social",
+    "profile_photo_asset": "media/units/department-of-education__profile.jpg"
   },
   {
     "id": "centre-for-futures-studies",
@@ -1299,7 +1313,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:41Z",
-    "school_id": "sch_social"
+    "school_id": "sch_social",
+    "profile_photo_asset": "media/units/centre-for-futures-studies__profile.jpg"
   },
   {
     "id": "department-of-rural-industries-management",
@@ -1386,7 +1401,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:42Z",
-    "school_id": "sch_management"
+    "school_id": "sch_management",
+    "profile_photo_asset": "media/units/department-of-rural-industries-management__profile.jpg"
   },
   {
     "id": "department-of-economics",
@@ -1455,7 +1471,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:44Z",
-    "school_id": "sch_management"
+    "school_id": "sch_management",
+    "profile_photo_asset": "media/units/department-of-economics__profile.jpg"
   },
   {
     "id": "department-of-cooperation",
@@ -1524,7 +1541,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:45Z",
-    "school_id": "sch_management"
+    "school_id": "sch_management",
+    "profile_photo_asset": "media/units/department-of-cooperation__profile.jpg"
   },
   {
     "id": "department-of-mathematics",
@@ -1610,7 +1628,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:46Z",
-    "school_id": "sch_sciences"
+    "school_id": "sch_sciences",
+    "profile_photo_asset": "media/units/department-of-mathematics__profile.jpg"
   },
   {
     "id": "department-of-physics",
@@ -1691,7 +1710,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:47Z",
-    "school_id": "sch_sciences"
+    "school_id": "sch_sciences",
+    "profile_photo_asset": "media/units/department-of-physics__profile.jpg"
   },
   {
     "id": "department-of-chemistry",
@@ -1764,7 +1784,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:48Z",
-    "school_id": "sch_sciences"
+    "school_id": "sch_sciences",
+    "profile_photo_asset": "media/units/department-of-chemistry__profile.jpg"
   },
   {
     "id": "department-of-biology",
@@ -1914,7 +1935,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:50Z",
-    "school_id": "sch_sciences"
+    "school_id": "sch_sciences",
+    "profile_photo_asset": "media/units/department-of-biology__profile.jpg"
   },
   {
     "id": "department-of-home-science",
@@ -2037,7 +2059,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:51Z",
-    "school_id": "sch_sciences"
+    "school_id": "sch_sciences",
+    "profile_photo_asset": "media/units/department-of-home-science__profile.jpg"
   },
   {
     "id": "department-of-computer-science-applications",
@@ -2177,7 +2200,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:52Z",
-    "school_id": "sch_cs"
+    "school_id": "sch_cs",
+    "profile_photo_asset": "media/units/department-of-computer-science-applications__profile.jpg"
   },
   {
     "id": "centre-for-rural-technology",
@@ -2229,7 +2253,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:53Z",
-    "school_id": "sch_cs"
+    "school_id": "sch_cs",
+    "profile_photo_asset": "media/units/centre-for-rural-technology__profile.jpg"
   },
   {
     "id": "centre-for-rural-energy",
@@ -2281,7 +2306,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:54Z",
-    "school_id": "sch_cs"
+    "school_id": "sch_cs",
+    "profile_photo_asset": "media/units/centre-for-rural-energy__profile.jpg"
   },
   {
     "id": "centre-for-applied-geology",
@@ -2350,7 +2376,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:55Z",
-    "school_id": "sch_cs"
+    "school_id": "sch_cs",
+    "profile_photo_asset": "media/units/centre-for-applied-geology__profile.jpg"
   },
   {
     "id": "school-of-agriculture-animal-sciences",
@@ -2419,7 +2446,8 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:56Z",
-    "school_id": "sch_agriculture"
+    "school_id": "sch_agriculture",
+    "profile_photo_asset": "media/units/school-of-agriculture-animal-sciences__profile.jpg"
   },
   {
     "id": "ddukk",
@@ -2633,6 +2661,7 @@
       }
     ],
     "fetched_at": "2026-11-05T12:45:00Z",
-    "school_id": ""
+    "school_id": "",
+    "profile_photo_asset": "media/units/computer-centre__profile.jpg"
   }
 ]

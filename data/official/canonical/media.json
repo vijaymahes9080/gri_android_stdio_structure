@@ -9,7 +9,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/01-t.webp",
       "number": 1,
       "group": "Archive 1",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "asset_path": "media/gallery/01.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/01.webp"
     },
     {
       "id": "gallery_02",
@@ -20,7 +22,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/02-t.webp",
       "number": 2,
       "group": "Archive 1",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "asset_path": "media/gallery/02.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/02.webp"
     },
     {
       "id": "gallery_03",
@@ -31,7 +35,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/03-t.webp",
       "number": 3,
       "group": "Archive 1",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "asset_path": "media/gallery/03.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/03.webp"
     },
     {
       "id": "gallery_04",
@@ -42,7 +48,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/04-t.webp",
       "number": 4,
       "group": "Archive 1",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "asset_path": "media/gallery/04.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/04.webp"
     },
     {
       "id": "gallery_05",
@@ -53,7 +61,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/05-t.webp",
       "number": 5,
       "group": "Archive 1",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "asset_path": "media/gallery/05.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/05.webp"
     },
     {
       "id": "gallery_21",
@@ -64,7 +74,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/21-t.webp",
       "number": 21,
       "group": "Archive 2",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "asset_path": "media/gallery/21.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/21.webp"
     },
     {
       "id": "gallery_22",
@@ -75,7 +87,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/22-t.webp",
       "number": 22,
       "group": "Archive 2",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "asset_path": "media/gallery/22.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/22.webp"
     },
     {
       "id": "gallery_23",
@@ -86,7 +100,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/23-t.webp",
       "number": 23,
       "group": "Archive 2",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "thumb_asset_path": "media/gallery/thumbs/23.webp",
+      "asset_path": "media/gallery/23.jpg"
     },
     {
       "id": "gallery_24",
@@ -97,7 +113,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/24-t.webp",
       "number": 24,
       "group": "Archive 2",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "asset_path": "media/gallery/24.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/24.webp"
     },
     {
       "id": "gallery_25",
@@ -108,7 +126,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/25-t.webp",
       "number": 25,
       "group": "Archive 2",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "thumb_asset_path": "media/gallery/thumbs/25.webp",
+      "asset_path": "media/gallery/25.jpg"
     },
     {
       "id": "gallery_06",
@@ -119,7 +139,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/06-t.webp",
       "number": 6,
       "group": "Archive 3",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "asset_path": "media/gallery/06.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/06.webp"
     },
     {
       "id": "gallery_07",
@@ -130,7 +152,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/07-t.webp",
       "number": 7,
       "group": "Archive 3",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "asset_path": "media/gallery/07.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/07.webp"
     },
     {
       "id": "gallery_08",
@@ -141,7 +165,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/08-t.webp",
       "number": 8,
       "group": "Archive 3",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "asset_path": "media/gallery/08.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/08.webp"
     },
     {
       "id": "gallery_09",
@@ -152,7 +178,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/09-t.webp",
       "number": 9,
       "group": "Archive 3",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "asset_path": "media/gallery/09.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/09.webp"
     },
     {
       "id": "gallery_10",
@@ -163,7 +191,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/10-t.webp",
       "number": 10,
       "group": "Archive 3",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "asset_path": "media/gallery/10.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/10.webp"
     },
     {
       "id": "gallery_11",
@@ -174,7 +204,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/11-t.webp",
       "number": 11,
       "group": "Archive 4",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "thumb_asset_path": "media/gallery/thumbs/11.webp",
+      "asset_path": "media/gallery/11.jpg"
     },
     {
       "id": "gallery_12",
@@ -185,7 +217,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/12-t.webp",
       "number": 12,
       "group": "Archive 4",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "asset_path": "media/gallery/12.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/12.webp"
     },
     {
       "id": "gallery_13",
@@ -196,7 +230,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/13-t.webp",
       "number": 13,
       "group": "Archive 4",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "asset_path": "media/gallery/13.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/13.webp"
     },
     {
       "id": "gallery_14",
@@ -207,7 +243,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/14-t.webp",
       "number": 14,
       "group": "Archive 4",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "asset_path": "media/gallery/14.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/14.webp"
     },
     {
       "id": "gallery_15",
@@ -218,7 +256,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/15-t.webp",
       "number": 15,
       "group": "Archive 4",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "asset_path": "media/gallery/15.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/15.webp"
     },
     {
       "id": "gallery_16",
@@ -229,7 +269,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/16-t.webp",
       "number": 16,
       "group": "Archive 5",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "asset_path": "media/gallery/16.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/16.webp"
     },
     {
       "id": "gallery_17",
@@ -240,7 +282,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/17-t.webp",
       "number": 17,
       "group": "Archive 5",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "asset_path": "media/gallery/17.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/17.webp"
     },
     {
       "id": "gallery_18",
@@ -251,7 +295,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/18-t.webp",
       "number": 18,
       "group": "Archive 5",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "asset_path": "media/gallery/18.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/18.webp"
     },
     {
       "id": "gallery_19",
@@ -262,7 +308,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/19-t.webp",
       "number": 19,
       "group": "Archive 5",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "asset_path": "media/gallery/19.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/19.webp"
     },
     {
       "id": "gallery_20",
@@ -273,7 +321,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/20-t.webp",
       "number": 20,
       "group": "Archive 5",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "asset_path": "media/gallery/20.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/20.webp"
     },
     {
       "id": "gallery_26",
@@ -284,7 +334,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/26-t.webp",
       "number": 26,
       "group": "Archive 6",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "asset_path": "media/gallery/26.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/26.webp"
     },
     {
       "id": "gallery_27",
@@ -295,7 +347,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/27-t.webp",
       "number": 27,
       "group": "Archive 6",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "asset_path": "media/gallery/27.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/27.webp"
     },
     {
       "id": "gallery_28",
@@ -306,7 +360,9 @@
       "thumb_url": "https://www.ruraluniv.ac.in/assets/img/gallery/28-t.webp",
       "number": 28,
       "group": "Archive 6",
-      "source_url": "https://ruraluniv.ac.in/photo-gallery"
+      "source_url": "https://ruraluniv.ac.in/photo-gallery",
+      "asset_path": "media/gallery/28.jpg",
+      "thumb_asset_path": "media/gallery/thumbs/28.webp"
     }
   ],
   "videos": [
@@ -318,7 +374,8 @@
       "embed_url": "https://www.youtube-nocookie.com/embed/vOq8rdPq-T8?rel=0",
       "watch_url": "https://www.youtube.com/watch?v=vOq8rdPq-T8",
       "thumbnail_url": "https://i.ytimg.com/vi/vOq8rdPq-T8/hqdefault.jpg",
-      "source_url": "https://ruraluniv.ac.in/video-gallery"
+      "source_url": "https://ruraluniv.ac.in/video-gallery",
+      "thumbnail_asset_path": "media/videos/vOq8rdPq-T8.jpg"
     },
     {
       "id": "video_uvjq1Xmd6QA",
@@ -328,7 +385,8 @@
       "embed_url": "https://www.youtube-nocookie.com/embed/uvjq1Xmd6QA?rel=0",
       "watch_url": "https://www.youtube.com/watch?v=uvjq1Xmd6QA",
       "thumbnail_url": "https://i.ytimg.com/vi/uvjq1Xmd6QA/hqdefault.jpg",
-      "source_url": "https://ruraluniv.ac.in/video-gallery"
+      "source_url": "https://ruraluniv.ac.in/video-gallery",
+      "thumbnail_asset_path": "media/videos/uvjq1Xmd6QA.jpg"
     },
     {
       "id": "video_T_WNVWSGOF4",
@@ -338,7 +396,8 @@
       "embed_url": "https://www.youtube-nocookie.com/embed/T_WNVWSGOF4?rel=0",
       "watch_url": "https://www.youtube.com/watch?v=T_WNVWSGOF4",
       "thumbnail_url": "https://i.ytimg.com/vi/T_WNVWSGOF4/hqdefault.jpg",
-      "source_url": "https://ruraluniv.ac.in/video-gallery"
+      "source_url": "https://ruraluniv.ac.in/video-gallery",
+      "thumbnail_asset_path": "media/videos/T_WNVWSGOF4.jpg"
     },
     {
       "id": "video_9TsfdJIWZ1M",
@@ -348,7 +407,8 @@
       "embed_url": "https://www.youtube-nocookie.com/embed/9TsfdJIWZ1M?rel=0",
       "watch_url": "https://www.youtube.com/watch?v=9TsfdJIWZ1M",
       "thumbnail_url": "https://i.ytimg.com/vi/9TsfdJIWZ1M/hqdefault.jpg",
-      "source_url": "https://ruraluniv.ac.in/video-gallery"
+      "source_url": "https://ruraluniv.ac.in/video-gallery",
+      "thumbnail_asset_path": "media/videos/9TsfdJIWZ1M.jpg"
     }
   ]
 }

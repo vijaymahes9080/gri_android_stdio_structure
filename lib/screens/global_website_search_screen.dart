@@ -1,152 +1,62 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../models/official_models.dart';
+import '../services/official_catalog_service.dart';
 import '../utils/gri_colors.dart';
-import 'about_gri_heritage_screen.dart';
-import 'governance_leadership_screen.dart';
-import 'schools_programmes_hub_screen.dart';
-import 'admissions_prospectus_screen.dart';
-import 'examination_services_screen.dart';
-import 'scholarships_welfare_screen.dart';
-import 'contact_campus_info_screen.dart';
-import 'campus_facilities_screen.dart';
-import 'official_document_center_screen.dart';
-import 'department_detail_screen.dart';
-import 'institutional_article_screen.dart';
-import 'document_vault_screen.dart';
-import 'media_gallery_screen.dart';
-import '../services/seed_data_service.dart';
+import '../utils/gri_motion.dart';
 
+/// Global website search screen that uses the verified OfficialCatalogService
+/// search index instead of the legacy static inventory.
 class GlobalWebsiteSearchScreen extends StatefulWidget {
   const GlobalWebsiteSearchScreen({super.key});
 
   @override
-  State<GlobalWebsiteSearchScreen> createState() => _GlobalWebsiteSearchScreenState();
+  State<GlobalWebsiteSearchScreen> createState() =>
+      _GlobalWebsiteSearchScreenState();
 }
 
-class _GlobalWebsiteSearchScreenState extends State<GlobalWebsiteSearchScreen> {
-  final TextEditingController _searchController = TextEditingController();
-  List<Map<String, dynamic>> _allPages = [];
-  List<Map<String, dynamic>> _filteredPages = [];
-  bool _isLoading = true;
-  String _selectedCategory = "All";
-
-  final List<String> _categories = [
-    "All",
-    "Academics",
-    "Admissions",
-    "Examinations",
-    "Governance",
-    "Heritage",
-    "Research",
-    "Facilities",
-    "Student Welfare",
-    "Disclosures",
-  ];
+class _GlobalWebsiteSearchScreenState extends State<GlobalWebsiteSearchScreen>
+    with SingleTickerProviderStateMixin {
+  late TextEditingController _searchController;
+  late FocusNode _focusNode;
+  List<OfficialSearchHit> _hits = [];
+  String _selectedCategory = 'All';
+  bool _isSearching = false;
+  bool _isInit = true;
 
   @override
   void initState() {
     super.initState();
-    _loadInventory();
+    _searchController = TextEditingController();
+    _focusNode = FocusNode();
+    _hits = [];
   }
 
-  Future<void> _loadInventory() async {
-    if (SeedDataService.instance.allPages.isNotEmpty) {
-      setState(() {
-        _allPages = SeedDataService.instance.allPages;
-        _filteredPages = _allPages;
-        _isLoading = false;
-      });
-      return;
-    }
-    try {
-      final jsonStr = await rootBundle.loadString('assets/website_inventory.json');
-      final data = json.decode(jsonStr) as Map<String, dynamic>;
-      final pagesList = data['pages'] as List<dynamic>? ?? [];
-      
-      setState(() {
-        _allPages = pagesList.map((e) => e as Map<String, dynamic>).toList();
-        _filteredPages = _allPages;
-        _isLoading = false;
-      });
-    } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
-    }
+  @override
+  void dispose() {
+    _searchController.dispose();
+    _focusNode.dispose();
+    super.dispose();
   }
 
-  void _onFilterChanged() {
-    final query = _searchController.text.trim().toLowerCase();
+  Future<void> _performSearch(String query) async {
+    final catalog = OfficialCatalogService.instance;
+    if (!catalog.isLoaded) {
+      await catalog.ensureLoaded();
+    }
     setState(() {
-      _filteredPages = _allPages.where((page) {
-        final title = (page['title'] ?? '').toString().toLowerCase();
-        final cat = (page['category'] ?? '').toString().toLowerCase();
-        final url = (page['url'] ?? '').toString().toLowerCase();
-
-        final matchesQuery = query.isEmpty ||
-            title.contains(query) ||
-            cat.contains(query) ||
-            url.contains(query);
-
-        final matchesCat = _selectedCategory == "All" ||
-            cat.contains(_selectedCategory.toLowerCase());
-
-        return matchesQuery && matchesCat;
-      }).toList();
+      _hits = catalog.search(query, category: _selectedCategory);
+      _isSearching = _hits.isNotEmpty || query.isNotEmpty;
     });
   }
 
-  void _navigateToPage(Map<String, dynamic> page) {
-    final url = (page['url'] ?? '').toString().toLowerCase();
-    final title = (page['title'] ?? 'GRI Official Portal').toString();
-
-    if (url.contains('department=')) {
-      final deptSlug = Uri.tryParse(url)?.queryParameters['department'] ?? 'Department';
-      final cleanName = deptSlug.replaceAll('_programmes', '').replaceAll('_profile', '').replaceAll('_', ' ');
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) => DepartmentDetailScreen(
-            departmentId: deptSlug,
-            departmentName: cleanName.toUpperCase(),
-            schoolName: "School of $cleanName Studies",
-            hodName: "Head of the Department",
-            sourceUrl: page['url'] ?? 'https://ruraluniv.ac.in/',
-          ),
-        ),
-      );
-    } else if (url.contains('videotour') || url.contains('video')) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const MediaGalleryScreen()));
-    } else if (url.contains('aboutgri') || url.contains('genesis') || url.contains('chancellor') || url.contains('emblem')) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AboutGriHeritageScreen()));
-    } else if (url.contains('governance') || url.contains('administration') || url.contains('council') || url.contains('deans') || url.contains('hod')) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const GovernanceLeadershipScreen()));
-    } else if (url.contains('faculties') || url.contains('schools') || url.contains('cbcs')) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SchoolsProgrammesHubScreen()));
-    } else if (url.contains('admi') || url.contains('prospect') || url.contains('refund') || url.contains('hostel_fee')) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AdmissionsProspectusScreen()));
-    } else if (url.contains('exam') || url.contains('coe') || url.contains('tatkal') || url.contains('esanad') || url.contains('timetable')) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ExaminationServicesScreen()));
-    } else if (url.contains('scholar') || url.contains('welfare') || url.contains('apaar') || url.contains('ragging')) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ScholarshipsWelfareScreen()));
-    } else if (url.contains('contact') || url.contains('reach') || url.contains('map')) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ContactCampusInfoScreen()));
-    } else if (url.contains('facilities') || url.contains('library') || url.contains('sports') || url.contains('hospital')) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CampusFacilitiesScreen()));
-    } else if (url.contains('nirf') || url.contains('naac') || url.contains('rti') || url.contains('iqac')) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const OfficialDocumentCenterScreen()));
-    } else {
-      // General Institutional Article Template
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) => InstitutionalArticleScreen(
-            title: title,
-            category: page['category'] ?? 'Institutional Information',
-            sourceUrl: page['url'] ?? 'https://ruraluniv.ac.in/',
-          ),
-        ),
-      );
-    }
+  void _clearSearch() {
+    setState(() {
+      _searchController.clear();
+      _hits = [];
+      _isSearching = false;
+      _focusNode.unfocus();
+    });
   }
 
   @override
@@ -154,257 +64,301 @@ class _GlobalWebsiteSearchScreenState extends State<GlobalWebsiteSearchScreen> {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
+    if (_isInit) {
+      _isInit = false;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        // Ensure catalog is loaded; search will trigger on user input
+      });
+    }
+
     return Scaffold(
       backgroundColor: isDark ? GriColors.darkCanvas : GriColors.surfaceCanvas,
       appBar: AppBar(
-        title: const Text(
-          "GRI Portal & Directory Search",
-          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
-        ),
+        title: const Text('Global Website Search'),
         backgroundColor: isDark ? GriColors.darkSurface1 : Colors.white,
         foregroundColor: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
         elevation: 0,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.folder_shared, color: GriColors.ochrePrimary),
-            tooltip: "Document Vault",
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (_) => const DocumentVaultScreen()));
-            },
-          ),
+          if (_isSearching)
+            IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: _clearSearch,
+            ),
         ],
       ),
-      body: Column(
-        children: [
-          // Search Input Bar
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            decoration: BoxDecoration(
-              color: isDark ? GriColors.darkSurface1 : Colors.white,
-              border: Border(
-                bottom: BorderSide(
-                  color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
-                  width: 1.0,
-                ),
-              ),
-            ),
-            child: TextField(
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Search bar
+            TextField(
               controller: _searchController,
-              onChanged: (_) => _onFilterChanged(),
+              focusNode: _focusNode,
+              onSubmitted: (query) => _performSearch(query),
               decoration: InputDecoration(
-                hintText: "Search 309 official pages, 602 documents, policies...",
-                hintStyle: TextStyle(
-                  fontSize: 12.5,
-                  color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                hintText: 'Search GRI website...',
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: isDark
+                        ? GriColors.darkOutlineVariant
+                        : GriColors.outlineVariant,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                prefixIcon: const Icon(Icons.search, color: GriColors.forestPrimary, size: 20),
+                filled: true,
+                fillColor: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
                 suffixIcon: _searchController.text.isNotEmpty
                     ? IconButton(
-                        icon: const Icon(Icons.clear, size: 18),
-                        onPressed: () {
-                          _searchController.clear();
-                          _onFilterChanged();
-                        },
+                        icon: const Icon(Icons.close),
+                        onPressed: _clearSearch,
                       )
                     : null,
-                filled: true,
-                fillColor: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant.withValues(alpha: 0.5),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(
-                    color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
-                    width: 1.0,
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(
-                    color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
-                    width: 1.0,
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: GriColors.forestPrimary, width: 1.5),
-                ),
+                contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16, vertical: 14),
               ),
+              onChanged: (query) {
+                if (query.isNotEmpty || _hits.isNotEmpty) {
+                  _performSearch(query);
+                }
+              },
             ),
-          ),
+            const SizedBox(height: 16),
 
-          // Category Filter Chips
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            child: Row(
-              children: _categories.map((cat) {
-                final isSelected = _selectedCategory == cat;
-                return Padding(
-                  padding: const EdgeInsets.only(right: 6),
-                  child: FilterChip(
-                    label: Text(
-                      cat,
-                      style: TextStyle(
-                        fontSize: 11,
-                        fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                        color: isSelected ? Colors.white : (isDark ? GriColors.darkOnSurface : Colors.black87),
-                      ),
-                    ),
-                    selected: isSelected,
-                    selectedColor: GriColors.forestPrimary,
-                    backgroundColor: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
-                    checkmarkColor: Colors.white,
-                    side: BorderSide(
-                      color: isSelected ? GriColors.forestPrimary : (isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant),
-                      width: 0.8,
-                    ),
-                    onSelected: (val) {
-                      setState(() {
-                        _selectedCategory = cat;
-                      });
-                      _onFilterChanged();
-                    },
-                  ),
-                );
-              }).toList(),
-            ),
-          ),
-
-          // Results Counter
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // Category filter
+            Wrap(
+              spacing: 8,
+              runSpacing: 6,
               children: [
-                Text(
-                  "Found ${_filteredPages.length} official items",
-                  style: TextStyle(fontSize: 12, color: Colors.grey.shade600, fontWeight: FontWeight.w500),
+                FilterChip(
+                  label: const Text('All'),
+                  selected: _selectedCategory == 'All',
+                  backgroundColor: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
+                  selectedColor: GriColors.forestPrimary,
+                  disabledColor: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+                  checkmarkColor: Colors.white,
+                  side: BorderSide(
+                    color: _selectedCategory == 'All'
+                        ? GriColors.forestPrimary
+                        : (isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant),
+                    width: 1.0,
+                  ),
+                  onSelected: (_) {
+                    setState(() => _selectedCategory = 'All');
+                    if (_searchController.text.isNotEmpty) {
+                      _performSearch(_searchController.text);
+                    }
+                  },
                 ),
-                Text(
-                  "Source: ruraluniv.ac.in",
-                  style: TextStyle(fontSize: 11, color: GriColors.forestPrimary.withValues(alpha: 0.8)),
+                FilterChip(
+                  label: const Text('Faculty'),
+                  selected: _selectedCategory == 'Faculty',
+                  backgroundColor: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
+                  selectedColor: GriColors.forestPrimary,
+                  disabledColor: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+                  checkmarkColor: Colors.white,
+                  side: BorderSide(
+                    color: _selectedCategory == 'Faculty'
+                        ? GriColors.forestPrimary
+                        : (isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant),
+                    width: 1.0,
+                  ),
+                  onSelected: (_) {
+                    setState(() => _selectedCategory = 'Faculty');
+                    if (_searchController.text.isNotEmpty) {
+                      _performSearch(_searchController.text);
+                    }
+                  },
+                ),
+                FilterChip(
+                  label: const Text('Programmes'),
+                  selected: _selectedCategory == 'Programmes',
+                  backgroundColor: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
+                  selectedColor: GriColors.forestPrimary,
+                  disabledColor: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+                  checkmarkColor: Colors.white,
+                  side: BorderSide(
+                    color: _selectedCategory == 'Programmes'
+                        ? GriColors.forestPrimary
+                        : (isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant),
+                    width: 1.0,
+                  ),
+                  onSelected: (_) {
+                    setState(() => _selectedCategory = 'Programmes');
+                    if (_searchController.text.isNotEmpty) {
+                      _performSearch(_searchController.text);
+                    }
+                  },
+                ),
+                FilterChip(
+                  label: const Text('Notices'),
+                  selected: _selectedCategory == 'Notices',
+                  backgroundColor: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
+                  selectedColor: GriColors.forestPrimary,
+                  disabledColor: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+                  checkmarkColor: Colors.white,
+                  side: BorderSide(
+                    color: _selectedCategory == 'Notices'
+                        ? GriColors.forestPrimary
+                        : (isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant),
+                    width: 1.0,
+                  ),
+                  onSelected: (_) {
+                    setState(() => _selectedCategory = 'Notices');
+                    if (_searchController.text.isNotEmpty) {
+                      _performSearch(_searchController.text);
+                    }
+                  },
+                ),
+                FilterChip(
+                  label: const Text('Photos'),
+                  selected: _selectedCategory == 'Media',
+                  backgroundColor: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
+                  selectedColor: GriColors.forestPrimary,
+                  disabledColor: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+                  checkmarkColor: Colors.white,
+                  side: BorderSide(
+                    color: _selectedCategory == 'Media'
+                        ? GriColors.forestPrimary
+                        : (isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant),
+                    width: 1.0,
+                  ),
+                  onSelected: (_) {
+                    setState(() => _selectedCategory = 'Media');
+                    if (_searchController.text.isNotEmpty) {
+                      _performSearch(_searchController.text);
+                    }
+                  },
+                ),
+                FilterChip(
+                  label: const Text('Documents'),
+                  selected: _selectedCategory == 'Documents',
+                  backgroundColor: isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant,
+                  selectedColor: GriColors.forestPrimary,
+                  disabledColor: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+                  checkmarkColor: Colors.white,
+                  side: BorderSide(
+                    color: _selectedCategory == 'Documents'
+                        ? GriColors.forestPrimary
+                        : (isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant),
+                    width: 1.0,
+                  ),
+                  onSelected: (_) {
+                    setState(() => _selectedCategory = 'Documents');
+                    if (_searchController.text.isNotEmpty) {
+                      _performSearch(_searchController.text);
+                    }
+                  },
                 ),
               ],
             ),
-          ),
+            const SizedBox(height: 16),
 
-          const Divider(height: 1),
-
-          // Search Results List
-          Expanded(
-            child: _isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : _filteredPages.isEmpty
-                    ? Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.search_off, size: 56, color: Colors.grey.shade400),
-                            const SizedBox(height: 12),
-                            const Text("No matching pages or documents found", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-                            const SizedBox(height: 4),
-                            Text("Try searching 'physics', 'prospectus', 'tatkal', or 'hostel'", style: TextStyle(fontSize: 12, color: Colors.grey.shade600)),
-                          ],
-                        ),
-                      )
-                    : ListView.separated(
-                        itemCount: _filteredPages.length,
-                        separatorBuilder: (_, __) => const Divider(height: 1),
-                        itemBuilder: (context, index) {
-                          final page = _filteredPages[index];
-                          final title = page['title'] ?? 'The Gandhigram Rural Institute';
-                          final category = page['category'] ?? 'General';
-                          final url = page['url'] ?? '';
-                          final docsCount = (page['resources']?['documents'] as List?)?.length ?? 0;
-
-                          return ListTile(
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                            leading: CircleAvatar(
-                              backgroundColor: _getCategoryColor(category).withValues(alpha: 0.15),
-                              child: Icon(_getCategoryIcon(category), color: _getCategoryColor(category), size: 20),
-                            ),
-                            title: Text(
-                              title,
-                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(height: 2),
-                                Row(
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                      decoration: BoxDecoration(
-                                        color: _getCategoryColor(category).withValues(alpha: 0.1),
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                      child: Text(
-                                        category,
-                                        style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: _getCategoryColor(category)),
-                                      ),
-                                    ),
-                                    if (docsCount > 0) ...[
-                                      const SizedBox(width: 6),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                        decoration: BoxDecoration(
-                                          color: Colors.red.withValues(alpha: 0.1),
-                                          borderRadius: BorderRadius.circular(4),
-                                        ),
-                                        child: Text(
-                                          "$docsCount PDFs",
-                                          style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.red),
-                                        ),
-                                      ),
-                                    ],
-                                  ],
-                                ),
-                                const SizedBox(height: 3),
-                                Text(
-                                  url,
-                                  style: TextStyle(fontSize: 10, color: Colors.grey.shade500),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
-                            ),
-                            trailing: const Icon(Icons.arrow_forward_ios, size: 14, color: Colors.grey),
-                            onTap: () => _navigateToPage(page),
-                          );
-                        },
-                      ),
-          ),
-        ],
+            // Search results
+            if (_isSearching || _hits.isNotEmpty)
+              _buildResultsList(isDark)
+            else
+              _buildSearchHint(isDark),
+          ],
+        ),
       ),
     );
   }
 
-  Color _getCategoryColor(String cat) {
-    final c = cat.toLowerCase();
-    if (c.contains('heritage') || c.contains('profile')) return GriColors.forestPrimary;
-    if (c.contains('governance') || c.contains('admin')) return GriColors.ochrePrimary;
-    if (c.contains('academic') || c.contains('school') || c.contains('department')) return Colors.indigo;
-    if (c.contains('admiss') || c.contains('prospect')) return Colors.deepPurple;
-    if (c.contains('exam') || c.contains('coe')) return Colors.teal;
-    if (c.contains('scholar') || c.contains('welfare')) return Colors.brown;
-    if (c.contains('research')) return Colors.blueGrey;
-    if (c.contains('facilit')) return Colors.orange.shade800;
-    return Colors.blue;
+  Widget _buildResultsList(bool isDark) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Found ${_hits.length} result${_hits.length == 1 ? '' : 's'}',
+          style: TextStyle(
+            fontSize: 12,
+            color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+          ),
+        ),
+        const SizedBox(height: 8),
+        ..._hits.map((hit) => _buildResultTile(hit, isDark)).toList(),
+      ],
+    );
   }
 
-  IconData _getCategoryIcon(String cat) {
-    final c = cat.toLowerCase();
-    if (c.contains('heritage') || c.contains('profile')) return Icons.history_edu;
-    if (c.contains('governance') || c.contains('admin')) return Icons.account_balance;
-    if (c.contains('academic') || c.contains('school') || c.contains('department')) return Icons.school;
-    if (c.contains('admiss') || c.contains('prospect')) return Icons.app_registration;
-    if (c.contains('exam') || c.contains('coe')) return Icons.assignment_turned_in;
-    if (c.contains('scholar') || c.contains('welfare')) return Icons.volunteer_activism;
-    if (c.contains('research')) return Icons.science;
-    if (c.contains('facilit')) return Icons.domain;
-    return Icons.article;
+  Widget _buildResultTile(OfficialSearchHit hit, bool isDark) {
+    final isUrl = hit.url.startsWith('http') || hit.url.startsWith('/');
+    return Card(
+      margin: const EdgeInsets.only(bottom: 8),
+      color: isDark ? GriColors.darkSurface1 : Colors.white,
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        leading: _resultIcon(hit.category, isDark),
+        title: Text(
+          hit.title,
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 11,
+            color: isDark ? GriColors.darkOnSurface : Colors.black87,
+            overflow: TextOverflow.ellipsis,
+          ),
+          maxLines: 1,
+        ),
+        subtitle: Text(
+          hit.subtitle,
+          style: TextStyle(
+            fontSize: 9,
+            color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+            overflow: TextOverflow.ellipsis,
+          ),
+          maxLines: 1,
+        ),
+        trailing: isUrl
+            ? const Icon(Icons.open_in_new, size: 14, color: GriColors.ochrePrimary)
+            : null,
+        onTap: isUrl ? () => _launchUrl(hit.url) : null,
+      ),
+    );
+  }
+
+  Widget _resultIcon(String category, bool isDark) {
+    final icons = {
+      'Faculty': Icons.person_outlined,
+      'Programmes': Icons.book_outlined,
+      'Notices': Icons.notifications_outlined,
+      'Media': Icons.photo_outlined,
+      'Documents': Icons.picture_as_pdf,
+      'All': Icons.search,
+    };
+    final icon = icons[category] ?? Icons.search;
+    return Icon(icon, size: 20, color: GriColors.forestPrimary);
+  }
+
+  Widget _buildSearchHint(bool isDark) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.search_outlined,
+            size: 64,
+            color: isDark ? GriColors.darkSurfaceVariant : GriColors.outlineVariant,
+          ),
+          const SizedBox(height: 12),
+          Text(
+            'Search the official GRI website',
+            style: TextStyle(
+              fontSize: 16,
+              color: isDark ? GriColors.darkOnSurfaceVariant : Colors.grey.shade600,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            'Type keywords to search faculty, programmes, notices, documents and media',
+            style: TextStyle(
+              fontSize: 12,
+              color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
   }
 }

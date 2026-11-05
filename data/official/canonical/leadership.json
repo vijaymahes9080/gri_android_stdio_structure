@@ -9,7 +9,8 @@
     "email": "grucc@ruraluniv.ac.in",
     "phone": "0451-2452371",
     "contact_note": "University general office contact; no direct officer line is published.",
-    "source_url": "https://www.ruraluniv.ac.in/page/administration"
+    "source_url": "https://www.ruraluniv.ac.in/page/administration",
+    "photo_asset": "media/leadership/ldr_chancellor.jpg"
   },
   {
     "id": "ldr_vice-chancellor",
@@ -21,7 +22,8 @@
     "email": "grucc@ruraluniv.ac.in",
     "phone": "0451-2452371",
     "contact_note": "University general office contact; no direct officer line is published.",
-    "source_url": "https://www.ruraluniv.ac.in/page/administration"
+    "source_url": "https://www.ruraluniv.ac.in/page/administration",
+    "photo_asset": "media/leadership/ldr_vice-chancellor.jpg"
   },
   {
     "id": "ldr_registrar",
@@ -33,7 +35,8 @@
     "email": "grucc@ruraluniv.ac.in",
     "phone": "0451-2452371",
     "contact_note": "University general office contact; no direct officer line is published.",
-    "source_url": "https://www.ruraluniv.ac.in/page/administration"
+    "source_url": "https://www.ruraluniv.ac.in/page/administration",
+    "photo_asset": "media/leadership/ldr_registrar.jpg"
   },
   {
     "id": "ldr_controller-of-examinations",
@@ -45,7 +48,8 @@
     "email": "grucc@ruraluniv.ac.in",
     "phone": "0451-2452371",
     "contact_note": "University general office contact; no direct officer line is published.",
-    "source_url": "https://www.ruraluniv.ac.in/page/administration"
+    "source_url": "https://www.ruraluniv.ac.in/page/administration",
+    "photo_asset": "media/leadership/ldr_controller-of-examinations.jpg"
   },
   {
     "id": "ldr_finance-officer",
@@ -57,7 +61,8 @@
     "email": "grucc@ruraluniv.ac.in",
     "phone": "0451-2452371",
     "contact_note": "University general office contact; no direct officer line is published.",
-    "source_url": "https://www.ruraluniv.ac.in/page/administration"
+    "source_url": "https://www.ruraluniv.ac.in/page/administration",
+    "photo_asset": "media/leadership/ldr_finance-officer.jpg"
   },
   {
     "id": "ldr_chief-vigilance-officer",
@@ -69,7 +74,8 @@
     "email": "grucc@ruraluniv.ac.in",
     "phone": "0451-2452371",
     "contact_note": "University general office contact; no direct officer line is published.",
-    "source_url": "https://www.ruraluniv.ac.in/page/administration"
+    "source_url": "https://www.ruraluniv.ac.in/page/administration",
+    "photo_asset": "media/leadership/ldr_chief-vigilance-officer.jpg"
   },
   {
     "id": "ldr_dean_p-anandakumar",
@@ -81,7 +87,8 @@
     "email": "grucc@ruraluniv.ac.in",
     "phone": "0451-2452371",
     "contact_note": "University general office contact; no direct officer line is published.",
-    "source_url": "https://www.ruraluniv.ac.in/page/administration"
+    "source_url": "https://www.ruraluniv.ac.in/page/administration",
+    "photo_asset": "media/leadership/ldr_dean_p-anandakumar.jpg"
   },
   {
     "id": "ldr_dean_s-balasundari",
@@ -93,7 +100,8 @@
     "email": "grucc@ruraluniv.ac.in",
     "phone": "0451-2452371",
     "contact_note": "University general office contact; no direct officer line is published.",
-    "source_url": "https://www.ruraluniv.ac.in/page/administration"
+    "source_url": "https://www.ruraluniv.ac.in/page/administration",
+    "photo_asset": "media/leadership/ldr_dean_s-balasundari.jpg"
   },
   {
     "id": "ldr_dean_r-venkataravi",
@@ -105,7 +113,8 @@
     "email": "grucc@ruraluniv.ac.in",
     "phone": "0451-2452371",
     "contact_note": "University general office contact; no direct officer line is published.",
-    "source_url": "https://www.ruraluniv.ac.in/page/administration"
+    "source_url": "https://www.ruraluniv.ac.in/page/administration",
+    "photo_asset": "media/leadership/ldr_dean_r-venkataravi.jpg"
   },
   {
     "id": "ldr_dean_b-tamilmani",
@@ -117,7 +126,8 @@
     "email": "grucc@ruraluniv.ac.in",
     "phone": "0451-2452371",
     "contact_note": "University general office contact; no direct officer line is published.",
-    "source_url": "https://www.ruraluniv.ac.in/page/administration"
+    "source_url": "https://www.ruraluniv.ac.in/page/administration",
+    "photo_asset": "media/leadership/ldr_dean_b-tamilmani.jpg"
   },
   {
     "id": "ldr_dean_p-kalavathi",
@@ -129,7 +139,8 @@
     "email": "grucc@ruraluniv.ac.in",
     "phone": "0451-2452371",
     "contact_note": "University general office contact; no direct officer line is published.",
-    "source_url": "https://www.ruraluniv.ac.in/page/administration"
+    "source_url": "https://www.ruraluniv.ac.in/page/administration",
+    "photo_asset": "media/leadership/ldr_dean_p-kalavathi.jpg"
   },
   {
     "id": "ldr_dean_a-ramanathan",
@@ -141,7 +152,8 @@
     "email": "grucc@ruraluniv.ac.in",
     "phone": "0451-2452371",
     "contact_note": "University general office contact; no direct officer line is published.",
-    "source_url": "https://www.ruraluniv.ac.in/page/administration"
+    "source_url": "https://www.ruraluniv.ac.in/page/administration",
+    "photo_asset": "media/leadership/ldr_dean_a-ramanathan.jpg"
   },
   {
     "id": "ldr_dean_r-mani",
@@ -153,6 +165,7 @@
     "email": "grucc@ruraluniv.ac.in",
     "phone": "0451-2452371",
     "contact_note": "University general office contact; no direct officer line is published.",
-    "source_url": "https://www.ruraluniv.ac.in/page/administration"
+    "source_url": "https://www.ruraluniv.ac.in/page/administration",
+    "photo_asset": "media/leadership/ldr_dean_r-mani.jpg"
   }
 ]
