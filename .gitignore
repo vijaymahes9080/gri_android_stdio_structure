@@ -21,14 +21,7 @@ node_modules/
 .vite/
 dist/
 screenshots/
-audit_reports/
+audit_reports
 *.hprof
 .dart_tool/
-.github/
-
-# Large official archive: kept locally in data/official/files and data/official/media.
-# Canonical JSON, source snapshots and manifests are committed instead.
-data/official/files/
-data/official/media/
-data/official/manifests/download.log
-.crawl_home.html
+.github
