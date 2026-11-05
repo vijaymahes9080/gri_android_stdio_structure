@@ -1,0 +1,27 @@
+{
+  "id": "gri",
+  "name": "The Gandhigram Rural Institute (Deemed to be University)",
+  "short_name": "GRI",
+  "tamil_name": "காந்திகிராம கிராமிய நிகர்நிலைப் பல்கலைக்கழகம்",
+  "established": 1956,
+  "deemed_university": 1976,
+  "accreditation": "Accredited by NAAC with A ++ Grade (4th Cycle)",
+  "ministry": "Ministry of Education, Government of India",
+  "address": "Gandhigram, Dindigul District, Tamil Nadu 624 302, India",
+  "email": "grucc@ruraluniv.ac.in",
+  "phone": "0451-2452371",
+  "website": "https://www.ruraluniv.ac.in/",
+  "schools_count": 8,
+  "departments_count": 19,
+  "centres_count": 11,
+  "programmes_count": 64,
+  "students_count": 5000,
+  "teaching_staff": 178,
+  "non_teaching_staff": 243,
+  "facts_source": [
+    "https://www.ruraluniv.ac.in/",
+    "https://www.ruraluniv.ac.in/page/about-gri",
+    "https://www.ruraluniv.ac.in/contact-us"
+  ],
+  "generated_at": "2026-11-05T13:08:34Z"
+}

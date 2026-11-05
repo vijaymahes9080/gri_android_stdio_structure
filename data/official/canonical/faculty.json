@@ -1,0 +1,3478 @@
+[
+  {
+    "id": "fac_15",
+    "fid": "15",
+    "name": "Dr.A.BALAKRISHNAN",
+    "designation": "Officer on Special Duty (VC Office)",
+    "qualifications": "M.A. (RD), M.B.A., M.A. (Sociology), M.Phil., P",
+    "specialization": "1) Rural Development\n 2) Labour Studies\n 3) Interdisciplinary Research",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/145.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/145.pdf",
+    "scholar": "https://scholar.google.com/citations?user=SgKNQcAAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/115782",
+    "orcid": "https://orcid.org/0000-0002-1145-6121",
+    "affiliations": [
+      {
+        "role": "officer",
+        "designation": "Officer on Special Duty (VC Office)",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "",
+        "school_name": "",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "officer"
+    ],
+    "primary_role": "officer"
+  },
+  {
+    "id": "fac_40",
+    "fid": "40",
+    "name": "Dr.C.PITCHAI",
+    "designation": "Professor In-charge of Library",
+    "qualifications": "M.B.A., M.A. (Coop. Mgmt.)., Ph.D., FDPM (IIMA)",
+    "specialization": "1)Cooperative Management\n 2) Rural Development & Extension\n 3) Hu",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/276.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/276.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "officer",
+        "designation": "Professor In-charge of Library",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "",
+        "school_name": "",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "officer"
+    ],
+    "primary_role": "officer"
+  },
+  {
+    "id": "fac_96",
+    "fid": "96",
+    "name": "Dr. C. Sugumar",
+    "designation": "Warden, Men's Hostel",
+    "qualifications": "",
+    "specialization": "",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/facilities/phyedu/img/267.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/267.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Director of Physical Education",
+        "unit_id": "physical-education-and-yoga-centre",
+        "unit_name": "Physical Education and Yoga Centre",
+        "school_id": "sch_social",
+        "school_name": "School of Social Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/physical-education-and-yoga-centre"
+      },
+      {
+        "role": "hod",
+        "designation": "Director & Head, Department of Physical Education",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_social",
+        "school_name": "School of Social Sciences",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      },
+      {
+        "role": "officer",
+        "designation": "Warden, Men's Hostel",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "",
+        "school_name": "",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "officer",
+      "hod",
+      "unit"
+    ],
+    "primary_role": "officer"
+  },
+  {
+    "id": "fac_estate-officer",
+    "fid": "",
+    "name": "Estate Officer",
+    "designation": "Er.S. Srigovarthana Krishnan",
+    "qualifications": "",
+    "specialization": "",
+    "photo_url": "https://www.ruraluniv.ac.in/files/images/aofficers/ErSS.jpg",
+    "profile_url": "",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "officer",
+        "designation": "Er.S. Srigovarthana Krishnan",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "",
+        "school_name": "",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "officer"
+    ],
+    "primary_role": "officer"
+  },
+  {
+    "id": "fac_4",
+    "fid": "4",
+    "name": "Dr.K.Kesava Raja Rajan",
+    "designation": "Officer on Special Duty (Public Relations)",
+    "qualifications": "Ph.D.",
+    "specialization": "History, Culture, Art and Architectural History",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/268.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/268.pdf",
+    "scholar": "https://scholar.google.com/citations?hl=en&user=9geeOqAAAAAJ",
+    "irins": "",
+    "orcid": "https://orcid.org/0000-0002-1078-1694",
+    "affiliations": [
+      {
+        "role": "officer",
+        "designation": "Officer on Special Duty (Public Relations)",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "",
+        "school_name": "",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "officer"
+    ],
+    "primary_role": "officer"
+  },
+  {
+    "id": "fac_71",
+    "fid": "71",
+    "name": "Dr.P.KALAVATHI",
+    "designation": "Professor in-charge of Computer Centre",
+    "qualifications": "M.C.A., M.Phil., Ph.D.,",
+    "specialization": "Medical Image Processing and Analysis,Internet of Things",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/207.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/207.pdf",
+    "scholar": "https://scholar.google.com/citations?user=fiDU-1YAAAAJ&hl=en",
+    "irins": "https://ruraluniv.irins.org/profile/107255",
+    "orcid": "https://orcid.org/0000-0003-3378-1715",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Professor In-charge",
+        "unit_id": "computer-centre",
+        "unit_name": "Computer Centre",
+        "school_id": "",
+        "school_name": "",
+        "source_url": "https://www.ruraluniv.ac.in/page/computer-centre"
+      },
+      {
+        "role": "dean",
+        "designation": "Professor",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "",
+        "school_name": "",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      },
+      {
+        "role": "officer",
+        "designation": "Professor in-charge of Computer Centre",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "",
+        "school_name": "",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "officer",
+      "dean",
+      "unit"
+    ],
+    "primary_role": "officer"
+  },
+  {
+    "id": "fac_17",
+    "fid": "17",
+    "name": "Dr.P.U.MAHALINGAM",
+    "designation": "Director IQAC",
+    "qualifications": "M.Sc., M.Phil., Ph.D",
+    "specialization": "1) Microbial Consortium Technology\n 2) Compost Technology & Biofertilizers\n 3) Bio-nanotechnology\n 4) Biofuel Tec",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/210.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/210.pdf",
+    "scholar": "http://scholar.google.co.in/citations?user=z2M_MsIAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/107244",
+    "orcid": "http://www.orcid.org/0000-0003-4808-367X",
+    "affiliations": [
+      {
+        "role": "hod",
+        "designation": "Head i/c, Department of Rural Health and Sanitation",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_health",
+        "school_name": "School of Health Sciences and Rural Development",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      },
+      {
+        "role": "hod",
+        "designation": "Head, Department of Biology",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      },
+      {
+        "role": "officer",
+        "designation": "Director IQAC",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "",
+        "school_name": "",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "officer",
+      "hod"
+    ],
+    "primary_role": "officer"
+  },
+  {
+    "id": "fac_44",
+    "fid": "44",
+    "name": "Dr.R.UTHAYAKUMAR",
+    "designation": "Director Academic",
+    "qualifications": "M.Sc., M.Phil. B.Ed., PGDCA., Ph.D.",
+    "specialization": "1) Operations Research - Inventory Management and Control\n 2) Fractal Analysis and its Applications\n 3) Fuzzy Optimi",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/180.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/180.pdf",
+    "scholar": "https://scholar.google.co.in/citations?user=dSbxOn0AAAAJ&hl=en",
+    "irins": "https://ruraluniv.irins.org/profile/60497",
+    "orcid": "https://orcid.org/0000-0002-1956-758X",
+    "affiliations": [
+      {
+        "role": "officer",
+        "designation": "Director Academic",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "",
+        "school_name": "",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "officer"
+    ],
+    "primary_role": "officer"
+  },
+  {
+    "id": "fac_7",
+    "fid": "7",
+    "name": "Dr.S.BALASUNDARI",
+    "designation": "Director, Basic facilities for Women",
+    "qualifications": "MA, M.Ed., M. Phil, Ph.D",
+    "specialization": "1) Indian Writing in English\n 2) Subaltern Literature",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/205.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/205.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "dean",
+        "designation": "Professor & Dean",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "",
+        "school_name": "",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      },
+      {
+        "role": "hod",
+        "designation": "Dean, School of English & Foreign Languages",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_english",
+        "school_name": "School of English & Foreign Languages",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      },
+      {
+        "role": "officer",
+        "designation": "Director, Basic facilities for Women",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "",
+        "school_name": "",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "officer",
+      "dean",
+      "hod"
+    ],
+    "primary_role": "officer"
+  },
+  {
+    "id": "fac_55",
+    "fid": "55",
+    "name": "Dr.S.MEENAKSHI",
+    "designation": "Director (Research and Development)",
+    "qualifications": "M.Sc,Ph.D",
+    "specialization": "1) Adsorption; 2) Defluoridation\n 3) Toxic Ions, Heavy Metal Removal\n 4) Photodegradation of Dyes and Pesticides\n 5) Removal of Oil from Oil in Water Emulsion",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/127.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/127.pdf",
+    "scholar": "https://scholar.google.co.in/citations?user=vJO31RoAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/60710",
+    "orcid": "https://orcid.org/0000-0003-3350-2325",
+    "affiliations": [
+      {
+        "role": "officer",
+        "designation": "Director (Research and Development)",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "",
+        "school_name": "",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "officer"
+    ],
+    "primary_role": "officer"
+  },
+  {
+    "id": "fac_74",
+    "fid": "74",
+    "name": "Dr.T.KALAISELVI",
+    "designation": "Warden, Women's Hostel",
+    "qualifications": "MCA, PhD, PDF",
+    "specialization": "1) Medical Image Processing\n 2) Artificial Intelligence\n3) IoT & Robotics",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/254.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/254.pdf",
+    "scholar": "https://scholar.google.com/citations?user=iqPcLBAAAAAJ&hl=en",
+    "irins": "https://ruraluniv.irins.org/profile/107254",
+    "orcid": "https://orcid.org/0000-0002-0197-2077",
+    "affiliations": [
+      {
+        "role": "officer",
+        "designation": "Warden, Women's Hostel",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "",
+        "school_name": "",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "officer"
+    ],
+    "primary_role": "officer"
+  },
+  {
+    "id": "fac_83",
+    "fid": "83",
+    "name": "Dr.A.RAMANATHAN",
+    "designation": "Senior Professor & Dean",
+    "qualifications": "M.V.Sc., Ph.D.",
+    "specialization": "1. Veterinary Surgery\n 2. Livestock Production and Management\n 3. Livestock and Poultry Nutrition",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/167.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/167.pdf",
+    "scholar": "",
+    "irins": "https://ruraluniv.irins.org/profile/115674",
+    "orcid": "http://www.orcid.org/0000-0003-1261-9209",
+    "affiliations": [
+      {
+        "role": "dean",
+        "designation": "Senior Professor & Dean",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "",
+        "school_name": "",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      },
+      {
+        "role": "hod",
+        "designation": "Dean, School of Agriculture & Animal Sciences",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_agriculture",
+        "school_name": "School of Agriculture & Animal Sciences",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "dean",
+      "hod"
+    ],
+    "primary_role": "dean"
+  },
+  {
+    "id": "fac_37",
+    "fid": "37",
+    "name": "Dr.B.TAMILMANI",
+    "designation": "Senior Professor",
+    "qualifications": "MA,M.Com,MBA,M.Phil,Ph.D",
+    "specialization": "1)Cooperative Management\n 2) Consumer Cooperatives and Marketing Management\n 3) Strategic Management",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/42.jpg",
+    "profile_url": "",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "dean",
+        "designation": "Senior Professor",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "",
+        "school_name": "",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "dean"
+    ],
+    "primary_role": "dean"
+  },
+  {
+    "id": "fac_1",
+    "fid": "1",
+    "name": "Dr.P.ANANDAKUMAR",
+    "designation": "School of Tamil, Indian Languages and Rural Arts",
+    "qualifications": "M.A., M.Phil., Ph.D. (Tamil) Dip in Malayalam, Dip in Telugu, Cert. in Russian",
+    "specialization": "Comparative Literature, Literary Criticism & Translation",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/139.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/139.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "dean",
+        "designation": "School of Tamil, Indian Languages and Rural Arts",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "",
+        "school_name": "",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      },
+      {
+        "role": "hod",
+        "designation": "Head, Department of Tamil",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_tamil",
+        "school_name": "School of Tamil, Indian Languages and Rural Arts",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "dean",
+      "hod"
+    ],
+    "primary_role": "dean"
+  },
+  {
+    "id": "fac_43",
+    "fid": "43",
+    "name": "Dr.P.BALASUBRAMANIAM",
+    "designation": "Senior Professor",
+    "qualifications": "M.Sc., M.Phil., Ph.D., M.C.A., D.Sc.,",
+    "specialization": "1) Neural Networks and Image Processing\n 2) Quantum Computation and Algorithms\n 3) Fractional Differential",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/172.jpg",
+    "profile_url": "",
+    "scholar": "https://shorturl.at/Kbr5P",
+    "irins": "https://ruraluniv.irins.org/profile/60529",
+    "orcid": "https://orcid.org/0000-0001-9673-5949",
+    "affiliations": [
+      {
+        "role": "dean",
+        "designation": "Senior Professor",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "",
+        "school_name": "",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "dean"
+    ],
+    "primary_role": "dean"
+  },
+  {
+    "id": "fac_20",
+    "fid": "20",
+    "name": "Dr.R.MANI",
+    "designation": "School of Social Sciences",
+    "qualifications": "M.A (GT)., M.A (RD)., M.Phil., Ph.D",
+    "specialization": "1) Gandhian Thought 2) Rural Reconstruction\n 3) Rural Development 4) Watershed Planning\n 5) Micro Level Planning",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/182.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/182.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "dean",
+        "designation": "School of Social Sciences",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "",
+        "school_name": "",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      },
+      {
+        "role": "hod",
+        "designation": "Head i/c, Department of Gandhian Thought and Peace Science",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_social",
+        "school_name": "School of Social Sciences",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "dean",
+      "hod"
+    ],
+    "primary_role": "dean"
+  },
+  {
+    "id": "fac_19",
+    "fid": "19",
+    "name": "Dr.R.VENKATARAVI",
+    "designation": "Professor & Director",
+    "qualifications": "Ph.D in Economics, M. A Rural Development",
+    "specialization": "1) Rural Development, 2) Rural Extension",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/274.jpg",
+    "profile_url": "",
+    "scholar": "http://scholar.google.co.in/citations?user=523_h5oAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/115796",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "dean",
+        "designation": "Professor & Director",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "",
+        "school_name": "",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "dean"
+    ],
+    "primary_role": "dean"
+  },
+  {
+    "id": "fac_39",
+    "fid": "39",
+    "name": "Dr.S.MANIVEL",
+    "designation": "Studen's Welfare",
+    "qualifications": "M.A. (Coop. Mgt.) Ph.D.",
+    "specialization": "1) Management Accounting\n2) Financial Management",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/174.jpg",
+    "profile_url": "",
+    "scholar": "https://scholar.google.com/citations?user=i9jVrMYAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/95038",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "dean",
+        "designation": "Studen's Welfare",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "",
+        "school_name": "",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "dean"
+    ],
+    "primary_role": "dean"
+  },
+  {
+    "id": "fac_79",
+    "fid": "79",
+    "name": "Dr.B.GURUGNANAM",
+    "designation": "Director i/c, Centre for Applied Geology",
+    "qualifications": "M.Sc., M.Phil., MTech, Ph.D., M.Sc. (GIS)",
+    "specialization": "1) Hydrogeology 2) Climate Change\n3) Disaster Management",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/275.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/275.pdf",
+    "scholar": "https://scholar.google.co.in/citations?user=U2JuNvMAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/107237",
+    "orcid": "https://orcid.org/0000-0002-8775-7123",
+    "affiliations": [
+      {
+        "role": "hod",
+        "designation": "Director i/c, Centre for Applied Geology",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_cs",
+        "school_name": "School of Computer Science & Technologies",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "hod"
+    ],
+    "primary_role": "hod"
+  },
+  {
+    "id": "fac_76",
+    "fid": "76",
+    "name": "Dr.B.SANGEETHAVANI",
+    "designation": "Director i/c, Centre for Rural Technology",
+    "qualifications": "M.E. Ph.D.,",
+    "specialization": "1) Water Resource Engineering\n2) Irrigation Engineering\n3) Watershed Management\n4) Sanitary Engineering",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/262.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/262.pdf",
+    "scholar": "https://scholar.google.com/citations?user=rFQg5rYAAAAJ&hl=en",
+    "irins": "https://ruraluniv.irins.org/profile/115670",
+    "orcid": "https://orcid.org/0009-0000-7003-9910",
+    "affiliations": [
+      {
+        "role": "hod",
+        "designation": "Director i/c, Centre for Rural Technology",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_cs",
+        "school_name": "School of Computer Science & Technologies",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "hod"
+    ],
+    "primary_role": "hod"
+  },
+  {
+    "id": "fac_45",
+    "fid": "45",
+    "name": "Dr.G.MAHADEVAN",
+    "designation": "Head, Department of Mathematics",
+    "qualifications": "M.Sc., M. Phil., M.Tech., Ph.D.,",
+    "specialization": "1)Graphs and Networks\n 2) Domination Theory\n 3) Graph colorings",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/232.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/232.pdf",
+    "scholar": "https://scholar.google.com/citations?user=jlD8C2sAAAAJ&hl=en",
+    "irins": "https://www.ruraluniv.ac.in/includes/ academics/faculties/profile/232.pdf",
+    "orcid": "https://orcid.org/0000-0003-2438-1576",
+    "affiliations": [
+      {
+        "role": "hod",
+        "designation": "Head, Department of Mathematics",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "hod"
+    ],
+    "primary_role": "hod"
+  },
+  {
+    "id": "fac_58",
+    "fid": "58",
+    "name": "Dr.K.K.SATHEESHKUMAR",
+    "designation": "Head, Department of Chemistry",
+    "qualifications": "M.Sc. PhD",
+    "specialization": "Conducting Polymers",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/231.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/231.pdf",
+    "scholar": "https://scholar.google.co.in/citations?user=nGEe10oAAAAJ",
+    "irins": "https://scholar.google.co.in/citations?user=nGEe10oAAAAJ",
+    "orcid": "https://orcid.org/0000-0002-2677-291X",
+    "affiliations": [
+      {
+        "role": "hod",
+        "designation": "Head, Department of Chemistry",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "hod"
+    ],
+    "primary_role": "hod"
+  },
+  {
+    "id": "fac_35",
+    "fid": "35",
+    "name": "Dr.K.MANIKANDAN",
+    "designation": "Head, Department of Economics",
+    "qualifications": "M.A., Ph.D.",
+    "specialization": "Agricultural Economics",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/234.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/234.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "hod",
+        "designation": "Head, Department of Economics",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_management",
+        "school_name": "School of Management Studies",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "hod"
+    ],
+    "primary_role": "hod"
+  },
+  {
+    "id": "fac_38",
+    "fid": "38",
+    "name": "Dr.K.RAVICHANDRAN",
+    "designation": "Head, Department of Cooperation",
+    "qualifications": "M.A., M.B.A., M.Phil., PhD",
+    "specialization": "1) Cooperative Management\n 2) Enterprise Development & Rural Finance\n 3) Community Engagement of HEIs",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/162.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/162.pdf",
+    "scholar": "http://scholar.google.co.in/citations?user=-okRr7YAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/107261",
+    "orcid": "https://orcid.org/0000-0002-4874-6595",
+    "affiliations": [
+      {
+        "role": "hod",
+        "designation": "Head, Department of Cooperation",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_management",
+        "school_name": "School of Management Studies",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "hod"
+    ],
+    "primary_role": "hod"
+  },
+  {
+    "id": "fac_6",
+    "fid": "6",
+    "name": "Dr. KHANDARE CHANDU LAXMAN",
+    "designation": "Head, Department of Hindi",
+    "qualifications": "M.A. M. Phil. Ph.D. PGTDH (NET)",
+    "specialization": "1)Fiction\n 2) Dalit Literature\n 3) Comparative Literature",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/243.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/243.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "hod",
+        "designation": "Head, Department of Hindi",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_tamil",
+        "school_name": "School of Tamil, Indian Languages and Rural Arts",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "hod"
+    ],
+    "primary_role": "hod"
+  },
+  {
+    "id": "fac_16",
+    "fid": "16",
+    "name": "Dr.M.HILARIA SOUNDARI",
+    "designation": "Head, Department of Applied Research",
+    "qualifications": "MSW, PhD, PDF",
+    "specialization": "1) Development Research\n 2) Gender Issues\n 3) Socia",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/224.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/224.pdf",
+    "scholar": "https://scholar.google.com/citations?user=IiMJw0YAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/115788",
+    "orcid": "https://orcid.org/0000-0001-5449-0023",
+    "affiliations": [
+      {
+        "role": "hod",
+        "designation": "Head, Department of Applied Research",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_health",
+        "school_name": "School of Health Sciences and Rural Development",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "hod"
+    ],
+    "primary_role": "hod"
+  },
+  {
+    "id": "fac_72",
+    "fid": "72",
+    "name": "Dr.M.MARY SHANTHI RANI",
+    "designation": "Head, Department of Computer Science & Applications",
+    "qualifications": "M.C.A., M.Phil.,Ph.D.,",
+    "specialization": "Machine Learning,\nDeep Learning,\nImage Compression,\nInformation Security",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/124.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/124.pdf",
+    "scholar": "https://scholar.google.com/citations?user=qVBXKAMAAAAJ&hl=en",
+    "irins": "https://ruraluniv.irins.org/profile/107256",
+    "orcid": "https://orcid.org/0000-0002-0395-7292",
+    "affiliations": [
+      {
+        "role": "hod",
+        "designation": "Head, Department of Computer Science & Applications",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_cs",
+        "school_name": "School of Computer Science & Technologies",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "hod"
+    ],
+    "primary_role": "hod"
+  },
+  {
+    "id": "fac_14",
+    "fid": "14",
+    "name": "Dr.M.MUTHUKUMAR",
+    "designation": "Director i/c, Centre for Geoinformatics",
+    "qualifications": "Ph.D Remote Sensing",
+    "specialization": "Applications of Geospatial Technologies in Natural Resources",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/247.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/247.pdf",
+    "scholar": "https://scholar.google.com/citations?user=V1yZffQAAAAJ&hl=en",
+    "irins": "https://ruraluniv.irins.org/profile/115779",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "hod",
+        "designation": "Director i/c, Centre for Geoinformatics",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_health",
+        "school_name": "School of Health Sciences and Rural Development",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "hod"
+    ],
+    "primary_role": "hod"
+  },
+  {
+    "id": "fac_25",
+    "fid": "25",
+    "name": "Dr.N.DEVAKI",
+    "designation": "Director i/c, Centre for Futures Studies",
+    "qualifications": "M.Sc (Psy)., M.A (Eng)., M.Ed., M.Phil (Eng)., M.Phil (Edn)., NET (Edn)., Ph.D (Edn.,Tech)",
+    "specialization": "1) Innovative Pedagogy\n2) Educational Psychology\n3) English Language Teaching\n4) Teacher Education",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/252.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/252.pdf",
+    "scholar": "",
+    "irins": "https://ruraluniv.irins.org/profile/115761",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "hod",
+        "designation": "Director i/c, Centre for Futures Studies",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_social",
+        "school_name": "School of Social Sciences",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "hod"
+    ],
+    "primary_role": "hod"
+  },
+  {
+    "id": "fac_65",
+    "fid": "65",
+    "name": "Dr.R.I.SATHYA",
+    "designation": "Head, Department of Home Science",
+    "qualifications": "M.Sc., M.Phil., Ph.D",
+    "specialization": "1) Textiles and Clothing\n2) Textiles Finishing\n3) Technical Textiles\n4) Fashion Forecasting\n5) Digitization",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/176.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/176.pdf",
+    "scholar": "https://scholar.google.co.in/citations?user=yOwjiPUAAAAJ",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "hod",
+        "designation": "Head, Department of Home Science",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "hod"
+    ],
+    "primary_role": "hod"
+  },
+  {
+    "id": "fac_21",
+    "fid": "21",
+    "name": "Dr.R.KUMARAN",
+    "designation": "Head i/c, Department of Sociology",
+    "qualifications": "M.A., M.Phil., Ph.D",
+    "specialization": "1) Media and Society\n 2) Sociology of Development\n 3) Gandhian Sociology",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/223.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/223.pdf",
+    "scholar": "",
+    "irins": "http://orcid.org/0000-0003-3536-9441",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "hod",
+        "designation": "Head i/c, Department of Sociology",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_social",
+        "school_name": "School of Social Sciences",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "hod"
+    ],
+    "primary_role": "hod"
+  },
+  {
+    "id": "fac_12",
+    "fid": "12",
+    "name": "Dr.R.VENKATARAVI",
+    "designation": "Director i/c, Centre for Extension",
+    "qualifications": "Ph.D in Economics, M. A Rural Development",
+    "specialization": "1) Rural Development, 2) Rural Extension",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/274.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/274.pdf",
+    "scholar": "http://scholar.google.co.in/citations?user=523_h5oAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/115796",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "hod",
+        "designation": "Head i/c, Department of Rural Development",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_health",
+        "school_name": "School of Health Sciences and Rural Development",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      },
+      {
+        "role": "hod",
+        "designation": "Head, Department of Lifelong Learning & Extension",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_health",
+        "school_name": "School of Health Sciences and Rural Development",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      },
+      {
+        "role": "hod",
+        "designation": "Director i/c, Centre for Extension",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_health",
+        "school_name": "School of Health Sciences and Rural Development",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "hod"
+    ],
+    "primary_role": "hod"
+  },
+  {
+    "id": "fac_51",
+    "fid": "51",
+    "name": "Dr.S.ARIPONNAMMAL",
+    "designation": "Head i/c, Department of Physics",
+    "qualifications": "Ph.D",
+    "specialization": "re and Low Temperature Studies\n 2) Energy Storage Applications",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/184.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/184.pdf",
+    "scholar": "",
+    "irins": "https://ruraluniv.irins.org/faculty/index/Department+of+Physics",
+    "orcid": "https://orcid.org/0000-0002-9837-7556",
+    "affiliations": [
+      {
+        "role": "hod",
+        "designation": "Head i/c, Department of Physics",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "hod"
+    ],
+    "primary_role": "hod"
+  },
+  {
+    "id": "fac_23",
+    "fid": "23",
+    "name": "Dr.SONKHOGIN HAOKIP",
+    "designation": "Head, Department of Political Science & Dev. Admn.",
+    "qualifications": "M.A., Ph.D.",
+    "specialization": "Decentralized Governance and\nDevelopment",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/220.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/220.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "hod",
+        "designation": "Head, Department of Political Science & Dev. Admn.",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_social",
+        "school_name": "School of Social Sciences",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "hod"
+    ],
+    "primary_role": "hod"
+  },
+  {
+    "id": "fac_24",
+    "fid": "24",
+    "name": "Dr. SREE DEVI. P.S.",
+    "designation": "Head, Department of Education",
+    "qualifications": "M.Sc, M.Ed, M.Phil, Ph.D (Edu), NET",
+    "specialization": "1) Science Education, STEM & STEAM\n2) Teacher Education & Technology",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/233.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/233.pdf",
+    "scholar": "",
+    "irins": "https://ruraluniv.irins.org/profile/59467",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "hod",
+        "designation": "Head, Department of Education",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_social",
+        "school_name": "School of Social Sciences",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "hod"
+    ],
+    "primary_role": "hod"
+  },
+  {
+    "id": "fac_78",
+    "fid": "78",
+    "name": "Dr.V.KIRUBAKARAN",
+    "designation": "Director i/c, Centre for Rural Energy",
+    "qualifications": "B.E., M.Tech., Ph.D.,",
+    "specialization": "1) Biomass Gasification\n2) Solar Energy\n3) Energy Conservation",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/226.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/226.pdf",
+    "scholar": "http://scholar.google.co.in/citations?user=iTWS9SEAAAAJ&hl",
+    "irins": "https://ruraluniv.irins.org/profile/107241",
+    "orcid": "https://orcid.org/0000-0001-7160-4758",
+    "affiliations": [
+      {
+        "role": "hod",
+        "designation": "Director i/c, Centre for Rural Energy",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_cs",
+        "school_name": "School of Computer Science & Technologies",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "hod"
+    ],
+    "primary_role": "hod"
+  },
+  {
+    "id": "fac_31",
+    "fid": "31",
+    "name": "Dr. WELL HAOREI",
+    "designation": "Head, Department of Rural Industries and Management",
+    "qualifications": "MA (Eco.), M.Phil (Eco), MBA, Ph.D",
+    "specialization": "Economic Development & Planning, Operations Management",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/222.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/222.pdf",
+    "scholar": "https://scholar.google.co.in/citations?user= _dGb9wgAAAAJ&hl=en",
+    "irins": "",
+    "orcid": "https://orcid.org/0000-0001-6360-9487",
+    "affiliations": [
+      {
+        "role": "hod",
+        "designation": "Head, Department of Rural Industries and Management",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "sch_management",
+        "school_name": "School of Management Studies",
+        "source_url": "https://ruraluniv.ac.in/page/administration"
+      }
+    ],
+    "roles": [
+      "hod"
+    ],
+    "primary_role": "hod"
+  },
+  {
+    "id": "fac_145",
+    "fid": "",
+    "name": "Dr.A.BALAKRISHNAN",
+    "designation": "Senior Professor",
+    "qualifications": "M.A. (RD), M.B.A., M.A. (Sociology), M.Phil., P",
+    "specialization": "1) Rural Development\n 2) Labour Studies\n 3) Interdisciplinary Research",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/145.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/145.pdf",
+    "scholar": "https://scholar.google.com/citations?user=SgKNQcAAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/115782",
+    "orcid": "https://orcid.org/0000-0002-1145-6121",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor",
+        "unit_id": "department-of-applied-research",
+        "unit_name": "Department of Applied Research",
+        "school_id": "sch_health",
+        "school_name": "School of Health Sciences and Rural Development",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-applied-research"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_167",
+    "fid": "",
+    "name": "Dr.A.RAMANATHAN",
+    "designation": "Senior Professor & Dean",
+    "qualifications": "M.V.Sc., Ph.D.",
+    "specialization": "1. Veterinary Surgery\n 2. Livestock Production and Management\n 3. Livestock and Poultry Nutrition",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/167.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/167.pdf",
+    "scholar": "",
+    "irins": "https://ruraluniv.irins.org/profile/115674",
+    "orcid": "http://www.orcid.org/0000-0003-1261-9209",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor & Dean",
+        "unit_id": "school-of-agriculture-animal-sciences",
+        "unit_name": "School of Agriculture & Animal Sciences",
+        "school_id": "sch_agriculture",
+        "school_name": "School of Agriculture & Animal Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/school-of-agriculture-animal-sciences"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_238",
+    "fid": "",
+    "name": "Dr.A.THAHIRA BANU",
+    "designation": "Associate Professor",
+    "qualifications": "M.Sc M.Phil., Ph.D",
+    "specialization": "1) Therapeutic Nutrition and Dietetics\n 2) Community Nutrition\n 3) Food Product Development",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/238.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/238.pdf",
+    "scholar": "https://scholar.google.co.in/citations?user=SQuPCxAAAAAJ&hl=en",
+    "irins": "https://ruraluniv.irins.org/profile/107264",
+    "orcid": "https://orcid.org/0000-0002-1074-4164",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Associate Professor",
+        "unit_id": "department-of-home-science",
+        "unit_name": "Department of Home Science",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-home-science"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_221",
+    "fid": "",
+    "name": "Dr.B.BASKAR",
+    "designation": "Associate Professor",
+    "qualifications": "M.A. (C.M)., Ph.D",
+    "specialization": "1)Cooperation\n2) Cooperative Management\n3) Accounting",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/221.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/221.pdf",
+    "scholar": "http://scholar.google.co.in/citations?user=1ujtapkAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/107260",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Associate Professor",
+        "unit_id": "department-of-cooperation",
+        "unit_name": "Department of Cooperation",
+        "school_id": "sch_management",
+        "school_name": "School of Management Studies",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-cooperation"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_275",
+    "fid": "",
+    "name": "Dr.B.GURUGNANAM",
+    "designation": "Senior Professor & Director In-Charge",
+    "qualifications": "M.Sc., M.Phil., MTech, Ph.D., M.Sc. (GIS)",
+    "specialization": "1) Hydrogeology 2) Climate Change\n3) Disaster Management",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/275.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/275.pdf",
+    "scholar": "https://scholar.google.co.in/citations?user=U2JuNvMAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/107237",
+    "orcid": "https://orcid.org/0000-0002-8775-7123",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor & Director In-Charge",
+        "unit_id": "centre-for-applied-geology",
+        "unit_name": "Centre for Applied Geology",
+        "school_id": "sch_cs",
+        "school_name": "School of Computer Science & Technologies",
+        "source_url": "https://www.ruraluniv.ac.in/page/centre-for-applied-geology"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_262",
+    "fid": "",
+    "name": "Dr.B.SANGEETHAVANI",
+    "designation": "Assistant Professor & Director In-Charge",
+    "qualifications": "M.E. Ph.D.,",
+    "specialization": "1) Water Resource Engineering\n2) Irrigation Engineering\n3) Watershed Management\n4) Sanitary Engineering",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/262.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/262.pdf",
+    "scholar": "https://scholar.google.com/citations?user=rFQg5rYAAAAJ&hl=en",
+    "irins": "https://ruraluniv.irins.org/profile/115670",
+    "orcid": "https://orcid.org/0009-0000-7003-9910",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Assistant Professor & Director In-Charge",
+        "unit_id": "centre-for-rural-technology",
+        "unit_name": "Centre for Rural Technology",
+        "school_id": "sch_cs",
+        "school_name": "School of Computer Science & Technologies",
+        "source_url": "https://www.ruraluniv.ac.in/page/centre-for-rural-technology"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_256",
+    "fid": "",
+    "name": "Dr.B.SENTHILKUMAR",
+    "designation": "Associate Professor",
+    "qualifications": "M.Tech.(Textile Technology) ,Ph.D",
+    "specialization": "Technical Textiles, Clothing Technology",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/256.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/256.pdf",
+    "scholar": "https://scholar.google.co.in/citations?user= ZZTrdqIAAAAJ&hl=en",
+    "irins": "https://ruraluniv.irins.org/profile/115688",
+    "orcid": "https://orcid.org/0000-0002-2640-6784",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Associate Professor",
+        "unit_id": "department-of-rural-industries-management",
+        "unit_name": "Department of Rural Industries & Management",
+        "school_id": "sch_management",
+        "school_name": "School of Management Studies",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-rural-industries-management"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_42",
+    "fid": "",
+    "name": "Dr.B.TAMILMANI",
+    "designation": "Senior Professor",
+    "qualifications": "MA,M.Com,MBA,M.Phil,Ph.D",
+    "specialization": "1)Cooperative Management\n 2) Consumer Cooperatives and Marketing Management\n 3) Strategic Management",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/42.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/42.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor",
+        "unit_id": "department-of-cooperation",
+        "unit_name": "Department of Cooperation",
+        "school_id": "sch_management",
+        "school_name": "School of Management Studies",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-cooperation"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_276",
+    "fid": "",
+    "name": "Dr.C.PITCHAI",
+    "designation": "Senior Professor",
+    "qualifications": "M.B.A., M.A. (Coop. Mgmt.)., Ph.D., FDPM (IIMA)",
+    "specialization": "1)Cooperative Management\n 2) Rural Development & Extension\n 3) Hu",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/276.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/276.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor",
+        "unit_id": "department-of-cooperation",
+        "unit_name": "Department of Cooperation",
+        "school_id": "sch_management",
+        "school_name": "School of Management Studies",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-cooperation"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_609",
+    "fid": "",
+    "name": "Dr.C.RAJA MOHAN",
+    "designation": "Assistant Professor",
+    "qualifications": "M.Sc.,M.Phil.,Ph.D",
+    "specialization": "1) Semiconductor Nanostructures\n 2) Bionano Composites",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/609.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/609.pdf",
+    "scholar": "https://scholar.google.co.in/citations?user=jEmO0u8AAAAJ&hl=e",
+    "irins": "https://ruraluniv.irins.org/profile/107274",
+    "orcid": "https://orcid.org/0000-0002-9429-4294",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Assistant Professor",
+        "unit_id": "department-of-physics",
+        "unit_name": "Department of Physics",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-physics"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_232",
+    "fid": "",
+    "name": "Dr.G.MAHADEVAN",
+    "designation": "Professor & Head",
+    "qualifications": "M.Sc., M. Phil., M.Tech., Ph.D.,",
+    "specialization": "1)Graphs and Networks\n 2) Domination Theory\n 3) Graph colorings",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/232.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/232.pdf",
+    "scholar": "https://scholar.google.com/citations?user=jlD8C2sAAAAJ&hl=en",
+    "irins": "https://www.ruraluniv.ac.in/includes/ academics/faculties/profile/232.pdf",
+    "orcid": "https://orcid.org/0000-0003-2438-1576",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Professor & Head",
+        "unit_id": "department-of-mathematics",
+        "unit_name": "Department of Mathematics",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-mathematics"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_257",
+    "fid": "",
+    "name": "Dr.G.NAGAMANI",
+    "designation": "Associate Professor",
+    "qualifications": "M.Sc., M.Phil., Ph.D.",
+    "specialization": "Neural Networks, Dissipativity and Passivity Theory",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/257.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/257.pdf",
+    "scholar": "",
+    "irins": "https://ruraluniv.irins.org/profile/107267",
+    "orcid": "https://orcid.org/0000-0002-6405-2235",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Associate Professor",
+        "unit_id": "department-of-mathematics",
+        "unit_name": "Department of Mathematics",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-mathematics"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_87",
+    "fid": "",
+    "name": "Dr.G.S.KANNAN",
+    "designation": "Senior Professor",
+    "qualifications": "B.Sc. (Zoology.), B.Sc. (Agriculture), M.Sc. (Agriculture)Plant Pathology, Ph.D",
+    "specialization": "Plant Pathology",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/87.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/87.pdf",
+    "scholar": "https://scholar.google.com/citations?hl=en&user=iUVksjYAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/107282",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor",
+        "unit_id": "school-of-agriculture-animal-sciences",
+        "unit_name": "School of Agriculture & Animal Sciences",
+        "school_id": "sch_agriculture",
+        "school_name": "School of Agriculture & Animal Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/school-of-agriculture-animal-sciences"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_265",
+    "fid": "",
+    "name": "Ms.G.VIDYA",
+    "designation": "Assistant Professor",
+    "qualifications": "M.A. French, M.A. English UGC-NET",
+    "specialization": "1) French as a Foreign Language (FLE)\n2) Caribbean Literature",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/265.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/265.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Assistant Professor",
+        "unit_id": "school-of-english-foreign-languages",
+        "unit_name": "School of English & Foreign Languages",
+        "school_id": "sch_english",
+        "school_name": "School of English & Foreign Languages",
+        "source_url": "https://www.ruraluniv.ac.in/page/school-of-english-foreign-languages"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_241",
+    "fid": "",
+    "name": "Dr.H.SAMUEL THAVARAJ",
+    "designation": "Associate Professor",
+    "qualifications": "M.B.A., M.Phil., Ph.D.,",
+    "specialization": "1) Human Resource Management\n2) Emotional Intelligence",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/241.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/241.pdf",
+    "scholar": "http://scholar.google.co.in/citations?user=RCPVqJgAAAAJ",
+    "irins": "",
+    "orcid": "https://orcid.org/0000-0002-6294-976X",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Associate Professor",
+        "unit_id": "department-of-rural-industries-management",
+        "unit_name": "Department of Rural Industries & Management",
+        "school_id": "sch_management",
+        "school_name": "School of Management Studies",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-rural-industries-management"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_240",
+    "fid": "",
+    "name": "Dr.K.DHEVAN",
+    "designation": "Associate Professor",
+    "qualifications": "M.A, M.Phil, MBA, Ph.D.,",
+    "specialization": "1) Cooperative Banking\n 2)Marketing\n 3) Human Resource Management",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/240.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/240.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Associate Professor",
+        "unit_id": "department-of-cooperation",
+        "unit_name": "Department of Cooperation",
+        "school_id": "sch_management",
+        "school_name": "School of Management Studies",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-cooperation"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_231",
+    "fid": "",
+    "name": "Dr.K.K.SATHEESHKUMAR",
+    "designation": "Professor & Head",
+    "qualifications": "M.Sc. PhD",
+    "specialization": "Conducting Polymers",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/231.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/231.pdf",
+    "scholar": "https://scholar.google.co.in/citations?user=nGEe10oAAAAJ",
+    "irins": "https://scholar.google.co.in/citations?user=nGEe10oAAAAJ",
+    "orcid": "https://orcid.org/0000-0002-2677-291X",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Professor & Head",
+        "unit_id": "department-of-chemistry",
+        "unit_name": "Department of Chemistry",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-chemistry"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_268",
+    "fid": "",
+    "name": "Dr.K.Kesava Raja Rajan",
+    "designation": "Associate Professor in Fine Arts",
+    "qualifications": "Ph.D.",
+    "specialization": "History, Culture, Art and Architectural History",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/268.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/268.pdf",
+    "scholar": "https://scholar.google.com/citations?hl=en&user=9geeOqAAAAAJ",
+    "irins": "",
+    "orcid": "https://orcid.org/0000-0002-1078-1694",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Associate Professor in Fine Arts",
+        "unit_id": "department-of-tamil",
+        "unit_name": "Department of Tamil",
+        "school_id": "sch_tamil",
+        "school_name": "School of Tamil, Indian Languages and Rural Arts",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-tamil"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_234",
+    "fid": "",
+    "name": "Dr.K.MANIKANDAN",
+    "designation": "Professor & Head",
+    "qualifications": "M.A., Ph.D.",
+    "specialization": "Agricultural Economics",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/234.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/234.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Professor & Head",
+        "unit_id": "department-of-economics",
+        "unit_name": "Department of Economics",
+        "school_id": "sch_management",
+        "school_name": "School of Management Studies",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-economics"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_225",
+    "fid": "",
+    "name": "Dr.K.MARIMUTHU",
+    "designation": "Professor",
+    "qualifications": "",
+    "specialization": "Phosphors, Luminescence Glasses on Glass and Ceramics",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/225.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/225.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Professor",
+        "unit_id": "department-of-physics",
+        "unit_name": "Department of Physics",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-physics"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_128",
+    "fid": "",
+    "name": "Dr.K.P.ELANGO",
+    "designation": "Senior Professor",
+    "qualifications": "M.Sc., M.Phil., Ph.D.,",
+    "specialization": "1) Coordination Compounds\n 2) Optical Sensors\n 3) Ligand-DNA Binding",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/128.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/128.pdf",
+    "scholar": "https://scholar.google.co.in/citations?user=qN-u3REAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/107248",
+    "orcid": "https://orcid.org/0000-0001-8245-533X",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor",
+        "unit_id": "department-of-chemistry",
+        "unit_name": "Department of Chemistry",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-chemistry"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_160",
+    "fid": "",
+    "name": "Dr.K.RAJA ALIAS PRANMALAI",
+    "designation": "Senior Professor",
+    "qualifications": "M.A., M.Phil. ,Ph.D, MBA",
+    "specialization": "Rural Industries and management\nEntrepreneurship\nBusiness Law\nRural Marketing",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/160.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/160.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor",
+        "unit_id": "department-of-rural-industries-management",
+        "unit_name": "Department of Rural Industries & Management",
+        "school_id": "sch_management",
+        "school_name": "School of Management Studies",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-rural-industries-management"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_162",
+    "fid": "",
+    "name": "Dr.K.RAVICHANDRAN",
+    "designation": "Senior Professor & Head",
+    "qualifications": "M.A., M.B.A., M.Phil., PhD",
+    "specialization": "1) Cooperative Management\n 2) Enterprise Development & Rural Finance\n 3) Community Engagement of HEIs",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/162.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/162.pdf",
+    "scholar": "http://scholar.google.co.in/citations?user=-okRr7YAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/107261",
+    "orcid": "https://orcid.org/0000-0002-4874-6595",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor & Head",
+        "unit_id": "department-of-cooperation",
+        "unit_name": "Department of Cooperation",
+        "school_id": "sch_management",
+        "school_name": "School of Management Studies",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-cooperation"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_75",
+    "fid": "",
+    "name": "Dr.K.S.PUSHPA",
+    "designation": "Senior Professor",
+    "qualifications": "M.Sc, M.Phil, B.Ed, Ph.D",
+    "specialization": "Home Science Extension",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/75.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/75.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "https://orcid.org/0000-0003-3008-1318",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor",
+        "unit_id": "department-of-home-science",
+        "unit_name": "Department of Home Science",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-home-science"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_99",
+    "fid": "99",
+    "name": "Dr.K.Vinayagamoorthy",
+    "designation": "Data Entry Operator",
+    "qualifications": "",
+    "specialization": "",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/facilities/cc/img/616.jpg",
+    "profile_url": "",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Data Entry Operator",
+        "unit_id": "computer-centre",
+        "unit_name": "Computer Centre",
+        "school_id": "",
+        "school_name": "",
+        "source_url": "https://www.ruraluniv.ac.in/page/computer-centre"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_243",
+    "fid": "",
+    "name": "Dr. KHANDARE CHANDU LAXMAN",
+    "designation": "Associate Professor & Head",
+    "qualifications": "M.A. M. Phil. Ph.D. PGTDH (NET)",
+    "specialization": "1)Fiction\n 2) Dalit Literature\n 3) Comparative Literature",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/243.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/243.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Associate Professor & Head",
+        "unit_id": "department-of-hindi",
+        "unit_name": "Department of Hindi",
+        "school_id": "sch_tamil",
+        "school_name": "School of Tamil, Indian Languages and Rural Arts",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-hindi"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_208",
+    "fid": "",
+    "name": "Dr.L.RATHAKRISHNAN",
+    "designation": "Senior Professor",
+    "qualifications": "M.A., M.Phil, Ph.D, P.D.F (LSE, (U.K)",
+    "specialization": "1.Rural Industries and Management\n2.Rural Economics &Extension Education\n3.Environmental Economics",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/208.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/208.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor",
+        "unit_id": "department-of-rural-industries-management",
+        "unit_name": "Department of Rural Industries & Management",
+        "school_id": "sch_management",
+        "school_name": "School of Management Studies",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-rural-industries-management"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_280",
+    "fid": "",
+    "name": "Dr.M.ARUNACHALAM",
+    "designation": "Assistant Professor",
+    "qualifications": "M.Sc., Ph.D",
+    "specialization": "1) Supramolecular Chemistry, 2) Organic Chemistry\n 3) Polymer Chemistry",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/280.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/280.pdf",
+    "scholar": "https://scholar.google.com/citations?user=lVpsnUAAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/107236",
+    "orcid": "https://orcid.org/0000-0002-6573-7797",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Assistant Professor",
+        "unit_id": "department-of-chemistry",
+        "unit_name": "Department of Chemistry",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-chemistry"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_224",
+    "fid": "",
+    "name": "Dr.M.HILARIA SOUNDARI",
+    "designation": "Professor & Head",
+    "qualifications": "MSW, PhD, PDF",
+    "specialization": "1) Development Research\n 2) Gender Issues\n 3) Socia",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/224.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/224.pdf",
+    "scholar": "https://scholar.google.com/citations?user=IiMJw0YAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/115788",
+    "orcid": "https://orcid.org/0000-0001-5449-0023",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Professor & Head",
+        "unit_id": "department-of-applied-research",
+        "unit_name": "Department of Applied Research",
+        "school_id": "sch_health",
+        "school_name": "School of Health Sciences and Rural Development",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-applied-research"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_124",
+    "fid": "",
+    "name": "Dr.M.MARY SHANTHI RANI",
+    "designation": "Professor & Head",
+    "qualifications": "M.C.A., M.Phil.,Ph.D.,",
+    "specialization": "Machine Learning,\nDeep Learning,\nImage Compression,\nInformation Security",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/124.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/124.pdf",
+    "scholar": "https://scholar.google.com/citations?user=qVBXKAMAAAAJ&hl=en",
+    "irins": "https://ruraluniv.irins.org/profile/107256",
+    "orcid": "https://orcid.org/0000-0002-0395-7292",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Professor & Head",
+        "unit_id": "department-of-computer-science-applications",
+        "unit_name": "Department of Computer Science & Applications",
+        "school_id": "sch_cs",
+        "school_name": "School of Computer Science & Technologies",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-computer-science-applications"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_247",
+    "fid": "",
+    "name": "Dr.M.MUTHUKUMAR",
+    "designation": "Associate Professor & Director In-Charge",
+    "qualifications": "Ph.D Remote Sensing",
+    "specialization": "Applications of Geospatial Technologies in Natural Resources",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/247.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/247.pdf",
+    "scholar": "https://scholar.google.com/citations?user=V1yZffQAAAAJ&hl=en",
+    "irins": "https://ruraluniv.irins.org/profile/115779",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Associate Professor & Director In-Charge",
+        "unit_id": "centre-for-geoinformatics",
+        "unit_name": "Centre for Geoinformatics",
+        "school_id": "sch_health",
+        "school_name": "School of Health Sciences and Rural Development",
+        "source_url": "https://www.ruraluniv.ac.in/page/centre-for-geoinformatics"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_258",
+    "fid": "",
+    "name": "Dr.M.SEENIVASA PERUMAL",
+    "designation": "Associate Professor",
+    "qualifications": "M. Sc. Ph.D",
+    "specialization": "1) Synthetic Organic Chemistry\n 2) Green Chemistry\n 3) Heterocyclic Chemistry",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/258.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/258.pdf",
+    "scholar": "https://scholar.google.co.in/citations?user=6c7SD7YAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/107252",
+    "orcid": "https://orcid.org/0000-0002-2234-1346",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Associate Professor",
+        "unit_id": "department-of-chemistry",
+        "unit_name": "Department of Chemistry",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-chemistry"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_88",
+    "fid": "",
+    "name": "Dr.M.SUNDARAMARI",
+    "designation": "Senior Professor",
+    "qualifications": "M.Sc. (Agri.), Ph.D",
+    "specialization": "Agricultural Extension",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/88.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/88.pdf",
+    "scholar": "https://scholar.google.com/citations?user=MJpFgYoAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/107285",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor",
+        "unit_id": "school-of-agriculture-animal-sciences",
+        "unit_name": "School of Agriculture & Animal Sciences",
+        "school_id": "sch_agriculture",
+        "school_name": "School of Agriculture & Animal Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/school-of-agriculture-animal-sciences"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_285",
+    "fid": "",
+    "name": "Dr.M.SURESH KUMAR",
+    "designation": "Assistant Professor",
+    "qualifications": "M.Sc., M.Phil., Ph.D.",
+    "specialization": "1) Functional Equations, 2) Fractal Geometry\n3) Iterated Function System",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/285.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/285.pdf",
+    "scholar": "https://scholar.google.com/citations?user=vvtu SU4AAAAJ&hl=e",
+    "irins": "https://ruraluniv.irins.org/profile/115665",
+    "orcid": "https://orcid.org/0000-0003-4393-4631",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Assistant Professor",
+        "unit_id": "department-of-mathematics",
+        "unit_name": "Department of Mathematics",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-mathematics"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_165",
+    "fid": "",
+    "name": "Dr.MOGHAL SALEEM BAIG",
+    "designation": "Senior Professor",
+    "qualifications": "M.A. Ph,D, PGDFHT",
+    "specialization": "Comparative Literature, Language Teaching, Translation",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/165.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/165.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor",
+        "unit_id": "department-of-hindi",
+        "unit_name": "Department of Hindi",
+        "school_id": "sch_tamil",
+        "school_name": "School of Tamil, Indian Languages and Rural Arts",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-hindi"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_252",
+    "fid": "",
+    "name": "Dr.N.DEVAKI",
+    "designation": "Associate Professor & Director I/C",
+    "qualifications": "M.Sc (Psy)., M.A (Eng)., M.Ed., M.Phil (Eng)., M.Phil (Edn)., NET (Edn)., Ph.D (Edn.,Tech)",
+    "specialization": "1) Innovative Pedagogy\n2) Educational Psychology\n3) English Language Teaching\n4) Teacher Education",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/252.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/252.pdf",
+    "scholar": "",
+    "irins": "https://ruraluniv.irins.org/profile/115761",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Associate Professor",
+        "unit_id": "department-of-education",
+        "unit_name": "Department of Education",
+        "school_id": "sch_social",
+        "school_name": "School of Social Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-education"
+      },
+      {
+        "role": "unit",
+        "designation": "Associate Professor & Director I/C",
+        "unit_id": "centre-for-futures-studies",
+        "unit_name": "Centre for Futures Studies",
+        "school_id": "sch_social",
+        "school_name": "School of Social Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/centre-for-futures-studies"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_287",
+    "fid": "",
+    "name": "Dr.N.R.DEEPA",
+    "designation": "Assistant Professor",
+    "qualifications": "M.A., M.Phil., B.Ed., Ph.D.,",
+    "specialization": "1) Development Economics, 2) Microeconomics",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/287.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/287.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Assistant Professor",
+        "unit_id": "department-of-economics",
+        "unit_name": "Department of Economics",
+        "school_id": "sch_management",
+        "school_name": "School of Management Studies",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-economics"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_272",
+    "fid": "",
+    "name": "Dr.N.SENTHILKUMARAN",
+    "designation": "Associate Professor",
+    "qualifications": "MCA., M.Phil, M.Sc.(BI), Ph.D.,",
+    "specialization": "Medical Image Processing,\nBioinformatics",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/272.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/272.pdf",
+    "scholar": "https://scholar.google.com/citations?user=b4smr1gAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/107257",
+    "orcid": "https://orcid.org/0000-0002-9698-2867",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Associate Professor",
+        "unit_id": "department-of-computer-science-applications",
+        "unit_name": "Department of Computer Science & Applications",
+        "school_id": "sch_cs",
+        "school_name": "School of Computer Science & Technologies",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-computer-science-applications"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_206",
+    "fid": "",
+    "name": "Smt.N.SUGANTHI",
+    "designation": "Associate Professor",
+    "qualifications": "MA, B.Ed., M. Phil",
+    "specialization": "Indian English Literature",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/206.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/206.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Associate Professor",
+        "unit_id": "school-of-english-foreign-languages",
+        "unit_name": "School of English & Foreign Languages",
+        "school_id": "sch_english",
+        "school_name": "School of English & Foreign Languages",
+        "source_url": "https://www.ruraluniv.ac.in/page/school-of-english-foreign-languages"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_179",
+    "fid": "",
+    "name": "Dr.O.MUTHIAH",
+    "designation": "Senior Professor",
+    "qualifications": "M.A., M.Phil., Ph.D.",
+    "specialization": "Folklore & Performing Arts and Modern Literature",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/179.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/179.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor",
+        "unit_id": "department-of-tamil",
+        "unit_name": "Department of Tamil",
+        "school_id": "sch_tamil",
+        "school_name": "School of Tamil, Indian Languages and Rural Arts",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-tamil"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_139",
+    "fid": "",
+    "name": "Dr.P.ANANDAKUMAR",
+    "designation": "Senior Professor & Head",
+    "qualifications": "M.A., M.Phil., Ph.D. (Tamil) Dip in Malayalam, Dip in Telugu, Cert. in Russian",
+    "specialization": "Comparative Literature, Literary Criticism & Translation",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/139.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/139.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor & Head",
+        "unit_id": "department-of-tamil",
+        "unit_name": "Department of Tamil",
+        "school_id": "sch_tamil",
+        "school_name": "School of Tamil, Indian Languages and Rural Arts",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-tamil"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_173",
+    "fid": "",
+    "name": "Dr.P.ANANDHA RAJA KUMAR",
+    "designation": "Senior Professor",
+    "qualifications": "M.A (RD)., M.A (Socio)., M.Phil., Ph.D.",
+    "specialization": "Rural Development, Micro Level Planning",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/173.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/173.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor",
+        "unit_id": "department-of-rural-development",
+        "unit_name": "Department of Rural Development",
+        "school_id": "sch_health",
+        "school_name": "School of Health Sciences and Rural Development",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-rural-development"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_140",
+    "fid": "",
+    "name": "Dr.P.ANITHA PIUS",
+    "designation": "Senior Professor",
+    "qualifications": "M.Sc, Ph.D",
+    "specialization": "Environmental Chemistry, Food Chemistry,\nWaste water Treatment",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/140.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/140.pdf",
+    "scholar": "https://scholar.google.com/citations?user=F4tO9S4AAAAJ&hl=en",
+    "irins": "https://ruraluniv.irins.org/profile/107247",
+    "orcid": "https://orcid.org/0000-0002-0740-7722",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor",
+        "unit_id": "department-of-chemistry",
+        "unit_name": "Department of Chemistry",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-chemistry"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_172",
+    "fid": "",
+    "name": "Dr.P.BALASUBRAMANIAM",
+    "designation": "Senior Professor",
+    "qualifications": "M.Sc., M.Phil., Ph.D., M.C.A., D.Sc.,",
+    "specialization": "1) Neural Networks and Image Processing\n 2) Quantum Computation and Algorithms\n 3) Fractional Differential",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/172.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/172.pdf",
+    "scholar": "https://shorturl.at/Kbr5P",
+    "irins": "https://ruraluniv.irins.org/profile/60529",
+    "orcid": "https://orcid.org/0000-0001-9673-5949",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor",
+        "unit_id": "department-of-mathematics",
+        "unit_name": "Department of Mathematics",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-mathematics"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_207",
+    "fid": "",
+    "name": "Dr.P.KALAVATHI",
+    "designation": "Professor",
+    "qualifications": "M.C.A., M.Phil., Ph.D.,",
+    "specialization": "Medical Image Processing and Analysis,Internet of Things",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/207.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/207.pdf",
+    "scholar": "https://scholar.google.com/citations?user=fiDU-1YAAAAJ&hl=en",
+    "irins": "https://ruraluniv.irins.org/profile/107255",
+    "orcid": "https://orcid.org/0000-0003-3378-1715",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Professor",
+        "unit_id": "department-of-computer-science-applications",
+        "unit_name": "Department of Computer Science & Applications",
+        "school_id": "sch_cs",
+        "school_name": "School of Computer Science & Technologies",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-computer-science-applications"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_251",
+    "fid": "",
+    "name": "Dr.P.KALIMUTHU",
+    "designation": "Associate Professor",
+    "qualifications": "M.Sc., Ph.D.",
+    "specialization": "1) Artificial Photosynthesis\n 2) Hydrogen Generation Using Water Splitting\n 3) Photodynamic Therap",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/251.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/251.pdf",
+    "scholar": "https://scholar.google.com/citations?user=MlyfLfsAAAAJ&hl=en",
+    "irins": "https://ruraluniv.irins.org/profile/107249",
+    "orcid": "https://orcid.org/0000-0003-2557-7781",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Associate Professor",
+        "unit_id": "department-of-chemistry",
+        "unit_name": "Department of Chemistry",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-chemistry"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_235",
+    "fid": "",
+    "name": "Dr.P.MUTHUKUMAR",
+    "designation": "Professor",
+    "qualifications": "M.Sc., B.Ed., M.Phil., Ph.D.",
+    "specialization": "1) Applied Mathematics; 2) Differential Equations\n 3) Stability and Control Th",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/235.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/uploads/docs/2026/11/a991dd6f8b3396d294503ffc.pdf",
+    "scholar": "https://scholar.google.com.sg/citations?user=wDUdVoAAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/107266",
+    "orcid": "https://orcid.org/0000-0003-1396-9948",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Professor",
+        "unit_id": "department-of-mathematics",
+        "unit_name": "Department of Mathematics",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-mathematics"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_237",
+    "fid": "",
+    "name": "Dr.P.NITHIANANTHI",
+    "designation": "Associate Professor",
+    "qualifications": "M.Sc., Ph.D in Physics",
+    "specialization": "Semiconducting Nanostructures",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/237.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/237.pdf",
+    "scholar": "https://scholar.google.com/citations?user=__tQr6EAAAAJ&hl=en",
+    "irins": "https://ruraluniv.irins.org/profile/107273",
+    "orcid": "https://orcid.org/0000-0001-7759-1513",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Associate Professor",
+        "unit_id": "department-of-physics",
+        "unit_name": "Department of Physics",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-physics"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_289",
+    "fid": "",
+    "name": "Dr.P.PONNUSAMY",
+    "designation": "Assistant Professor",
+    "qualifications": "M.Sc, M.Ed, M.Phil, Ph.D, M.B.A",
+    "specialization": "1) Mathematics Education\n2) Education Technology\n3) Inclusive Education",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/289.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/289.pdf",
+    "scholar": "https://scholar.google.co.in/citations?user=SdB3OMYAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/115765",
+    "orcid": "https://orcid.org/0000-0002-8799-5121",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Assistant Professor",
+        "unit_id": "department-of-education",
+        "unit_name": "Department of Education",
+        "school_id": "sch_social",
+        "school_name": "School of Social Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-education"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_121",
+    "fid": "",
+    "name": "Dr.P.SHANMUGAVADIVU",
+    "designation": "Senior Professor",
+    "qualifications": "M.C.A., M.Tech (DS &Engg.) MBA, M.Sc. (Applied Psychology), Ph.D.,",
+    "specialization": "1) Medical Image Processing &Analysis\n2) Intelligent Models for Health care\n3) Software Technologies\n4) Parallel Computing\n5) Pattern Recognition\n6) Web Mining",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/121.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/121.pdf",
+    "scholar": "https://scholar.google.co.in/citations?user=LvsOefIAAAAJ&hl=en",
+    "irins": "https://ruraluniv.irins.org/profile/107258",
+    "orcid": "https://orcid.org/0000-0003-2032-6115",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor",
+        "unit_id": "department-of-computer-science-applications",
+        "unit_name": "Department of Computer Science & Applications",
+        "school_id": "sch_cs",
+        "school_name": "School of Computer Science & Technologies",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-computer-science-applications"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_210",
+    "fid": "",
+    "name": "Dr.P.U.MAHALINGAM",
+    "designation": "Senior Professor & Head",
+    "qualifications": "M.Sc., M.Phil., Ph.D",
+    "specialization": "1) Microbial Consortium Technology\n 2) Compost Technology & Biofertilizers\n 3) Bio-nanotechnology\n 4) Biofuel Technology",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/210.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/210.pdf",
+    "scholar": "http://scholar.google.co.in/citations?user=z2M_MsIAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/107244",
+    "orcid": "http://www.orcid.org/0000-0003-4808-367X",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor & Head",
+        "unit_id": "department-of-rural-health-and-sanitation",
+        "unit_name": "Department of Rural Health and Sanitation",
+        "school_id": "sch_health",
+        "school_name": "School of Health Sciences and Rural Development",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-rural-health-and-sanitation"
+      },
+      {
+        "role": "unit",
+        "designation": "Senior Professor & Head",
+        "unit_id": "department-of-biology",
+        "unit_name": "Department of Biology",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-biology"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_81",
+    "fid": "",
+    "name": "Dr.P.VICKRAMAN",
+    "designation": "Senior Professor",
+    "qualifications": "M.Sc., Ph.D.",
+    "specialization": "1) Supercapacitors, Supercapattery, Fuel Cells\n2) Polymer Electrolytes and Polymer Nano Composites for\nLi-ion Batteries\n 3)Ultrasonic Studies on Polymers\n 4) Semiconductor Oxide Thin films",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/81.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/81.pdf",
+    "scholar": "https://scholar.google.com/citations?user=oaxdOYkAAAAJ&hl=en",
+    "irins": "https://ruraluniv.irins.org/profile/107277",
+    "orcid": "https://orcid.org/0000-0002-5200-4682",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor",
+        "unit_id": "department-of-physics",
+        "unit_name": "Department of Physics",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-physics"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_288",
+    "fid": "",
+    "name": "Dr.R.BAGDHA VATCHALA PERUMAL",
+    "designation": "Assistant Professor",
+    "qualifications": "M.Sc., M.Ed., M.Phil., Ph.D",
+    "specialization": "1) Biological Science Education\n2) Educational Technology\n3) Teacher Education",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/288.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/288.pdf",
+    "scholar": "",
+    "irins": "https://ruraluniv.irins.org/profile/115764",
+    "orcid": "https://orcid.org/0000-0002-6233-7835",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Assistant Professor",
+        "unit_id": "department-of-education",
+        "unit_name": "Department of Education",
+        "school_id": "sch_social",
+        "school_name": "School of Social Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-education"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_176",
+    "fid": "",
+    "name": "Dr.R.I.SATHYA",
+    "designation": "Senior Professor & Head",
+    "qualifications": "M.Sc., M.Phil., Ph.D",
+    "specialization": "1) Textiles and Clothing\n2) Textiles Finishing\n3) Technical Textiles\n4) Fashion Forecasting\n5) Digitization",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/176.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/176.pdf",
+    "scholar": "https://scholar.google.co.in/citations?user=yOwjiPUAAAAJ",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor & Head",
+        "unit_id": "department-of-home-science",
+        "unit_name": "Department of Home Science",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-home-science"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_223",
+    "fid": "",
+    "name": "Dr.R.KUMARAN",
+    "designation": "Professor & Head I/C",
+    "qualifications": "M.A., M.Phil., Ph.D",
+    "specialization": "1) Media and Society\n 2) Sociology of Development\n 3) Gandhian Sociology",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/223.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/223.pdf",
+    "scholar": "",
+    "irins": "http://orcid.org/0000-0003-3536-9441",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Professor & Head I/C",
+        "unit_id": "department-of-sociology",
+        "unit_name": "Department of Sociology",
+        "school_id": "sch_social",
+        "school_name": "School of Social Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-sociology"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_182",
+    "fid": "",
+    "name": "Dr.R.MANI",
+    "designation": "Senior Professor & Head I/C",
+    "qualifications": "M.A (GT)., M.A (RD)., M.Phil., Ph.D",
+    "specialization": "1) Gandhian Thought 2) Rural Reconstruction\n 3) Rural Development 4) Watershed Planning\n 5) Micro Level Planning",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/182.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/182.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor & Head I/C",
+        "unit_id": "department-of-gandhian-thought-and-peace-science",
+        "unit_name": "Department of Gandhian Thought and Peace Science",
+        "school_id": "sch_social",
+        "school_name": "School of Social Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-gandhian-thought-and-peace-science"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_236",
+    "fid": "",
+    "name": "Dr. R.RAJKUMAR",
+    "designation": "Associate Professor",
+    "qualifications": "M.Sc., Ph.D.",
+    "specialization": "1) Algebraic Graph Theory\n (Groups and Graphs,\n Spectral Graph Theory)\n 2) Algebraic Coding Theory",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/236.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/236.pdf",
+    "scholar": "https://shorturl.at/oXIZ4",
+    "irins": "https://ruraluniv.irins.org/profile/107268",
+    "orcid": "https://orcid.org/0000-0001-7096-7901?lang=en",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Associate Professor",
+        "unit_id": "department-of-mathematics",
+        "unit_name": "Department of Mathematics",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-mathematics"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_269",
+    "fid": "",
+    "name": "Dr.R.RAMASUBBU",
+    "designation": "Associate Professor",
+    "qualifications": "M.Sc. MPhil. Ph.D., FIAAT., FIAPRB.",
+    "specialization": "Plant Taxonomy,\nPlant Reproductive Biology\nBiodiversity Conservation",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/269.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/269.pdf",
+    "scholar": "https://scholar.google.com/citations?user=-6Iv3FQAAAAJ",
+    "irins": "",
+    "orcid": "https://orcid.org/0000-0002-3044-6527",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Associate Professor",
+        "unit_id": "department-of-biology",
+        "unit_name": "Department of Biology",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-biology"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_260",
+    "fid": "",
+    "name": "Dr.R.SAHUL HAMEED",
+    "designation": "Associate Professor",
+    "qualifications": "M.Sc. (FSN), Ph.D., PDF (Canada)",
+    "specialization": "Food and Nutrition",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/260.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/260.pdf",
+    "scholar": "https://scholar.google.com/citations?user=u7ERhV4AAAAJ",
+    "irins": "https://scholar.google.com/citations?user=u7ERhV4AAAAJ",
+    "orcid": "https://orcid.org/0000-0002-4126-9706",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Associate Professor",
+        "unit_id": "department-of-home-science",
+        "unit_name": "Department of Home Science",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-home-science"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_261",
+    "fid": "",
+    "name": "Dr.R.T.BALAMURALI",
+    "designation": "Assistant Professor",
+    "qualifications": "M.E, Ph.D.,",
+    "specialization": "Structural Engineering\nConcrete Technology",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/261.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/261.pdf",
+    "scholar": "https://scholar.google.com/citations?hl=en&user=A56M3f0AAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/115672",
+    "orcid": "https://orcid.org/0009-0004-4670-3120",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Assistant Professor",
+        "unit_id": "centre-for-rural-technology",
+        "unit_name": "Centre for Rural Technology",
+        "school_id": "sch_cs",
+        "school_name": "School of Computer Science & Technologies",
+        "source_url": "https://www.ruraluniv.ac.in/page/centre-for-rural-technology"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_180",
+    "fid": "",
+    "name": "Dr.R.UTHAYAKUMAR",
+    "designation": "Senior Professor",
+    "qualifications": "M.Sc., M.Phil. B.Ed., PGDCA., Ph.D.",
+    "specialization": "1) Operations Research - Inventory Management and Control\n 2) Fractal Analysis and its Applications\n 3) Fuzzy Optimi",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/180.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/180.pdf",
+    "scholar": "https://scholar.google.co.in/citations?user=dSbxOn0AAAAJ&hl=en",
+    "irins": "https://ruraluniv.irins.org/profile/60497",
+    "orcid": "https://orcid.org/0000-0002-1956-758X",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor",
+        "unit_id": "department-of-mathematics",
+        "unit_name": "Department of Mathematics",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-mathematics"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_274",
+    "fid": "",
+    "name": "Dr.R.VENKATARAVI",
+    "designation": "Professor & Director",
+    "qualifications": "Ph.D in Economics, M. A Rural Development",
+    "specialization": "1) Rural Development, 2) Rural Extension",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/274.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/274.pdf",
+    "scholar": "http://scholar.google.co.in/citations?user=523_h5oAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/115796",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Professor & Head In-Charge",
+        "unit_id": "department-of-rural-development",
+        "unit_name": "Department of Rural Development",
+        "school_id": "sch_health",
+        "school_name": "School of Health Sciences and Rural Development",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-rural-development"
+      },
+      {
+        "role": "unit",
+        "designation": "Professor & Head",
+        "unit_id": "department-of-lifelong-learning-extension",
+        "unit_name": "Department of Lifelong Learning & Extension",
+        "school_id": "sch_health",
+        "school_name": "School of Health Sciences and Rural Development",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-lifelong-learning-extension"
+      },
+      {
+        "role": "unit",
+        "designation": "Professor & Director In-Charge",
+        "unit_id": "centre-for-extension",
+        "unit_name": "Centre for Extension",
+        "school_id": "sch_health",
+        "school_name": "School of Health Sciences and Rural Development",
+        "source_url": "https://www.ruraluniv.ac.in/page/centre-for-extension"
+      },
+      {
+        "role": "unit",
+        "designation": "Professor & Director",
+        "unit_id": "centre-for-lifelong-learning",
+        "unit_name": "Centre for Lifelong Learning",
+        "school_id": "sch_health",
+        "school_name": "School of Health Sciences and Rural Development",
+        "source_url": "https://www.ruraluniv.ac.in/page/centre-for-lifelong-learning"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_184",
+    "fid": "",
+    "name": "Dr.S.ARIPONNAMMAL",
+    "designation": "Senior Professor & Head I/C.",
+    "qualifications": "Ph.D",
+    "specialization": "re and Low Temperature Studies\n 2) Energy Storage Applications",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/184.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/184.pdf",
+    "scholar": "",
+    "irins": "https://ruraluniv.irins.org/faculty/index/Department+of+Physics",
+    "orcid": "https://orcid.org/0000-0002-9837-7556",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor & Head I/C.",
+        "unit_id": "department-of-physics",
+        "unit_name": "Department of Physics",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-physics"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_281",
+    "fid": "",
+    "name": "Dr.S.ARIVAZHAGAN",
+    "designation": "Assistant Professor",
+    "qualifications": "M.Sc., Ph.D.,",
+    "specialization": "Remote Sensing in Terrestrial and Planetary Exploration",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/281.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/281.pdf",
+    "scholar": "https://scholar.google.co.in/citations?user=cYF8b6oAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/80677",
+    "orcid": "https://orcid.org/0000-0002-6697-660X",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Assistant Professor",
+        "unit_id": "centre-for-applied-geology",
+        "unit_name": "Centre for Applied Geology",
+        "school_id": "sch_cs",
+        "school_name": "School of Computer Science & Technologies",
+        "source_url": "https://www.ruraluniv.ac.in/page/centre-for-applied-geology"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_205",
+    "fid": "",
+    "name": "Dr.S.BALASUNDARI",
+    "designation": "Professor & Dean",
+    "qualifications": "MA, M.Ed., M. Phil, Ph.D",
+    "specialization": "1) Indian Writing in English\n 2) Subaltern Literature",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/205.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/205.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Professor & Dean",
+        "unit_id": "school-of-english-foreign-languages",
+        "unit_name": "School of English & Foreign Languages",
+        "school_id": "sch_english",
+        "school_name": "School of English & Foreign Languages",
+        "source_url": "https://www.ruraluniv.ac.in/page/school-of-english-foreign-languages"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_271",
+    "fid": "",
+    "name": "Dr.S.CHIDAMBARAM",
+    "designation": "Associate Professor",
+    "qualifications": "",
+    "specialization": "Sangam Literature, Temple Arts & Internet Tamil",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/271.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/271.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Associate Professor",
+        "unit_id": "department-of-tamil",
+        "unit_name": "Department of Tamil",
+        "school_id": "sch_tamil",
+        "school_name": "School of Tamil, Indian Languages and Rural Arts",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-tamil"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_217",
+    "fid": "",
+    "name": "Dr.S.KAVITHA MAITHILY",
+    "designation": "Professor",
+    "qualifications": "M.Sc., M.A., M.Phil. Ph.D",
+    "specialization": "1) Home Science Extension\n2) Child Care and Education\n3) Children with Special Needs",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/217.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/217.pdf",
+    "scholar": "http://scholar.google.co.in/citations?user=tQaT-qUAAAAJ",
+    "irins": "http://scholar.google.co.in/citations?user=tQaT-qUAAAAJ",
+    "orcid": "https://orcid.org/0000-0002-6301-8991",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Professor",
+        "unit_id": "department-of-home-science",
+        "unit_name": "Department of Home Science",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-home-science"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_174",
+    "fid": "",
+    "name": "Dr.S.MANIVEL",
+    "designation": "Senior Professor",
+    "qualifications": "M.A. (Coop. Mgt.) Ph.D.",
+    "specialization": "1) Management Accounting\n2) Financial Management",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/174.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/174.pdf",
+    "scholar": "https://scholar.google.com/citations?user=i9jVrMYAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/95038",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor",
+        "unit_id": "department-of-cooperation",
+        "unit_name": "Department of Cooperation",
+        "school_id": "sch_management",
+        "school_name": "School of Management Studies",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-cooperation"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_127",
+    "fid": "",
+    "name": "Dr.S.MEENAKSHI",
+    "designation": "Senior Professor",
+    "qualifications": "M.Sc,Ph.D",
+    "specialization": "1) Adsorption; 2) Defluoridation\n 3) Toxic Ions, Heavy Metal Removal\n 4) Photodegradation of Dyes and Pesticides\n 5) Removal of Oil from Oil in Water Emulsion",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/127.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/127.pdf",
+    "scholar": "https://scholar.google.co.in/citations?user=vJO31RoAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/60710",
+    "orcid": "https://orcid.org/0000-0003-3350-2325",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor",
+        "unit_id": "department-of-chemistry",
+        "unit_name": "Department of Chemistry",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-chemistry"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_181",
+    "fid": "",
+    "name": "Dr.S.NEHRU",
+    "designation": "Senior Professor",
+    "qualifications": "M.A., M.Phil.,M.Ed.,Ph.D.,",
+    "specialization": "1)International Economics\n 2) Economics Reforms\n 3) Agricultural Economics",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/181.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/181.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Senior Professor",
+        "unit_id": "department-of-economics",
+        "unit_name": "Department of Economics",
+        "school_id": "sch_management",
+        "school_name": "School of Management Studies",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-economics"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_186",
+    "fid": "",
+    "name": "Dr.S.S.VIJAYANCHALI",
+    "designation": "Professor",
+    "qualifications": "M.Sc., Ph.D.",
+    "specialization": "1) Maternal and Child Nutrition\n 2)Therapeutics-Food Product Development\n and Intervention\n 3) Nutraceuticals and Functional Foods\n 4) Millet Research and Pa",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/186.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/186.pdf",
+    "scholar": "",
+    "irins": "https://ruraluniv.irins.org/profile/115593",
+    "orcid": "https://scholar.google.co.in/citations?user=kbKsNYAAAAAJ",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Professor",
+        "unit_id": "department-of-home-science",
+        "unit_name": "Department of Home Science",
+        "school_id": "sch_sciences",
+        "school_name": "School of Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-home-science"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_98",
+    "fid": "98",
+    "name": "Mr.S.Saravanan",
+    "designation": "Technical Officer",
+    "qualifications": "",
+    "specialization": "",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/585.jpg",
+    "profile_url": "",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Technical Officer",
+        "unit_id": "computer-centre",
+        "unit_name": "Computer Centre",
+        "school_id": "",
+        "school_name": "",
+        "source_url": "https://www.ruraluniv.ac.in/page/computer-centre"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_255",
+    "fid": "",
+    "name": "Dr.S.SIVAGURUNATHAN",
+    "designation": "Associate Professor",
+    "qualifications": "MCA, M.Phil., Ph.D.(Anna University)",
+    "specialization": "1) Computer Networks\n2) Network Security\n3) Software Engineering",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/255.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/255.pdf",
+    "scholar": "https://scholar.google.com/citations?user=1tdAwdYAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/107259",
+    "orcid": "https://orcid.org/0000-0002-8545-7303",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Associate Professor",
+        "unit_id": "department-of-computer-science-applications",
+        "unit_name": "Department of Computer Science & Applications",
+        "school_id": "sch_cs",
+        "school_name": "School of Computer Science & Technologies",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-computer-science-applications"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_73",
+    "fid": "73",
+    "name": "Dr.S.SIVAGURUNATHAN",
+    "designation": "Deputy Director i/c.",
+    "qualifications": "MCA, M.Phil., Ph.D.(Anna University)",
+    "specialization": "1) Computer Networks\n2) Network Security\n3) Software Engineering",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/255.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/255.pdf",
+    "scholar": "https://scholar.google.com/citations?user=1tdAwdYAAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/107259",
+    "orcid": "https://orcid.org/0000-0002-8545-7303",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Deputy Director i/c.",
+        "unit_id": "computer-centre",
+        "unit_name": "Computer Centre",
+        "school_id": "",
+        "school_name": "",
+        "source_url": "https://www.ruraluniv.ac.in/page/computer-centre"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_220",
+    "fid": "",
+    "name": "Dr.SONKHOGIN HAOKIP",
+    "designation": "Professor & Head",
+    "qualifications": "M.A., Ph.D.",
+    "specialization": "Decentralized Governance and\nDevelopment",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/220.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/220.pdf",
+    "scholar": "",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Professor & Head",
+        "unit_id": "",
+        "unit_name": "Administration",
+        "school_id": "",
+        "school_name": "",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-political-science-development-administration"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_233",
+    "fid": "",
+    "name": "Dr. SREE DEVI. P.S.",
+    "designation": "Professor & Head",
+    "qualifications": "M.Sc, M.Ed, M.Phil, Ph.D (Edu), NET",
+    "specialization": "1) Science Education, STEM & STEAM\n2) Teacher Education & Technology",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/233.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/233.pdf",
+    "scholar": "",
+    "irins": "https://ruraluniv.irins.org/profile/59467",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Professor & Head",
+        "unit_id": "department-of-education",
+        "unit_name": "Department of Education",
+        "school_id": "sch_social",
+        "school_name": "School of Social Sciences",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-education"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_592",
+    "fid": "",
+    "name": "Dr.T.ANANTHA VIJAYAH",
+    "designation": "Associate Professor",
+    "qualifications": "M.A., M.Phil., Ph.D",
+    "specialization": "1) Indigenous literature\n 2) English Language Teaching\n 3) Journalism and Mass Media\n 4) Post-colonial literature\n 5) Commun",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/592.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/592.pdf",
+    "scholar": "https://scholar.google.com/citations?hl=en&user=egKo3R4AAAAJ",
+    "irins": "https://ruraluniv.irins.org/profile/115813",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Associate Professor",
+        "unit_id": "school-of-english-foreign-languages",
+        "unit_name": "School of English & Foreign Languages",
+        "school_id": "sch_english",
+        "school_name": "School of English & Foreign Languages",
+        "source_url": "https://www.ruraluniv.ac.in/page/school-of-english-foreign-languages"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_263",
+    "fid": "",
+    "name": "Dr.T.DAVID JEYARAJ FRANKLIN",
+    "designation": "Associate Professor",
+    "qualifications": "M.A., M.Phil., Ph.D.",
+    "specialization": "1) Indigenous Literatures\n 2) Communication Studies\n 3) Indian Writing in English",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/263.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/263.pdf",
+    "scholar": "https://scholar.google.com/citations?user=lbdLMcIAAAAJ&hl=en",
+    "irins": "",
+    "orcid": "",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Associate Professor",
+        "unit_id": "school-of-english-foreign-languages",
+        "unit_name": "School of English & Foreign Languages",
+        "school_id": "sch_english",
+        "school_name": "School of English & Foreign Languages",
+        "source_url": "https://www.ruraluniv.ac.in/page/school-of-english-foreign-languages"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_254",
+    "fid": "",
+    "name": "Dr.T.KALAISELVI",
+    "designation": "Associate Professor",
+    "qualifications": "MCA, PhD, PDF",
+    "specialization": "1) Medical Image Processing\n 2) Artificial Intelligence\n3) IoT & Robotics",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/254.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/254.pdf",
+    "scholar": "https://scholar.google.com/citations?user=iqPcLBAAAAAJ&hl=en",
+    "irins": "https://ruraluniv.irins.org/profile/107254",
+    "orcid": "https://orcid.org/0000-0002-0197-2077",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Associate Professor",
+        "unit_id": "department-of-computer-science-applications",
+        "unit_name": "Department of Computer Science & Applications",
+        "school_id": "sch_cs",
+        "school_name": "School of Computer Science & Technologies",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-computer-science-applications"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_226",
+    "fid": "",
+    "name": "Dr.V.KIRUBAKARAN",
+    "designation": "Professor & Director I/C",
+    "qualifications": "B.E., M.Tech., Ph.D.,",
+    "specialization": "1) Biomass Gasification\n2) Solar Energy\n3) Energy Conservation",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/226.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/226.pdf",
+    "scholar": "http://scholar.google.co.in/citations?user=iTWS9SEAAAAJ&hl",
+    "irins": "https://ruraluniv.irins.org/profile/107241",
+    "orcid": "https://orcid.org/0000-0001-7160-4758",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Professor & Director I/C",
+        "unit_id": "centre-for-rural-energy",
+        "unit_name": "Centre for Rural Energy",
+        "school_id": "sch_cs",
+        "school_name": "School of Computer Science & Technologies",
+        "source_url": "https://www.ruraluniv.ac.in/page/centre-for-rural-energy"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  },
+  {
+    "id": "fac_222",
+    "fid": "",
+    "name": "Dr. WELL HAOREI",
+    "designation": "Professor & Head",
+    "qualifications": "MA (Eco.), M.Phil (Eco), MBA, Ph.D",
+    "specialization": "Economic Development & Planning, Operations Management",
+    "photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/222.jpg",
+    "profile_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/profile/222.pdf",
+    "scholar": "https://scholar.google.co.in/citations?user= _dGb9wgAAAAJ&hl=en",
+    "irins": "",
+    "orcid": "https://orcid.org/0000-0001-6360-9487",
+    "affiliations": [
+      {
+        "role": "unit",
+        "designation": "Professor & Head",
+        "unit_id": "department-of-rural-industries-management",
+        "unit_name": "Department of Rural Industries & Management",
+        "school_id": "sch_management",
+        "school_name": "School of Management Studies",
+        "source_url": "https://www.ruraluniv.ac.in/page/department-of-rural-industries-management"
+      }
+    ],
+    "roles": [
+      "unit"
+    ],
+    "primary_role": "unit"
+  }
+]

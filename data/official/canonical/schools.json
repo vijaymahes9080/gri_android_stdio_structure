@@ -1,0 +1,177 @@
+[
+  {
+    "id": "sch_tamil",
+    "name": "School of Tamil, Indian Languages and Rural Arts",
+    "type": "school",
+    "dean_id": "1",
+    "dean_name": "Dr.P.ANANDAKUMAR",
+    "dean_designation": "School of Tamil, Indian Languages and Rural Arts",
+    "dean_photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/139.jpg",
+    "source_urls": [
+      "https://www.ruraluniv.ac.in/page/academics",
+      "https://www.ruraluniv.ac.in/page/administration"
+    ],
+    "unit_ids": [
+      "department-of-tamil",
+      "department-of-hindi",
+      "centre-for-malayalam"
+    ],
+    "programme_count": 2
+  },
+  {
+    "id": "sch_english",
+    "name": "School of English & Foreign Languages",
+    "type": "school",
+    "dean_id": "7",
+    "dean_name": "Dr.S.BALASUNDARI",
+    "dean_designation": "Professor & Dean",
+    "dean_photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/205.jpg",
+    "source_urls": [
+      "https://www.ruraluniv.ac.in/page/academics",
+      "https://www.ruraluniv.ac.in/page/administration"
+    ],
+    "unit_ids": [
+      "school-of-english-foreign-languages"
+    ],
+    "programme_count": 5
+  },
+  {
+    "id": "sch_health",
+    "name": "School of Health Sciences and Rural Development",
+    "type": "school",
+    "dean_id": "19",
+    "dean_name": "Dr.R.VENKATARAVI",
+    "dean_designation": "Professor & Director",
+    "dean_photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/274.jpg",
+    "source_urls": [
+      "https://www.ruraluniv.ac.in/page/academics",
+      "https://www.ruraluniv.ac.in/page/administration"
+    ],
+    "unit_ids": [
+      "department-of-rural-development",
+      "centre-for-geoinformatics",
+      "department-of-applied-research",
+      "department-of-rural-health-and-sanitation",
+      "department-of-lifelong-learning-extension",
+      "centre-for-extension",
+      "centre-for-lifelong-learning"
+    ],
+    "programme_count": 15
+  },
+  {
+    "id": "sch_social",
+    "name": "School of Social Sciences",
+    "type": "school",
+    "dean_id": "20",
+    "dean_name": "Dr.R.MANI",
+    "dean_designation": "School of Social Sciences",
+    "dean_photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/182.jpg",
+    "source_urls": [
+      "https://www.ruraluniv.ac.in/page/academics",
+      "https://www.ruraluniv.ac.in/page/administration"
+    ],
+    "unit_ids": [
+      "department-of-gandhian-thought-and-peace-science",
+      "department-of-sociology",
+      "department-of-political-science-development-administration",
+      "department-of-education",
+      "centre-for-futures-studies",
+      "physical-education-and-yoga-centre"
+    ],
+    "programme_count": 20
+  },
+  {
+    "id": "sch_management",
+    "name": "School of Management Studies",
+    "type": "school",
+    "dean_id": "37",
+    "dean_name": "Dr.B.TAMILMANI",
+    "dean_designation": "Senior Professor",
+    "dean_photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/42.jpg",
+    "source_urls": [
+      "https://www.ruraluniv.ac.in/page/academics",
+      "https://www.ruraluniv.ac.in/page/administration"
+    ],
+    "unit_ids": [
+      "department-of-rural-industries-management",
+      "department-of-economics",
+      "department-of-cooperation"
+    ],
+    "programme_count": 8
+  },
+  {
+    "id": "sch_sciences",
+    "name": "School of Sciences",
+    "type": "school",
+    "dean_id": "43",
+    "dean_name": "Dr.P.BALASUBRAMANIAM",
+    "dean_designation": "Senior Professor",
+    "dean_photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/172.jpg",
+    "source_urls": [
+      "https://www.ruraluniv.ac.in/page/academics",
+      "https://www.ruraluniv.ac.in/page/administration"
+    ],
+    "unit_ids": [
+      "department-of-mathematics",
+      "department-of-physics",
+      "department-of-chemistry",
+      "department-of-biology",
+      "department-of-home-science"
+    ],
+    "programme_count": 19
+  },
+  {
+    "id": "sch_cs",
+    "name": "School of Computer Science & Technologies",
+    "type": "school",
+    "dean_id": "71",
+    "dean_name": "Dr.P.KALAVATHI",
+    "dean_designation": "Professor",
+    "dean_photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/207.jpg",
+    "source_urls": [
+      "https://www.ruraluniv.ac.in/page/academics",
+      "https://www.ruraluniv.ac.in/page/administration"
+    ],
+    "unit_ids": [
+      "department-of-computer-science-applications",
+      "centre-for-rural-technology",
+      "centre-for-rural-energy",
+      "centre-for-applied-geology"
+    ],
+    "programme_count": 6
+  },
+  {
+    "id": "sch_agriculture",
+    "name": "School of Agriculture & Animal Sciences",
+    "type": "school",
+    "dean_id": "83",
+    "dean_name": "Dr.A.RAMANATHAN",
+    "dean_designation": "Senior Professor & Dean",
+    "dean_photo_url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/images/167.jpg",
+    "source_urls": [
+      "https://www.ruraluniv.ac.in/page/academics",
+      "https://www.ruraluniv.ac.in/page/administration"
+    ],
+    "unit_ids": [
+      "school-of-agriculture-animal-sciences"
+    ],
+    "programme_count": 3
+  },
+  {
+    "id": "ddu-kk",
+    "name": "Deen Dayal Upadhyay - KAUSHAL Kendra (DDU-KK)",
+    "type": "kaushal-kendra",
+    "dean_id": "",
+    "dean_name": "",
+    "dean_designation": "Director",
+    "dean_photo_url": "",
+    "source_urls": [
+      "https://www.ruraluniv.ac.in/page/ddukk"
+    ],
+    "unit_ids": [
+      "ddukk-programmes",
+      "ddukk"
+    ],
+    "programme_count": 12
+  }
+]

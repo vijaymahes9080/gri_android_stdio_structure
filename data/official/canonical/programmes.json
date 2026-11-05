@@ -1,0 +1,1219 @@
+[
+  {
+    "id": "pgm_b-com-cooperation",
+    "group": "Arts, Commerce & Management",
+    "degree": "B.Com.",
+    "name": "Cooperation",
+    "display_name": "B.Com. Cooperation",
+    "tags": [
+      "Hons.",
+      "8 Semesters"
+    ],
+    "duration": "8 Semesters",
+    "approval": "",
+    "unit_id": "department-of-cooperation",
+    "official_url": "https://www.ruraluniv.ac.in/page/department-of-cooperation#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2015-16",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/syllabus/pdf/203.pdf"
+      },
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/5/pdf/18_BCom_2018.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/5/pdf/18_BCom_2021.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/5/pdf/Bcom_2025.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "B.Com. Cooperation"
+  },
+  {
+    "id": "pgm_b-b-a-business-administration",
+    "group": "Arts, Commerce & Management",
+    "degree": "B.B.A.",
+    "name": "Business Administration",
+    "display_name": "B.B.A. Business Administration",
+    "tags": [
+      "Hons.",
+      "8 Semesters"
+    ],
+    "duration": "8 Semesters",
+    "approval": "",
+    "unit_id": "department-of-rural-industries-management",
+    "official_url": "https://www.ruraluniv.ac.in/page/department-of-rural-industries-management#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [],
+    "eligibility": ""
+  },
+  {
+    "id": "pgm_b-a-economics",
+    "group": "Arts, Commerce & Management",
+    "degree": "B.A.",
+    "name": "Economics",
+    "display_name": "B.A. Economics",
+    "tags": [
+      "Hons.",
+      "8 Semesters"
+    ],
+    "duration": "8 Semesters",
+    "approval": "",
+    "unit_id": "department-of-economics",
+    "official_url": "https://www.ruraluniv.ac.in/page/department-of-economics#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2019-20",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/6/pdf/17_BA_Eco_2019.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/6/pdf/17_BAEco_2021.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/6/pdf/ba_eco2024.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "B.A. Economics"
+  },
+  {
+    "id": "pgm_b-a-english",
+    "group": "Arts, Commerce & Management",
+    "degree": "B.A.",
+    "name": "English",
+    "display_name": "B.A. English",
+    "tags": [
+      "Hons.",
+      "8 Semesters"
+    ],
+    "duration": "8 Semesters",
+    "approval": "",
+    "unit_id": "school-of-english-foreign-languages",
+    "official_url": "https://www.ruraluniv.ac.in/page/school-of-english-foreign-languages#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2012-13",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/4/pdf/ma_eng2012.pdf"
+      },
+      {
+        "label": "From 2015-16",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/4/pdf/ma_eng2015.pdf"
+      },
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/4/pdf/4_MAEnglish_2018.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/4/pdf/4_MA%20English_CS_2021.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/4/pdf/MAEnglish2024.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "M.A. English and Communicative Studies"
+  },
+  {
+    "id": "pgm_b-a-demography-and-development-studies",
+    "group": "Arts, Commerce & Management",
+    "degree": "B.A.",
+    "name": "Demography and Development Studies",
+    "display_name": "B.A. Demography and Development Studies",
+    "tags": [
+      "Hons.",
+      "8 Semesters"
+    ],
+    "duration": "8 Semesters",
+    "approval": "",
+    "unit_id": "department-of-applied-research",
+    "official_url": "https://www.ruraluniv.ac.in/page/department-of-applied-research#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/13/pdf/BA_HonsDDS%20.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "B.A (Hons) in Demography and Development Studies"
+  },
+  {
+    "id": "pgm_b-a-gandhian-social-work",
+    "group": "Arts, Commerce & Management",
+    "degree": "B.A.",
+    "name": "Gandhian Social Work",
+    "display_name": "B.A. Gandhian Social Work",
+    "tags": [
+      "Hons.",
+      "8 Semesters"
+    ],
+    "duration": "8 Semesters",
+    "approval": "",
+    "unit_id": "department-of-gandhian-thought-and-peace-science",
+    "official_url": "https://www.ruraluniv.ac.in/page/department-of-gandhian-thought-and-peace-science#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [],
+    "eligibility": "",
+    "unit_programme_name": "B.A. Gandhian Social Work (Hons.)"
+  },
+  {
+    "id": "pgm_b-sc-mathematics",
+    "group": "Science",
+    "degree": "B.Sc.",
+    "name": "Mathematics",
+    "display_name": "B.Sc. Mathematics",
+    "tags": [
+      "Hons.",
+      "8 Semesters"
+    ],
+    "duration": "8 Semesters",
+    "approval": "",
+    "unit_id": "department-of-mathematics",
+    "official_url": "https://www.ruraluniv.ac.in/page/department-of-mathematics#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2015-16",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/syllabus/pdf/205.pdf"
+      },
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/21/pdf/BScMaths_201819.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/21/pdf/19_Bsc_Maths_2021.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/21/pdf/BScMathsNep2024.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "B.Sc. Mathematics"
+  },
+  {
+    "id": "pgm_b-sc-physics",
+    "group": "Science",
+    "degree": "B.Sc.",
+    "name": "Physics",
+    "display_name": "B.Sc. Physics",
+    "tags": [
+      "Hons.",
+      "8 Semesters"
+    ],
+    "duration": "8 Semesters",
+    "approval": "",
+    "unit_id": "department-of-physics",
+    "official_url": "https://www.ruraluniv.ac.in/page/department-of-physics#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2015-16",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/syllabus/pdf/206.pdf"
+      },
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/22/pdf/20_%20BscPhysics_2018.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/22/pdf/20_BscPhysics_2021.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/22/pdf/BScPhysics_NEPSyllabus.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "B.Sc. Physics"
+  },
+  {
+    "id": "pgm_b-sc-chemistry",
+    "group": "Science",
+    "degree": "B.Sc.",
+    "name": "Chemistry",
+    "display_name": "B.Sc. Chemistry",
+    "tags": [
+      "Hons.",
+      "8 Semesters"
+    ],
+    "duration": "8 Semesters",
+    "approval": "",
+    "unit_id": "department-of-chemistry",
+    "official_url": "https://www.ruraluniv.ac.in/page/department-of-chemistry#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2015-16",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/syllabus/pdf/207.pdf"
+      },
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/23/pdf/21_bsc_che_2018.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/23/pdf/21_Bsc_Che_2021.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/23/pdf/B.Sc.Chemistry2024.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "B.Sc. Chemistry"
+  },
+  {
+    "id": "pgm_b-sc-home-science",
+    "group": "Science",
+    "degree": "B.Sc.",
+    "name": "Home Science",
+    "display_name": "B.Sc. Home Science",
+    "tags": [
+      "Hons.",
+      "8 Semesters"
+    ],
+    "duration": "8 Semesters",
+    "approval": "",
+    "unit_id": "department-of-home-science",
+    "official_url": "https://www.ruraluniv.ac.in/page/department-of-home-science#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2015-16",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/syllabus/pdf/211.pdf"
+      },
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/24/pdf/22_Bsc_Hsc_2018.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/24/pdf/22_Bsc_Hsc_2021.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/24/pdf/24BScHSC.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "B.Sc. Home Science"
+  },
+  {
+    "id": "pgm_b-sc-textiles-and-fashion-design",
+    "group": "Science",
+    "degree": "B.Sc.",
+    "name": "Textiles and Fashion Design",
+    "display_name": "B.Sc. Textiles and Fashion Design",
+    "tags": [
+      "Hons.",
+      "8 Semesters"
+    ],
+    "duration": "8 Semesters",
+    "approval": "",
+    "unit_id": "department-of-home-science",
+    "official_url": "https://www.ruraluniv.ac.in/page/department-of-home-science#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2015-16",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/syllabus/pdf/213.pdf"
+      },
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/24/pdf/22_Bsc_Tfd_2018.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/24/pdf/22_Bsc_Tfd_2021.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/24/pdf/24BScTFD.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "B.Sc. Textiles and Fashion Design"
+  },
+  {
+    "id": "pgm_b-sc-geology",
+    "group": "Science",
+    "degree": "B.Sc.",
+    "name": "Geology",
+    "display_name": "B.Sc. Geology",
+    "tags": [
+      "Hons.",
+      "8 Semesters"
+    ],
+    "duration": "8 Semesters",
+    "approval": "",
+    "unit_id": "centre-for-applied-geology",
+    "official_url": "https://www.ruraluniv.ac.in/page/centre-for-applied-geology#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/29/pdf/27_Bsc_Geology_2018.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/29/pdf/27_B.Sc_Geology_2021.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/29/pdf/2024BSc4years.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "B.Sc. Geology"
+  },
+  {
+    "id": "pgm_b-sc-computer-science",
+    "group": "Science",
+    "degree": "B.Sc.",
+    "name": "Computer Science",
+    "display_name": "B.Sc. Computer Science",
+    "tags": [
+      "Hons.",
+      "8 Semesters"
+    ],
+    "duration": "8 Semesters",
+    "approval": "",
+    "unit_id": "department-of-computer-science-applications",
+    "official_url": "https://www.ruraluniv.ac.in/page/department-of-computer-science-applications#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2019-20",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/26/pdf/24_Bsc_CS_2019.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/26/pdf/24_Bsc_CS_2021.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/26/pdf/24bsccs202425.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "B.Sc. Computer Science"
+  },
+  {
+    "id": "pgm_b-sc-microbiology",
+    "group": "Science",
+    "degree": "B.Sc.",
+    "name": "Microbiology",
+    "display_name": "B.Sc. Microbiology",
+    "tags": [
+      "Hons.",
+      "8 Semesters"
+    ],
+    "duration": "8 Semesters",
+    "approval": "",
+    "unit_id": "department-of-biology",
+    "official_url": "https://www.ruraluniv.ac.in/page/department-of-biology#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2015-16",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/syllabus/pdf/316.pdf"
+      },
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/25/pdf/23_Msc_Microbiology_18.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/25/pdf/23_Msc_Microbiology_2021.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/25/pdf/MScMicrobiology2425.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "M.Sc Microbiology"
+  },
+  {
+    "id": "pgm_b-sc-botany",
+    "group": "Science",
+    "degree": "B.Sc.",
+    "name": "Botany",
+    "display_name": "B.Sc. Botany",
+    "tags": [
+      "Hons.",
+      "8 Semesters"
+    ],
+    "duration": "8 Semesters",
+    "approval": "",
+    "unit_id": "department-of-biology",
+    "official_url": "https://www.ruraluniv.ac.in/page/department-of-biology#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2026-27",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/25/pdf/BScBotany03092026.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "B.Sc Botany"
+  },
+  {
+    "id": "pgm_b-tech-civil-engineering",
+    "group": "Engineering & Agriculture",
+    "degree": "B.Tech",
+    "name": "Civil Engineering",
+    "display_name": "B.Tech Civil Engineering",
+    "tags": [
+      "8 Semesters",
+      "AICTE Approved"
+    ],
+    "duration": "8 Semesters",
+    "approval": "AICTE Approved",
+    "unit_id": "centre-for-rural-technology",
+    "official_url": "https://www.ruraluniv.ac.in/page/centre-for-rural-technology#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2015-16",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/programmes/syllabus/209.pdf"
+      },
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/27/pdf/25_BtechCivil_2018.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/27/pdf/25_BtechCivil_2021.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/27/pdf/BTechRTC_2024.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "B.Tech. Civil Engineering/B.Tech. Civil Engineering (Lateral Entry)"
+  },
+  {
+    "id": "pgm_b-sc-agriculture",
+    "group": "Engineering & Agriculture",
+    "degree": "B.Sc.",
+    "name": "Agriculture",
+    "display_name": "B.Sc. Agriculture",
+    "tags": [
+      "Hons.",
+      "8 Semesters",
+      "UGC Approved · ICAR pattern"
+    ],
+    "duration": "8 Semesters",
+    "approval": "UGC Approved · ICAR pattern",
+    "unit_id": "school-of-agriculture-animal-sciences",
+    "official_url": "https://www.ruraluniv.ac.in/page/school-of-agriculture-animal-sciences#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2015-16",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/programmes/syllabus/001.pdf"
+      },
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/18/pdf/%0A28_Dipl_Agri_2018.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/18/pdf/DAgri2122.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/18/pdf/DAgri2425.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "Diploma in Agriculture"
+  },
+  {
+    "id": "pgm_b-tech-civil-engineering-lateral-entry",
+    "group": "Engineering & Agriculture",
+    "degree": "B.Tech",
+    "name": "Civil Engineering (Lateral Entry)",
+    "display_name": "B.Tech Civil Engineering (Lateral Entry)",
+    "tags": [
+      "6 Semesters",
+      "AICTE Approved"
+    ],
+    "duration": "6 Semesters",
+    "approval": "AICTE Approved",
+    "unit_id": "centre-for-rural-technology",
+    "official_url": "https://www.ruraluniv.ac.in/page/centre-for-rural-technology#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2015-16",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/programmes/syllabus/209.pdf"
+      },
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/27/pdf/25_BtechCivil_2018.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/27/pdf/25_BtechCivil_2021.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/27/pdf/BTechRTC_2024.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "B.Tech. Civil Engineering/B.Tech. Civil Engineering (Lateral Entry)"
+  },
+  {
+    "id": "pgm_b-sc-agriculture-lateral-entry",
+    "group": "Engineering & Agriculture",
+    "degree": "B.Sc.",
+    "name": "Agriculture (Lateral Entry)",
+    "display_name": "B.Sc. Agriculture (Lateral Entry)",
+    "tags": [
+      "Hons.",
+      "6 Semesters",
+      "UGC Approved · ICAR pattern"
+    ],
+    "duration": "6 Semesters",
+    "approval": "UGC Approved · ICAR pattern",
+    "unit_id": "school-of-agriculture-animal-sciences",
+    "official_url": "https://www.ruraluniv.ac.in/page/school-of-agriculture-animal-sciences#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/18/pdf/28_B.Sc_Hons_Agri_2018.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/18/pdf/28_BSc_Agri_2021.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "B.Sc. (Hons) Agriculture / B.Sc. (Hons) Agriculture (Lateral Entry)"
+  },
+  {
+    "id": "pgm_b-sc-b-ed-mathematics",
+    "group": "Teacher Education & Physical Education",
+    "degree": "B.Sc. B.Ed.",
+    "name": "Mathematics",
+    "display_name": "B.Sc. B.Ed. Mathematics",
+    "tags": [
+      "8 Semesters",
+      "NCTE Approved"
+    ],
+    "duration": "8 Semesters",
+    "approval": "NCTE Approved",
+    "unit_id": "department-of-education",
+    "official_url": "https://www.ruraluniv.ac.in/page/department-of-education#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2026-27(Onwards)",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/programmes/syllabus/ITEP_20262027.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "ITEP – Secondary Stage B.Sc.B.Ed.(Physics/Chemistry/Mathematics)"
+  },
+  {
+    "id": "pgm_b-sc-b-ed-physics",
+    "group": "Teacher Education & Physical Education",
+    "degree": "B.Sc. B.Ed.",
+    "name": "Physics",
+    "display_name": "B.Sc. B.Ed. Physics",
+    "tags": [
+      "8 Semesters",
+      "NCTE Approved"
+    ],
+    "duration": "8 Semesters",
+    "approval": "NCTE Approved",
+    "unit_id": "department-of-education",
+    "official_url": "https://www.ruraluniv.ac.in/page/department-of-education#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2026-27(Onwards)",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/programmes/syllabus/ITEP_20262027.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "ITEP – Secondary Stage B.Sc.B.Ed.(Physics/Chemistry/Mathematics)"
+  },
+  {
+    "id": "pgm_b-sc-b-ed-chemistry",
+    "group": "Teacher Education & Physical Education",
+    "degree": "B.Sc. B.Ed.",
+    "name": "Chemistry",
+    "display_name": "B.Sc. B.Ed. Chemistry",
+    "tags": [
+      "8 Semesters",
+      "NCTE Approved"
+    ],
+    "duration": "8 Semesters",
+    "approval": "NCTE Approved",
+    "unit_id": "department-of-education",
+    "official_url": "https://www.ruraluniv.ac.in/page/department-of-education#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2026-27(Onwards)",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/programmes/syllabus/ITEP_20262027.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "ITEP – Secondary Stage B.Sc.B.Ed.(Physics/Chemistry/Mathematics)"
+  },
+  {
+    "id": "pgm_b-p-e-s-bachelor-of-physical-education-sports",
+    "group": "Teacher Education & Physical Education",
+    "degree": "B.P.E.S",
+    "name": "Bachelor of Physical Education & Sports",
+    "display_name": "B.P.E.S Bachelor of Physical Education & Sports",
+    "tags": [
+      "Hons.",
+      "6 Semesters"
+    ],
+    "duration": "6 Semesters",
+    "approval": "",
+    "unit_id": "physical-education-and-yoga-centre",
+    "official_url": "https://www.ruraluniv.ac.in/page/physical-education-and-yoga-centre#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2017-18",
+        "url": "https://www.ruraluniv.ac.in/files/includes/facilities/phyedu/pdf/ye2017.pdf"
+      },
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/facilities/phyedu/pdf/ye2018.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/facilities/phyedu/pdf/ye2021.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "Yoga Education"
+  },
+  {
+    "id": "pgm_b-voc-farm-equipments-operation-and-maintenance",
+    "group": "Vocational Degrees (B.Voc)",
+    "degree": "B.Voc",
+    "name": "Farm Equipments Operation and Maintenance",
+    "display_name": "B.Voc Farm Equipments Operation and Maintenance",
+    "tags": [],
+    "duration": "",
+    "approval": "",
+    "unit_id": "ddukk-programmes",
+    "official_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2015-16",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/BVocFEOM.pdf"
+      },
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/29_BVoc_FEOM_2018.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/29_BVoc_FEOM_2021.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/2024BVocFEOM.pdf"
+      },
+      {
+        "label": "From 2015-16",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/BVocFEOM.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "B.Voc. Farm Equipments Operation and Maintenance (6 Semesters) (UGC Approved)"
+  },
+  {
+    "id": "pgm_b-voc-footwear-and-accessories-design",
+    "group": "Vocational Degrees (B.Voc)",
+    "degree": "B.Voc",
+    "name": "Footwear and Accessories Design",
+    "display_name": "B.Voc Footwear and Accessories Design",
+    "tags": [],
+    "duration": "",
+    "approval": "",
+    "unit_id": "ddukk-programmes",
+    "official_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2015-16",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/BVocFAD.pdf"
+      },
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/29_BVoc_FAD_2018.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/29_BVoc_FAD_2021.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/2024FAD.pdf"
+      },
+      {
+        "label": "From 2015-16",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/BVocFAD.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "B.Voc. Footwear and Accessories Design (6 Semesters) (UGC Approved)"
+  },
+  {
+    "id": "pgm_b-voc-renewable-energy",
+    "group": "Vocational Degrees (B.Voc)",
+    "degree": "B.Voc",
+    "name": "Renewable Energy",
+    "display_name": "B.Voc Renewable Energy",
+    "tags": [],
+    "duration": "",
+    "approval": "",
+    "unit_id": "ddukk-programmes",
+    "official_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/29_BVoc_RE_2018.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/29_BVoc_RE_2021.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/29_BVoc_RE_2024.pdf"
+      },
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/29_BVoc_RE_2018.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "B.Voc. Renewable Energy (6 Semesters) (UGC Approved)"
+  },
+  {
+    "id": "pgm_b-voc-multimedia-production-technology",
+    "group": "Vocational Degrees (B.Voc)",
+    "degree": "B.Voc",
+    "name": "Multimedia Production Technology",
+    "display_name": "B.Voc Multimedia Production Technology",
+    "tags": [],
+    "duration": "",
+    "approval": "",
+    "unit_id": "ddukk-programmes",
+    "official_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/29_Bvoc_MMPT_2018.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/29_BVoc_MMPT_2021.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/2024BVocMMPT.pdf"
+      },
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/29_Bvoc_MMPT_2018.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "B.Voc. Multimedia Production Technology (6 Semesters) (UGC Approved)"
+  },
+  {
+    "id": "pgm_b-voc-food-processing",
+    "group": "Vocational Degrees (B.Voc)",
+    "degree": "B.Voc",
+    "name": "Food Processing",
+    "display_name": "B.Voc Food Processing",
+    "tags": [],
+    "duration": "",
+    "approval": "",
+    "unit_id": "ddukk-programmes",
+    "official_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/29_BVoc_FP_2018.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/29_BVoc_FP_2021.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/2024BVocFP.pdf"
+      },
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/29_BVoc_FP_2018.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/29_BVoc_FP_2021.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/2024BVocFP.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "B.Voc. Food Processing (6 Semesters) (UGC Approved)"
+  },
+  {
+    "id": "pgm_b-voc-food-testing-and-quality-evaluation",
+    "group": "Vocational Degrees (B.Voc)",
+    "degree": "B.Voc",
+    "name": "Food Testing and Quality Evaluation",
+    "display_name": "B.Voc Food Testing and Quality Evaluation",
+    "tags": [],
+    "duration": "",
+    "approval": "",
+    "unit_id": "ddukk-programmes",
+    "official_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/29_BVoc_FTQE_2018.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/29_BVoc_FTQE_2021.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/2024BVocFTQE.pdf"
+      },
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/29_BVoc_FTQE_2018.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/29_BVoc_FTQE_2021.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/2024BVocFTQE.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "B.Voc. Food Testing and Quality Evaluation (6 Semesters) (UGC Approved)"
+  },
+  {
+    "id": "pgm_b-voc-dairy-production-and-technology",
+    "group": "Vocational Degrees (B.Voc)",
+    "degree": "B.Voc",
+    "name": "Dairy Production and Technology",
+    "display_name": "B.Voc Dairy Production and Technology",
+    "tags": [],
+    "duration": "",
+    "approval": "",
+    "unit_id": "ddukk-programmes",
+    "official_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2017-18",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/bvoc_dpt2017.pdf"
+      },
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/29_BVOC_DPT%202018.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/29_BVOC_DPT_2021.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/2024BVocDPT.pdf"
+      },
+      {
+        "label": "From 2017-18",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/bvoc_dpt2017.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "B.Voc. Dairy Production and Technology (6 Semesters) (UGC Approved)"
+  },
+  {
+    "id": "pgm_b-voc-organic-agriculture-and-enterprises-development",
+    "group": "Vocational Degrees (B.Voc)",
+    "degree": "B.Voc",
+    "name": "Organic Agriculture and Enterprises Development",
+    "display_name": "B.Voc Organic Agriculture and Enterprises Development",
+    "tags": [],
+    "duration": "",
+    "approval": "",
+    "unit_id": "ddukk-programmes",
+    "official_url": "https://www.ruraluniv.ac.in/page/ddukk-programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/29_Bvoc_OAED_2018.pdf"
+      },
+      {
+        "label": "From 2022-23",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/29_BVoc_OAED_2022.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/2024BVocOAED.pdf"
+      },
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/kk/pdf/29_Bvoc_OAED_2018.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "B.Voc. Organic Agriculture and Enterprises Development (6 Semesters) (UGC Approved)"
+  },
+  {
+    "id": "pgm_diploma-textile-technology",
+    "group": "Diploma Programmes",
+    "degree": "Diploma",
+    "name": "Textile Technology",
+    "display_name": "Diploma Textile Technology",
+    "tags": [
+      "4 Semesters",
+      "AICTE Approved"
+    ],
+    "duration": "4 Semesters",
+    "approval": "AICTE Approved",
+    "unit_id": "department-of-rural-industries-management",
+    "official_url": "https://www.ruraluniv.ac.in/page/department-of-rural-industries-management#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2015-16",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/10/pdf/DTT201516.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/10/pdf/DTT202122.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/10/pdf/DTT202425.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "Dip. in Textile Technology (AICTE Approved)"
+  },
+  {
+    "id": "pgm_diploma-agriculture",
+    "group": "Diploma Programmes",
+    "degree": "Diploma",
+    "name": "Agriculture",
+    "display_name": "Diploma Agriculture",
+    "tags": [
+      "4 Semesters"
+    ],
+    "duration": "4 Semesters",
+    "approval": "",
+    "unit_id": "school-of-agriculture-animal-sciences",
+    "official_url": "https://www.ruraluniv.ac.in/page/school-of-agriculture-animal-sciences#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2015-16",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/programmes/syllabus/001.pdf"
+      },
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/18/pdf/%0A28_Dipl_Agri_2018.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/18/pdf/DAgri2122.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/18/pdf/DAgri2425.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "Diploma in Agriculture"
+  },
+  {
+    "id": "pgm_d-voc-refrigerator-and-air-conditioner",
+    "group": "Diploma Programmes",
+    "degree": "D.Voc",
+    "name": "Refrigerator and Air Conditioner",
+    "display_name": "D.Voc Refrigerator and Air Conditioner",
+    "tags": [
+      "2 Semesters"
+    ],
+    "duration": "2 Semesters",
+    "approval": "",
+    "unit_id": "department-of-lifelong-learning-extension",
+    "official_url": "https://www.ruraluniv.ac.in/page/department-of-lifelong-learning-extension#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [],
+    "eligibility": ""
+  },
+  {
+    "id": "pgm_d-voc-software-development",
+    "group": "Diploma Programmes",
+    "degree": "D.Voc",
+    "name": "Software Development",
+    "display_name": "D.Voc Software Development",
+    "tags": [
+      "2 Semesters"
+    ],
+    "duration": "2 Semesters",
+    "approval": "",
+    "unit_id": "computer-centre",
+    "official_url": "https://www.ruraluniv.ac.in/page/computer-centre#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/facilities/cc/pdf/syllabus.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "D.Voc. Software Development"
+  },
+  {
+    "id": "pgm_certificate-two-wheeler-technician",
+    "group": "Certificate Programme",
+    "degree": "Certificate",
+    "name": "Two Wheeler Technician",
+    "display_name": "Certificate Two Wheeler Technician",
+    "tags": [
+      "2 Semesters"
+    ],
+    "duration": "2 Semesters",
+    "approval": "",
+    "unit_id": "department-of-lifelong-learning-extension",
+    "official_url": "https://www.ruraluniv.ac.in/page/department-of-lifelong-learning-extension#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2016-17",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/15d/pdf/29_Cer_Twowheeler_2016.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/15d/pdf/29_Cer_Twowheeler_2021.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "Certificate in Two Wheeler Technician"
+  },
+  {
+    "id": "pgm_b-a-m-a-public-administration",
+    "group": "Integrated Programmes",
+    "degree": "B.A. / M.A.",
+    "name": "Public Administration",
+    "display_name": "B.A. / M.A. Public Administration",
+    "tags": [
+      "5 Years Integrated",
+      "10 Semesters"
+    ],
+    "duration": "5 Years Integrated",
+    "approval": "",
+    "unit_id": "department-of-political-science-development-administration",
+    "official_url": "https://www.ruraluniv.ac.in/page/department-of-political-science-development-administration#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2015-16",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/7/pdf/ma_da2015.pdf"
+      },
+      {
+        "label": "From 2018-19",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/7/pdf/12_MA_DA_2018.pdf"
+      },
+      {
+        "label": "From 2021-22",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/7/pdf/12_MA_DA_2021.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/7/pdf/BAMA_PA2024.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "M.A. Development and Administration (5 year Integrated)"
+  },
+  {
+    "id": "pgm_b-a-m-a-sociology",
+    "group": "Integrated Programmes",
+    "degree": "B.A. / M.A.",
+    "name": "Sociology",
+    "display_name": "B.A. / M.A. Sociology",
+    "tags": [
+      "5 Years Integrated",
+      "10 Semesters"
+    ],
+    "duration": "5 Years Integrated",
+    "approval": "",
+    "unit_id": "department-of-sociology",
+    "official_url": "https://www.ruraluniv.ac.in/page/department-of-sociology#programmes",
+    "source_url": "https://ruraluniv.ac.in/page/academics",
+    "syllabi": [
+      {
+        "label": "From 2017-18 (NON OBE)",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/9/pdf/soc_non_obe2017.pdf"
+      },
+      {
+        "label": "2018 & 2019 (OBE)",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/9/pdf/11_MA_Sociology_2018.pdf"
+      },
+      {
+        "label": "2020 & 2021 (OBE)",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/9/pdf/ma_soc_obe20202021.pdf"
+      },
+      {
+        "label": "From 2021-22 (OBE)",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/9/pdf/11_MA_Sociology_2021.pdf"
+      },
+      {
+        "label": "From 2024-25",
+        "url": "https://www.ruraluniv.ac.in/files/includes/academics/faculties/dept/9/pdf/BAMASociology24.pdf"
+      }
+    ],
+    "eligibility": "",
+    "unit_programme_name": "M.A. Sociology (5 year integrated)"
+  }
+]
