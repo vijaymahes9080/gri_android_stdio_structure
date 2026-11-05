@@ -747,6 +747,8 @@ gantt
     Post-Release Maintenance & Biometric Sync Gate  :dep4, 2026-12-16, 2027-02-28
 ```
 
+![Figure 1: Project Lifecycle & Milestones](../assets/diagram_01_lifecycle.png)
+
 #### Detailed Explanation of Diagram 1
 *Figure 1* illustrates the five-phase development lifecycle. The critical engineering path flows through Requirements Crawling $\rightarrow$ SRS Signoff $\rightarrow$ Database Modeling $\rightarrow$ Dual-Tier Sync Pipeline $\rightarrow$ Core Screen Development $\rightarrow$ Quality Assurance $\rightarrow$ Release Compilation. Five milestone gates enforce verification: **M1** (SRS Signoff), **M2** (Architecture Freeze), **M3** (Code Freeze), **M4** (QA Certification), and **M5** (Institutional Handover).
 
@@ -811,6 +813,8 @@ graph TB
     UI_Screens -->|Direct Map Link| TransitAPI
 ```
 
+![Figure 2: System Architecture Block Diagram](../assets/diagram_02_architecture.png)
+
 #### Detailed Explanation of Diagram 2
 *Figure 2* models the five-tier architectural decomposition:
 1. **Presentation Layer:** Hosts 25 native screens, modular action dialogs, and the Gandhian theme tokens.
@@ -860,6 +864,8 @@ graph TD
     P_System -->|QR Attestation Requests, APAAR Student Verification Tokens| E_External
     E_External -->|Apostille Confirmations, DigiLocker Transcripts, ERP Records| P_System
 ```
+
+![Figure 3: Level-0 Context Diagram](../assets/diagram_03_dfd_level_0.png)
 
 #### Detailed Explanation of Diagram 3
 *Figure 3* shows the Level-0 Context Diagram. The entire system is represented as central process `0.0`. Six external entities interact across the system boundary: Students, Faculty, Administrators, COE Staff, Research Scholars, and External National Portals. Inputs and outputs are strictly balanced against the Level-1 process decomposition in Diagram 4.
@@ -940,6 +946,8 @@ graph TB
     P6 -->|Stream PDF & Canonical Portal Links| E_Student
 ```
 
+![Figure 4: Level-1 Data Flow Diagram](../assets/diagram_04_dfd_level_1.png)
+
 #### Detailed Explanation of Diagram 4
 *Figure 4* provides the functional decomposition of process `0.0` into six balanced subprocesses:
 - **1.0 (Auth & Role Validation):** Interfaces with data store `D1 (user_profiles)`.
@@ -1007,6 +1015,8 @@ sequenceDiagram
     Prov-->>UI: Render HallTicketModal with QR Code, Subject Table & Center Info
     UI-->>Stu: Display Verified Hall Ticket (Print / Save Digital Copy)
 ```
+
+![Figure 5: System Sequence Diagram](../assets/diagram_05_sequence.png)
 
 #### Detailed Explanation of Diagram 5
 *Figure 5* details the end-to-end operational sequence across three phases:
@@ -1187,6 +1197,8 @@ erDiagram
     }
 ```
 
+![Figure 6: Entity-Relationship Database Schema](../assets/diagram_06_er_schema.png)
+
 #### Detailed Explanation of Diagram 6
 *Figure 6* documents the relational database schema implemented across PostgreSQL migrations in `supabase/migrations/`. Key entities include `user_profiles`, `audit_logs`, `circulars_notices`, `grievances`, `faculty_leaves`, `student_courses`, `schools`, `departments`, `programmes`, and `documents_repository`. Strict Row-Level Security (RLS) is applied across all tables.
 
@@ -1232,6 +1244,8 @@ gantt
     Postgraduate Student Pilot Deployment            :crit, t17, after t16, 18d
     Final Institutional Handover                     :crit, m5, after t17, 5d
 ```
+
+![Figure 7: Project Timeline Gantt & PERT Chart](../assets/diagram_07_gantt_pert.png)
 
 #### Detailed Explanation of Diagram 7
 *Figure 7* illustrates the project work breakdown structure, task durations, dependencies, and critical path analysis. The critical path flows from portal crawling through database modeling, Flutter engineering, testing, and APK verification. Five explicit quality gates enforce verification: **M1** (SRS Signoff), **M2** (Architecture Freeze), **M3** (Code Freeze), **M4** (QA Certification), and **M5** (Final Handover).
@@ -1323,6 +1337,8 @@ graph LR
     UC_ReviewDossier -.->|"<<include>>"| UC_Audit
 ```
 
+![Figure 8: UML Use Case Diagram](../assets/diagram_08_use_case.png)
+
 #### Detailed Explanation of Diagram 8
 *Figure 8* presents the UML Use Case model defining system boundaries and behavioral contracts. It captures relationships for six verified human actors, modeling include dependencies (`<<include>>` for session verification, eligibility checking, and audit logging) and extend dependencies (`<<extend>>` for e-SANAD attestation and clarification requests).
 
@@ -1408,8 +1424,10 @@ graph TD
     Scaffold -->|Drawer Menu| Scr_Settings
 ```
 
+![Figure 9: Navigation Wireframes & Screen Flow](../assets/diagram_09_navigation_wireframes.png)
+
 #### Detailed Explanation of Diagram 9
-*Figure 9* details the navigation architecture and screen flow. It captures transitions from splash boot to dynamic bottom-tab indexing, modal sheet interactions, and the deep-linked routes in the University Drawer. Visual wireframe layouts for the four core screens are documented in `document/assets/wireframes_overview.png`.
+*Figure 9* details the navigation architecture and screen flow. It captures transitions from splash boot to dynamic bottom-tab indexing, modal sheet interactions, and the deep-linked routes in the University Drawer. Visual wireframe layouts for the four core screens are documented in `../assets/wireframes_overview.png`.
 
 ---
 
@@ -1465,6 +1483,8 @@ flowchart TD
     AdminReview -- Approves Dossier --> SendApprove[Update status='APPROVED'<br/>Append to approved_roles] --> WriteApproveAudit[Log APPROVE_DOSSIER in audit_logs]
     WriteApproveAudit --> LoadApproved
 ```
+
+![Figure 10: Registration & Authentication Flowchart](../assets/diagram_10_auth_flowchart.png)
 
 #### Detailed Explanation of Diagram 10
 *Figure 10* shows the decision tree governing credential hydration, user self-registration, and administrative action branches. It enforces strict status checking (`APPROVED`, `PENDING_APPROVAL`, `UNDER_REVIEW`, `REJECTED`, `SUSPENDED`) and logs all approval actions to `audit_logs`.
