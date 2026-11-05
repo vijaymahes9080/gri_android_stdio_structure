@@ -103,7 +103,10 @@ def download(url: str, dest: Path) -> dict:
             tmp.replace(dest)
             return {"ok": True, "bytes": dest.stat().st_size, "sha256": sha256(dest), "content_type": ctype}
         except Exception as exc:
-            tmp.unlink(missing_ok=True)
+            try:
+                tmp.unlink(missing_ok=True)
+            except OSError:
+                pass
             if attempt == 2:
                 return {"ok": False, "error": str(exc)[:200]}
             time.sleep(1.5 * (attempt + 1))
@@ -126,15 +129,10 @@ DOC_DIRS = {
 def document_destination(doc: dict) -> Path:
     folder = DOC_DIRS.get(doc["category"], "official-documents")
     base = safe_name(doc.get("filename") or "document.pdf")
-    if doc["category"] == "faculty-profile":
-        key = doc.get("faculty_id") or doc["id"].replace("doc_profile_", "")
-        base = safe_name(str(key)) + "__" + base
-    elif doc["category"] == "syllabus":
-        base = doc["id"].replace("doc_", "")[:10] + "__" + base
-    else:
-        if len(base) < 8:
-            base = doc["id"].replace("doc_", "")[:10] + "__" + base
-    return FILES / folder / base
+    # Always prefix a stable per-record id: several official files share the
+    # same basename (e.g. syllabus.pdf) and would otherwise collide.
+    prefix = doc["id"].replace("doc_profile_", "").replace("doc_", "")[:12]
+    return FILES / folder / f"{safe_name(prefix)}__{base}"
 
 
 def run_validations(documents: list[dict]) -> list[dict]:

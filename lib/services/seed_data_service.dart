@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import '../models/academic_models.dart';
 import '../models/official_models.dart';
@@ -222,7 +221,6 @@ class SeedDataService {
   static const String generalPhone = '0451-2452371';
 
   bool _isLoaded = false;
-  Map<String, dynamic> _rawJson = {};
   List<SchoolItem> schools = [];
   List<DepartmentItem> departments = [];
   List<ProgrammeItem> programmes = [];
@@ -250,10 +248,6 @@ class SeedDataService {
     final catalog = OfficialCatalogService.instance;
     try {
       await catalog.ensureLoaded();
-      _rawJson = {
-        'generated_at': catalog.generatedAt,
-        'source': catalog.source,
-      };
       _institution = catalog.institution;
 
       schools = catalog.schools

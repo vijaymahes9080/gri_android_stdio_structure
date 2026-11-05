@@ -33,4 +33,11 @@ flutter:
     - assets/official/icons/
     - assets/official/documents/
     - assets/official/metadata/
-    - assets/website_inventory.json
+    - data/official/canonical/
+    - data/official/media/
+    - data/official/media/faculty/
+    - data/official/media/leadership/
+    - data/official/media/units/
+    - data/official/media/gallery/
+    - data/official/media/gallery/thumbs/
+    - data/official/media/videos/
