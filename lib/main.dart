@@ -24,6 +24,7 @@ import 'screens/faculty_staff_portal_screen.dart';
 import 'screens/gri_splash_screen.dart';
 import 'services/seed_data_service.dart';
 import 'services/supabase_service.dart';
+import 'services/official_catalog_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +32,7 @@ void main() async {
   // otherwise the app runs on its persistent local vault (offline-first).
   await SupabaseService.instance.initialize();
   await SeedDataService.instance.loadSeedData();
+  await OfficialCatalogService.instance.ensureLoaded();
   runApp(
     ChangeNotifierProvider(
       create: (_) => GriProvider(),
