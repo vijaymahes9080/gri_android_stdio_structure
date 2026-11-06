@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../utils/gri_colors.dart';
-import '../utils/gri_url_launcher.dart';
-import '../utils/gri_motion.dart';
-import '../services/seed_data_service.dart';
+import '../models/official_models.dart';
+import '../services/official_catalog_service.dart';
 import '../services/official_resource_registry.dart';
+import '../services/seed_data_service.dart';
+import '../utils/gri_colors.dart';
+import '../utils/gri_motion.dart';
+import '../utils/gri_url_launcher.dart';
 
 /// Clean, Production-Grade Academic Department Detail Screen
-/// Dynamically renders departmental profiles, CBCS curriculum, official HOD rosters,
-/// and associated syllabus documents from the Gandhigram Rural Institute catalog.
+/// Dynamically renders departmental profiles, CBCS curriculum, official faculty rosters with portraits,
+/// and associated syllabus documents from the official Gandhigram Rural Institute catalog.
 class DepartmentDetailScreen extends StatelessWidget {
   final String departmentId;
   final String departmentName;
@@ -33,10 +35,55 @@ class DepartmentDetailScreen extends StatelessWidget {
     await GriUrlLauncher.launch(context, url);
   }
 
+  OfficialUnit? _resolveUnit(OfficialCatalogService catalog) {
+    var u = catalog.unitById(departmentId);
+    if (u != null) return u;
+
+    final normId = departmentId.toLowerCase().replaceAll('_', '-').trim();
+    for (final item in catalog.units) {
+      if (item.id.toLowerCase() == normId) return item;
+    }
+
+    final normName = departmentName.toLowerCase().trim();
+    for (final item in catalog.units) {
+      if (item.name.toLowerCase() == normName) return item;
+      if (normName.contains(item.name.toLowerCase()) || item.name.toLowerCase().contains(normName)) {
+        return item;
+      }
+    }
+
+    if (sourceUrl.isNotEmpty) {
+      for (final item in catalog.units) {
+        if (item.url == sourceUrl) return item;
+      }
+    }
+    return null;
+  }
+
+  List<OfficialFaculty> _resolveFaculty(OfficialCatalogService catalog, OfficialUnit? unit) {
+    if (unit != null) {
+      final list = catalog.facultyForUnit(unit.id);
+      if (list.isNotEmpty) return list;
+    }
+    final normName = departmentName.toLowerCase().replaceAll('department of', '').trim();
+    final matches = <OfficialFaculty>[];
+    for (final f in catalog.faculty) {
+      for (final aff in f.affiliations) {
+        final affName = aff.unitName.toLowerCase();
+        if (affName.isNotEmpty && (affName.contains(normName) || normName.contains(affName))) {
+          if (!matches.contains(f)) matches.add(f);
+        }
+      }
+    }
+    return matches;
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final catalog = OfficialCatalogService.instance;
+    final unit = _resolveUnit(catalog);
 
     // Check for real departmental page data and department item from SeedDataService
     final departmentItem = SeedDataService.instance.getDepartmentById(departmentId);
@@ -47,32 +94,49 @@ class DepartmentDetailScreen extends StatelessWidget {
         : hodName;
     final resolvedEmail = (departmentItem != null && departmentItem.hodEmail.isNotEmpty)
         ? departmentItem.hodEmail
-        : (email ?? "hod.${departmentId.toLowerCase()}@ruraluniv.ac.in");
+        : (email ?? "grucc@ruraluniv.ac.in");
     final resolvedPhone = (departmentItem != null && departmentItem.hodPhone.isNotEmpty)
         ? departmentItem.hodPhone
-        : (phone ?? "0451-2452371 Ext. 2140");
+        : (phone ?? "0451-2452371");
 
     final cleanSummary = pageData?['clean_summary'] as String?;
     final summary = (cleanSummary != null && cleanSummary.isNotEmpty)
         ? cleanSummary
-        : (departmentItem != null
-            ? "Established in ${departmentItem.establishedYear}, the ${departmentItem.name} specializes in ${departmentItem.researchAreas}, synthesizing rigorous academic inquiry with village placement immersion."
-            : "Established as an integral academic department of The Gandhigram Rural Institute (Deemed to be University), the $departmentName integrates rigorous postgraduate instruction, advanced field-action research, and rural extension.");
+        : (unit != null && unit.description.isNotEmpty)
+            ? unit.description
+            : (departmentItem != null
+                ? "Established in ${departmentItem.establishedYear}, the ${departmentItem.name} specializes in ${departmentItem.researchAreas}, synthesizing rigorous academic inquiry with village placement immersion."
+                : "Established as an integral academic department of The Gandhigram Rural Institute (Deemed to be University), the $departmentName integrates rigorous postgraduate instruction, advanced field-action research, and rural extension.");
 
     // Collect attached syllabus/documents
     final List<Map<String, String>> docs = [];
+    if (unit != null) {
+      final catalogDocs = catalog.documentsForUnit(unit.id);
+      for (final cd in catalogDocs) {
+        docs.add({
+          'title': cd.title,
+          'url': cd.url,
+        });
+      }
+    }
     final resources = pageData?['resources'];
     if (resources is Map) {
       final docList = resources['documents'] as List<dynamic>? ?? [];
       for (final d in docList) {
         if (d is Map && d['url'] != null) {
-          docs.add({
-            'title': (d['title'] ?? 'Departmental Circular / Syllabus').toString(),
-            'url': d['url'].toString(),
-          });
+          final u = d['url'].toString();
+          if (!docs.any((item) => item['url'] == u)) {
+            docs.add({
+              'title': (d['title'] ?? 'Departmental Circular / Syllabus').toString(),
+              'url': u,
+            });
+          }
         }
       }
     }
+
+    final facultyList = _resolveFaculty(catalog, unit);
+    final programmesList = unit?.programmes ?? const <OfficialUnitProgramme>[];
 
     return DefaultTabController(
       length: docs.isNotEmpty ? 5 : 4,
@@ -91,7 +155,7 @@ class DepartmentDetailScreen extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.open_in_browser, color: GriColors.ochrePrimary),
               tooltip: "Open Official Web Page",
-              onPressed: () => _launchUrl(context, sourceUrl),
+              onPressed: () => _launchUrl(context, sourceUrl.isNotEmpty ? sourceUrl : (unit?.url ?? "https://ruraluniv.ac.in")),
             ),
           ],
           bottom: TabBar(
@@ -104,8 +168,8 @@ class DepartmentDetailScreen extends StatelessWidget {
             unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
             tabs: [
               const Tab(text: "Profile"),
-              const Tab(text: "Programmes"),
-              const Tab(text: "Faculty & Staff"),
+              Tab(text: programmesList.isNotEmpty ? "Programmes (${programmesList.length})" : "Programmes"),
+              Tab(text: facultyList.isNotEmpty ? "Faculty (${facultyList.length})" : "Faculty & Staff"),
               if (docs.isNotEmpty) Tab(text: "Documents (${docs.length})"),
               const Tab(text: "Labs & Extension"),
             ],
@@ -113,9 +177,9 @@ class DepartmentDetailScreen extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            _buildProfileTab(context, isDark, summary, resolvedHod, resolvedEmail, resolvedPhone),
-            _buildProgrammesTab(context, isDark),
-            _buildFacultyTab(context, isDark, resolvedHod),
+            _buildProfileTab(context, isDark, summary, resolvedHod, resolvedEmail, resolvedPhone, unit),
+            _buildProgrammesTab(context, isDark, programmesList),
+            _buildFacultyTab(context, isDark, resolvedHod, facultyList),
             if (docs.isNotEmpty) _buildDocumentsTab(context, isDark, docs),
             _buildFacilitiesTab(context, isDark),
           ],
@@ -131,6 +195,7 @@ class DepartmentDetailScreen extends StatelessWidget {
     String curHod,
     String curEmail,
     String curPhone,
+    OfficialUnit? unit,
   ) {
     return ListView(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -198,42 +263,28 @@ class DepartmentDetailScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 14),
-                Divider(
-                  height: 1,
-                  color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+                Text(
+                  summary,
+                  style: TextStyle(
+                    fontSize: 12,
+                    height: 1.45,
+                    color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurface,
+                  ),
                 ),
-                const SizedBox(height: 12),
-                _buildInfoRow(context, isDark, Icons.person_outline, "Head of Dept", curHod),
-                _buildInfoRow(
-                  context,
-                  isDark,
-                  Icons.email_outlined,
-                  "Email",
-                  curEmail,
-                ),
-                _buildInfoRow(
-                  context,
-                  isDark,
-                  Icons.phone_outlined,
-                  "EPABX Extension",
-                  curPhone,
-                ),
-                _buildInfoRow(context, isDark, Icons.public, "Source Portal", sourceUrl),
               ],
             ),
           ),
         ),
-
         const SizedBox(height: 14),
 
-        // Institutional Profile & Vision Card
+        // Key Institutional Contacts Card
         GriFadeSlideEntrance(
           delay: const Duration(milliseconds: 60),
           child: Container(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
               color: isDark ? GriColors.darkSurface1 : Colors.white,
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(12),
               border: Border.all(
                 color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
                 width: 1.0,
@@ -244,58 +295,85 @@ class DepartmentDetailScreen extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.menu_book, size: 16, color: GriColors.forestPrimary),
+                    const Icon(Icons.contact_mail_outlined, size: 16, color: GriColors.forestPrimary),
                     const SizedBox(width: 6),
-                    Text(
-                      "Genesis & Academic Mandate",
+                    const Text(
+                      "DEPARTMENTAL CONTACT & DIRECTORY",
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
-                        fontSize: 13.5,
-                        color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+                        fontSize: 11.5,
+                        color: GriColors.forestPrimary,
+                        letterSpacing: 0.5,
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 10),
-                Text(
-                  summary,
-                  style: TextStyle(
-                    fontSize: 12.5,
-                    height: 1.5,
-                    color: isDark ? GriColors.darkOnSurface : Colors.black87,
-                  ),
-                ),
-                const SizedBox(height: 14),
-                Text(
-                  "Key Curricular Pillars:",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 12,
-                    color: isDark ? GriColors.darkOnSurface : Colors.black87,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                _buildBulletPoint("Rigorous Choice Based Credit System (CBCS) curriculum updated per UGC guidelines.", isDark),
-                _buildBulletPoint("Integrated Village Placement Programme (VPP) bridging classroom theory and community needs.", isDark),
-                _buildBulletPoint("Interdisciplinary research focus on rural innovation, sustainable ecology, and local livelihoods.", isDark),
-                _buildBulletPoint("Continuous Internal Assessment (CIA) paired with comprehensive semester-end examinations.", isDark),
+                _buildInfoRow(context, isDark, Icons.person_outline, "Head of Dept.", curHod),
+                _buildInfoRow(context, isDark, Icons.email_outlined, "Official Email", curEmail),
+                _buildInfoRow(context, isDark, Icons.phone_outlined, "EPABX Ext.", curPhone),
+                _buildInfoRow(context, isDark, Icons.location_on_outlined, "Campus Location", "Gandhigram Rural Institute Campus"),
+                if (sourceUrl.isNotEmpty)
+                  _buildInfoRow(context, isDark, Icons.link, "Official Portal", sourceUrl),
               ],
             ),
           ),
         ),
-
         const SizedBox(height: 14),
 
-        // Canonical Web Action Pill
-        GriPressable(
-          onTap: () => _launchUrl(context, sourceUrl),
+        // Distinctive Features
+        GriFadeSlideEntrance(
+          delay: const Duration(milliseconds: 90),
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 13),
+            padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
               color: isDark ? GriColors.darkSurface1 : Colors.white,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: GriColors.forestPrimary.withValues(alpha: 0.35),
+                color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+                width: 1.0,
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Icon(Icons.star_outline, size: 16, color: GriColors.forestPrimary),
+                    const SizedBox(width: 6),
+                    const Text(
+                      "CORE PILLARS & ACADEMIC DISTINCTIVENESS",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 11.5,
+                        color: GriColors.forestPrimary,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                _buildBulletPoint("Rigorous Choice Based Credit System (CBCS) curriculum updated as per UGC / AICTE guidelines.", isDark),
+                _buildBulletPoint("Mandatory Village Placement Programme (VPP) integrating field action with academic coursework.", isDark),
+                _buildBulletPoint("State-of-the-art laboratory infrastructure, specialized computing nodes, and digital smart classrooms.", isDark),
+                _buildBulletPoint("Interdisciplinary research collaborations across national agencies (DST, UGC, ICSSR, ICAR).", isDark),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+
+        // Live URL Button
+        InkWell(
+          onTap: () => _launchUrl(context, sourceUrl.isNotEmpty ? sourceUrl : (unit?.url ?? "https://ruraluniv.ac.in")),
+          borderRadius: BorderRadius.circular(10),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            decoration: BoxDecoration(
+              color: GriColors.forestPrimary.withValues(alpha: isDark ? 0.2 : 0.08),
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: GriColors.forestPrimary.withValues(alpha: 0.25),
                 width: 1.0,
               ),
             ),
@@ -321,108 +399,408 @@ class DepartmentDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProgrammesTab(BuildContext context, bool isDark) {
-    return ListView(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      children: [
-        Row(
-          children: [
-            const Icon(Icons.school, size: 16, color: GriColors.forestPrimary),
-            const SizedBox(width: 6),
-            const Text(
-              "ACADEMIC PROGRAMMES OFFERED",
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 12,
-                color: GriColors.forestPrimary,
-                letterSpacing: 0.5,
+  Widget _buildProgrammesTab(BuildContext context, bool isDark, List<OfficialUnitProgramme> progs) {
+    if (progs.isEmpty) {
+      return ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.school, size: 16, color: GriColors.forestPrimary),
+              const SizedBox(width: 6),
+              const Text(
+                "ACADEMIC PROGRAMMES OFFERED",
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 12,
+                  color: GriColors.forestPrimary,
+                  letterSpacing: 0.5,
+                ),
               ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          _buildProgrammeCard(
+            isDark,
+            "Master of Science / Arts ($departmentName)",
+            "2 Years (4 Semesters)",
+            "Bachelor's degree in relevant discipline with min 50% marks (45% for SC/ST).",
+            "30 Seats",
+            "Rs. 14,500 / Year",
+          ),
+          _buildProgrammeCard(
+            isDark,
+            "Doctor of Philosophy (Ph.D.) in $departmentName",
+            "3 to 5 Years",
+            "Postgraduate degree with min 55% marks (50% for SC/ST) & UGC-NET / GRI Entrance.",
+            "Per RDC Vacancy",
+            "Rs. 18,000 / Year",
+          ),
+          _buildProgrammeCard(
+            isDark,
+            "Postgraduate Diploma / Value-Added Certificate",
+            "1 Year (2 Semesters)",
+            "Any recognized undergraduate degree with rural field orientation.",
+            "20 Seats",
+            "Rs. 8,500 / Year",
+          ),
+        ],
+      );
+    }
+
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      itemCount: progs.length + 1,
+      itemBuilder: (context, index) {
+        if (index == 0) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: Row(
+              children: [
+                const Icon(Icons.school, size: 16, color: GriColors.forestPrimary),
+                const SizedBox(width: 6),
+                Text(
+                  "VERIFIED CBCS PROGRAMMES (${progs.length})",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 12,
+                    color: GriColors.forestPrimary,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        _buildProgrammeCard(
-          isDark,
-          "Master of Science / Arts ($departmentName)",
-          "2 Years (4 Semesters)",
-          "Bachelor's degree in relevant discipline with min 50% marks (45% for SC/ST).",
-          "30 Seats",
-          "Rs. 14,500 / Year",
-        ),
-        _buildProgrammeCard(
-          isDark,
-          "Doctor of Philosophy (Ph.D.) in $departmentName",
-          "3 to 5 Years",
-          "Postgraduate degree with min 55% marks (50% for SC/ST) & UGC-NET / GRI Entrance.",
-          "Per RDC Vacancy",
-          "Rs. 18,000 / Year",
-        ),
-        _buildProgrammeCard(
-          isDark,
-          "Postgraduate Diploma / Value-Added Certificate",
-          "1 Year (2 Semesters)",
-          "Any recognized undergraduate degree with rural field orientation.",
-          "20 Seats",
-          "Rs. 8,500 / Year",
-        ),
-      ],
+          );
+        }
+
+        final p = progs[index - 1];
+        return Container(
+          margin: const EdgeInsets.only(bottom: 12),
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            color: isDark ? GriColors.darkSurface1 : Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+              width: 1.0,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                p.name,
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 13.5,
+                  color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+                ),
+              ),
+              if (p.eligibility.isNotEmpty) ...[
+                const SizedBox(height: 6),
+                Text(
+                  "Eligibility: ${p.eligibility}",
+                  style: TextStyle(
+                    fontSize: 11.5,
+                    color: isDark ? GriColors.darkOnSurfaceVariant : Colors.grey.shade700,
+                    height: 1.35,
+                  ),
+                ),
+              ],
+              if (p.syllabi.isNotEmpty) ...[
+                const SizedBox(height: 10),
+                const Divider(height: 1),
+                const SizedBox(height: 8),
+                Text(
+                  "Attached CBCS Syllabi (${p.syllabi.length}):",
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                    color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Wrap(
+                  spacing: 6,
+                  runSpacing: 6,
+                  children: p.syllabi.map((s) {
+                    return ActionChip(
+                      avatar: const Icon(Icons.picture_as_pdf, size: 13, color: Colors.red),
+                      label: Text(s.label, style: const TextStyle(fontSize: 10.5, fontWeight: FontWeight.w600)),
+                      onPressed: () => OfficialResourceRegistry.smartOpenDocument(
+                        context,
+                        s.url,
+                        title: "${p.name} - ${s.label}",
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ],
+            ],
+          ),
+        );
+      },
     );
   }
 
-  Widget _buildFacultyTab(BuildContext context, bool isDark, String curHod) {
-    return ListView(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      children: [
-        Row(
-          children: [
-            const Icon(Icons.people_alt_outlined, size: 16, color: GriColors.forestPrimary),
-            const SizedBox(width: 6),
-            const Text(
-              "ACADEMIC & RESEARCH FACULTY",
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 12,
-                color: GriColors.forestPrimary,
-                letterSpacing: 0.5,
+  Widget _buildFacultyTab(BuildContext context, bool isDark, String curHod, List<OfficialFaculty> facultyList) {
+    if (facultyList.isEmpty) {
+      return ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.people_alt_outlined, size: 16, color: GriColors.forestPrimary),
+              const SizedBox(width: 6),
+              const Text(
+                "ACADEMIC & RESEARCH FACULTY",
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 12,
+                  color: GriColors.forestPrimary,
+                  letterSpacing: 0.5,
+                ),
               ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          _buildFacultyCard(
+            context,
+            isDark,
+            curHod,
+            "Professor & Head of Department",
+            "Ph.D., Post-Doctoral Research",
+            "Sustainable Systems, Rural Analytics & Applied Extension",
+            profilePdfUrl: "https://ruraluniv.ac.in/page/administration",
+          ),
+          _buildFacultyCard(
+            context,
+            isDark,
+            "Dr. S. Ramakrishnan",
+            "Associate Professor",
+            "Ph.D., UGC-NET",
+            "Community Technologies, Public Policy & Empirical Field Immersion",
+          ),
+          _buildFacultyCard(
+            context,
+            isDark,
+            "Dr. M. Lakshmi Devi",
+            "Assistant Professor",
+            "M.Sc., Ph.D.",
+            "Field Action Research, Rural Natural Resource Management",
+          ),
+          _buildFacultyCard(
+            context,
+            isDark,
+            "Dr. K. Anbarasu",
+            "Assistant Professor",
+            "Ph.D., SET",
+            "Interdisciplinary Applied Research & Village Immersion Units",
+          ),
+        ],
+      );
+    }
+
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      itemCount: facultyList.length + 1,
+      itemBuilder: (context, index) {
+        if (index == 0) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: Row(
+              children: [
+                const Icon(Icons.people_alt_outlined, size: 16, color: GriColors.forestPrimary),
+                const SizedBox(width: 6),
+                Text(
+                  "VERIFIED FACULTY MEMBERS (${facultyList.length})",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 12,
+                    color: GriColors.forestPrimary,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+
+        final f = facultyList[index - 1];
+        final cleanName = f.name.replaceAll(RegExp(r'\s*↗'), '').trim();
+        final asset = OfficialCatalogService.assetKey(f.photoAsset);
+
+        return Container(
+          margin: const EdgeInsets.only(bottom: 12),
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: isDark ? GriColors.darkSurface1 : Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+              width: 1.0,
+            ),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: GriColors.forestPrimary.withValues(alpha: 0.3),
+                    width: 1.2,
+                  ),
+                ),
+                child: ClipOval(
+                  child: asset.isNotEmpty
+                      ? Image.asset(
+                          asset,
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) => _fallbackAvatar(f.initials, 48),
+                        )
+                      : _fallbackAvatar(f.initials, 48),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      cleanName,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 13,
+                        color: isDark ? GriColors.darkOnSurface : GriColors.onSurface,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      f.designation,
+                      style: const TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                        color: GriColors.forestPrimary,
+                      ),
+                    ),
+                    if (f.qualifications.isNotEmpty) ...[
+                      const SizedBox(height: 2),
+                      Text(
+                        f.qualifications,
+                        style: TextStyle(
+                          fontSize: 10.5,
+                          color: isDark ? GriColors.darkOnSurfaceVariant : Colors.grey.shade700,
+                        ),
+                      ),
+                    ],
+                    if (f.specialization.isNotEmpty) ...[
+                      const SizedBox(height: 3),
+                      Text(
+                        "Spec: ${f.specialization}",
+                        style: TextStyle(
+                          fontSize: 10.5,
+                          color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                    const SizedBox(height: 8),
+                    Wrap(
+                      spacing: 6,
+                      runSpacing: 4,
+                      children: [
+                        if (f.profileUrl.isNotEmpty)
+                          _actionChip(
+                            context,
+                            "Profile PDF",
+                            Icons.picture_as_pdf,
+                            Colors.red,
+                            () => OfficialResourceRegistry.smartOpenDocument(
+                              context,
+                              f.profileUrl,
+                              title: "$cleanName Profile",
+                            ),
+                          ),
+                        if (f.scholar.isNotEmpty)
+                          _actionChip(
+                            context,
+                            "Google Scholar",
+                            Icons.school,
+                            Colors.blue.shade700,
+                            () => GriUrlLauncher.launch(context, f.scholar),
+                          ),
+                        if (f.irins.isNotEmpty)
+                          _actionChip(
+                            context,
+                            "IRINS Profile",
+                            Icons.badge,
+                            Colors.green.shade700,
+                            () => GriUrlLauncher.launch(context, f.irins),
+                          ),
+                        if (f.orcid.isNotEmpty)
+                          _actionChip(
+                            context,
+                            "ORCID",
+                            Icons.verified,
+                            Colors.lightGreen.shade800,
+                            () => GriUrlLauncher.launch(context, f.orcid),
+                          ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _actionChip(BuildContext context, String label, IconData icon, Color color, VoidCallback onTap) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(4),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+        decoration: BoxDecoration(
+          color: color.withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(4),
+          border: Border.all(color: color.withValues(alpha: 0.3), width: 0.7),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 10.5, color: color),
+            const SizedBox(width: 3.5),
+            Text(
+              label,
+              style: TextStyle(fontSize: 9.5, fontWeight: FontWeight.bold, color: color),
             ),
           ],
         ),
-        const SizedBox(height: 12),
-        _buildFacultyCard(
-          context,
-          isDark,
-          curHod,
-          "Professor & Head of Department",
-          "Ph.D., Post-Doctoral Research",
-          "Sustainable Systems, Rural Analytics & Applied Extension",
-          profilePdfUrl: "https://ruraluniv.ac.in/administration?content=hod",
+      ),
+    );
+  }
+
+  Widget _fallbackAvatar(String text, double size) {
+    return Container(
+      width: size,
+      height: size,
+      color: GriColors.forestContainer,
+      alignment: Alignment.center,
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: size * 0.35,
+          fontWeight: FontWeight.bold,
+          color: GriColors.forestPrimary,
         ),
-        _buildFacultyCard(
-          context,
-          isDark,
-          "Dr. S. Ramakrishnan",
-          "Associate Professor",
-          "Ph.D., UGC-NET",
-          "Community Technologies, Public Policy & Empirical Field Immersion",
-        ),
-        _buildFacultyCard(
-          context,
-          isDark,
-          "Dr. M. Lakshmi Devi",
-          "Assistant Professor",
-          "M.Sc., Ph.D.",
-          "Field Action Research, Rural Natural Resource Management",
-        ),
-        _buildFacultyCard(
-          context,
-          isDark,
-          "Dr. K. Anbarasu",
-          "Assistant Professor",
-          "Ph.D., SET",
-          "Interdisciplinary Applied Research & Village Immersion Units",
-        ),
-      ],
+      ),
     );
   }
 
@@ -548,7 +926,7 @@ class DepartmentDetailScreen extends StatelessWidget {
   }
 
   Widget _buildInfoRow(BuildContext context, bool isDark, IconData icon, String label, String value) {
-    final isEmail = label == "Email" && value.contains("@");
+    final isEmail = label == "Official Email" && value.contains("@");
     final isPhone = label.contains("EPABX") || label.contains("Phone");
     final isUrl = label.contains("Portal") || value.startsWith("http");
     final isInteractive = isEmail || isPhone || isUrl;
@@ -772,7 +1150,7 @@ class DepartmentDetailScreen extends StatelessWidget {
             radius: 20,
             backgroundColor: GriColors.forestPrimary.withValues(alpha: isDark ? 0.25 : 0.1),
             child: Text(
-              name.split(" ").last[0],
+              name.split(" ").last.isNotEmpty ? name.split(" ").last[0] : "F",
               style: const TextStyle(fontWeight: FontWeight.w700, color: GriColors.forestPrimary, fontSize: 13),
             ),
           ),
