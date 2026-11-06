@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import '../utils/gri_colors.dart';
 import '../utils/gri_url_launcher.dart';
 import 'seed_data_service.dart';
+import 'official_catalog_service.dart';
 
 enum ResourceType {
   IMAGE,
@@ -408,6 +409,37 @@ class OfficialResourceRegistry {
           isVerified: true,
           lastChecked: '2026-10-15',
           summary: summary,
+        ),
+      );
+    }
+
+    // Merge official catalog documents from canonical dataset
+    for (final doc in OfficialCatalogService.instance.documents) {
+      final url = doc.url.trim();
+      final urlLower = url.toLowerCase();
+      if (urlLower.isEmpty || seenUrls.contains(urlLower)) continue;
+      seenUrls.add(urlLower);
+
+      var id = 'doc_${doc.id}';
+      if (seenIds.contains(id)) {
+        id = 'DOC_OFFICIAL_${unified.length + 1}';
+      }
+      seenIds.add(id);
+
+      final localPath = doc.fileAsset.isNotEmpty ? 'data/official/${doc.fileAsset}' : null;
+      unified.add(
+        OfficialResource(
+          id: id,
+          title: doc.title,
+          category: doc.category.isNotEmpty ? doc.category : 'General',
+          type: ResourceType.DOCUMENT_PDF,
+          sourceUrl: url,
+          localPath: localPath,
+          sizeBytes: doc.sizeBytes > 0 ? doc.sizeBytes : null,
+          module: doc.authority.isNotEmpty ? doc.authority : 'Academic Affairs',
+          isVerified: doc.verified,
+          lastChecked: '2026-11-05',
+          summary: doc.sizeLabel,
         ),
       );
     }

@@ -16,6 +16,7 @@ import 'global_website_search_screen.dart';
 import 'official_portals_gateway_screen.dart';
 import 'settings_screen.dart';
 import '../services/official_resource_registry.dart';
+import '../services/official_catalog_service.dart';
 
 /// Production-Grade Home Dashboard for The Gandhigram Rural Institute
 /// Engineered to executive government & university digital standards:
@@ -253,15 +254,27 @@ class HomeDashboardScreen extends StatelessWidget {
           const SizedBox(height: 16),
 
           // 3. Live University Circulars & Important Announcements
-          if (provider.circulars.isNotEmpty) ...[
+          if (provider.circulars.isNotEmpty || OfficialCatalogService.instance.notices.isNotEmpty) ...[
             GriFadeSlideEntrance(
               delay: const Duration(milliseconds: 90),
               child: Builder(
                 builder: (context) {
-                  final urgent = provider.circulars.firstWhere(
-                    (c) => c.isUrgent,
-                    orElse: () => provider.circulars.first,
-                  );
+                  final officialNotice = OfficialCatalogService.instance.notices.isNotEmpty
+                      ? OfficialCatalogService.instance.notices.first
+                      : null;
+                  final urgent = provider.circulars.isNotEmpty
+                      ? provider.circulars.firstWhere(
+                          (c) => c.isUrgent,
+                          orElse: () => provider.circulars.first,
+                        )
+                      : null;
+
+                  final noticeTitle = urgent?.title ?? officialNotice?.title ?? "Official University Notification";
+                  final noticeDate = urgent?.publishedDate ?? officialNotice?.dateDisplay ?? "Latest Update";
+                  final noticeSummary = urgent?.summary ?? officialNotice?.summary ?? "Issued by The Gandhigram Rural Institute.";
+                  final noticeSource = urgent?.issuedBy ?? "Registrar / Administration";
+                  final noticeUrl = urgent?.actionUrl ?? officialNotice?.url ?? "";
+
                   return Container(
                     decoration: BoxDecoration(
                       color: isDark ? GriColors.darkSurface2 : GriColors.warningContainer.withValues(alpha: 0.6),
@@ -308,7 +321,7 @@ class HomeDashboardScreen extends StatelessWidget {
                                   ),
                                   const SizedBox(width: 8),
                                   Text(
-                                    urgent.publishedDate,
+                                    noticeDate,
                                     style: TextStyle(
                                       fontSize: 11,
                                       color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
@@ -318,7 +331,7 @@ class HomeDashboardScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                urgent.title,
+                                noticeTitle,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 13,
@@ -327,7 +340,7 @@ class HomeDashboardScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 3),
                               Text(
-                                urgent.summary,
+                                noticeSummary,
                                 style: TextStyle(
                                   fontSize: 11.5,
                                   color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
@@ -341,7 +354,7 @@ class HomeDashboardScreen extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "Source: ${urgent.issuedBy}",
+                                    "Source: $noticeSource",
                                     style: TextStyle(
                                       fontSize: 10.5,
                                       color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
@@ -349,11 +362,19 @@ class HomeDashboardScreen extends StatelessWidget {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (_) => const DocumentVaultScreen(initialCategory: "Circulars"),
-                                        ),
-                                      );
+                                      if (noticeUrl.isNotEmpty) {
+                                        OfficialResourceRegistry.smartOpenDocument(
+                                          context,
+                                          noticeUrl,
+                                          title: noticeTitle,
+                                        );
+                                      } else {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (_) => const DocumentVaultScreen(initialCategory: "Circulars"),
+                                          ),
+                                        );
+                                      }
                                     },
                                     child: const Row(
                                       mainAxisSize: MainAxisSize.min,
@@ -530,9 +551,9 @@ class HomeDashboardScreen extends StatelessWidget {
                     _buildBentoCard(
                       context: context,
                       title: "Schools & Academics",
-                      subtitle: "8 Faculties • CUET Intake",
+                      subtitle: "9 Schools • 33 Depts",
                       icon: Icons.account_balance_outlined,
-                      badge: "8 Faculties",
+                      badge: "9 Schools",
                       badgeColor: GriColors.forestPrimary,
                       destination: const SchoolsProgrammesHubScreen(),
                     ),
@@ -557,7 +578,7 @@ class HomeDashboardScreen extends StatelessWidget {
                     _buildBentoCard(
                       context: context,
                       title: "Governance & Officers",
-                      subtitle: "Chancellor • VC • Syndicate",
+                      subtitle: "Chancellor • VC • Deans",
                       icon: Icons.groups_outlined,
                       badge: "Authorities",
                       badgeColor: GriColors.ochrePrimary,
@@ -584,9 +605,9 @@ class HomeDashboardScreen extends StatelessWidget {
                     _buildBentoCard(
                       context: context,
                       title: "Document Vault",
-                      subtitle: "595 Institutional PDFs",
+                      subtitle: "466 Official PDFs",
                       icon: Icons.folder_shared_outlined,
-                      badge: "595 PDFs",
+                      badge: "466 PDFs",
                       badgeColor: Colors.indigo,
                       destination: const DocumentVaultScreen(),
                     ),
