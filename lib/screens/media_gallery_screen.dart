@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/official_models.dart';
 import '../services/official_catalog_service.dart';
-import '../services/official_resource_registry.dart';
 import '../utils/gri_colors.dart';
 import '../utils/gri_motion.dart';
 import '../utils/gri_url_launcher.dart';
@@ -444,7 +443,7 @@ class _MediaGalleryScreenState extends State<MediaGalleryScreen>
     bool isDark,
     List<OfficialPhoto> photos,
   ) {
-    final groups = ['All', ...photos.map((p) => p.group).toSet().toList()];
+    final groups = ['All', ...photos.map((p) => p.group).toSet()];
     final filtered = _selectedPhotoGroup == 'All'
         ? photos
         : photos.where((p) => p.group == _selectedPhotoGroup).toList();

@@ -273,7 +273,7 @@ class HomeDashboardScreen extends StatelessWidget {
                   final noticeDate = urgent?.publishedDate ?? officialNotice?.dateDisplay ?? "Latest Update";
                   final noticeSummary = urgent?.summary ?? officialNotice?.summary ?? "Issued by The Gandhigram Rural Institute.";
                   final noticeSource = urgent?.issuedBy ?? "Registrar / Administration";
-                  final noticeUrl = urgent?.actionUrl ?? officialNotice?.url ?? "";
+                  final noticeUrl = officialNotice?.url ?? "";
 
                   return Container(
                     decoration: BoxDecoration(

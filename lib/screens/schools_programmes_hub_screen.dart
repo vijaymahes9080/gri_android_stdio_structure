@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../models/official_models.dart';
 import '../services/official_catalog_service.dart';
 import '../services/official_resource_registry.dart';

@@ -426,7 +426,7 @@ class OfficialResourceRegistry {
       }
       seenIds.add(id);
 
-      final localPath = doc.fileAsset.isNotEmpty ? 'data/official/${doc.fileAsset}' : null;
+      final localPath = doc.localPath.isNotEmpty ? 'data/official/${doc.localPath}' : null;
       unified.add(
         OfficialResource(
           id: id,
@@ -435,9 +435,9 @@ class OfficialResourceRegistry {
           type: ResourceType.DOCUMENT_PDF,
           sourceUrl: url,
           localPath: localPath,
-          sizeBytes: doc.sizeBytes > 0 ? doc.sizeBytes : null,
+          sizeBytes: doc.bytes > 0 ? doc.bytes : null,
           module: doc.authority.isNotEmpty ? doc.authority : 'Academic Affairs',
-          isVerified: doc.verified,
+          isVerified: doc.valid,
           lastChecked: '2026-11-05',
           summary: doc.sizeLabel,
         ),
