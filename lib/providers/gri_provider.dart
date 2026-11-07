@@ -1639,6 +1639,8 @@ class GriProvider extends ChangeNotifier {
           isUser: false,
           timestamp: "Just now",
           source: reply.sources.isNotEmpty ? reply.sources.first : null,
+          confidence: reply.confidence,
+          grounded: reply.grounded,
         ),
       );
       notifyListeners();

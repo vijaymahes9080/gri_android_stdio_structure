@@ -368,6 +368,10 @@ class SahayakMessage {
   final bool isUser;
   final String timestamp;
   final String? source;
+  /// Confidence in [0,1] for assistant replies; 1.0 for user messages.
+  final double confidence;
+  /// Whether the reply was grounded in a verified source.
+  final bool grounded;
 
   SahayakMessage({
     required this.id,
@@ -375,6 +379,8 @@ class SahayakMessage {
     required this.isUser,
     this.timestamp = "Just now",
     this.source,
+    this.confidence = 1.0,
+    this.grounded = false,
   });
 
   Map<String, dynamic> toMap() => {
@@ -383,6 +389,8 @@ class SahayakMessage {
         'is_user': isUser,
         'timestamp': timestamp,
         'source': source,
+        'confidence': confidence,
+        'grounded': grounded,
       };
 
   factory SahayakMessage.fromMap(Map<String, dynamic> map) => SahayakMessage(
@@ -391,6 +399,8 @@ class SahayakMessage {
         isUser: map['is_user'] as bool? ?? false,
         timestamp: map['timestamp']?.toString() ?? 'Just now',
         source: map['source']?.toString(),
+        confidence: (map['confidence'] as num?)?.toDouble() ?? 1.0,
+        grounded: map['grounded'] as bool? ?? false,
       );
 }
 

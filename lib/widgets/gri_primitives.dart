@@ -95,41 +95,42 @@ class GriEmptyState extends StatelessWidget {
     return Semantics(
       label: hint != null ? '$title. $hint!' : title,
       child: GriFadeSlideEntrance(
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: GriSpacing.xl, vertical: GriSpacing.xxl),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 64,
-                height: 64,
-                decoration: BoxDecoration(
-                  color: wellColor,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: GriSpacing.xl, vertical: GriSpacing.xxl),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 64,
+                  height: 64,
+                  decoration: BoxDecoration(
+                    color: wellColor,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant),
+                  ),
+                  child: Icon(icon, size: 28, color: Theme.of(context).colorScheme.primary),
                 ),
-                child: Icon(icon, size: 28, color: Theme.of(context).colorScheme.primary),
-              ),
-              const SizedBox(height: GriSpacing.md),
-              Text(
-                title,
-                textAlign: TextAlign.center,
-                style: GriTypography.titleMedium.copyWith(color: onWell),
-              ),
-              if (hint != null) ...[
-                const SizedBox(height: GriSpacing.xs),
-                Text(
-                  hint!,
-                  textAlign: TextAlign.center,
-                  style: GriTypography.bodySmall.copyWith(color: muted),
-                ),
-              ],
-              if (action != null) ...[
                 const SizedBox(height: GriSpacing.md),
-                action!,
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: GriTypography.titleMedium.copyWith(color: onWell),
+                ),
+                if (hint != null) ...[
+                  const SizedBox(height: GriSpacing.xs),
+                  Text(
+                    hint!,
+                    textAlign: TextAlign.center,
+                    style: GriTypography.bodySmall.copyWith(color: muted),
+                  ),
+                ],
+                if (action != null) ...[
+                  const SizedBox(height: GriSpacing.md),
+                  action!,
+                ],
               ],
-            ],
+            ),
           ),
         ),
       ),
@@ -192,22 +193,122 @@ class GriStatusBadge extends StatelessWidget {
       ink = onContainer;
     }
 
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: dense ? GriSpacing.s : GriSpacing.md,
-        vertical: dense ? 3 : 5,
-      ),
-      decoration: BoxDecoration(
-        color: container,
-        borderRadius: BorderRadius.circular(GriRadii.sm),
-        border: Border.all(color: ink.withValues(alpha: 0.35)),
-      ),
-      child: Text(
-        label,
-        style: GriTypography.labelSmall.copyWith(
-          color: onContainer,
-          fontSize: dense ? 10 : 11,
+    return Semantics(
+      label: label,
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: dense ? GriSpacing.s : GriSpacing.md,
+          vertical: dense ? 3 : 5,
         ),
+        decoration: BoxDecoration(
+          color: container,
+          borderRadius: BorderRadius.circular(GriRadii.sm),
+          border: Border.all(color: ink.withValues(alpha: 0.35)),
+        ),
+        child: Text(
+          label,
+          style: GriTypography.labelSmall.copyWith(
+            color: onContainer,
+            fontSize: dense ? 10 : 11,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Shimmer loading skeleton used while content is fetched or rendered.
+/// Honors reduced-motion by rendering a static placeholder instead of animating.
+class GriSkeleton extends StatefulWidget {
+  final double width;
+  final double height;
+  final BorderRadius borderRadius;
+  final bool pulse;
+
+  const GriSkeleton({
+    super.key,
+    this.width = double.infinity,
+    this.height = 16,
+    this.borderRadius = const BorderRadius.all(Radius.circular(4)),
+    this.pulse = true,
+  });
+
+  @override
+  State<GriSkeleton> createState() => _GriSkeletonState();
+}
+
+class _GriSkeletonState extends State<GriSkeleton>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    )..repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final base = isDark ? GriColors.darkSurface2 : GriColors.surfaceVariant;
+    final highlight = isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant;
+
+    final child = Container(
+      width: widget.width,
+      height: widget.height,
+      decoration: BoxDecoration(
+        color: base,
+        borderRadius: widget.borderRadius,
+        border: Border.all(color: highlight.withValues(alpha: 0.3), width: 0.5),
+      ),
+    );
+
+    if (!widget.pulse || GriMotion.shouldReduceMotion(context)) {
+      return Semantics(
+        label: 'Loading',
+        child: child,
+      );
+    }
+
+    return Semantics(
+      label: 'Loading',
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, _) {
+          final value = _controller.value;
+          return ClipRRect(
+            borderRadius: widget.borderRadius,
+            child: Container(
+              width: widget.width,
+              height: widget.height,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    base,
+                    highlight.withValues(alpha: 0.5),
+                    base,
+                  ],
+                  stops: [
+                    (value - 0.3).clamp(0.0, 1.0),
+                    value.clamp(0.0, 1.0),
+                    (value + 0.3).clamp(0.0, 1.0),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

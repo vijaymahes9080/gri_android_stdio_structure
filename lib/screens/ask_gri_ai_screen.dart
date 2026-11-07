@@ -209,6 +209,28 @@ class _AskGriAiScreenState extends State<AskGriAiScreen> {
                                   ),
                                 ),
                               ],
+                              if (!msg.isUser && msg.confidence < 1.0) ...[
+                                const SizedBox(height: 6),
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const Icon(
+                                      Icons.info_outline,
+                                      size: 10,
+                                      color: GriColors.ochrePrimary,
+                                    ),
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      'Confidence: ${(msg.confidence * 100).round()}% • ${msg.grounded ? 'grounded' : 'not grounded'}',
+                                      style: TextStyle(
+                                        fontSize: 9,
+                                        color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                                        fontStyle: FontStyle.italic,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ],
                           ),
                         ),

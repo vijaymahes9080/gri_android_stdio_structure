@@ -5,11 +5,15 @@ class SahayakReply {
   final String text;
   final List<String> sources;
   final bool grounded;
+  /// Confidence in [0,1]. Grounded replies carry high confidence; fallback and
+  /// refused replies carry low confidence so the UI can label them honestly.
+  final double confidence;
 
   const SahayakReply({
     required this.text,
     this.sources = const [],
     this.grounded = false,
+    this.confidence = 1.0,
   });
 }
 
@@ -209,6 +213,18 @@ class SahayakKnowledgeEngine {
       return const SahayakReply(text: ''); // caller treats as no-op
     }
 
+    // Prompt-injection / role-override guard. Never let a query override the
+    // assistant's system behavior or impersonate the institution.
+    final injection = _detectPromptInjection(q);
+    if (injection != null) {
+      return SahayakReply(
+        text: injection,
+        sources: const [],
+        grounded: false,
+        confidence: 0.0,
+      );
+    }
+
     // Live circulars are matched first so current notices win over static text.
     for (final circular in circulars) {
       final hay = '${circular.title} ${circular.category} ${circular.summary}'
@@ -228,6 +244,7 @@ class SahayakKnowledgeEngine {
               'the circulars page of the university website.',
           sources: [_circularsUrl],
           grounded: true,
+          confidence: 0.95,
         );
       }
     }
@@ -241,6 +258,7 @@ class SahayakKnowledgeEngine {
         text: rag.text,
         sources: rag.sources,
         grounded: rag.grounded,
+        confidence: rag.confidence,
       );
     }
 
@@ -276,6 +294,7 @@ class SahayakKnowledgeEngine {
         text: '${best.answer}$sourceLine',
         sources: best.sources,
         grounded: true,
+        confidence: 0.8,
       );
     }
 
@@ -291,6 +310,38 @@ class SahayakKnowledgeEngine {
           'library, scholarships, NIRF/NAAC data and anti-ragging policy. For '
           'anything outside that scope please use the Official Portals '
           'gateway or the university site.',
+      grounded: false,
+      confidence: 0.35,
     );
+  }
+
+  /// Detects prompt-injection / role-override attempts and returns a safe
+  /// refusal message, or null when the query is benign.
+  String? _detectPromptInjection(String q) {
+    final lq = q.toLowerCase();
+    final injectionMarkers = [
+      'ignore previous instructions',
+      'ignore all previous',
+      'disregard your',
+      'you are now',
+      'pretend to be',
+      'act as if you are',
+      'reveal your system',
+      'system prompt',
+      'developer mode',
+      'override your',
+      'jailbreak',
+      'forget your',
+      'new instructions',
+      'sudo', 'admin mode', 'root access',
+    ];
+    for (final marker in injectionMarkers) {
+      if (lq.contains(marker)) {
+        return 'I cannot comply with that request. I am the GRI-Sahayak '
+            'institutional assistant and I only answer verified questions '
+            'about Gandhigram Rural Institute using published official sources.';
+      }
+    }
+    return null;
   }
 }
