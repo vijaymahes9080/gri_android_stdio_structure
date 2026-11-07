@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../utils/gri_colors.dart';
 import '../utils/gri_motion.dart';
 import '../services/official_resource_registry.dart';
+import '../services/verified_institution_content.dart';
 import '../main.dart';
 
 /// Authentic Institutional Animated Splash Screen

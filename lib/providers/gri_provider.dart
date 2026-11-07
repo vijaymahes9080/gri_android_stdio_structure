@@ -67,6 +67,27 @@ class GriProvider extends ChangeNotifier {
   bool _isAuthenticated = true;
   bool get isAuthenticated => _isAuthenticated;
 
+  /// True when the app has no live university/Supabase session and is running
+  /// on locally seeded demo records. All student figures must be labelled
+  /// accordingly instead of being presented as official university data.
+  bool get isDemoSession => !SupabaseService.instance.isInitialized;
+
+  /// Phase 2 gate: student-only workspace actions stay locked until the user
+  /// explicitly acknowledges that the workspace contains demo data unless a
+  /// real institutional session exists.
+  bool _studentWorkspaceUnlocked = false;
+  bool get isStudentWorkspaceUnlocked => _studentWorkspaceUnlocked;
+
+  void unlockStudentWorkspace() {
+    _studentWorkspaceUnlocked = true;
+    notifyListeners();
+  }
+
+  void lockStudentWorkspace() {
+    _studentWorkspaceUnlocked = false;
+    notifyListeners();
+  }
+
   UserModel? _currentUser;
   UserModel? get currentUser => _currentUser;
 

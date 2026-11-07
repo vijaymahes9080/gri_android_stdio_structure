@@ -15,12 +15,16 @@ import 'document_vault_screen.dart';
 import 'global_website_search_screen.dart';
 import 'official_portals_gateway_screen.dart';
 import 'settings_screen.dart';
+import 'faculty_directory_screen.dart';
+import 'events_notices_screen.dart';
+import 'campus_map_screen.dart';
+import 'institutional_services_screen.dart';
 import '../services/official_resource_registry.dart';
 import '../services/official_catalog_service.dart';
 
 /// Production-Grade Home Dashboard for The Gandhigram Rural Institute
 /// Engineered to executive government & university digital standards:
-/// - Authoritative institutional header with NAAC 'A' accreditation
+/// - Authoritative institutional header with NAAC A++ accreditation
 /// - Prominent universal catalog search across 247 official URLs
 /// - Live circulars ticker with server sync & fallback
 /// - Bento-style 8-module academic grid
@@ -35,6 +39,13 @@ class HomeDashboardScreen extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
     final provider = context.watch<GriProvider>();
     final user = provider.currentUser;
+
+    final catalog = OfficialCatalogService.instance;
+    final hasCatalog = catalog.isLoaded;
+    final schoolCount = hasCatalog ? catalog.schools.length : null;
+    final unitCount = hasCatalog ? catalog.units.length : null;
+    final programmeCount = hasCatalog ? catalog.programmes.length : null;
+    final documentCount = hasCatalog ? catalog.documents.length : null;
 
     return RefreshIndicator(
       onRefresh: () => provider.triggerCloudSync(),
@@ -128,6 +139,26 @@ class HomeDashboardScreen extends StatelessWidget {
                                     color: GriColors.ochrePrimary,
                                     size: 15,
                                   ),
+                                  if (provider.isDemoSession) ...[
+                                    const SizedBox(width: 4),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 6, vertical: 1),
+                                      decoration: BoxDecoration(
+                                        color: GriColors.ochreContainer,
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: const Text(
+                                        'DEMO',
+                                        style: TextStyle(
+                                          fontSize: 8.5,
+                                          fontWeight: FontWeight.w800,
+                                          letterSpacing: 0.4,
+                                          color: GriColors.ochrePrimary,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ],
                               ),
                               const SizedBox(height: 2),
@@ -223,7 +254,9 @@ class HomeDashboardScreen extends StatelessWidget {
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
-                        "Search 309 official pages, 602 documents, syllabi...",
+                        hasCatalog
+                            ? "Search $unitCount units, $programmeCount programmes, $documentCount documents..."
+                            : "Search verified faculty, programmes, notices and documents...",
                         style: TextStyle(
                           fontSize: 12.5,
                           color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
@@ -237,9 +270,9 @@ class HomeDashboardScreen extends StatelessWidget {
                         color: GriColors.forestPrimary.withValues(alpha: 0.08),
                         borderRadius: BorderRadius.circular(6),
                       ),
-                      child: const Text(
-                        "309 URLs",
-                        style: TextStyle(
+                      child: Text(
+                        hasCatalog ? "$unitCount units" : "Verified",
+                        style: const TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w700,
                           color: GriColors.forestPrimary,
@@ -458,7 +491,9 @@ class HomeDashboardScreen extends StatelessWidget {
                       icon: Icons.map_outlined,
                       label: "Campus Map",
                       color: GriColors.tealSecondary,
-                      onTap: () => provider.switchTab(NavigationTab.CAMPUS),
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => const CampusMapScreen()),
+                      ),
                     ),
                     _buildQuickAction(
                       context: context,
@@ -499,6 +534,47 @@ class HomeDashboardScreen extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+          const SizedBox(height: 12),
+          Wrap(
+            spacing: 6,
+            runSpacing: 6,
+            children: [
+              ActionChip(
+                avatar: const Icon(Icons.badge_outlined, size: 14),
+                label: const Text('Faculty Directory',
+                    style: TextStyle(fontSize: 11)),
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (_) => const FacultyDirectoryScreen()),
+                ),
+              ),
+              ActionChip(
+                avatar: const Icon(Icons.event_outlined, size: 14),
+                label:
+                    const Text('Events & Notices', style: TextStyle(fontSize: 11)),
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (_) => const EventsNoticesScreen()),
+                ),
+              ),
+              ActionChip(
+                avatar: const Icon(Icons.miscellaneous_services_outlined, size: 14),
+                label: const Text('Institutional Services',
+                    style: TextStyle(fontSize: 11)),
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (_) => const InstitutionalServicesScreen()),
+                ),
+              ),
+              ActionChip(
+                avatar: const Icon(Icons.map_outlined, size: 14),
+                label: const Text('Campus Map', style: TextStyle(fontSize: 11)),
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const CampusMapScreen()),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 20),
 
@@ -551,9 +627,11 @@ class HomeDashboardScreen extends StatelessWidget {
                     _buildBentoCard(
                       context: context,
                       title: "Schools & Academics",
-                      subtitle: "9 Schools • 33 Depts",
+                      subtitle: hasCatalog
+                          ? "$schoolCount Schools • $unitCount Units"
+                          : "Schools • Departments • Centres",
                       icon: Icons.account_balance_outlined,
-                      badge: "9 Schools",
+                      badge: hasCatalog ? "$programmeCount Programmes" : "Academics",
                       badgeColor: GriColors.forestPrimary,
                       destination: const SchoolsProgrammesHubScreen(),
                     ),
@@ -587,7 +665,7 @@ class HomeDashboardScreen extends StatelessWidget {
                     _buildBentoCard(
                       context: context,
                       title: "Campus Facilities",
-                      subtitle: "300-Acre Map • Library",
+                      subtitle: "Official map • Library • Research facilities",
                       icon: Icons.apartment_outlined,
                       badge: "Infrastructure",
                       badgeColor: GriColors.tealSecondary,
@@ -605,18 +683,20 @@ class HomeDashboardScreen extends StatelessWidget {
                     _buildBentoCard(
                       context: context,
                       title: "Document Vault",
-                      subtitle: "466 Official PDFs",
+                      subtitle: hasCatalog
+                          ? "$documentCount official documents"
+                          : "Official documents & publications",
                       icon: Icons.folder_shared_outlined,
-                      badge: "466 PDFs",
+                      badge: hasCatalog ? "$documentCount Docs" : "Documents",
                       badgeColor: Colors.indigo,
                       destination: const DocumentVaultScreen(),
                     ),
                     _buildBentoCard(
                       context: context,
                       title: "Official Gateways",
-                      subtitle: "Samarth • Webmail • ERP",
+                      subtitle: "Samarth • Webmail • Official portals",
                       icon: Icons.shield_outlined,
-                      badge: "10 Portals",
+                      badge: "Verified links",
                       badgeColor: Colors.indigo,
                       destination: const OfficialPortalsGatewayScreen(),
                     ),
@@ -705,37 +785,49 @@ class HomeDashboardScreen extends StatelessWidget {
                       _buildCampusPhotoCard(
                         context: context,
                         imagePath: "assets/images/library_front.jpg",
-                        title: "Dr. Radhakrishnan Central Library",
-                        subtitle: "1,80,000+ volumes, rare palm-leaf archives & e-consortium",
-                        tag: "Academic Hub",
-                        onTap: () => provider.switchTab(NavigationTab.CAMPUS),
+                        title: "Dr. G.R. Library",
+                        subtitle: "Official campus library • see official page for collections",
+                        tag: "Academic",
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (_) => const CampusFacilitiesScreen()),
+                        ),
                       ),
                       const SizedBox(width: 12),
                       _buildCampusPhotoCard(
                         context: context,
                         imagePath: "assets/official/images/gri_admin_block.png",
-                        title: "Dr. G. Ramachandran Administrative Block",
-                        subtitle: "Central University Secretariat & Chancellery",
-                        tag: "Heritage",
-                        onTap: () => provider.switchTab(NavigationTab.CAMPUS),
+                        title: "Administrative Block",
+                        subtitle: "Campus administration and university offices",
+                        tag: "Campus",
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (_) => const CampusMapScreen()),
+                        ),
                       ),
                       const SizedBox(width: 12),
                       _buildCampusPhotoCard(
                         context: context,
                         imagePath: "assets/images/health_centre.jpg",
-                        title: "GRI Rural Health Centre",
-                        subtitle: "24x7 community clinic, pharmacy & outpatient care",
-                        tag: "Healthcare",
-                        onTap: () => provider.switchTab(NavigationTab.CAMPUS),
+                        title: "Campus Health Centre",
+                        subtitle: "Health services published under campus infrastructure",
+                        tag: "Health",
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (_) => const CampusMapScreen()),
+                        ),
                       ),
                       const SizedBox(width: 12),
                       _buildCampusPhotoCard(
                         context: context,
                         imagePath: "assets/images/grilogotya.jpg",
-                        title: "Residential Halls & Dining Enclave",
-                        subtitle: "Kasturba & Tagore hostels with solar water & WiFi",
-                        tag: "Hostels",
-                        onTap: () => provider.switchTab(NavigationTab.CAMPUS),
+                        title: "Residential Facilities",
+                        subtitle: "Hostels and guest house • details on official infrastructure page",
+                        tag: "Residential",
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (_) => const CampusMapScreen()),
+                        ),
                       ),
                     ],
                   ),
@@ -791,7 +883,7 @@ class HomeDashboardScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "Ministry of Education, Govt. of India • NAAC 'A' Grade (3.63 CGPA)",
+                          "Ministry of Education, Govt. of India • NAAC A++ Grade (4th Cycle) • CGPA 3.58",
                           style: TextStyle(
                             fontSize: 10,
                             color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
@@ -815,16 +907,31 @@ class HomeDashboardScreen extends StatelessWidget {
     final List<({String label, String value, bool isHighlight})> metrics;
 
     if (role == UserRole.STUDENT) {
+      final avgAttendance = provider.courses.isEmpty
+          ? null
+          : (provider.courses
+                      .map((c) => c.attendancePercent)
+                      .reduce((a, b) => a + b) /
+                  provider.courses.length)
+              .round();
       metrics = [
-        (label: "Semester", value: user?.semester ?? "Sem IV", isHighlight: false),
-        (label: "CGPA", value: user?.cgpa ?? "8.92", isHighlight: false),
-        (label: "Attendance", value: "87%", isHighlight: true),
-        (label: "Hostel", value: user?.isHostelite == true ? "Kasturba" : "Day Scholar", isHighlight: false),
+        (label: "Semester", value: user?.semester ?? "—", isHighlight: false),
+        (label: "CGPA", value: user?.cgpa ?? "—", isHighlight: false),
+        (
+          label: provider.isDemoSession ? "Attendance (demo)" : "Attendance",
+          value: avgAttendance == null ? "—" : "$avgAttendance%",
+          isHighlight: true,
+        ),
+        (
+          label: "Residence",
+          value: user?.isHostelite == true ? "Hostelite" : "Day Scholar",
+          isHighlight: false,
+        ),
       ];
     } else if (role == UserRole.FACULTY) {
       metrics = [
         (label: "Designation", value: user?.semester ?? "Faculty", isHighlight: false),
-        (label: "Degree", value: user?.cgpa ?? "Ph.D.", isHighlight: false),
+        (label: "Degree", value: user?.cgpa ?? "—", isHighlight: false),
         (label: "Status", value: "Active Duty", isHighlight: true),
         (label: "Workstation", value: "Staff Wing", isHighlight: false),
       ];

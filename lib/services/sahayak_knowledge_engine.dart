@@ -1,4 +1,5 @@
 import '../models/academic_models.dart';
+import 'official_rag_service.dart';
 
 class SahayakReply {
   final String text;
@@ -41,16 +42,16 @@ class SahayakKnowledgeEngine {
   };
 
   static const String _siteUrl = 'https://ruraluniv.ac.in/';
-  static const String _circularsUrl = 'https://ruraluniv.ac.in/gridu?content=circular';
-  static const String _libraryUrl = 'https://ruraluniv.ac.in/facilities?content=library';
-  static const String _cbcsUrl = 'https://ruraluniv.ac.in/academics?content=CBCSsystem';
+  static const String _circularsUrl = 'https://ruraluniv.ac.in/notices/circular';
+  static const String _libraryUrl = 'https://ruraluniv.ac.in/page/library';
+  static const String _cbcsUrl = 'https://ruraluniv.ac.in/page/examination';
   static const String _admissionsUrl = 'https://ruraluniv.samarth.ac.in/index.php/site/login';
   static const String _prospectusUrl =
-      'https://www.ruraluniv.ac.in/includes/admissions/2026/pdf/Prospectus_202627.pdf';
-  static const String _esanadUrl = 'http://ruraluniv.ac.in/includes/examination/pdf/e-sanad301221.pdf';
-  static const String _nirfUrl = 'https://ruraluniv.ac.in/gri?CC=NIRF1';
+      'https://www.ruraluniv.ac.in/page/admissions#prospectus';
+  static const String _esanadUrl = 'https://ruraluniv.ac.in/page/examination#e-sanad';
+  static const String _nirfUrl = 'https://ruraluniv.ac.in/page/disclosures#naac';
   static const String _antiRaggingUrl =
-      'https://ruraluniv.ac.in/gridu?content=AntiRaggingCommittee';
+      'https://ruraluniv.ac.in/page/cells#anti-ragging';
 
   static final List<_KnowledgeEntry> _corpus = [
     const _KnowledgeEntry(
@@ -92,28 +93,29 @@ class SahayakKnowledgeEngine {
         'hostel', 'hostels', 'mess', 'residence', 'accommodation', 'rebate',
         'warden', 'stay',
       ],
-      'GRI provides residential facilities including Kasturba Hostel for '
-          'women and Tagore and Bapu hostels for men. Meals are managed by '
-          'student mess committees, and mess rebate applications are collected '
-          'by the Chief Warden before each vacation window.',
-      [_siteUrl],
+      'GRI publishes its hostel and residential facilities on the official '
+          'infrastructure page. Hostel allotment, mess rules and fee details '
+          'are administered by the university. This app does not display '
+          'official allotment records.',
+      [_siteUrl, 'https://ruraluniv.ac.in/page/infrastructure#hostels'],
     ),
     const _KnowledgeEntry(
       ['bus', 'transport', 'route', 'routes', 'pass', 'commute', 'driver'],
-      'The university operates scheduled bus services from Dindigul Bus '
-          'Stand, Madurai Mattuthavani and Batlagundu. Concessional semester '
-          'passes are issued to regular students; live route, driver and '
-          'timing details are available in the Campus hub.',
-      [_siteUrl],
+      'Campus transport routes and semester bus-pass instructions are published '
+          'by the university. Current timings and routes must be confirmed with '
+          'the official campus administration; this app does not invent route '
+          'schedules.',
+      [_siteUrl, 'https://ruraluniv.ac.in/page/about-gri#location-map'],
     ),
     const _KnowledgeEntry(
       [
         'library', 'book', 'books', 'journal', 'journals', 'digital',
         'repository', 'ieee',
       ],
-      'Dr. Radhakrishnan Central Library holds over 1,80,000 volumes with '
-          'online access to IEEE, Springer and UGC INFONET repositories and a '
-          'collection of classical Tamil palm-leaf archives.',
+      'The Dr. G.R. Library (Central Library) is the university library. The '
+          'official library page lists its collections, e-resources and service '
+          'information. Current opening hours and borrowing rules should be '
+          'confirmed on that page.',
       [_libraryUrl],
     ),
     const _KnowledgeEntry(
@@ -121,17 +123,17 @@ class SahayakKnowledgeEngine {
         'certificate', 'certificates', 'verification', 'verify', 'authentic',
         'transcript', 'degree', 'marksheet', 'esanad', 'e-sanad', 'migration',
       ],
-      'Degree certificates, statements of marks and transcripts can be '
-          'verified under the Official Document Center using their GRI- '
-          'identifier, and are transferred digitally through the National '
-          'e-SANAD/DigiLocker facility.',
+      'Degree certificates, statements of marks and transcripts are verified '
+          'digitally through the National e-SANAD / DigiLocker facility. Follow '
+          'the instructions published on the GRI examination page for '
+          'certificate applications and verification.',
       [_esanadUrl],
     ),
     const _KnowledgeEntry(
       ['nirf', 'ranking', 'rank', 'naac', 'accreditation', 'grade'],
-      'The Gandhigram Rural Institute publishes its institutional data under '
-          'the National Institutional Ranking Framework and is accredited by '
-          'NAAC. Current disclosures are available on the official site.',
+      'The Gandhigram Rural Institute is accredited by NAAC with an A++ Grade '
+          'in its 4th cycle (2025), with a CGPA of 3.58. NAAC, NIRF and ranking '
+          'disclosures are published on the official disclosures page.',
       [_nirfUrl],
     ),
     const _KnowledgeEntry(
@@ -158,10 +160,11 @@ class SahayakKnowledgeEngine {
         'gandhi', 'nai', 'talim', 'history', 'founded', 'founding', '1947',
         'heritage', 'philosophy', 'soundram', 'ramachandran',
       ],
-      'Founded in 1947 by the Gandhian workers Dr. T. S. Soundram and '
-          'Dr. G. Ramachandran, the institute follows the Nai Talim philosophy '
-          'that integrates teaching, research and extension for rural '
-          'transformation.',
+      'Founded as Gandhigram in 1947 by the Gandhian workers Dr. T. S. Soundram '
+          'and Dr. G. Ramachandran, the institute was established in 1956 and '
+          'became a Deemed to be University in 1976. It follows the Nai Talim '
+          'philosophy that integrates teaching, research and extension for '
+          'rural transformation.',
       [_siteUrl],
     ),
     const _KnowledgeEntry(
@@ -227,6 +230,18 @@ class SahayakKnowledgeEngine {
           grounded: true,
         );
       }
+    }
+
+    // Canonical catalogue retrieval: only active when the verified dataset has
+    // been loaded. In unit tests the catalogue is absent, so the deterministic
+    // static corpus below remains the fallback.
+    final rag = OfficialRagService.instance.answer(q);
+    if (rag != null) {
+      return SahayakReply(
+        text: rag.text,
+        sources: rag.sources,
+        grounded: rag.grounded,
+      );
     }
 
     final queryTokens = _tokenize(q);
