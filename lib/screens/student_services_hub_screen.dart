@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../models/user_model.dart';
 import '../providers/gri_provider.dart';
 import '../services/official_resource_registry.dart';
+import '../services/verified_institution_content.dart';
 import '../utils/gri_colors.dart';
 import '../utils/gri_motion.dart';
+import '../utils/gri_url_launcher.dart';
 
 class StudentServicesHubScreen extends StatefulWidget {
   const StudentServicesHubScreen({super.key});
@@ -148,6 +151,134 @@ class _StudentServicesHubScreenState extends State<StudentServicesHubScreen> wit
     );
   }
 
+  Widget _buildStudentGate(BuildContext context, bool isDark) {
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(20, 24, 20, 28),
+      children: [
+        Container(
+          padding: const EdgeInsets.all(18),
+          decoration: BoxDecoration(
+            color: isDark ? GriColors.darkSurface1 : Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    width: 42,
+                    height: 42,
+                    decoration: BoxDecoration(
+                      color: GriColors.forestPrimary.withValues(alpha: 0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(Icons.shield_outlined,
+                        color: GriColors.forestPrimary, size: 22),
+                  ),
+                  const SizedBox(width: 12),
+                  const Expanded(
+                    child: Text(
+                      'Student Workspace',
+                      style: TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w800),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 14),
+              const Text(
+                'This area contains student-only self-service actions: '
+                'grievance filing, transport pass requests and hostel/mess '
+                'requests.',
+                style: TextStyle(fontSize: 12.5, height: 1.45),
+              ),
+              const SizedBox(height: 10),
+              const Text(
+                'This build has no authorised live university session. The '
+                'records shown here are locally seeded demo/QA data for testing '
+                'the interface — they are not official GRI student records, and '
+                'submitting a request here does not reach the university.',
+                style: TextStyle(fontSize: 12, height: 1.45),
+              ),
+              const SizedBox(height: 14),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: isDark
+                      ? GriColors.darkSurface2
+                      : GriColors.ochreContainer.withValues(alpha: 0.6),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(Icons.info_outline,
+                        size: 15, color: GriColors.ochrePrimary),
+                    SizedBox(width: 7),
+                    Expanded(
+                      child: Text(
+                        'Live attendance, results, fee payment and admission '
+                        'tracking require an authorised GRI/Samarth integration '
+                        'that is not configured in this build.',
+                        style: TextStyle(fontSize: 11, height: 1.4),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton.icon(
+                  onPressed: () =>
+                      context.read<GriProvider>().unlockStudentWorkspace(),
+                  icon: const Icon(Icons.science_outlined, size: 16),
+                  label: const Text('Continue to demo workspace'),
+                ),
+              ),
+              const SizedBox(height: 8),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton.icon(
+                  onPressed: () => GriUrlLauncher.launch(
+                      context, VerifiedInstitution.samarthUrl),
+                  icon: const Icon(Icons.open_in_new, size: 16),
+                  label: const Text('Open official Samarth portal'),
+                ),
+              ),
+              const SizedBox(height: 8),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton.icon(
+                  onPressed: () => GriUrlLauncher.launch(
+                      context, VerifiedInstitution.contactUrl),
+                  icon: const Icon(Icons.contact_support_outlined, size: 16),
+                  label: const Text('Official GRI contact'),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 12),
+        Text(
+          'For official student login and university records, use the Samarth '
+          'portal linked above. This app never asks for your university password.',
+          style: TextStyle(
+            fontSize: 10.5,
+            height: 1.45,
+            color: isDark
+                ? GriColors.darkOnSurfaceVariant
+                : GriColors.onSurfaceVariant,
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -156,8 +287,42 @@ class _StudentServicesHubScreenState extends State<StudentServicesHubScreen> wit
     final cardBg = isDark ? GriColors.darkSurface1 : Colors.white;
     final borderColor = isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant;
 
+    // Phase 2 gate: student-only services are not exposed until the user
+    // explicitly acknowledges the demo workspace boundary. A real deployment
+    // must replace this with a server-verified institutional session.
+    if (provider.currentRole == UserRole.STUDENT &&
+        !provider.isStudentWorkspaceUnlocked) {
+      return _buildStudentGate(context, isDark);
+    }
+
     return Column(
       children: [
+        if (provider.isDemoSession)
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+            color: isDark ? GriColors.darkSurface2 : GriColors.ochreContainer,
+            child: Row(
+              children: [
+                const Icon(Icons.info_outline,
+                    size: 14, color: GriColors.ochrePrimary),
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Text(
+                    'Demo workspace: grievance, transport and hostel records are '
+                    'locally seeded QA data, not official university records.',
+                    style: TextStyle(
+                      fontSize: 10.5,
+                      height: 1.35,
+                      color: isDark
+                          ? GriColors.darkOnSurfaceVariant
+                          : GriColors.ochreOnContainer,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         Container(
           color: isDark ? GriColors.darkSurface1 : Colors.white,
           child: TabBar(

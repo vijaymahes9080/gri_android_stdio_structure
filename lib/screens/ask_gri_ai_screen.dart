@@ -16,12 +16,12 @@ class _AskGriAiScreenState extends State<AskGriAiScreen> {
   final _scrollController = ScrollController();
 
   final List<String> _suggestedPrompts = [
-    "Admissions 2026 eligibility?",
-    "Attendance rules for exam?",
-    "Hostel facilities and mess rebate",
-    "Bus routes from Dindigul",
-    "Library hours and e-resources",
-    "Nai Talim philosophy of GRI",
+    "What is GRI's NAAC grade?",
+    "Admissions and CUET process",
+    "Library and e-resources",
+    "Examination rules and e-SANAD",
+    "Latest events and tenders",
+    "Contact and campus location",
   ];
 
   @override
@@ -96,7 +96,7 @@ class _AskGriAiScreenState extends State<AskGriAiScreen> {
                       ),
                       const SizedBox(height: 1),
                       Text(
-                        "Powered by Official GRI Institutional Repository (ruraluniv.ac.in)",
+                        "Grounded in the verified GRI dataset • sources cited",
                         style: TextStyle(
                           fontSize: 10.5,
                           color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,

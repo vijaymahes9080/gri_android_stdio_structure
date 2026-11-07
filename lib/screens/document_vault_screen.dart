@@ -4,7 +4,7 @@ import '../services/official_resource_registry.dart';
 import '../widgets/gri_primitives.dart';
 
 /// Production-Grade Official Document Vault Screen
-/// Instant indexing across 595 institutional PDFs, circulars, prospectuses, and statutory reports.
+/// Instant indexing across the verified institutional document catalogue.
 class DocumentVaultScreen extends StatefulWidget {
   final String? initialCategory;
   const DocumentVaultScreen({super.key, this.initialCategory});
@@ -93,7 +93,7 @@ class _DocumentVaultScreenState extends State<DocumentVaultScreen> {
                   controller: _searchController,
                   onChanged: (_) => setState(() {}),
                   decoration: InputDecoration(
-                    hintText: "Search 595 official prospectuses, forms, circulars...",
+                    hintText: "Search ${allDocs.length} official documents...",
                     hintStyle: TextStyle(
                       fontSize: 12.5,
                       color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,

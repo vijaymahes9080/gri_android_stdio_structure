@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../utils/gri_colors.dart';
 import '../services/official_resource_registry.dart';
+import '../services/verified_institution_content.dart';
+import '../utils/gri_url_launcher.dart';
 import 'document_vault_screen.dart';
 
 /// Production-Grade Heritage & Institutional Dossier Screen
@@ -94,12 +96,41 @@ class _AboutGriHeritageScreenState extends State<AboutGriHeritageScreen> with Si
               const SizedBox(height: 12),
               _buildContentCard(
                 context,
-                title: "NAAC 'A' GRADE & DEEMED STATUS",
+                title: "NAAC A++ GRADE & DEEMED STATUS",
                 icon: Icons.workspace_premium,
                 iconColor: GriColors.forestPrimary,
-                child: const Text(
-                  "The Gandhigram Rural Institute was conferred Deemed to be University status in 1976 under Section 3 of the UGC Act, 1956. GRI is re-accredited with 'A' Grade by NAAC in its Cycle-4 assessment and ranked among top rural institutions under Category-I by the Ministry of Education, Government of India.",
-                  style: TextStyle(fontSize: 12.5, height: 1.45),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "The Gandhigram Rural Institute was conferred Deemed to be "
+                      "University status in 1976 under Section 3 of the UGC Act, "
+                      "1956. In 2025, GRI was accredited by NAAC with the A++ Grade "
+                      "in its fourth cycle, with a CGPA of 3.58.",
+                      style: TextStyle(fontSize: 12.5, height: 1.45),
+                    ),
+                    const SizedBox(height: 10),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 6,
+                      children: [
+                        OutlinedButton.icon(
+                          onPressed: () => GriUrlLauncher.launch(
+                              context, VerifiedInstitution.naacUrl),
+                          icon: const Icon(Icons.open_in_new, size: 14),
+                          label: const Text('Official NAAC disclosure',
+                              style: TextStyle(fontSize: 11)),
+                        ),
+                        OutlinedButton.icon(
+                          onPressed: () => GriUrlLauncher.launch(
+                              context, VerifiedInstitution.disclosuresUrl),
+                          icon: const Icon(Icons.verified_outlined, size: 14),
+                          label: const Text('Mandatory disclosures',
+                              style: TextStyle(fontSize: 11)),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ],

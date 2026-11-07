@@ -10,16 +10,23 @@ import '../screens/scholarships_welfare_screen.dart';
 import '../screens/contact_campus_info_screen.dart';
 import '../screens/campus_facilities_screen.dart';
 import '../screens/global_website_search_screen.dart';
-import '../screens/department_detail_screen.dart';
-import '../screens/institutional_article_screen.dart';
 import '../screens/document_vault_screen.dart';
 import '../screens/media_gallery_screen.dart';
 import '../screens/official_portals_gateway_screen.dart';
 import '../screens/settings_screen.dart';
+import '../screens/faculty_directory_screen.dart';
+import '../screens/events_notices_screen.dart';
+import '../screens/campus_map_screen.dart';
+import '../screens/institutional_services_screen.dart';
+import '../services/official_catalog_service.dart';
 import '../services/official_resource_registry.dart';
+import '../services/verified_institution_content.dart';
 
-/// Pro-Level Institutional University Drawer
-/// Categorized logically into five official governance and academic divisions.
+/// Institutional university drawer.
+///
+/// Counts are read from the verified canonical catalogue at build time and
+/// every entry either opens a working in-app screen or the exact official GRI
+/// page. No staff names, department contacts or campus sizes are hard-coded.
 class GriUniversityDrawer extends StatelessWidget {
   const GriUniversityDrawer({super.key});
 
@@ -37,6 +44,8 @@ class GriUniversityDrawer extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final isDark = theme.brightness == Brightness.dark;
+    final catalog = OfficialCatalogService.instance;
+    final loaded = catalog.isLoaded;
 
     return Drawer(
       backgroundColor: isDark ? GriColors.darkSurface1 : Colors.white,
@@ -83,11 +92,11 @@ class GriUniversityDrawer extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 14),
-                    const Expanded(
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             "THE GANDHIGRAM",
                             style: TextStyle(
                               color: Colors.white,
@@ -96,7 +105,7 @@ class GriUniversityDrawer extends StatelessWidget {
                               letterSpacing: 0.5,
                             ),
                           ),
-                          Text(
+                          const Text(
                             "RURAL INSTITUTE",
                             style: TextStyle(
                               color: GriColors.ochreAccent,
@@ -105,10 +114,10 @@ class GriUniversityDrawer extends StatelessWidget {
                               letterSpacing: 0.5,
                             ),
                           ),
-                          SizedBox(height: 3),
+                          const SizedBox(height: 3),
                           Text(
-                            "Deemed to be University • NAAC 'A' Grade • 1956",
-                            style: TextStyle(
+                            "Deemed to be University • NAAC A++ (4th Cycle)",
+                            style: const TextStyle(
                               color: Colors.white70,
                               fontSize: 10,
                               fontWeight: FontWeight.w500,
@@ -135,13 +144,21 @@ class GriUniversityDrawer extends StatelessWidget {
                         width: 0.8,
                       ),
                     ),
-                    child: const Row(
+                    child: Row(
                       children: [
-                        Icon(Icons.search, color: Colors.white70, size: 17),
-                        SizedBox(width: 8),
-                        Text(
-                          "Search 247 official web pages...",
-                          style: TextStyle(color: Colors.white70, fontSize: 12),
+                        const Icon(Icons.search, color: Colors.white70, size: 17),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            loaded
+                                ? "Search ${catalog.units.length} units, "
+                                    "${catalog.faculty.length} faculty, "
+                                    "${catalog.documents.length} documents..."
+                                : "Search the verified GRI catalogue...",
+                            style: const TextStyle(color: Colors.white70, fontSize: 12),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ],
                     ),
@@ -160,38 +177,34 @@ class GriUniversityDrawer extends StatelessWidget {
                 _buildSectionHeader("ACADEMICS & PROGRAMMES"),
                 ExpansionTile(
                   leading: const Icon(Icons.school, color: GriColors.forestPrimary, size: 21),
-                  title: const Text("Schools & Departments", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  title: const Text("Schools & Departments",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                   children: [
-                    _buildSubItem(context, "All 8 Statutory Schools", () => _push(context, const SchoolsProgrammesHubScreen())),
-                    _buildSubItem(context, "School of Sciences", () => _push(context, const DepartmentDetailScreen(
-                      departmentId: "Maths",
-                      departmentName: "Department of Mathematics",
-                      schoolName: "School of Sciences",
-                      hodName: "Dr. P. Balasubramaniam",
-                      email: "hodmaths@ruraluniv.ac.in",
-                      sourceUrl: "https://ruraluniv.ac.in/faculties?department=maths",
-                    ))),
-                    _buildSubItem(context, "School of Agriculture & Rural Dev.", () => _push(context, const DepartmentDetailScreen(
-                      departmentId: "Agriculture",
-                      departmentName: "Faculty of Rural Development",
-                      schoolName: "School of Agriculture and Animal Husbandry",
-                      hodName: "Dr. T. Senthilvel",
-                      email: "hodagri@ruraluniv.ac.in",
-                      sourceUrl: "https://ruraluniv.ac.in/faculties?department=agri",
-                    ))),
-                    _buildSubItem(context, "School of Social Sciences", () => _push(context, const DepartmentDetailScreen(
-                      departmentId: "SocialSciences",
-                      departmentName: "Department of Applied Research",
-                      schoolName: "School of Social Sciences",
-                      hodName: "Dr. S. Radhakrishnan",
-                      email: "hodsocial@ruraluniv.ac.in",
-                      sourceUrl: "https://ruraluniv.ac.in/faculties?department=social",
-                    ))),
+                    _buildSubItem(
+                      context,
+                      loaded
+                          ? "All ${catalog.schools.length} schools • ${catalog.units.length} units"
+                          : "All schools & departments",
+                      () => _push(context, const SchoolsProgrammesHubScreen()),
+                    ),
+                    _buildSubItem(
+                      context,
+                      loaded
+                          ? "Faculty directory (${catalog.faculty.length})"
+                          : "Faculty directory",
+                      () => _push(context, const FacultyDirectoryScreen()),
+                    ),
+                    _buildSubItem(
+                      context,
+                      "Campus map & locations",
+                      () => _push(context, const CampusMapScreen()),
+                    ),
                   ],
                 ),
                 ListTile(
                   leading: const Icon(Icons.menu_book_outlined, color: GriColors.forestPrimary, size: 21),
-                  title: const Text("CBCS Curriculum & Syllabi", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  title: const Text("CBCS Curriculum & Syllabi",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
                   onTap: () => _push(context, const DocumentVaultScreen(initialCategory: "CBCS Syllabus")),
                 ),
@@ -201,13 +214,16 @@ class GriUniversityDrawer extends StatelessWidget {
                 _buildSectionHeader("ADMISSIONS & EXAMINATIONS"),
                 ListTile(
                   leading: const Icon(Icons.how_to_reg_outlined, color: GriColors.forestPrimary, size: 21),
-                  title: const Text("Admissions 2026-27 & CUET", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  title: const Text("Admissions & Prospectus",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
                   onTap: () => _push(context, const AdmissionsProspectusScreen()),
                 ),
                 ListTile(
-                  leading: const Icon(Icons.assignment_turned_in_outlined, color: GriColors.forestPrimary, size: 21),
-                  title: const Text("Controller of Examinations (COE)", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  leading: const Icon(Icons.assignment_turned_in_outlined,
+                      color: GriColors.forestPrimary, size: 21),
+                  title: const Text("Controller of Examinations (COE)",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
                   onTap: () => _push(context, const ExaminationServicesScreen()),
                 ),
@@ -217,25 +233,24 @@ class GriUniversityDrawer extends StatelessWidget {
                 _buildSectionHeader("GOVERNANCE & HERITAGE"),
                 ListTile(
                   leading: const Icon(Icons.history_edu, color: GriColors.ochrePrimary, size: 21),
-                  title: const Text("About GRI & Gandhian Heritage", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  title: const Text("About GRI & Gandhian Heritage",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
                   onTap: () => _push(context, const AboutGriHeritageScreen()),
                 ),
                 ListTile(
                   leading: const Icon(Icons.account_balance, color: GriColors.ochrePrimary, size: 21),
-                  title: const Text("Governance & Authorities", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  title: const Text("Governance & Authorities",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
                   onTap: () => _push(context, const GovernanceLeadershipScreen()),
                 ),
                 ListTile(
-                  leading: const Icon(Icons.gavel_outlined, color: GriColors.ochrePrimary, size: 21),
-                  title: const Text("Mandatory Disclosures & NAAC", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
-                  trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
-                  onTap: () => _push(context, const InstitutionalArticleScreen(
-                    title: "Mandatory Disclosures & NAAC SSR",
-                    category: "Statutory Compliance",
-                    sourceUrl: "https://ruraluniv.ac.in/naac?content=ssr",
-                  )),
+                  leading: const Icon(Icons.verified_outlined, color: GriColors.ochrePrimary, size: 21),
+                  title: const Text("NAAC, NIRF & Disclosures",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  trailing: const Icon(Icons.open_in_new, size: 13, color: Colors.grey),
+                  onTap: () => _launchUrl(context, VerifiedInstitution.disclosuresUrl),
                 ),
 
                 // SECTION 4: CAMPUS & STUDENT LIFE
@@ -243,25 +258,38 @@ class GriUniversityDrawer extends StatelessWidget {
                 _buildSectionHeader("CAMPUS & STUDENT WELFARE"),
                 ListTile(
                   leading: const Icon(Icons.apartment, color: GriColors.tealSecondary, size: 21),
-                  title: const Text("300-Acre Campus & Facilities", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  title: const Text("Campus Facilities",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
                   onTap: () => _push(context, const CampusFacilitiesScreen()),
                 ),
                 ListTile(
+                  leading: const Icon(Icons.map_outlined, color: GriColors.tealSecondary, size: 21),
+                  title: const Text("Official Campus Map",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
+                  onTap: () => _push(context, const CampusMapScreen()),
+                ),
+                ListTile(
                   leading: const Icon(Icons.card_giftcard, color: GriColors.tealSecondary, size: 21),
-                  title: const Text("Scholarships & Welfare Schemes", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  title: const Text("Scholarships & Welfare Schemes",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
                   onTap: () => _push(context, const ScholarshipsWelfareScreen()),
                 ),
                 ListTile(
-                  leading: const Icon(Icons.video_library_outlined, color: GriColors.tealSecondary, size: 21),
-                  title: const Text("Media Gallery & Campus 360", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  leading: const Icon(Icons.video_library_outlined,
+                      color: GriColors.tealSecondary, size: 21),
+                  title: const Text("Photo & Video Gallery",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
                   onTap: () => _push(context, const MediaGalleryScreen()),
                 ),
                 ListTile(
-                  leading: const Icon(Icons.contact_phone_outlined, color: GriColors.tealSecondary, size: 21),
-                  title: const Text("Campus Directory & Emergency", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  leading: const Icon(Icons.contact_phone_outlined,
+                      color: GriColors.tealSecondary, size: 21),
+                  title: const Text("Contact & Campus Directory",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
                   onTap: () => _push(context, const ContactCampusInfoScreen()),
                 ),
@@ -270,16 +298,43 @@ class GriUniversityDrawer extends StatelessWidget {
                 const Divider(height: 16),
                 _buildSectionHeader("DIGITAL SERVICES & VAULT"),
                 ListTile(
+                  leading: const Icon(Icons.event_outlined, color: GriColors.forestPrimary, size: 21),
+                  title: const Text("Events, Notices & Tenders",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
+                  onTap: () => _push(context, const EventsNoticesScreen()),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.miscellaneous_services_outlined,
+                      color: GriColors.forestPrimary, size: 21),
+                  title: const Text("Institutional Services",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  subtitle: Text(
+                    "${VerifiedContent.services.length} verified official entries",
+                    style: const TextStyle(fontSize: 10.5),
+                  ),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
+                  onTap: () => _push(context, const InstitutionalServicesScreen()),
+                ),
+                ListTile(
                   leading: const Icon(Icons.folder_shared_outlined, color: Colors.indigo, size: 21),
-                  title: const Text("Official Document Vault", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
-                  subtitle: const Text("595 institutional PDFs & circulars", style: TextStyle(fontSize: 10.5)),
+                  title: const Text("Official Document Vault",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  subtitle: Text(
+                    loaded
+                        ? "${catalog.documents.length} official documents & circulars"
+                        : "Official documents & circulars",
+                    style: const TextStyle(fontSize: 10.5),
+                  ),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
                   onTap: () => _push(context, const DocumentVaultScreen()),
                 ),
                 ListTile(
                   leading: const Icon(Icons.shield_outlined, color: Colors.indigo, size: 21),
-                  title: const Text("Official Portals & Gateways", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
-                  subtitle: const Text("Samarth, Webmail, e-SANAD & Portals", style: TextStyle(fontSize: 10.5)),
+                  title: const Text("Official Portals & Gateways",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  subtitle: const Text("Samarth, Webmail, e-SANAD & Portals",
+                      style: TextStyle(fontSize: 10.5)),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
                   onTap: () => _push(context, const OfficialPortalsGatewayScreen()),
                 ),
@@ -289,8 +344,10 @@ class GriUniversityDrawer extends StatelessWidget {
                 _buildSectionHeader("SYSTEM & PREFERENCES"),
                 ListTile(
                   leading: const Icon(Icons.settings_outlined, color: GriColors.forestPrimary, size: 21),
-                  title: const Text("Settings & Preferences", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
-                  subtitle: const Text("Theme, Text scale, Language & Storage", style: TextStyle(fontSize: 10.5)),
+                  title: const Text("Settings & Preferences",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  subtitle: const Text("Theme, Text scale, Language & Storage",
+                      style: TextStyle(fontSize: 10.5)),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
                   onTap: () => _push(context, const SettingsScreen()),
                 ),
@@ -314,7 +371,7 @@ class GriUniversityDrawer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "GRI v1.0 • NAAC 'A' Grade",
+                  "GRI v1.0 • NAAC A++ (CGPA 3.58)",
                   style: TextStyle(
                     fontSize: 11,
                     color: colorScheme.onSurfaceVariant,
@@ -322,7 +379,7 @@ class GriUniversityDrawer extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-                  onTap: () => _launchUrl(context, "https://ruraluniv.ac.in/"),
+                  onTap: () => _launchUrl(context, VerifiedInstitution.website),
                   child: Text(
                     "ruraluniv.ac.in ↗",
                     style: TextStyle(

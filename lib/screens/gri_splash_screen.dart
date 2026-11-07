@@ -123,7 +123,7 @@ class _GriSplashScreenState extends State<GriSplashScreen> with SingleTickerProv
 
                         // Bilingual Tamil Title
                         const Text(
-                          "காந்திகிராம கிராமிய நிறுவனம்",
+                          VerifiedInstitution.tamilName,
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
@@ -179,7 +179,7 @@ class _GriSplashScreenState extends State<GriSplashScreen> with SingleTickerProv
                               Icon(Icons.workspace_premium, color: GriColors.ochrePrimary, size: 16),
                               SizedBox(width: 6),
                               Text(
-                                "NAAC 'A' Grade  •  Estd. 1956  •  MoE, Govt. of India",
+                                "NAAC A++ Grade (4th Cycle)  •  Estd. 1956  •  MoE, Govt. of India",
                                 style: TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w600,

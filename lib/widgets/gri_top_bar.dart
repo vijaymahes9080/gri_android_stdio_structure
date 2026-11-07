@@ -105,7 +105,7 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                         ),
                         const SizedBox(height: 1),
                         Text(
-                          "Deemed to be University • NAAC 'A'",
+                          "Deemed to be University • NAAC A++",
                           style: TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.w500,
@@ -128,7 +128,7 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                   color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
                   size: 20,
                 ),
-                tooltip: "Search 247 Official Pages",
+                tooltip: "Search verified official records",
                 padding: const EdgeInsets.all(6),
                 constraints: const BoxConstraints(minWidth: 34, minHeight: 34),
                 onPressed: () {
