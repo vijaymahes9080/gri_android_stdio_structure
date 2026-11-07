@@ -87,9 +87,9 @@ class SettingsScreen extends StatelessWidget {
             "The Gandhigram Rural Institute (Deemed to be University)\n"
             "Gandhigram - 624 302, Dindigul District, Tamil Nadu, India.\n\n"
             "• Conferred Deemed to be University status in 1976 under Section 3 of the UGC Act, 1956.\n"
-            "• Re-accredited with 'A' Grade by NAAC (Cycle-4).\n"
-            "• Categorized under Category-I by the Ministry of Education, Govt. of India.\n\n"
-            "All content in this application reflects verified public records collected from the official portal (ruraluniv.ac.in).",
+            "• Re-accredited by NAAC with the A++ Grade in its 4th cycle, CGPA 3.58.\n\n"
+            "Public content in this application reflects records verified against the official portal (ruraluniv.ac.in). "
+            "Locally seeded student records are clearly labelled as demo/QA data and are not official university records.",
             style: TextStyle(fontSize: 12.5, height: 1.45),
           ),
         ),

@@ -395,16 +395,20 @@ class _AcademicsHubScreenState extends State<AcademicsHubScreen> with SingleTick
                             style: TextStyle(fontSize: 12, color: GriColors.ochreOnContainer),
                           ),
                           const SizedBox(height: 4),
-                          const Text(
-                            "8.92 / 10.00",
-                            style: TextStyle(
+                          Text(
+                            provider.isDemoSession
+                                ? "Demo record"
+                                : (provider.currentUser?.cgpa ?? "Not published"),
+                            style: const TextStyle(
                               fontSize: 26,
                               fontWeight: FontWeight.w800,
                               color: GriColors.ochreOnContainer,
                             ),
                           ),
                           Text(
-                            "Classification: First Class with Distinction",
+                            provider.isDemoSession
+                                ? "Seeded QA record — not an official grade card."
+                                : "Classification is published on the official grade card.",
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w600,

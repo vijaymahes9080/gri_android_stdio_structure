@@ -12,44 +12,56 @@ class InstitutionalFeePaymentScreen extends StatefulWidget {
 
 class _InstitutionalFeePaymentScreenState extends State<InstitutionalFeePaymentScreen> {
   String _selectedFeeCategory = "COE Tatkal & Transcripts";
-  final TextEditingController _rollController = TextEditingController(text: "23402108");
-  final TextEditingController _nameController = TextEditingController(text: "Mahesh V.");
+  final TextEditingController _rollController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
   bool _isSandboxMode = false;
   bool _isProcessing = false;
   Map<String, dynamic>? _lastReceipt;
 
+  /// Fee heads are real institutional categories, but the amounts and payment
+  /// instructions are NOT bundled here. GRI publishes current amounts in its
+  /// prospectus/notices, so the app routes users to the official source instead
+  /// of displaying a figure that may be stale or wrong.
   final List<Map<String, dynamic>> _feeCategories = [
     {
       "name": "COE Tatkal & Transcripts",
-      "amount": "₹ 1,500.00",
-      "code": "COE-TATKAL-2026",
-      "officialPortal": "https://ruraluniv.ac.in/includes/infrastructure/coe/pdf/Duplicate_Certificate_Application.pdf",
-      "bankMode": "SBI Collect (GRI Examination Account)",
-      "description": "Fast-track issue of Degree, Consolidated Mark Statement, or Official Transcripts within 48 hours.",
+      "amount": "Amount published by the Controller of Examinations",
+      "code": "COE-TATKAL",
+      "officialPortal": "https://www.ruraluniv.ac.in/page/examination",
+      "bankMode": "Official examination payment route",
+      "description":
+          "Tatkal certificates, consolidated mark statements and transcripts. "
+          "Check the official examination page for the current fee and form.",
     },
     {
       "name": "Semester Tuition & Lab Fee",
-      "amount": "₹ 12,450.00",
-      "code": "SEM-FEE-IV-2026",
-      "officialPortal": "https://ruraluniv.ac.in/fee_structure",
-      "bankMode": "Canara Bank / SBI Collect E-Challan",
-      "description": "Regular academic tuition, laboratory consumables, library digital database, and sports council fee.",
+      "amount": "Amount published in the official prospectus/fee notice",
+      "code": "SEM-FEE",
+      "officialPortal": "https://www.ruraluniv.ac.in/page/admissions",
+      "bankMode": "Official university payment route",
+      "description":
+          "Semester tuition and laboratory fees. The current amount is "
+          "published by GRI; this app does not display or collect it.",
     },
     {
       "name": "Hostel & Dining Mess Charges",
-      "amount": "₹ 8,700.00",
-      "code": "HSTL-MESS-2026",
-      "officialPortal": "https://ruraluniv.ac.in/facilities?content=hostel",
-      "bankMode": "GRI Hostels Account (SBI Gandhigram)",
-      "description": "Kasturba & Tagore Hostels lodging maintenance, steam kitchen meal token, and solar hot water facility.",
+      "amount": "Amount published by the hostel office",
+      "code": "HSTL-MESS",
+      "officialPortal": "https://www.ruraluniv.ac.in/page/infrastructure#hostels",
+      "bankMode": "Official hostel payment route",
+      "description":
+          "Hostel and mess charges are administered by the university. "
+          "Contact the hostel office or use the official infrastructure page.",
     },
     {
       "name": "Admission Application (CUET/Non-CUET)",
-      "amount": "₹ 600.00",
-      "code": "ADM-APP-2026",
-      "officialPortal": "https://ruraluniv.ac.in/admissions",
-      "bankMode": "Online Payment Gateway (SBI E-Pay)",
-      "description": "Application registration for Undergraduate, Postgraduate, Diploma, and Ph.D. admissions.",
+      "amount": "Amount published on the Samarth admission portal",
+      "code": "ADM-APP",
+      "officialPortal": "https://www.ruraluniv.ac.in/page/admissions",
+      "bankMode": "Official Samarth admission portal",
+      "description":
+          "Application registration for UG, PG, Diploma and Ph.D. programmes. "
+          "The official Samarth portal shows the current application fee.",
     },
   ];
 
