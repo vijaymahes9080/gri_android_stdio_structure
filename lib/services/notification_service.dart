@@ -33,7 +33,7 @@ class NotificationService {
       const initSettings = InitializationSettings(android: androidSettings);
 
       await _notificationsPlugin.initialize(
-        settings: initSettings,
+        initSettings,
         onDidReceiveNotificationResponse: (NotificationResponse response) {
           debugPrint('Notification clicked with payload: ${response.payload}');
         },
@@ -118,10 +118,10 @@ class NotificationService {
 
       final details = NotificationDetails(android: androidDetails);
       await _notificationsPlugin.show(
-        id: id,
-        title: title,
-        body: body,
-        notificationDetails: details,
+        id,
+        title,
+        body,
+        details,
         payload: payload,
       );
     } catch (e) {
