@@ -570,45 +570,51 @@ class GriProvider extends ChangeNotifier {
     ];
 
     // Seed Transport
+    //
+    // NOTE: GRI does not publish route schedules, bus numbers or driver
+    // contact details in the verified in-app dataset. These entries are
+    // locally seeded QA placeholders used only to exercise the transport UI.
+    // They are labelled as demo data in the student services hub and must
+    // never be presented as official university transport records.
     _transportRoutes = [
       TransportRouteModel(
-        id: "tr_1",
-        routeNo: "Route 01",
+        id: "tr_demo_1",
+        routeNo: "Route 01 (demo)",
         routeName: "Dindigul Bus Stand - GRI Campus",
         source: "Dindigul Bus Stand",
         destination: "GRI Main Administrative Arch",
-        busNumber: "TN 57 G 1102",
-        departureTime: "08:15 AM",
-        returnTime: "05:15 PM",
-        driverName: "K. Murugesan",
-        driverPhone: "+91 94431 82710",
-        currentStatus: "ON_TIME",
+        busNumber: "Not published",
+        departureTime: "Not published",
+        returnTime: "Not published",
+        driverName: "Not published",
+        driverPhone: "Not published",
+        currentStatus: "Demo data",
       ),
       TransportRouteModel(
-        id: "tr_2",
-        routeNo: "Route 02",
+        id: "tr_demo_2",
+        routeNo: "Route 02 (demo)",
         routeName: "Madurai Mattuthavani - GRI Campus",
         source: "Mattuthavani Integrated Terminal",
         destination: "GRI Library Plaza",
-        busNumber: "TN 57 G 1108",
-        departureTime: "07:45 AM",
-        returnTime: "05:15 PM",
-        driverName: "S. Karuppiah",
-        driverPhone: "+91 98425 44912",
-        currentStatus: "ON_TIME",
+        busNumber: "Not published",
+        departureTime: "Not published",
+        returnTime: "Not published",
+        driverName: "Not published",
+        driverPhone: "Not published",
+        currentStatus: "Demo data",
       ),
       TransportRouteModel(
-        id: "tr_3",
-        routeNo: "Route 03",
+        id: "tr_demo_3",
+        routeNo: "Route 03 (demo)",
         routeName: "Batlagundu - GRI Campus",
         source: "Batlagundu Bus Stand",
         destination: "GRI Agriculture Campus",
-        busNumber: "TN 57 G 1115",
-        departureTime: "08:20 AM",
-        returnTime: "05:15 PM",
-        driverName: "M. Pandi",
-        driverPhone: "+91 97871 33201",
-        currentStatus: "ON_TIME",
+        busNumber: "Not published",
+        departureTime: "Not published",
+        returnTime: "Not published",
+        driverName: "Not published",
+        driverPhone: "Not published",
+        currentStatus: "Demo data",
       ),
     ];
 

@@ -36,30 +36,35 @@ class GriSectionHeader extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final baseColor = color ?? (isDark ? GriColors.darkOnSurface : GriColors.onSurface);
     final resolvedAction = (actionLabel != null && onAction != null) ? onAction : null;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: Text(
-            titleCase ? title.toUpperCase() : title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: GriTypography.labelMedium.copyWith(
-              color: baseColor,
-              fontWeight: FontWeight.w700,
+    return Semantics(
+      container: true,
+      label: title,
+      button: resolvedAction != null,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Text(
+              titleCase ? title.toUpperCase() : title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: GriTypography.labelMedium.copyWith(
+                color: baseColor,
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
-        ),
-        if (resolvedAction != null)
-          TextButton(
-            onPressed: resolvedAction,
-            style: TextButton.styleFrom(
-              visualDensity: VisualDensity.compact,
-              foregroundColor: Theme.of(context).colorScheme.primary,
+          if (resolvedAction != null)
+            TextButton(
+              onPressed: resolvedAction,
+              style: TextButton.styleFrom(
+                visualDensity: VisualDensity.compact,
+                foregroundColor: Theme.of(context).colorScheme.primary,
+              ),
+              child: Text(actionLabel!, style: GriTypography.labelMedium),
             ),
-            child: Text(actionLabel!, style: GriTypography.labelMedium),
-          ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -87,7 +92,9 @@ class GriEmptyState extends StatelessWidget {
     final onWell = isDark ? GriColors.darkOnSurface : GriColors.onSurface;
     final muted = isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant;
 
-    return GriFadeSlideEntrance(
+    return Semantics(
+      label: hint != null ? '$title. $hint!' : title,
+      child: GriFadeSlideEntrance(
       child: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: GriSpacing.xl, vertical: GriSpacing.xxl),
