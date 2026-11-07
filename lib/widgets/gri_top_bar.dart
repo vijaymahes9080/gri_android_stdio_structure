@@ -4,6 +4,7 @@ import '../providers/gri_provider.dart';
 import '../utils/gri_colors.dart';
 import '../screens/global_website_search_screen.dart';
 import '../screens/settings_screen.dart';
+import '../screens/notifications_center_screen.dart';
 import '../services/official_resource_registry.dart';
 
 /// Refined Pro-Level Institutional App Bar (58dp)
@@ -136,6 +137,59 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                     MaterialPageRoute(builder: (_) => const GlobalWebsiteSearchScreen()),
                   );
                 },
+              ),
+
+              // Official Notifications & Circulars Center Shortcut
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      provider.unreadNotificationsCount > 0
+                          ? Icons.notifications_active_outlined
+                          : Icons.notifications_none_outlined,
+                      color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+                      size: 20,
+                    ),
+                    tooltip: "Official Notifications & Circulars",
+                    padding: const EdgeInsets.all(6),
+                    constraints: const BoxConstraints(minWidth: 34, minHeight: 34),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => const NotificationsCenterScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                  if (provider.unreadNotificationsCount > 0)
+                    Positioned(
+                      top: 4,
+                      right: 4,
+                      child: IgnorePointer(
+                        child: Container(
+                          padding: const EdgeInsets.all(2.5),
+                          decoration: const BoxDecoration(
+                            color: GriColors.terracotta,
+                            shape: BoxShape.circle,
+                          ),
+                          constraints: const BoxConstraints(
+                            minWidth: 14,
+                            minHeight: 14,
+                          ),
+                          child: Text(
+                            '${provider.unreadNotificationsCount > 9 ? '9+' : provider.unreadNotificationsCount}',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 8.5,
+                              fontWeight: FontWeight.w800,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
               ),
 
               // Settings Shortcut

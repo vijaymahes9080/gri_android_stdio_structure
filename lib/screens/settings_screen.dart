@@ -5,6 +5,8 @@ import '../providers/gri_provider.dart';
 import '../services/seed_data_service.dart';
 import '../utils/gri_colors.dart';
 import '../services/official_resource_registry.dart';
+import '../services/notification_service.dart';
+import 'notifications_center_screen.dart';
 
 /// Production-Grade Settings & Institutional Preferences Screen
 /// Conforms to Phase 7 of GRI Engineering Specification:
@@ -391,6 +393,56 @@ class SettingsScreen extends StatelessWidget {
                   value: provider.examAlertsEnabled,
                   activeColor: GriColors.forestPrimary,
                   onChanged: (val) => provider.setExamAlertsEnabled(val),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        icon: const Icon(Icons.vibration, size: 15),
+                        label: const Text("Test Alert on Phone", style: TextStyle(fontSize: 11.5)),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: Colors.indigo,
+                          side: const BorderSide(color: Colors.indigo),
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        ),
+                        onPressed: () async {
+                          final ok = await NotificationService.instance.showTestNotification();
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(ok
+                                    ? "Test notification delivered! Pull down phone notification shade to view."
+                                    : "Failed to trigger notification. Check Android permissions."),
+                                duration: const Duration(seconds: 3),
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: ElevatedButton.icon(
+                        icon: const Icon(Icons.mark_email_unread_outlined, size: 15),
+                        label: const Text("Open Inbox", style: TextStyle(fontSize: 11.5)),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.indigo,
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => const NotificationsCenterScreen(),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

@@ -8,6 +8,7 @@ import '../services/local_data_store_service.dart';
 import '../services/official_web_sync_service.dart';
 import '../services/document_certification_service.dart';
 import '../services/sahayak_knowledge_engine.dart';
+import '../services/notification_service.dart';
 
 enum NavigationTab {
   HOME,
@@ -406,6 +407,9 @@ class GriProvider extends ChangeNotifier {
     if (_noticesEnabled == value) return;
     _noticesEnabled = value;
     notifyListeners();
+    if (value) {
+      await NotificationService.instance.requestPermissions();
+    }
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool(_prefNoticesKey, value);
@@ -416,6 +420,9 @@ class GriProvider extends ChangeNotifier {
     if (_examAlertsEnabled == value) return;
     _examAlertsEnabled = value;
     notifyListeners();
+    if (value) {
+      await NotificationService.instance.requestPermissions();
+    }
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool(_prefExamAlertsKey, value);
@@ -1215,6 +1222,19 @@ class GriProvider extends ChangeNotifier {
   // Circulars
   List<CircularModel> _locallyPublishedCirculars = [];
 
+  int get unreadNotificationsCount {
+    return _circulars.where((c) => !c.isRead).length;
+  }
+
+  void markAllCircularsRead() {
+    for (int i = 0; i < _circulars.length; i++) {
+      _circulars[i] = _circulars[i].copyWith(isRead: true);
+      _readCircularIds.add(_circulars[i].id);
+    }
+    _persistCircularReadState();
+    notifyListeners();
+  }
+
   void markCircularRead(String id) {
     final index = _circulars.indexWhere((c) => c.id == id);
     if (index != -1) {
@@ -1258,6 +1278,15 @@ class GriProvider extends ChangeNotifier {
         status: "PUBLISHED",
       ),
     );
+    if (_noticesEnabled) {
+      NotificationService.instance.showNotification(
+        id: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+        title: isUrgent ? "🚨 GRI URGENT: $title" : "🏛️ GRI Circular: $title",
+        body: summary,
+        channelId: NotificationService.channelIdOfficial,
+        channelName: NotificationService.channelNameOfficial,
+      );
+    }
     _showNotification("Official Circular published successfully.");
     notifyListeners();
   }

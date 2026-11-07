@@ -25,9 +25,12 @@ import 'screens/gri_splash_screen.dart';
 import 'services/seed_data_service.dart';
 import 'services/supabase_service.dart';
 import 'services/official_catalog_service.dart';
+import 'services/notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Initialize device local notifications
+  await NotificationService.instance.initialize();
   // Cloud backend activates only when --dart-define credentials are supplied;
   // otherwise the app runs on its persistent local vault (offline-first).
   await SupabaseService.instance.initialize();

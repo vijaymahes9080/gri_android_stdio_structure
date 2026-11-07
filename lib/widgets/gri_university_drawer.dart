@@ -16,6 +16,7 @@ import '../screens/official_portals_gateway_screen.dart';
 import '../screens/settings_screen.dart';
 import '../screens/faculty_directory_screen.dart';
 import '../screens/events_notices_screen.dart';
+import '../screens/notifications_center_screen.dart';
 import '../screens/campus_map_screen.dart';
 import '../screens/institutional_services_screen.dart';
 import '../screens/institutional_activities_hub.dart';
@@ -396,6 +397,16 @@ class GriUniversityDrawer extends StatelessWidget {
                 // SECTION 5: DIGITAL SERVICES & PORTALS
                 const Divider(height: 16),
                 _buildSectionHeader("DIGITAL SERVICES & VAULT"),
+                ListTile(
+                  leading: const Icon(Icons.notifications_active_outlined,
+                      color: GriColors.forestPrimary, size: 21),
+                  title: const Text("Notifications & Circulars Inbox",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  subtitle: const Text("Verified announcements & examination alerts",
+                      style: TextStyle(fontSize: 10.5)),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
+                  onTap: () => _push(context, const NotificationsCenterScreen()),
+                ),
                 ListTile(
                   leading: const Icon(Icons.event_outlined, color: GriColors.forestPrimary, size: 21),
                   title: const Text("Events, Notices & Tenders",

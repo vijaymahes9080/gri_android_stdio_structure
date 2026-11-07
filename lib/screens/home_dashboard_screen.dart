@@ -17,6 +17,7 @@ import 'official_portals_gateway_screen.dart';
 import 'settings_screen.dart';
 import 'faculty_directory_screen.dart';
 import 'events_notices_screen.dart';
+import 'notifications_center_screen.dart';
 import 'campus_map_screen.dart';
 import 'institutional_services_screen.dart';
 import '../services/official_resource_registry.dart';
@@ -543,6 +544,19 @@ class HomeDashboardScreen extends StatelessWidget {
             spacing: 6,
             runSpacing: 6,
             children: [
+              ActionChip(
+                avatar: const Icon(Icons.notifications_active_outlined, size: 14),
+                label: Text(
+                  provider.unreadNotificationsCount > 0
+                      ? 'Notifications (${provider.unreadNotificationsCount})'
+                      : 'Notifications',
+                  style: const TextStyle(fontSize: 11),
+                ),
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (_) => const NotificationsCenterScreen()),
+                ),
+              ),
               ActionChip(
                 avatar: const Icon(Icons.badge_outlined, size: 14),
                 label: const Text('Faculty Directory',
