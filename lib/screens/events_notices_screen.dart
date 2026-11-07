@@ -263,7 +263,9 @@ class _EventsNoticesScreenState extends State<EventsNoticesScreen>
           color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
         ),
       ),
-      child: ListTile(
+      child: Material(
+        type: MaterialType.transparency,
+        child: ListTile(
         onTap: () => OfficialResourceRegistry.smartOpenDocument(
           context,
           notice.url,
@@ -303,7 +305,7 @@ class _EventsNoticesScreenState extends State<EventsNoticesScreen>
           ),
         ),
         trailing: const Icon(Icons.chevron_right, size: 18),
-      ),
+      )),
     );
   }
 
@@ -378,7 +380,9 @@ class _EventsNoticesScreenState extends State<EventsNoticesScreen>
           color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
         ),
       ),
-      child: ListTile(
+      child: Material(
+        type: MaterialType.transparency,
+        child: ListTile(
         onTap: () => GriUrlLauncher.launch(context, event.url),
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
         leading: Container(
@@ -413,7 +417,7 @@ class _EventsNoticesScreenState extends State<EventsNoticesScreen>
           ),
         ),
         trailing: const Icon(Icons.open_in_new, size: 16),
-      ),
+      )),
     );
   }
 

@@ -446,7 +446,9 @@ class _FacultyCard extends StatelessWidget {
           color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
         ),
       ),
-      child: ListTile(
+      child: Material(
+        type: MaterialType.transparency,
+        child: ListTile(
         onTap: onTap,
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         leading: _FacultyAvatar(
@@ -479,7 +481,7 @@ class _FacultyCard extends StatelessWidget {
           ),
         ),
         trailing: const Icon(Icons.chevron_right, size: 18),
-      ),
+      )),
     );
   }
 }

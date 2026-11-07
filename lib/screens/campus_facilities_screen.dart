@@ -383,7 +383,9 @@ class _CampusFacilitiesScreenState extends State<CampusFacilitiesScreen> {
           color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
         ),
       ),
-      child: ListTile(
+      child: Material(
+        type: MaterialType.transparency,
+        child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
         leading: Container(
           width: 34,
@@ -410,7 +412,7 @@ class _CampusFacilitiesScreenState extends State<CampusFacilitiesScreen> {
         ),
         trailing: const Icon(Icons.open_in_new, size: 16),
         onTap: () => GriUrlLauncher.launch(context, facility.sourceUrl),
-      ),
+      )),
     );
   }
 
@@ -427,7 +429,9 @@ class _CampusFacilitiesScreenState extends State<CampusFacilitiesScreen> {
           color: isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
         ),
       ),
-      child: ListTile(
+      child: Material(
+        type: MaterialType.transparency,
+        child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
         leading: Container(
           width: 34,
@@ -466,7 +470,7 @@ class _CampusFacilitiesScreenState extends State<CampusFacilitiesScreen> {
             sourceUrl: unit.url,
           ),
         )),
-      ),
+      )),
     );
   }
 }

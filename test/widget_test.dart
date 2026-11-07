@@ -170,7 +170,7 @@ void main() {
 
     // Initial frame of splash screen
     await tester.pump();
-    expect(find.text('காந்திகிராம கிராமிய நிறுவனம்'), findsOneWidget);
+    expect(find.text('காந்திகிராம கிராமிய நிகர்நிலைப் பல்கலைக்கழகம்'), findsOneWidget);
     expect(find.text('THE GANDHIGRAM RURAL INSTITUTE'), findsOneWidget);
     expect(find.textContaining('NAAC'), findsOneWidget);
 

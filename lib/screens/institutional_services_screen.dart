@@ -222,7 +222,9 @@ class _InstitutionalServicesScreenState
                                 : GriColors.outlineVariant,
                           ),
                         ),
-                        child: ListTile(
+                        child: Material(
+                          type: MaterialType.transparency,
+                          child: ListTile(
                           contentPadding: const EdgeInsets.symmetric(
                               horizontal: 12, vertical: 5),
                           leading: Container(
@@ -267,7 +269,7 @@ class _InstitutionalServicesScreenState
                           ),
                           onTap: () =>
                               GriUrlLauncher.launch(context, service.url),
-                        ),
+                        )),
                       );
                     },
                   ),

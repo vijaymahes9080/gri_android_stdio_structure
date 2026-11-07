@@ -178,12 +178,15 @@ class _GriSplashScreenState extends State<GriSplashScreen> with SingleTickerProv
                             children: [
                               Icon(Icons.workspace_premium, color: GriColors.ochrePrimary, size: 16),
                               SizedBox(width: 6),
-                              Text(
-                                "NAAC A++ Grade (4th Cycle)  •  Estd. 1956  •  MoE, Govt. of India",
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w600,
-                                  color: GriColors.forestPrimary,
+                              Flexible(
+                                child: Text(
+                                  "NAAC A++ Grade (4th Cycle)  •  Estd. 1956  •  MoE, Govt. of India",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w600,
+                                    color: GriColors.forestPrimary,
+                                  ),
                                 ),
                               ),
                             ],

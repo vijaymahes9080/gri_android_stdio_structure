@@ -658,7 +658,9 @@ class _GlobalWebsiteSearchScreenState extends State<GlobalWebsiteSearchScreen> {
               isDark ? GriColors.darkOutlineVariant : GriColors.outlineVariant,
         ),
       ),
-      child: ListTile(
+      child: Material(
+        type: MaterialType.transparency,
+        child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
         leading: Container(
           width: 34,
@@ -701,7 +703,7 @@ class _GlobalWebsiteSearchScreenState extends State<GlobalWebsiteSearchScreen> {
           color: GriColors.ochrePrimary,
         ),
         onTap: () => _openHit(hit),
-      ),
+      )),
     );
   }
 
