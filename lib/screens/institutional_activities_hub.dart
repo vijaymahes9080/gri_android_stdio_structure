@@ -160,7 +160,6 @@ class InstitutionalActivitiesHub extends StatelessWidget {
         trailing: const Icon(Icons.open_in_new, size: 18),
         onTap: () => GriUrlLauncher.launch(context, s.url),
       )),
-      ),
     );
   }
 
@@ -210,7 +209,6 @@ class InstitutionalActivitiesHub extends StatelessWidget {
         trailing: const Icon(Icons.open_in_new, size: 18),
         onTap: () => GriUrlLauncher.launch(context, f.sourceUrl),
       )),
-      ),
     );
   }
 }

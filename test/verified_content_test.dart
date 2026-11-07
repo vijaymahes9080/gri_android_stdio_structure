@@ -8,7 +8,11 @@ import 'package:gri_app/screens/events_notices_screen.dart';
 import 'package:gri_app/screens/faculty_directory_screen.dart';
 import 'package:gri_app/screens/grievance_submission_screen.dart';
 import 'package:gri_app/screens/hostel_services_screen.dart';
+import 'package:gri_app/screens/institutional_activities_hub.dart';
 import 'package:gri_app/screens/institutional_services_screen.dart';
+import 'package:gri_app/screens/institutional_transparency_centre.dart';
+import 'package:gri_app/screens/research_innovation_hub.dart';
+import 'package:gri_app/screens/rural_engagement_hub.dart';
 import 'package:gri_app/screens/student_services_hub_screen.dart';
 import 'package:gri_app/screens/transport_info_screen.dart';
 import 'package:gri_app/services/official_catalog_service.dart';
@@ -155,6 +159,46 @@ void main() {
       expect(find.textContaining('not transmitted to the university'),
           findsOneWidget);
       expect(provider.isStudentWorkspaceUnlocked, isFalse);
+    });
+
+    testWidgets('transparency centre shows verified disclosures',
+        (tester) async {
+      await tester.pumpWidget(
+          _app(const InstitutionalTransparencyCentre()));
+      await tester.pumpAndSettle();
+      expect(find.text('Transparency Centre'), findsOneWidget);
+      expect(find.textContaining('NAAC'), findsOneWidget);
+      expect(find.textContaining('RTI'), findsOneWidget);
+    });
+
+    testWidgets('research & innovation hub shows verified research content',
+        (tester) async {
+      await tester.pumpWidget(_app(const ResearchInnovationHub()));
+      await tester.pumpAndSettle();
+      expect(find.text('Research & Innovation'), findsOneWidget);
+      expect(find.textContaining('Research & Development Cell'),
+          findsOneWidget);
+    });
+
+    testWidgets('institutional activities hub shows NSS and UBA',
+        (tester) async {
+      await tester.pumpWidget(_app(const InstitutionalActivitiesHub()));
+      await tester.pumpAndSettle();
+      expect(find.text('Institutional Activities'), findsOneWidget);
+      expect(find.textContaining('National Service Scheme (NSS)'),
+          findsOneWidget);
+      expect(find.textContaining('Unnat Bharat Abhiyan (UBA)'), findsOneWidget);
+    });
+
+    testWidgets('rural engagement hub shows UBA rural engagement',
+        (tester) async {
+      await tester.pumpWidget(_app(const RuralEngagementHub()));
+      await tester.pumpAndSettle();
+      expect(find.text('Rural Engagement'), findsOneWidget);
+      expect(find.textContaining('Unnat Bharat Abhiyan (UBA)'), findsOneWidget);
+      // No fabricated village names or beneficiary statistics.
+      expect(find.text('Gandhigram Village'), findsNothing);
+      expect(find.textContaining('beneficiaries'), findsNothing);
     });
   });
 }

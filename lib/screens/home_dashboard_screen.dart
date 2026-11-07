@@ -21,6 +21,7 @@ import 'campus_map_screen.dart';
 import 'institutional_services_screen.dart';
 import '../services/official_resource_registry.dart';
 import '../services/official_catalog_service.dart';
+import '../widgets/gri_sync_status_banner.dart';
 
 /// Production-Grade Home Dashboard for The Gandhigram Rural Institute
 /// Engineered to executive government & university digital standards:
@@ -53,6 +54,8 @@ class HomeDashboardScreen extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         children: [
+          const GriSyncStatusBanner(),
+          const SizedBox(height: 10),
           // 1. Executive Institutional Header Card (Khadi Ivory & Forest Tone)
           GriFadeSlideEntrance(
             delay: const Duration(milliseconds: 30),
