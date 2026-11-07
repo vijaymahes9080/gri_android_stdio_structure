@@ -18,8 +18,12 @@ import '../screens/faculty_directory_screen.dart';
 import '../screens/events_notices_screen.dart';
 import '../screens/campus_map_screen.dart';
 import '../screens/institutional_services_screen.dart';
+import '../screens/institutional_activities_hub.dart';
+import '../screens/institutional_transparency_centre.dart';
 import '../screens/grievance_submission_screen.dart';
 import '../screens/hostel_services_screen.dart';
+import '../screens/research_innovation_hub.dart';
+import '../screens/rural_engagement_hub.dart';
 import '../screens/transport_info_screen.dart';
 import '../services/official_catalog_service.dart';
 import '../services/official_resource_registry.dart';
@@ -335,6 +339,58 @@ class GriUniversityDrawer extends StatelessWidget {
                   ),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
                   onTap: () => _push(context, const GrievanceSubmissionScreen()),
+                ),
+
+                // SECTION 4C: GRI DISTINCTIVE MODULES
+                const Divider(height: 16),
+                _buildSectionHeader("GRI DISTINCTIVE MODULES"),
+                ListTile(
+                  leading: const Icon(Icons.eco_outlined,
+                      color: GriColors.ochrePrimary, size: 21),
+                  title: const Text("Rural Engagement & Village Placement",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  subtitle: const Text(
+                    "Unnat Bharat Abhiyan — rural development identity",
+                    style: TextStyle(fontSize: 10.5),
+                  ),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
+                  onTap: () => _push(context, const RuralEngagementHub()),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.science_outlined,
+                      color: GriColors.tealSecondary, size: 21),
+                  title: const Text("Research & Innovation Hub",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  subtitle: const Text(
+                    "Verified research services & facilities",
+                    style: TextStyle(fontSize: 10.5),
+                  ),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
+                  onTap: () => _push(context, const ResearchInnovationHub()),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.people_outlined,
+                      color: GriColors.ochrePrimary, size: 21),
+                  title: const Text("Institutional Activities Hub",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  subtitle: const Text(
+                    "NSS, UBA, Shanti Sena & heritage facilities",
+                    style: TextStyle(fontSize: 10.5),
+                  ),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
+                  onTap: () => _push(context, const InstitutionalActivitiesHub()),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.description_outlined,
+                      color: GriColors.forestPrimary, size: 21),
+                  title: const Text("Institutional Transparency Centre",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  subtitle: const Text(
+                    "NAAC, NIRF, AISHE, IQAC, RTI, mandatory disclosures",
+                    style: TextStyle(fontSize: 10.5),
+                  ),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
+                  onTap: () => _push(context, const InstitutionalTransparencyCentre()),
                 ),
 
                 // SECTION 5: DIGITAL SERVICES & PORTALS
