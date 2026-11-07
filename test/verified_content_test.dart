@@ -6,8 +6,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:gri_app/providers/gri_provider.dart';
 import 'package:gri_app/screens/events_notices_screen.dart';
 import 'package:gri_app/screens/faculty_directory_screen.dart';
+import 'package:gri_app/screens/grievance_submission_screen.dart';
+import 'package:gri_app/screens/hostel_services_screen.dart';
 import 'package:gri_app/screens/institutional_services_screen.dart';
 import 'package:gri_app/screens/student_services_hub_screen.dart';
+import 'package:gri_app/screens/transport_info_screen.dart';
 import 'package:gri_app/services/official_catalog_service.dart';
 import 'package:gri_app/services/verified_institution_content.dart';
 
@@ -117,6 +120,41 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('Institutional Services'), findsOneWidget);
       expect(find.textContaining('VERIFIED OFFICIAL COVERAGE'), findsOneWidget);
+    });
+  });
+
+  group('Phase 3 connected campus services', () {
+    testWidgets('hostel services screen shows verified info and honest enquiry',
+        (tester) async {
+      await tester.pumpWidget(_app(const HostelServicesScreen()));
+      await tester.pumpAndSettle();
+      expect(find.text('Hostel Services'), findsOneWidget);
+      expect(find.text('Hostels'), findsOneWidget);
+      // No fabricated room allocations.
+      expect(find.text('Block B, Room 204'), findsNothing);
+      expect(find.text('Official infrastructure page'), findsOneWidget);
+    });
+
+    testWidgets('transport info screen states live GPS is not published',
+        (tester) async {
+      await tester.pumpWidget(_app(const TransportInfoScreen()));
+      await tester.pumpAndSettle();
+      expect(find.text('Campus Transport'), findsOneWidget);
+      expect(find.text('Live GPS tracking is not published'), findsOneWidget);
+      expect(find.text('Campus location & transport'), findsOneWidget);
+    });
+
+    testWidgets('grievance screen is gated behind student workspace',
+        (tester) async {
+      final provider = GriProvider();
+      await tester.pumpWidget(_app(const GrievanceSubmissionScreen(),
+          provider: provider));
+      await tester.pumpAndSettle();
+      expect(find.text('Grievance & Support'), findsOneWidget);
+      // Submission disabled until workspace unlocked; honest demo notice shown.
+      expect(find.textContaining('not transmitted to the university'),
+          findsOneWidget);
+      expect(provider.isStudentWorkspaceUnlocked, isFalse);
     });
   });
 }

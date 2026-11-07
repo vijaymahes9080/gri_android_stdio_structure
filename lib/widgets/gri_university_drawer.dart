@@ -18,6 +18,9 @@ import '../screens/faculty_directory_screen.dart';
 import '../screens/events_notices_screen.dart';
 import '../screens/campus_map_screen.dart';
 import '../screens/institutional_services_screen.dart';
+import '../screens/grievance_submission_screen.dart';
+import '../screens/hostel_services_screen.dart';
+import '../screens/transport_info_screen.dart';
 import '../services/official_catalog_service.dart';
 import '../services/official_resource_registry.dart';
 import '../services/verified_institution_content.dart';
@@ -292,6 +295,46 @@ class GriUniversityDrawer extends StatelessWidget {
                       style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
                   onTap: () => _push(context, const ContactCampusInfoScreen()),
+                ),
+
+                // SECTION 4B: CONNECTED CAMPUS SERVICES (Phase 3)
+                const Divider(height: 16),
+                _buildSectionHeader("CONNECTED CAMPUS SERVICES"),
+                ListTile(
+                  leading: const Icon(Icons.hotel_outlined,
+                      color: GriColors.forestPrimary, size: 21),
+                  title: const Text("Hostel Services",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  subtitle: const Text(
+                    "Verified public hostel information",
+                    style: TextStyle(fontSize: 10.5),
+                  ),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
+                  onTap: () => _push(context, const HostelServicesScreen()),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.directions_bus_outlined,
+                      color: GriColors.forestPrimary, size: 21),
+                  title: const Text("Campus Transport",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  subtitle: const Text(
+                    "Official transport info — live GPS not published",
+                    style: TextStyle(fontSize: 10.5),
+                  ),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
+                  onTap: () => _push(context, const TransportInfoScreen()),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.flag_outlined,
+                      color: GriColors.forestPrimary, size: 21),
+                  title: const Text("Grievance & Support",
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  subtitle: const Text(
+                    "Demo workspace — not transmitted to university",
+                    style: TextStyle(fontSize: 10.5),
+                  ),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
+                  onTap: () => _push(context, const GrievanceSubmissionScreen()),
                 ),
 
                 // SECTION 5: DIGITAL SERVICES & PORTALS

@@ -125,8 +125,11 @@ class _StudentServicesHubScreenState extends State<StudentServicesHubScreen> wit
                       Navigator.pop(ctx);
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text("Mess rebate application recorded and forwarded to Chief Warden office."),
-                          backgroundColor: GriColors.forestPrimary,
+                          content: Text(
+                            "Demo entry only: not submitted to the university. "
+                            "Use the official hostel office for real applications.",
+                          ),
+                          backgroundColor: GriColors.ochrePrimary,
                         ),
                       );
                     },
@@ -717,12 +720,15 @@ class _StudentServicesHubScreenState extends State<StudentServicesHubScreen> wit
                         ),
                         const SizedBox(height: 8),
                         const Text(
-                          "Allocated Accommodation: Block B, Room 204 (Kasturba Complex)",
+                          "Hostel allocation is administered by the university "
+                          "and is not available in this demo build.",
                           style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          "Mess Scheme: Vegetarian • Committee: Student Elected Mess Representatives",
+                          "Hostel & mess facilities are published on the official "
+                          "infrastructure page. Allotment, mess rules and rebate "
+                          "applications must be submitted through the university.",
                           style: TextStyle(
                             fontSize: 11,
                             color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
