@@ -13,6 +13,7 @@ import 'package:gri_app/screens/media_gallery_screen.dart';
 import 'package:gri_app/screens/official_portals_gateway_screen.dart';
 import 'package:gri_app/screens/gri_splash_screen.dart';
 import 'package:gri_app/screens/settings_screen.dart';
+import 'package:gri_app/screens/notifications_center_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
@@ -208,5 +209,26 @@ void main() {
 
     // Verify Clear Cache button exists
     expect(find.text('Clear Cache'), findsOneWidget);
+  });
+
+  testWidgets('Notifications Center Screen renders feed, filters, and actions', (WidgetTester tester) async {
+    tester.view.physicalSize = const Size(1080, 2400);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+
+    SharedPreferences.setMockInitialValues({});
+    await tester.pumpWidget(createTestApp(const NotificationsCenterScreen()));
+    await tester.pumpAndSettle();
+
+    expect(find.text('NOTIFICATIONS & CIRCULARS'), findsOneWidget);
+    expect(find.text('Android Push & System Alerts Active'), findsOneWidget);
+    expect(find.text('All'), findsOneWidget);
+    expect(find.text('Examinations'), findsOneWidget);
+    expect(find.text('Academic'), findsOneWidget);
+    expect(find.text('Welfare'), findsOneWidget);
+    expect(find.byType(TextField), findsOneWidget);
   });
 }

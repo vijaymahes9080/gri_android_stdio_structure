@@ -170,7 +170,7 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                         child: Container(
                           padding: const EdgeInsets.all(2.5),
                           decoration: const BoxDecoration(
-                            color: GriColors.terracotta,
+                            color: GriColors.error,
                             shape: BoxShape.circle,
                           ),
                           constraints: const BoxConstraints(

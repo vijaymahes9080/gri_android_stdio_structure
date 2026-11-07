@@ -33,7 +33,7 @@ class NotificationService {
       const initSettings = InitializationSettings(android: androidSettings);
 
       await _notificationsPlugin.initialize(
-        initSettings,
+        settings: initSettings,
         onDidReceiveNotificationResponse: (NotificationResponse response) {
           debugPrint('Notification clicked with payload: ${response.payload}');
         },
@@ -71,6 +71,9 @@ class NotificationService {
 
   /// Explicitly request Android 13+ (API 33+) POST_NOTIFICATIONS permission
   Future<bool> requestPermissions() async {
+    if (!_isInitialized) {
+      await initialize();
+    }
     try {
       final androidImplementation = _notificationsPlugin
           .resolvePlatformSpecificImplementation<
@@ -99,6 +102,9 @@ class NotificationService {
     Importance importance = Importance.high,
     Priority priority = Priority.high,
   }) async {
+    if (!_isInitialized) {
+      return;
+    }
     try {
       final androidDetails = AndroidNotificationDetails(
         channelId,
@@ -112,10 +118,10 @@ class NotificationService {
 
       final details = NotificationDetails(android: androidDetails);
       await _notificationsPlugin.show(
-        id,
-        title,
-        body,
-        details,
+        id: id,
+        title: title,
+        body: body,
+        notificationDetails: details,
         payload: payload,
       );
     } catch (e) {

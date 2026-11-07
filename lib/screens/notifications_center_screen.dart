@@ -7,7 +7,6 @@ import '../services/notification_service.dart';
 import '../services/official_catalog_service.dart';
 import '../services/official_resource_registry.dart';
 import '../utils/gri_colors.dart';
-import '../utils/gri_motion.dart';
 import 'settings_screen.dart';
 
 /// Official Institutional Notification & Circulars Center
@@ -326,7 +325,7 @@ class _NotificationsCenterScreenState extends State<NotificationsCenterScreen> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
               decoration: BoxDecoration(
-                color: isSelected ? Colors.white : GriColors.terracotta,
+                color: isSelected ? Colors.white : GriColors.error,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Text(
