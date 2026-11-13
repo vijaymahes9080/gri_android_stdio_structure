@@ -131,13 +131,35 @@ class _AskGriAiScreenState extends State<AskGriAiScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        "GRI-Sahayak AI Assistant",
-                        style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13.5),
+                      Row(
+                        children: [
+                          const Text(
+                            "GRI-Sahayak AI Assistant",
+                            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13.5),
+                          ),
+                          if (provider.sahayakMessages.length > 1) ...[
+                            const SizedBox(width: 6),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1.5),
+                              decoration: BoxDecoration(
+                                color: GriColors.forestPrimary.withOpacity(0.12),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Text(
+                                "${provider.sahayakMessages.length} msgs",
+                                style: const TextStyle(
+                                  fontSize: 9.5,
+                                  fontWeight: FontWeight.bold,
+                                  color: GriColors.forestPrimary,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ],
                       ),
                       const SizedBox(height: 1),
                       Text(
-                        "Grounded in the verified GRI dataset • sources cited",
+                        "Grounded in verified GRI dataset • History saved",
                         style: TextStyle(
                           fontSize: 10.5,
                           color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
@@ -146,6 +168,14 @@ class _AskGriAiScreenState extends State<AskGriAiScreen> {
                     ],
                   ),
                 ),
+                if (provider.sahayakMessages.length > 1)
+                  IconButton(
+                    icon: const Icon(Icons.delete_outline, size: 20),
+                    tooltip: "Clear Chat History",
+                    padding: const EdgeInsets.all(6),
+                    constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                    onPressed: () => _confirmClearHistory(context, provider),
+                  ),
               ],
             ),
           ),
@@ -272,6 +302,19 @@ class _AskGriAiScreenState extends State<AskGriAiScreen> {
                                   ],
                                 ),
                               ],
+                              const SizedBox(height: 3),
+                              Align(
+                                alignment: Alignment.bottomRight,
+                                child: Text(
+                                  msg.timestamp,
+                                  style: TextStyle(
+                                    fontSize: 8.5,
+                                    color: msg.isUser
+                                        ? Colors.white.withOpacity(0.65)
+                                        : (isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
