@@ -14,7 +14,7 @@ function getArg(name, def = '') {
   return def;
 }
 
-const botToken = getArg('token', process.env.TELEGRAM_BOT_TOKEN || '9037258166:AAFHLnLJlqilhcsjWRlTzkcZ5s5oZvMS0dI');
+const botToken = getArg('token', process.env.TELEGRAM_BOT_TOKEN || '9037258166:AAFVK0qyhE96WSwaZpx1TrcWH7-ideg1NCY');
 const webhookUrl = getArg('url', process.env.TELEGRAM_WEBHOOK_URL);
 const secretToken = getArg('secret', process.env.TELEGRAM_WEBHOOK_SECRET);
 

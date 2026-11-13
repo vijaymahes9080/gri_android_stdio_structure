@@ -222,7 +222,7 @@ serve(async (req: Request) => {
 
       await botClient.sendMessage({
         chat_id: chatId,
-        text: `🔒 <b>Logged Out</b>\n\nYour session has been terminated. Institutional data requests are now locked. Use /login to re-authenticate.`,
+        text: `🔒 <b>Logged Out Successfully</b>\n\nYour session has been terminated and institutional records are locked.\n\n🔑 <b>Demo Credentials to Log Back In:</b>\n• <b>Student:</b> <code>/login student1 gri@2026</code>\n• <b>Faculty:</b> <code>/login faculty1 gri@2026</code>\n• <b>Admin:</b> <code>/login admin1 gri@2026</code>\n\n<i>Tap any credential above to copy and log back in!</i>`,
         parse_mode: "HTML",
       });
 
