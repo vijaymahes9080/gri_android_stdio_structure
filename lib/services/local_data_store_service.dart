@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/academic_models.dart';
 import '../models/user_model.dart';
+import '../models/telegram_models.dart';
+import '../models/activity_log_model.dart';
 
 /// Persistent local vault for institutional workflow data.
 ///
@@ -28,6 +30,10 @@ class LocalDataStoreService {
   static const String _kRollCallRosters = 'gri_vault_roll_call_rosters';
   static const String _kRollCallRecords = 'gri_vault_roll_call_records';
   static const String _kPendingCloudOps = 'gri_vault_pending_cloud_ops';
+  static const String _kTelegramConnection = 'gri_vault_telegram_connection';
+  static const String _kTelegramMessages = 'gri_vault_telegram_messages';
+  static const String _kTelegramPreferences = 'gri_vault_telegram_preferences';
+  static const String _kPendingActivityLogs = 'gri_vault_pending_activity_logs';
 
   static const int sahayakHistoryLimit = 60;
 
@@ -354,6 +360,96 @@ class LocalDataStoreService {
     } catch (_) {}
   }
 
+  // ------------------------------------------------------------------
+  // Telegram Integration & Activity Logs
+  // ------------------------------------------------------------------
+  Future<TelegramConnection?> loadTelegramConnection() async {
+    try {
+      final raw = (await _prefs).getString(_kTelegramConnection);
+      if (raw == null) return null;
+      return TelegramConnection.fromJson(raw);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  Future<void> saveTelegramConnection(TelegramConnection conn) async {
+    try {
+      final prefs = await _prefs;
+      await prefs.setString(_kTelegramConnection, conn.toJson());
+    } catch (_) {}
+  }
+
+  Future<void> clearTelegramConnection() async {
+    try {
+      final prefs = await _prefs;
+      await prefs.remove(_kTelegramConnection);
+    } catch (_) {}
+  }
+
+  Future<List<TelegramMessageRecord>> loadTelegramMessages() async {
+    try {
+      final raw = (await _prefs).getString(_kTelegramMessages);
+      if (raw == null) return [];
+      return (jsonDecode(raw) as List<dynamic>)
+          .whereType<Map<String, dynamic>>()
+          .map(TelegramMessageRecord.fromMap)
+          .toList();
+    } catch (_) {
+      return [];
+    }
+  }
+
+  Future<void> saveTelegramMessages(List<TelegramMessageRecord> messages) async {
+    try {
+      final prefs = await _prefs;
+      await prefs.setString(
+        _kTelegramMessages,
+        jsonEncode(messages.map((m) => m.toMap()).toList()),
+      );
+    } catch (_) {}
+  }
+
+  Future<TelegramNotificationPreferences> loadTelegramPreferences() async {
+    try {
+      final raw = (await _prefs).getString(_kTelegramPreferences);
+      if (raw == null) return const TelegramNotificationPreferences();
+      return TelegramNotificationPreferences.fromJson(raw);
+    } catch (_) {
+      return const TelegramNotificationPreferences();
+    }
+  }
+
+  Future<void> saveTelegramPreferences(TelegramNotificationPreferences prefs) async {
+    try {
+      final p = await _prefs;
+      await p.setString(_kTelegramPreferences, prefs.toJson());
+    } catch (_) {}
+  }
+
+  Future<List<AppActivityLog>> loadPendingActivityLogs() async {
+    try {
+      final raw = (await _prefs).getString(_kPendingActivityLogs);
+      if (raw == null) return [];
+      return (jsonDecode(raw) as List<dynamic>)
+          .whereType<Map<String, dynamic>>()
+          .map(AppActivityLog.fromMap)
+          .toList();
+    } catch (_) {
+      return [];
+    }
+  }
+
+  Future<void> savePendingActivityLogs(List<AppActivityLog> logs) async {
+    try {
+      final p = await _prefs;
+      await p.setString(
+        _kPendingActivityLogs,
+        jsonEncode(logs.map((l) => l.toMap()).toList()),
+      );
+    } catch (_) {}
+  }
+
   /// Destructive: wipes all persisted vault data (used by explicit user reset).
   Future<void> clearAll() async {
     try {
@@ -371,6 +467,10 @@ class LocalDataStoreService {
       await prefs.remove(_kRollCallRosters);
       await prefs.remove(_kRollCallRecords);
       await prefs.remove(_kPendingCloudOps);
+      await prefs.remove(_kTelegramConnection);
+      await prefs.remove(_kTelegramMessages);
+      await prefs.remove(_kTelegramPreferences);
+      await prefs.remove(_kPendingActivityLogs);
     } catch (_) {}
   }
 }

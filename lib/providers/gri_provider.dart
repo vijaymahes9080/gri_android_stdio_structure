@@ -9,6 +9,10 @@ import '../services/official_web_sync_service.dart';
 import '../services/document_certification_service.dart';
 import '../services/sahayak_knowledge_engine.dart';
 import '../services/notification_service.dart';
+import '../models/telegram_models.dart';
+import '../models/activity_log_model.dart';
+import '../services/telegram_bot_service.dart';
+import '../services/activity_logging_service.dart';
 
 enum NavigationTab {
   HOME,
@@ -107,6 +111,26 @@ class GriProvider extends ChangeNotifier {
   // Notifications & Feedback
   String? _notificationMessage;
   String? get notificationMessage => _notificationMessage;
+
+  // Telegram Integration State
+  TelegramConnection? _telegramConnection;
+  TelegramConnection? get telegramConnection => _telegramConnection;
+  bool get isTelegramConnected =>
+      _telegramConnection != null &&
+      _telegramConnection!.status == TelegramConnectionStatus.connected;
+
+  List<TelegramMessageRecord> _telegramMessages = [];
+  List<TelegramMessageRecord> get telegramMessages => _telegramMessages;
+
+  TelegramNotificationPreferences _telegramPreferences =
+      const TelegramNotificationPreferences();
+  TelegramNotificationPreferences get telegramPreferences => _telegramPreferences;
+
+  bool _isTelegramLoading = false;
+  bool get isTelegramLoading => _isTelegramLoading;
+
+  String? _telegramError;
+  String? get telegramError => _telegramError;
 
   // Dialog & Modal States
   bool _isRegistrationWizardOpen = false;
@@ -874,10 +898,15 @@ class GriProvider extends ChangeNotifier {
           // Ignore malformed persisted role
         }
       }
+      // Restore Telegram Integration state
+      _telegramConnection = await store.loadTelegramConnection();
+      _telegramMessages = await store.loadTelegramMessages();
+      _telegramPreferences = await store.loadTelegramPreferences();
+
+      // Drain any queued offline activity logs
+      unawaited(ActivityLoggingService.instance.drainPendingLogs());
+
       notifyListeners();
-    } catch (_) {
-      // Graceful fallback: keep seeded in-memory defaults
-    }
   }
 
   /// Persists every durable workflow dataset. Fire-and-forget safe.
@@ -1197,6 +1226,23 @@ class GriProvider extends ChangeNotifier {
     LocalDataStoreService.instance.saveGrievances(_grievances);
     _queueCloudOp('grievances', _grievances.first.toMap());
     _showNotification("Grievance $ticket submitted successfully.");
+
+    // Log Activity & Dispatch Telegram notification if configured
+    ActivityLoggingService.instance.logEvent(
+      userId: _currentUser?.rollNo ?? _currentUser?.id ?? '2026GRI001',
+      action: 'GRIEVANCE_SUBMITTED',
+      module: 'SERVICES',
+      entityType: 'grievances',
+      entityId: ticket,
+      metadata: {'category': category, 'subject': subject},
+    );
+    if (isTelegramConnected && _telegramPreferences.grievanceAlertsEnabled) {
+      TelegramBotService.instance.sendTestNotification(
+        _currentUser?.rollNo ?? _currentUser?.id ?? '2026GRI001',
+        'Grievance ticket $ticket [$category] submitted: "$subject". Status: SUBMITTED.',
+      );
+    }
+
     notifyListeners();
   }
 
@@ -1675,5 +1721,103 @@ class GriProvider extends ChangeNotifier {
       notifyListeners();
       LocalDataStoreService.instance.saveSahayakMessages(_sahayakMessages);
     });
+  }
+
+  // ------------------------------------------------------------------
+  // Telegram Bot Integration Actions & Telemetry
+  // ------------------------------------------------------------------
+
+  Future<String?> initiateTelegramLinking() async {
+    _isTelegramLoading = true;
+    _telegramError = null;
+    notifyListeners();
+
+    try {
+      final userId = _currentUser?.rollNo ?? _currentUser?.id ?? '2026GRI001';
+      final link = await TelegramBotService.instance.initiateDeepLinkConnect(userId);
+      _isTelegramLoading = false;
+      notifyListeners();
+      return link;
+    } catch (e) {
+      _telegramError = 'Failed to generate linking token: $e';
+      _isTelegramLoading = false;
+      notifyListeners();
+      return null;
+    }
+  }
+
+  Future<bool> disconnectTelegram() async {
+    _isTelegramLoading = true;
+    _telegramError = null;
+    notifyListeners();
+
+    try {
+      final userId = _currentUser?.rollNo ?? _currentUser?.id ?? '2026GRI001';
+      final ok = await TelegramBotService.instance.disconnectTelegram(userId);
+      if (ok) {
+        _telegramConnection = await LocalDataStoreService.instance.loadTelegramConnection();
+        _showNotification("Telegram account disconnected.");
+      }
+      _isTelegramLoading = false;
+      notifyListeners();
+      return ok;
+    } catch (e) {
+      _telegramError = 'Failed to disconnect: $e';
+      _isTelegramLoading = false;
+      notifyListeners();
+      return false;
+    }
+  }
+
+  Future<bool> sendTelegramTestMessage(String message) async {
+    _isTelegramLoading = true;
+    _telegramError = null;
+    notifyListeners();
+
+    try {
+      final userId = _currentUser?.rollNo ?? _currentUser?.id ?? '2026GRI001';
+      final ok = await TelegramBotService.instance.sendTestNotification(userId, message);
+      _telegramMessages = await TelegramBotService.instance.fetchMessageHistory(userId);
+      _isTelegramLoading = false;
+      if (ok) {
+        _showNotification("Telegram test alert dispatched.");
+      } else {
+        _showNotification("Failed to send Telegram alert.");
+      }
+      notifyListeners();
+      return ok;
+    } catch (e) {
+      _telegramError = 'Message dispatch error: $e';
+      _isTelegramLoading = false;
+      notifyListeners();
+      return false;
+    }
+  }
+
+  Future<void> refreshTelegramStatus() async {
+    _isTelegramLoading = true;
+    _telegramError = null;
+    notifyListeners();
+
+    try {
+      final userId = _currentUser?.rollNo ?? _currentUser?.id ?? '2026GRI001';
+      _telegramConnection = await TelegramBotService.instance.fetchConnectionStatus(userId);
+      _telegramMessages = await TelegramBotService.instance.fetchMessageHistory(userId);
+      _telegramPreferences = await LocalDataStoreService.instance.loadTelegramPreferences();
+    } catch (e) {
+      _telegramError = 'Status refresh error: $e';
+    } finally {
+      _isTelegramLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> setTelegramNotificationPreferences(
+    TelegramNotificationPreferences prefs,
+  ) async {
+    _telegramPreferences = prefs;
+    notifyListeners();
+    final userId = _currentUser?.rollNo ?? _currentUser?.id ?? '2026GRI001';
+    await TelegramBotService.instance.updatePreferences(userId, prefs);
   }
 }

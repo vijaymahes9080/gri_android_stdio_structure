@@ -237,4 +237,42 @@ class SupabaseService {
   /// Pushes a submitted attendance register (append-only roll-call ledger).
   Future<bool> pushRollCallRecord(Map<String, dynamic> row) =>
       insertRecord('attendance_registers', row);
+
+  /// Pushes an application activity log.
+  Future<bool> pushActivityLog(Map<String, dynamic> row) =>
+      insertRecord('app_activity_logs', row);
+
+  /// Fetches telegram messages for an authenticated user.
+  Future<List<Map<String, dynamic>>?> fetchTelegramMessages(String userId) async {
+    final db = client;
+    if (db == null) return null;
+    try {
+      final response = await db
+          .from('telegram_messages')
+          .select()
+          .eq('user_id', userId)
+          .order('created_at', ascending: false)
+          .limit(50);
+      return List<Map<String, dynamic>>.from(response);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// Fetches telegram connection for an authenticated user.
+  Future<Map<String, dynamic>?> fetchTelegramConnection(String userId) async {
+    final db = client;
+    if (db == null) return null;
+    try {
+      final response = await db
+          .from('telegram_connections')
+          .select()
+          .eq('user_id', userId)
+          .eq('connection_status', 'CONNECTED')
+          .maybeSingle();
+      return response;
+    } catch (_) {
+      return null;
+    }
+  }
 }
