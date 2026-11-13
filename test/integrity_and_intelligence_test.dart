@@ -349,6 +349,24 @@ void main() {
       expect(saved, isNotNull);
       expect(saved!.last.text, contains('Central Library'));
     });
+
+    test('Sahayak conversation history completely survives app restart and reloads all previous messages', () async {
+      final first = GriProvider();
+      await Future<void>.delayed(const Duration(milliseconds: 100));
+      first.sendSahayakMessage('what are the library hours');
+      await Future<void>.delayed(const Duration(milliseconds: 900));
+
+      final firstCount = first.sahayakMessages.length;
+      expect(firstCount, greaterThanOrEqualTo(3));
+
+      // Simulate app close & reopen (fresh provider instance restoring vault)
+      final second = GriProvider();
+      await Future<void>.delayed(const Duration(milliseconds: 250));
+
+      expect(second.sahayakMessages.length, equals(firstCount));
+      expect(second.sahayakMessages.any((m) => m.text == 'what are the library hours'), isTrue);
+      expect(second.sahayakMessages.any((m) => m.text.contains('Central Library')), isTrue);
+    });
   });
 
   group('Persistent vault (restart-safe state)', () {
