@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import '../providers/gri_provider.dart';
 import '../utils/gri_colors.dart';
 import '../screens/global_website_search_screen.dart';
-import '../screens/settings_screen.dart';
 import '../screens/notifications_center_screen.dart';
 import '../services/official_resource_registry.dart';
 
@@ -16,7 +15,7 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
   const GriTopBar({super.key});
 
   @override
-  Size get preferredSize => const Size.fromHeight(58);
+  Size get preferredSize => const Size.fromHeight(62);
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +44,7 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
       child: SafeArea(
         bottom: false,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
           child: Row(
             children: [
               // Drawer Hamburger Trigger
@@ -54,30 +53,31 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                   icon: Icon(
                     Icons.menu,
                     color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
-                    size: 24,
+                    size: 22,
                   ),
                   tooltip: "University Navigation Menu",
-                  constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(minWidth: 34, minHeight: 34),
                   onPressed: () => Scaffold.of(drawerCtx).openDrawer(),
                 ),
               ),
 
-              const SizedBox(width: 4),
+              const SizedBox(width: 2),
 
               // Official University Crest
               ClipRRect(
                 borderRadius: BorderRadius.circular(6),
                 child: OfficialResourceRegistry.buildImage(
                   "IMG_OFFICIAL_CREST",
-                  height: 30,
-                  width: 30,
+                  height: 32,
+                  width: 32,
                   fit: BoxFit.contain,
                 ),
               ),
 
-              const SizedBox(width: 8),
+              const SizedBox(width: 6),
 
-              // University Title & Metadata (Guaranteed Full Visibility with FittedBox scaling)
+              // University Title & Metadata (Guaranteed Full Visibility)
               Expanded(
                 child: InkWell(
                   onTap: () {
@@ -93,32 +93,28 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        FittedBox(
-                          fit: BoxFit.scaleDown,
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "THE GANDHIGRAM RURAL INSTITUTE",
-                            style: TextStyle(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w800,
-                              letterSpacing: -0.2,
-                              color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
-                            ),
+                        Text(
+                          "THE GANDHIGRAM RURAL INSTITUTE",
+                          style: TextStyle(
+                            fontSize: 10.5,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: -0.25,
+                            color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
                           ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: 1),
-                        FittedBox(
-                          fit: BoxFit.scaleDown,
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Deemed to be University • NAAC A++",
-                            style: TextStyle(
-                              fontSize: 9.5,
-                              fontWeight: FontWeight.w500,
-                              color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
-                              letterSpacing: -0.1,
-                            ),
+                        Text(
+                          "Deemed to be University • NAAC A++",
+                          style: TextStyle(
+                            fontSize: 8.5,
+                            fontWeight: FontWeight.w500,
+                            color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                            letterSpacing: -0.1,
                           ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
@@ -134,8 +130,8 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                   size: 19,
                 ),
                 tooltip: "Search verified official records",
-                padding: const EdgeInsets.all(4),
-                constraints: const BoxConstraints(minWidth: 28, minHeight: 28),
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(minWidth: 26, minHeight: 26),
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(builder: (_) => const GlobalWebsiteSearchScreen()),
@@ -156,7 +152,7 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                       size: 19,
                     ),
                     tooltip: "Official Notifications & Circulars",
-                    padding: const EdgeInsets.all(4),
+                    padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(minWidth: 28, minHeight: 28),
                     onPressed: () {
                       Navigator.of(context).push(
@@ -168,8 +164,8 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                   if (provider.unreadNotificationsCount > 0)
                     Positioned(
-                      top: 4,
-                      right: 4,
+                      top: 1,
+                      right: 1,
                       child: IgnorePointer(
                         child: Container(
                           padding: const EdgeInsets.all(2.5),
@@ -196,58 +192,46 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                 ],
               ),
 
-              // Settings Shortcut
-              IconButton(
-                icon: Icon(
-                  Icons.settings_outlined,
-                  color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
-                  size: 19,
-                ),
-                tooltip: "Settings & Preferences",
-                padding: const EdgeInsets.all(4),
-                constraints: const BoxConstraints(minWidth: 28, minHeight: 28),
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => const SettingsScreen()),
-                  );
-                },
-              ),
-
-              // Active Role Status Badge Button
+              // Active Role Status Trigger (Compact Institutional Pill)
               Padding(
-                padding: const EdgeInsets.only(left: 2, right: 2),
-                child: InkWell(
-                  onTap: () => provider.toggleRoleSwitcher(true),
-                  borderRadius: BorderRadius.circular(999),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
-                    decoration: BoxDecoration(
-                      color: GriColors.forestPrimary.withValues(alpha: isDark ? 0.3 : 0.1),
-                      borderRadius: BorderRadius.circular(999),
-                      border: Border.all(
-                        color: GriColors.forestPrimary.withValues(alpha: 0.25),
-                        width: 1.0,
+                padding: const EdgeInsets.only(left: 4, right: 2),
+                child: Tooltip(
+                  message: "Active Role: ${provider.currentRole.name} (Tap to switch)",
+                  child: InkWell(
+                    onTap: () => provider.toggleRoleSwitcher(true),
+                    borderRadius: BorderRadius.circular(999),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: GriColors.forestPrimary.withValues(alpha: isDark ? 0.3 : 0.1),
+                        borderRadius: BorderRadius.circular(999),
+                        border: Border.all(
+                          color: GriColors.forestPrimary.withValues(alpha: 0.25),
+                          width: 1.0,
+                        ),
                       ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(
-                          Icons.person,
-                          size: 11,
-                          color: GriColors.forestPrimary,
-                        ),
-                        const SizedBox(width: 3),
-                        Text(
-                          provider.currentRole.name,
-                          style: const TextStyle(
-                            fontSize: 9.5,
-                            fontWeight: FontWeight.w700,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.person,
+                            size: 12,
                             color: GriColors.forestPrimary,
-                            letterSpacing: 0.2,
                           ),
-                        ),
-                      ],
+                          const SizedBox(width: 2.5),
+                          Text(
+                            provider.currentRole.name.length > 3
+                                ? provider.currentRole.name.substring(0, 3)
+                                : provider.currentRole.name,
+                            style: const TextStyle(
+                              fontSize: 9,
+                              fontWeight: FontWeight.w700,
+                              color: GriColors.forestPrimary,
+                              letterSpacing: 0.2,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
