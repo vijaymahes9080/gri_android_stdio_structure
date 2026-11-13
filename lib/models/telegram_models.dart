@@ -232,3 +232,4 @@ class TelegramNotificationPreferences {
       TelegramNotificationPreferences.fromMap(
           jsonDecode(source) as Map<String, dynamic>);
 }
+

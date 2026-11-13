@@ -121,3 +121,4 @@ export function generateSecureToken(byteLength: number = 32): string {
   crypto.getRandomValues(bytes);
   return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
 }
+

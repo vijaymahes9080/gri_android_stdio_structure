@@ -84,3 +84,4 @@ class AppActivityLog {
   factory AppActivityLog.fromJson(String source) =>
       AppActivityLog.fromMap(jsonDecode(source) as Map<String, dynamic>);
 }
+

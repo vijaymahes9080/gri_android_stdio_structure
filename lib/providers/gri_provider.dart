@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user_model.dart';
@@ -907,6 +908,9 @@ class GriProvider extends ChangeNotifier {
       unawaited(ActivityLoggingService.instance.drainPendingLogs());
 
       notifyListeners();
+    } catch (_) {
+      // Graceful fallback: keep seeded in-memory defaults
+    }
   }
 
   /// Persists every durable workflow dataset. Fire-and-forget safe.

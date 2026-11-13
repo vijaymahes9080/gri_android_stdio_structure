@@ -120,3 +120,4 @@ class ActivityLoggingService {
     return sanitized;
   }
 }
+

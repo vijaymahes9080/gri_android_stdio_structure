@@ -69,15 +69,15 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                 borderRadius: BorderRadius.circular(6),
                 child: OfficialResourceRegistry.buildImage(
                   "IMG_OFFICIAL_CREST",
-                  height: 34,
-                  width: 34,
+                  height: 30,
+                  width: 30,
                   fit: BoxFit.contain,
                 ),
               ),
 
-              const SizedBox(width: 10),
+              const SizedBox(width: 8),
 
-              // University Title & Metadata
+              // University Title & Metadata (Guaranteed Full Visibility with FittedBox scaling)
               Expanded(
                 child: InkWell(
                   onTap: () {
@@ -93,28 +93,32 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "THE GANDHIGRAM RURAL INSTITUTE",
-                          style: TextStyle(
-                            fontSize: 10.5,
-                            fontWeight: FontWeight.w800,
-                            letterSpacing: -0.3,
-                            color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "THE GANDHIGRAM RURAL INSTITUTE",
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: -0.2,
+                              color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
+                            ),
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: 1),
-                        Text(
-                          "Deemed to be University • NAAC A++",
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w500,
-                            color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
-                            letterSpacing: -0.1,
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Deemed to be University • NAAC A++",
+                            style: TextStyle(
+                              fontSize: 9.5,
+                              fontWeight: FontWeight.w500,
+                              color: isDark ? GriColors.darkOnSurfaceVariant : GriColors.onSurfaceVariant,
+                              letterSpacing: -0.1,
+                            ),
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
@@ -127,11 +131,11 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                 icon: Icon(
                   Icons.search,
                   color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
-                  size: 20,
+                  size: 19,
                 ),
                 tooltip: "Search verified official records",
-                padding: const EdgeInsets.all(6),
-                constraints: const BoxConstraints(minWidth: 34, minHeight: 34),
+                padding: const EdgeInsets.all(4),
+                constraints: const BoxConstraints(minWidth: 28, minHeight: 28),
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(builder: (_) => const GlobalWebsiteSearchScreen()),
@@ -149,11 +153,11 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                           ? Icons.notifications_active_outlined
                           : Icons.notifications_none_outlined,
                       color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
-                      size: 20,
+                      size: 19,
                     ),
                     tooltip: "Official Notifications & Circulars",
-                    padding: const EdgeInsets.all(6),
-                    constraints: const BoxConstraints(minWidth: 34, minHeight: 34),
+                    padding: const EdgeInsets.all(4),
+                    constraints: const BoxConstraints(minWidth: 28, minHeight: 28),
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
@@ -197,11 +201,11 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                 icon: Icon(
                   Icons.settings_outlined,
                   color: isDark ? GriColors.darkOnSurface : GriColors.forestPrimary,
-                  size: 20,
+                  size: 19,
                 ),
                 tooltip: "Settings & Preferences",
-                padding: const EdgeInsets.all(6),
-                constraints: const BoxConstraints(minWidth: 34, minHeight: 34),
+                padding: const EdgeInsets.all(4),
+                constraints: const BoxConstraints(minWidth: 28, minHeight: 28),
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(builder: (_) => const SettingsScreen()),
@@ -216,7 +220,7 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                   onTap: () => provider.toggleRoleSwitcher(true),
                   borderRadius: BorderRadius.circular(999),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3.5),
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
                     decoration: BoxDecoration(
                       color: GriColors.forestPrimary.withValues(alpha: isDark ? 0.3 : 0.1),
                       borderRadius: BorderRadius.circular(999),
@@ -230,14 +234,14 @@ class GriTopBar extends StatelessWidget implements PreferredSizeWidget {
                       children: [
                         const Icon(
                           Icons.person,
-                          size: 13,
+                          size: 11,
                           color: GriColors.forestPrimary,
                         ),
                         const SizedBox(width: 3),
                         Text(
                           provider.currentRole.name,
                           style: const TextStyle(
-                            fontSize: 10,
+                            fontSize: 9.5,
                             fontWeight: FontWeight.w700,
                             color: GriColors.forestPrimary,
                             letterSpacing: 0.2,

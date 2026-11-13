@@ -7,6 +7,7 @@ import '../utils/gri_colors.dart';
 import '../services/official_resource_registry.dart';
 import '../services/notification_service.dart';
 import 'notifications_center_screen.dart';
+import 'telegram_integration_screen.dart';
 
 /// Production-Grade Settings & Institutional Preferences Screen
 /// Conforms to Phase 7 of GRI Engineering Specification:
@@ -443,6 +444,69 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     ),
                   ],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 14),
+
+          // 4b. Connected Services & Telegram Bot Integration
+          _buildCard(
+            cardBg: cardBg,
+            borderColor: borderColor,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildHeader(
+                  icon: Icons.send_rounded,
+                  title: "CONNECTED SERVICES & TELEGRAM",
+                  color: const Color(0xFF2AABEE),
+                ),
+                const SizedBox(height: 10),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF2AABEE).withOpacity(0.12),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Icon(Icons.send_rounded, color: Color(0xFF2AABEE), size: 22),
+                  ),
+                  title: const Text(
+                    "Telegram Bot Integration",
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13.5),
+                  ),
+                  subtitle: Text(
+                    provider.isTelegramConnected
+                        ? "Connected as @Gandhigram_rural_institutebot"
+                        : "Link account for role-gated exam & attendance alerts",
+                    style: const TextStyle(fontSize: 11),
+                  ),
+                  trailing: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: provider.isTelegramConnected
+                          ? Colors.green.withOpacity(0.12)
+                          : Colors.orange.withOpacity(0.12),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      provider.isTelegramConnected ? "LINKED" : "SETUP",
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                        color: provider.isTelegramConnected ? Colors.green : Colors.orange,
+                      ),
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const TelegramIntegrationScreen(),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
