@@ -25,25 +25,66 @@ class _AskGriAiScreenState extends State<AskGriAiScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollToBottom(animate: false);
+    });
+  }
+
+  @override
   void dispose() {
     _queryController.dispose();
     _scrollController.dispose();
     super.dispose();
   }
 
+  void _scrollToBottom({bool animate = true}) {
+    if (!_scrollController.hasClients) return;
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    if (animate) {
+      _scrollController.animateTo(
+        maxScroll,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    } else {
+      _scrollController.jumpTo(maxScroll);
+    }
+  }
+
   void _sendMessage(GriProvider provider, String text) {
     if (text.trim().isEmpty) return;
     provider.sendSahayakMessage(text.trim());
     _queryController.clear();
-    Future.delayed(const Duration(milliseconds: 300), () {
-      if (_scrollController.hasClients) {
-        _scrollController.animateTo(
-          _scrollController.position.maxScrollExtent,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeOut,
-        );
-      }
-    });
+    Future.delayed(const Duration(milliseconds: 150), () => _scrollToBottom(animate: true));
+    Future.delayed(const Duration(milliseconds: 700), () => _scrollToBottom(animate: true));
+  }
+
+  void _confirmClearHistory(BuildContext context, GriProvider provider) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Clear Assistant History?"),
+        content: const Text(
+          "This will reset your conversation history with GRI-Sahayak and restore the baseline greeting. All institutional records remain unaffected.",
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: const Text("Cancel"),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: GriColors.error),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+              provider.clearSahayakHistory();
+            },
+            child: const Text("Clear History"),
+          ),
+        ],
+      ),
+    );
   }
 
   @override

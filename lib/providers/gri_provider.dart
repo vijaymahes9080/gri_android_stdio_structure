@@ -1686,10 +1686,17 @@ class GriProvider extends ChangeNotifier {
   }
 
   // AI Assistant (GRI-Sahayak)
+  String _currentFormattedTime() {
+    final now = DateTime.now();
+    return "${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
+  }
+
   void sendSahayakMessage(String query) {
     if (query.trim().isEmpty) return;
-    if (_sahayakMessages.any((m) => m.isUser && m.text == query.trim())) {
-      // Duplicate dispatch guard (e.g., double tap): ignore repeat submits.
+    if (_sahayakMessages.isNotEmpty &&
+        _sahayakMessages.last.isUser &&
+        _sahayakMessages.last.text == query.trim()) {
+      // Rapid double tap guard on immediate last message only
       return;
     }
 
@@ -1698,7 +1705,7 @@ class GriProvider extends ChangeNotifier {
         id: "msg_${DateTime.now().millisecondsSinceEpoch}",
         text: query,
         isUser: true,
-        timestamp: "Just now",
+        timestamp: _currentFormattedTime(),
       ),
     );
     notifyListeners();
@@ -1716,7 +1723,7 @@ class GriProvider extends ChangeNotifier {
           id: "msg_ai_${DateTime.now().millisecondsSinceEpoch}",
           text: reply.text,
           isUser: false,
-          timestamp: "Just now",
+          timestamp: _currentFormattedTime(),
           source: reply.sources.isNotEmpty ? reply.sources.first : null,
           confidence: reply.confidence,
           grounded: reply.grounded,
@@ -1725,6 +1732,20 @@ class GriProvider extends ChangeNotifier {
       notifyListeners();
       LocalDataStoreService.instance.saveSahayakMessages(_sahayakMessages);
     });
+  }
+
+  void clearSahayakHistory() {
+    _sahayakMessages = [
+      SahayakMessage(
+        id: "msg_init",
+        text: "Vanakkam! I am GRI-Sahayak, your institutional guide for The Gandhigram Rural Institute (Deemed to be University). Ask me about Admissions 2026, CBCS courses, examinations, attendance criteria, hostels, library facilities, or transport.",
+        isUser: false,
+        source: "ruraluniv.ac.in",
+        timestamp: _currentFormattedTime(),
+      ),
+    ];
+    LocalDataStoreService.instance.saveSahayakMessages(_sahayakMessages);
+    notifyListeners();
   }
 
   // ------------------------------------------------------------------
