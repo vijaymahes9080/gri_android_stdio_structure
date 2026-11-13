@@ -4,8 +4,6 @@ import 'package:url_launcher/url_launcher.dart';
 import '../providers/gri_provider.dart';
 import '../models/telegram_models.dart';
 import '../utils/gri_colors.dart';
-import '../widgets/gri_top_bar.dart';
-import '../widgets/gri_primitives.dart';
 
 /// Secure Telegram Bot Integration Screen
 /// Implements official BotFather connection (@Gandhigram_rural_institutebot),
@@ -419,7 +417,7 @@ class _TelegramIntegrationScreenState extends State<TelegramIntegrationScreen> {
               child: const Row(
                 children: [
                   Icon(Icons.key, size: 16, color: Colors.indigo),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       "To authenticate on Telegram, send:\n/login <username> <password>",

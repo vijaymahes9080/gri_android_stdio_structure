@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
 import '../models/telegram_models.dart';
 import 'local_data_store_service.dart';
 import 'supabase_service.dart';

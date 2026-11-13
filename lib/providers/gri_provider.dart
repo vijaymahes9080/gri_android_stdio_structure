@@ -11,7 +11,6 @@ import '../services/document_certification_service.dart';
 import '../services/sahayak_knowledge_engine.dart';
 import '../services/notification_service.dart';
 import '../models/telegram_models.dart';
-import '../models/activity_log_model.dart';
 import '../services/telegram_bot_service.dart';
 import '../services/activity_logging_service.dart';
 
